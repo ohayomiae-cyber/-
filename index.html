@@ -128,8 +128,9 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .tb .env{position:absolute;right:-5px;top:-5px;width:16px;height:12px}
 .tabs .sp{flex:1}.tb.sm{height:34px;font-size:11px}
 .mapw{position:relative;overflow:hidden;background:var(--sea)}
+#cv{position:absolute;inset:0;display:block}
 #map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}#map:active{cursor:grabbing}
-.grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.55}
 /* 지도 요소 */
 .sea{fill:var(--sea)}
 #grat path{stroke:#7f969d;stroke-width:.6;fill:none;vector-effect:non-scaling-stroke;opacity:.55}
@@ -237,6 +238,8 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .dec .dt{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.dec .dt b{font:700 15px var(--serif)}.dec .dt span{font:600 12px var(--sans);color:#7a5a2c;white-space:nowrap}
 .dec .dd{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}.dec .dh2{font:italic 400 12.5px/1.5 var(--serif);color:#6d6250}.dec .da{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:8px}
 .uts2{display:grid;gap:6px}.uts2>span{display:flex;align-items:center;gap:10px;padding:6px 8px;border:1px solid #c9bc9c;background:#fbf7ec}.uts2 b{font:700 14px var(--sans);flex:1}.uts2 small{font-size:12px;color:#6d6250}
+.frt{cursor:pointer}.frt .fb{fill:#efe4c8;stroke:#2a1f14;stroke-width:1}.frt text{font:700 10.5px var(--sans);fill:#2a1f14;paint-order:stroke;stroke:#efe4c8;stroke-width:3px}.frt.me .fb{stroke:#8f2a17;stroke-width:2}
+.bar2.fr i{background:#8f2a17}
 .agenda{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:10px;max-width:min(400px,calc(100% - 24px));background:var(--ink);border:1px solid #000;border-left:3px solid var(--acc);padding:8px 10px 8px 11px;cursor:pointer;z-index:3}
 .agenda small{display:block;font:700 11px var(--sans);letter-spacing:.12em;color:var(--acc2)}.agenda b{font:700 14.5px var(--sans);display:block}.agenda span{color:#aab3b8;font-size:12.5px}
 .agenda .go{font-size:16px;color:var(--mu)}
@@ -261,6 +264,54 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
  .plate{left:8px;top:8px}.plate small{display:none}.plate.w{display:none}.zm{left:8px;top:56px}
  .cols{grid-template-columns:1fr}
 }
+/* ══ 고서·양피지 테마 (게임 화면) ══ */
+body{background:#1e140c}
+.bar{background:#2a1c12 var(--noise);border-bottom:2px solid #6b5636;box-shadow:0 2px 0 rgba(0,0,0,.5)}
+.bar .me b{font-family:var(--serif);color:#f1e6c8}.rs{border-left-color:#5d4a2c}.rs small{font:600 12px var(--serif);color:#c8b88e}.rs b{font:400 18px var(--type);color:#f4e9cc}.rs.sub b{font-size:15px;color:#d8cba8}
+.date b{font-family:var(--serif);color:#f1e6c8}.date small{color:#bfb18d}
+#rdy{background:var(--ox);border:1px solid #3c0f08;color:#f6ead0;box-shadow:inset 0 0 0 2px var(--ox),inset 0 0 0 3px #d9a27c;font:700 14px var(--serif);border-radius:0}#rdy.wait{background:#3a2a1c;box-shadow:none;color:#cbbd98;border-color:#6b5636}
+.tabs{background:#24180f var(--noise);border-right:2px solid #6b5636}
+.tb{background:#5a2e1c var(--noise);color:#f1e6c8;border:1px solid #2a140a;border-radius:0 3px 3px 0;font:700 14px var(--serif);letter-spacing:.1em;outline:1px dashed rgba(241,230,200,.32);outline-offset:-5px;box-shadow:2px 2px 0 rgba(0,0,0,.4)}
+.tb::before,.tb::after{background:#b39a68}.tb:hover{filter:brightness(1.12)}
+.tb.on{background:var(--parch) var(--noise);color:#2a1f14;border-color:#6b5636;outline-color:rgba(90,60,30,.35)}.tb.on::before,.tb.on::after{background:#7a6440}
+.mapw{background:#c9c2a0}.mapw::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;box-shadow:inset 0 0 120px rgba(74,46,18,.55),inset 0 0 20px rgba(50,30,10,.5)}
+#tags{position:relative;z-index:3}
+.plate{background:#2a1c12 var(--noise);border:1px solid #6b5636;box-shadow:2px 2px 0 rgba(0,0,0,.4)}.plate b{color:#f1e6c8}.plate button{background:transparent;border-color:#6b5636;color:#f1e6c8;font-family:var(--serif)}
+.zm button{background:#2a1c12 var(--noise);color:#f1e6c8;border:1px solid #6b5636;border-radius:0}
+.sheet{background:var(--parch) var(--noise);color:#2a1f14;border:1px solid #6b5636;box-shadow:inset 0 0 60px rgba(122,88,38,.25),3px 4px 0 rgba(0,0,0,.35)}
+.sh{background:#2a1c12 var(--noise);color:#f1e6c8;border-bottom:2px solid #6b5636}.sh b{font-family:var(--serif)}.sh small{color:#cbbd98}.sh button{border-color:#6b5636;color:#f1e6c8}
+.sb{color:#2a1f14}.sb .kv,.db .kv{background:#9c8a64;border-color:#9c8a64}.sb .kv div,.db .kv div{background:#f3e9d0}.sb .kv small,.db .kv small{color:#6d5a3a;font-family:var(--serif)}.sb .kv b,.db .kv b{color:#2a1f14;font:400 19px var(--type)}
+.sb .sec,.db .sec{color:#7a2a1a;border-bottom:1px solid #c9b78f;font-family:var(--serif);letter-spacing:.14em}
+.sb .ln{border-bottom-color:#d6c6a0}.sb .ln small{color:#6d5a3a}.sb .ln .v{color:#2a1f14;font-family:var(--type);font-weight:400}.sb .ln.cl:hover{background:#00000008}.sb .ln.hot{background:#a3361b1c}
+.sb button,.db button{background:#f3e9d0;color:#2a1f14;border:1px solid #7a6440;border-radius:0;font-family:var(--serif)}.sb button:hover,.db button:hover{background:#fff8e8}
+.sb button.pri,.db button.pri{background:var(--ox);color:#f6ead0;border-color:#3c0f08}.sb button.on,.db button.on{background:#2a1f14;color:#f1e6c8;border-color:#2a1f14;outline:0}
+.sb .opt{background:#fbf5e4;color:var(--pink);border-color:#c9bc9c}.sb .opt:hover:not(:disabled){background:#fff;border-color:#8c7d5e}.sb .opt .rd{border-color:#8c7d5e}.sb .opt.on{color:var(--pink);background:#fff;border-color:#a3361b;box-shadow:inset 3px 0 0 #a3361b}.sb .opt.on .rd{border-color:#a3361b;background:radial-gradient(circle,#a3361b 0 4px,transparent 5px)}
+.sb .fx{background:#00000008;color:#4a4030;border-color:#00000014}.sb .fx.up{color:#2f6b25;background:#4f7a4514;border-color:#4f7a4540}.sb .fx.dn{color:#9a2f18;background:#a3361b12;border-color:#a3361b40}
+.opt b,.dec .dt b,.spr b,.uts2 b{font-family:var(--serif)}.opt .q,.spr .q{grid-column:2/-1;font:italic 400 12.5px/1.5 var(--serif);color:#6d5a3a}
+.tag{color:#5d4a2c;border-color:#9c8a64;font-family:var(--serif)}.tag.ok{color:#2f6b25;border-color:#4f7a45}.tag.bad{color:#9a2f18;border-color:#a3361b}.tag.acc{color:#a3361b;border-color:#a3361b}
+.warn{background:#f3d9c9;color:#6e1f10;border-color:#a3361b;font-family:var(--serif)}.sb .note,.db .note{color:#6d5a3a;font-family:var(--serif)}
+.bar2{background:#e3d5b2;border-color:#7a6440}.bar2 i{background:#5d7a52}.bar2 i.u{background:#a8862e}
+.sb .docx{background:#00000006}.sb .docx p,.sb .fxl{color:#4a4030}
+.doc{background:var(--parch) var(--noise);border:1px solid #6b5636;box-shadow:inset 0 0 60px rgba(122,88,38,.25),3px 4px 0 rgba(0,0,0,.35)}.dh{background:#2a1c12 var(--noise);border-bottom:2px solid #6b5636}.dh b{font-family:var(--serif)}.dh button{color:#f1e6c8;border-color:#6b5636}
+.db .ledger td,.db .ledger th{border-bottom-color:#cdbb92}.db .subt button{background:#efe4c8;color:#3a2a1a}.db .subt button.on{background:#2a1c12;color:#f1e6c8}
+.agenda{background:var(--parch) var(--noise);color:#2a1f14;border:1px solid #6b5636;border-left:5px solid var(--ox);box-shadow:3px 4px 0 rgba(0,0,0,.35)}.agenda small{color:#8f2a17;font-family:var(--serif)}.agenda b{font-family:var(--serif)}.agenda span{color:#5d4a2c}.agenda .go{color:#8f2a17}
+.pop{background:var(--parch) var(--noise);color:#2a1f14;border:1px solid #6b5636}.pop::after{border-top-color:var(--parch)}.pop h5{font-family:var(--serif)}.pop dt,.pop .st{color:#6d5a3a}.pop .st i{color:#a3361b}.pop button{background:#f3e9d0;color:#2a1f14;border:1px solid #7a6440;border-radius:0}.pop button.pri{background:var(--ox);color:#f6ead0;border-color:#3c0f08}
+#tags .et{background:#f3e9d0;color:#3a2a1a;border-color:#7a6440;font-family:var(--serif)}#tags .et.hot{background:var(--ox);color:#f6ead0;border-color:var(--ox)}
+.ft text{fill:#2a1a0e;stroke:#efe4c8;font-family:var(--serif);font-weight:600}
+.paperN{background:var(--parch) var(--noise)}
+/* 시작 화면: 양피지 위 출항 장면 */
+.scr.pp{background:#e7d6aa var(--noise)}
+.scr.pp .scr-veil{background:radial-gradient(ellipse 75% 70% at 50% 45%,transparent 55%,rgba(110,72,30,.45) 85%,rgba(70,40,14,.8))}
+.sea-scene{position:absolute;inset:0;width:100%;height:100%}
+.sea-scene .ink{fill:none;stroke:#3b2a1a;stroke-linecap:round;stroke-linejoin:round}
+.ship{animation:sail var(--d,70s) linear infinite;animation-delay:var(--dl,0s)}
+.ship .bob{animation:bob 3.4s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 80%}
+.smk circle{fill:#5a4630;opacity:0;animation:smoke 4s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes sail{from{transform:translate(0,0)}to{transform:translate(var(--tx,1500px),var(--ty,60px))}}
+@keyframes bob{from{transform:rotate(-1.4deg) translateY(0)}to{transform:rotate(1.4deg) translateY(3px)}}
+@keyframes smoke{0%{opacity:.5;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(-40px,-46px) scale(2.2)}}
+.scr.pp .ttl-box{background:rgba(239,227,196,.82);border-color:#6b5636}.scr.pp .orn>.cn path{stroke:#6b5636}.scr.pp .logo{color:#2a1a0e;text-shadow:none}.scr.pp .logo i{color:#8f2a17}.scr.pp .ttl-k{color:#6b5636}.scr.pp .ttl-ko{color:#3b2a1a}.scr.pp .ttl-foot{color:#6b5636}
+.scr.pp .mb:not(.pri){background:#f6ecd2 var(--noise)}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="sp-map" id="spm"></div><div class="sp-vig"></div><div class="sp-in"><div class="cart orn"><span class="cn c1"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c2"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c3"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c4"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><div class="sp-k">AN ATLAS OF WAR AND STATECRAFT</div><h1 class="logo">Borders <i>in</i> Ink</h1><div class="sp-rule"><span>MCMX — MCMXLV</span></div><div class="sp-sub">잉크로 그은 국경 · 세계대전 국가경영</div></div><div class="sp-scale"><div class="sp-cells"><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="sp-lbl"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000 KM</span></div></div><div class="sp-st"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -304,7 +355,12 @@ function attack(s,a,rid,c,why){const R=s.R[rid],d=R.occ||R.o;if(d==a||!alive(s,a
    for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
  const A=s.N[a],D=s.N[d],use=A.mil*c/100;let att=use*(.8+Math.random()*.4),def=(D.mil*.5*1.2*(.8+Math.random()*.4)+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1);
  att*=docM(s,a,d,rid,'att',c);def*=docM(s,d,a,rid,'def',c); // 국가별 군사 교리 보정
- if(att>def){R.occ=a==R.o?null:a;A.mil-=use*.3;D.mil*=.8;s.log.push(`${nm(a,yr(s))}가 ${RG[rid][0]} 점령 성공`)}else{A.mil-=use*.5*docM(s,d,a,rid,'loss',c);s.log.push(`${nm(a,yr(s))}의 ${RG[rid][0]} 공격 실패`)}}
+ // 전선 진척도: 한 번에 점령하지 않고 여러 분기에 걸쳐 전선을 밀고 밀린다
+ const T=T2[rid],lat=T?80-T.cy*138/560:40;if(lat>50&&WIN(s))att*=.85;if(MTNC.includes(ENN[rid]))def*=1.2;
+ s.FR=s.FR||{};let F=s.FR[rid];if(!F||F.a!=a)F=s.FR[rid]={a,d,p:0};
+ const r=att/Math.max(.5,def),g=Math.round(Math.max(-25,Math.min(90,(r-.6)*100))),ca=Math.min(use,use*Math.max(.04,Math.min(.35,.1/Math.sqrt(r)))*docM(s,d,a,rid,'loss',c)),cd=D.mil*Math.max(.02,Math.min(.25,.06*Math.sqrt(r)));
+ A.mil-=ca;D.mil-=cd;F.p=Math.max(0,Math.min(100,F.p+g));F.t=s.t;F.d=d;F.last={r:+r.toFixed(2),ca:+ca.toFixed(1),cd:+cd.toFixed(1),g};(s.BT=s.BT||[]).push({rid,a,d,g,p:F.p,ca:+ca.toFixed(1),cd:+cd.toFixed(1)});
+ if(F.p>=100){R.occ=a==R.o?null:a;delete s.FR[rid];s.log.push(`${nm(a,yr(s))}, ${RG[rid][0]} 점령`)}else s.log.push(`${RG[rid][0]} 전투 — ${nm(a,yr(s))} ${g>0?'진격':'저지됨'} (전선 ${F.p}%, 손실 ${ca|0} 대 ${cd|0})`)}
 const P_h=(s,n)=>Object.values(s.P).includes(n);
 function peace(s,t){const{a,b}=t;s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);
  if(t.ty=='cease')for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o)){R.o=R.occ;R.occ=null}}
@@ -323,9 +379,9 @@ function ai(s,n){const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=wars(s,n),sh=O
   if(tg.length&&N.mil>E.mil*.6)o.atk.push({r:tg[0],c:50});else if(N.mil<E.mil*.7||N.sup<45)o.props.push({to:e,ty:'cease'})});
  const ns=nb(s,n).filter(x=>alive(s,x));
  if(Math.random()<.3){const x=ns.find(x=>!pact(s,n,x,'trade')&&!atWar(s,n,x));if(x)o.props.push({to:x,ty:'trade'})}
- if(!w.length&&qt(s)==1&&N.sup>55&&Math.random()<.15){const x=ns.find(x=>!pact(s,n,x)&&s.N[x].mil*1.8<N.mil&&!s.N[x].lord);if(x){const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==x&&held(s,n).some(h=>dist(h,r)<=1));if(r){o.atk.push({r,c:50});s.log.push(`${nm(n,yr(s))}: 자원 부족과 군사 우위로 팽창 결정`)}}}
+ if(!w.length&&qt(s)==1&&N.sup>55&&Math.random()<.15&&({GER:1938,ITA:1936,JPN:1937,RUS:1939}[NID(n)]||9999)<=yr(s)){const x=ns.find(x=>!pact(s,n,x)&&s.N[x].mil*1.8<N.mil&&!s.N[x].lord);if(x){const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==x&&held(s,n).some(h=>dist(h,r)<=1));if(r){o.atk.push({r,c:50});s.log.push(`${nm(n,yr(s))}: 자원 부족과 군사 우위로 팽창 결정`)}}}
  return o}
-function step(s,ords){const y=yr(s),q=qt(s);s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
+function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
  ns.forEach(n=>{const h=P_h(s,n);oo[n]=h?(ords[n]||{focus:'ind',atk:[],props:[]}):ai(s,n)});
  // 이벤트
  HG.forEach(e=>{if(e[0]!=y||e[1]!=q||!s.N[e[2]]||P_h(s,e[2]))return;const[,,w,ty,tg,,why]=e;
@@ -413,7 +469,7 @@ function world(){if(CT)return CT;if(!window.WORLD)return null;try{const W=window
 
 // ════════ 지도 자료 (1936 기준 지명·시설) ════════
 const LL=(a,o)=>[(o+180)*1000/360,(80-a)*560/138];
-const EN2KR={'United Kingdom':'영국',France:'프랑스',Germany:'독일',Italy:'이탈리아',Spain:'스페인',Portugal:'포르투갈',Ireland:'아일랜드',Belgium:'벨기에',Netherlands:'네덜란드',Luxembourg:'룩셈부르크',Switzerland:'스위스',Austria:'오스트리아',Hungary:'헝가리','Czech Rep.':'체코',Slovakia:'슬로바키아',Poland:'폴란드',Lithuania:'리투아니아',Latvia:'라트비아',Estonia:'에스토니아',Finland:'핀란드',Sweden:'스웨덴',Norway:'노르웨이',Denmark:'덴마크',Iceland:'아이슬란드',Greenland:'그린란드',Romania:'루마니아',Bulgaria:'불가리아',Greece:'그리스',Albania:'알바니아',Serbia:'세르비아',Montenegro:'몬테네그로',Croatia:'크로아티아',Slovenia:'슬로베니아','Bosnia and Herz.':'보스니아',Macedonia:'마케도니아',Kosovo:'코소보',Moldova:'몰도바',Ukraine:'우크라이나',Belarus:'벨라루스',Russia:'러시아',Turkey:'터키',Syria:'시리아',Lebanon:'레바논',Iraq:'이라크',Iran:'페르시아',Afghanistan:'아프가니스탄','Saudi Arabia':'사우디아라비아',Yemen:'예멘',Oman:'오만',Jordan:'요르단',Israel:'팔레스타인',Palestine:'팔레스타인',Kuwait:'쿠웨이트',Qatar:'카타르','United Arab Emirates':'휴전 해안',Egypt:'이집트',Libya:'리비아',Tunisia:'튀니지',Algeria:'알제리',Morocco:'모로코',Sudan:'수단','S. Sudan':'남수단',Ethiopia:'에티오피아',Eritrea:'에리트레아',Somalia:'소말릴란드',Kenya:'케냐',Uganda:'우간다',Tanzania:'탕가니카',Nigeria:'나이지리아',Ghana:'골드코스트','South Africa':'남아프리카',Namibia:'남서아프리카',Angola:'앙골라',Mozambique:'모잠비크','Dem. Rep. Congo':'벨기에령 콩고',Congo:'프랑스령 콩고',Madagascar:'마다가스카르',Liberia:'라이베리아',Senegal:'세네갈',Mali:'수단(프)',Niger:'니제르',Chad:'차드',Cameroon:'카메룬',India:'인도',Pakistan:'인도 서부',Bangladesh:'벵골',Nepal:'네팔',Bhutan:'부탄','Sri Lanka':'실론',Myanmar:'버마',Thailand:'시암',Vietnam:'인도차이나',Laos:'라오스',Cambodia:'캄보디아',Malaysia:'말라야',Indonesia:'동인도',Philippines:'필리핀',China:'중국',Mongolia:'몽골',Taiwan:'대만',Japan:'일본',Korea:'한반도 남부','Dem. Rep. Korea':'한반도 북부',Kazakhstan:'카자흐',Uzbekistan:'우즈베크',Turkmenistan:'투르크멘',Tajikistan:'타지크',Kyrgyzstan:'키르기스',Georgia:'그루지야',Armenia:'아르메니아',Azerbaijan:'아제르바이잔','United States':'미국',Haiti:'아이티','Dominican Rep.':'도미니카','El Salvador':'엘살바도르',Liechtenstein:'리히텐슈타인',Andorra:'안도라',Jamaica:'자메이카',Guyana:'영국령 기아나',Suriname:'네덜란드령 기아나',Belize:'영국령 온두라스',Brunei:'브루나이','Timor-Leste':'포르투갈령 티모르','Lao PDR':'라오스',Singapore:'싱가포르',Malta:'몰타',Bahamas:'바하마',Fiji:'피지','New Caledonia':'뉴칼레도니아','Fr. Polynesia':'프랑스령 폴리네시아',Micronesia:'남양 군도',Palau:'팔라우','N. Mariana Is.':'마리아나 제도',Guam:'괌','Puerto Rico':'푸에르토리코','Falkland Is.':'포클랜드',Greenland:'그린란드',Iceland:'아이슬란드',Cyprus:'키프로스','N. Cyprus':'북키프로스',Djibouti:'지부티',Gabon:'가봉',Togo:'토골란드',Benin:'다호메',Guinea:'기니','Burkina Faso':'오트볼타',Mauritania:'모리타니','W. Sahara':'스페인령 사하라','Eq. Guinea':'스페인령 기니',Rwanda:'르완다',Burundi:'부룬디',Zambia:'북로디지아',Zimbabwe:'남로디지아',Malawi:'니아살랜드',Botswana:'베추아날란드',Swaziland:'스와질란드',Lesotho:'바수톨란드',Gambia:'감비아','Sierra Leone':'시에라리온','Guinea-Bissau':'포르투갈령 기니','Central African Rep.':'우방기샤리',Cameroon:'카메룬','Papua New Guinea':'파푸아',Trinidad:'트리니다드',Canada:'캐나다',Mexico:'멕시코',Cuba:'쿠바',Guatemala:'과테말라',Honduras:'온두라스',Nicaragua:'니카라과','Costa Rica':'코스타리카',Panama:'파나마',Colombia:'콜롬비아',Venezuela:'베네수엘라',Ecuador:'에콰도르',Peru:'페루',Bolivia:'볼리비아',Brazil:'브라질',Paraguay:'파라과이',Uruguay:'우루과이',Argentina:'아르헨티나',Chile:'칠레',Australia:'호주','New Zealand':'뉴질랜드','Papua New Guinea':'뉴기니'};
+const EN2KR={'United Kingdom':'영국',France:'프랑스',Germany:'독일',Italy:'이탈리아',Spain:'스페인',Portugal:'포르투갈',Ireland:'아일랜드',Belgium:'벨기에',Netherlands:'네덜란드',Luxembourg:'룩셈부르크',Switzerland:'스위스',Austria:'오스트리아',Hungary:'헝가리','Czech Rep.':'체코',Slovakia:'슬로바키아',Poland:'폴란드',Lithuania:'리투아니아',Latvia:'라트비아',Estonia:'에스토니아',Finland:'핀란드',Sweden:'스웨덴',Norway:'노르웨이',Denmark:'덴마크',Iceland:'아이슬란드',Greenland:'그린란드',Romania:'루마니아',Bulgaria:'불가리아',Greece:'그리스',Albania:'알바니아',Serbia:'세르비아',Montenegro:'몬테네그로',Croatia:'크로아티아',Slovenia:'슬로베니아','Bosnia and Herz.':'보스니아',Macedonia:'마케도니아',Kosovo:'코소보',Moldova:'몰도바',Ukraine:'우크라이나',Belarus:'벨라루스',Russia:'러시아',Turkey:'터키',Syria:'시리아',Lebanon:'레바논',Iraq:'이라크',Iran:'페르시아',Afghanistan:'아프가니스탄','Saudi Arabia':'사우디아라비아',Yemen:'예멘',Oman:'오만',Jordan:'요르단',Israel:'팔레스타인',Palestine:'팔레스타인',Kuwait:'쿠웨이트',Qatar:'카타르','United Arab Emirates':'휴전 해안',Egypt:'이집트',Libya:'리비아',Tunisia:'튀니지',Algeria:'알제리',Morocco:'모로코',Sudan:'수단','S. Sudan':'남수단',Ethiopia:'에티오피아',Eritrea:'에리트레아',Somalia:'소말릴란드',Kenya:'케냐',Uganda:'우간다',Tanzania:'탕가니카',Nigeria:'나이지리아',Ghana:'골드코스트','South Africa':'남아프리카',Namibia:'남서아프리카',Angola:'앙골라',Mozambique:'모잠비크','Dem. Rep. Congo':'벨기에령 콩고',Congo:'프랑스령 콩고',Madagascar:'마다가스카르',Liberia:'라이베리아',Senegal:'세네갈',Mali:'수단(프)',Niger:'니제르',Chad:'차드',Cameroon:'카메룬',India:'인도',Pakistan:'인도 서부',Bangladesh:'벵골',Nepal:'네팔',Bhutan:'부탄','Sri Lanka':'실론',Myanmar:'버마',Thailand:'시암',Vietnam:'인도차이나',Laos:'라오스',Cambodia:'캄보디아',Malaysia:'말라야',Indonesia:'동인도',Philippines:'필리핀',China:'중국',Mongolia:'몽골',Taiwan:'대만',Japan:'일본',Korea:'한반도 남부','Dem. Rep. Korea':'한반도 북부',Kazakhstan:'카자흐',Uzbekistan:'우즈베크',Turkmenistan:'투르크멘',Tajikistan:'타지크',Kyrgyzstan:'키르기스',Georgia:'그루지야',Armenia:'아르메니아',Azerbaijan:'아제르바이잔','United States':'미국',Haiti:'아이티',Curaçao:'퀴라소','Cayman Is.':'케이맨 제도',Bermuda:'버뮤다','Isle of Man':'맨 섬',Jersey:'저지 섬',Comoros:'코모로','Cape Verde':'카보베르데','São Tomé and Principe':'상투메','Faeroe Is.':'페로 제도',Aland:'올란드','American Samoa':'미국령 사모아',Samoa:'사모아',Tonga:'통가',Kiribati:'길버트 제도',Vanuatu:'뉴헤브리디스',Niue:'니우에',Bahrain:'바레인',Mauritius:'모리셔스',Seychelles:'세이셸','Saint Helena':'세인트헬레나','Turks and Caicos Is.':'터크스 케이커스',Montserrat:'몬트세랫','Antigua and Barb.':'앤티가',Barbados:'바베이도스',Dominica:'도미니카 섬',Grenada:'그레나다','Saint Lucia':'세인트루시아','St. Vin. and Gren.':'세인트빈센트','Trinidad and Tobago':'트리니다드','U.S. Virgin Is.':'미국령 버진 제도','St. Pierre and Miquelon':'생피에르 미클롱','Br. Indian Ocean Ter.':'영국령 인도양','Siachen Glacier':'시아첸','S. Geo. and S. Sandw. Is.':'사우스조지아','Fr. S. Antarctic Lands':'프랑스령 남방','Heard I. and McDonald Is.':'허드 섬','Dominican Rep.':'도미니카','El Salvador':'엘살바도르',Liechtenstein:'리히텐슈타인',Andorra:'안도라',Jamaica:'자메이카',Guyana:'영국령 기아나',Suriname:'네덜란드령 기아나',Belize:'영국령 온두라스',Brunei:'브루나이','Timor-Leste':'포르투갈령 티모르','Lao PDR':'라오스',Singapore:'싱가포르',Malta:'몰타',Bahamas:'바하마',Fiji:'피지','New Caledonia':'뉴칼레도니아','Fr. Polynesia':'프랑스령 폴리네시아',Micronesia:'남양 군도',Palau:'팔라우','N. Mariana Is.':'마리아나 제도',Guam:'괌','Puerto Rico':'푸에르토리코','Falkland Is.':'포클랜드',Greenland:'그린란드',Iceland:'아이슬란드',Cyprus:'키프로스','N. Cyprus':'북키프로스',Djibouti:'지부티',Gabon:'가봉',Togo:'토골란드',Benin:'다호메',Guinea:'기니','Burkina Faso':'오트볼타',Mauritania:'모리타니','W. Sahara':'스페인령 사하라','Eq. Guinea':'스페인령 기니',Rwanda:'르완다',Burundi:'부룬디',Zambia:'북로디지아',Zimbabwe:'남로디지아',Malawi:'니아살랜드',Botswana:'베추아날란드',Swaziland:'스와질란드',Lesotho:'바수톨란드',Gambia:'감비아','Sierra Leone':'시에라리온','Guinea-Bissau':'포르투갈령 기니','Central African Rep.':'우방기샤리',Cameroon:'카메룬','Papua New Guinea':'파푸아',Trinidad:'트리니다드',Canada:'캐나다',Mexico:'멕시코',Cuba:'쿠바',Guatemala:'과테말라',Honduras:'온두라스',Nicaragua:'니카라과','Costa Rica':'코스타리카',Panama:'파나마',Colombia:'콜롬비아',Venezuela:'베네수엘라',Ecuador:'에콰도르',Peru:'페루',Bolivia:'볼리비아',Brazil:'브라질',Paraguay:'파라과이',Uruguay:'우루과이',Argentina:'아르헨티나',Chile:'칠레',Australia:'호주','New Zealand':'뉴질랜드','Papua New Guinea':'뉴기니'};
 let NK={},ENN={},SD2={},CT=null,LBL={},FL=new Set();
 // 국가별 프로필: cam=[위도,경도,가로폭], f=[id,종류,이름,위도,경도,옵션], rails="A-B …", routes, 첫 안건
 const PF={
@@ -435,7 +491,7 @@ UK:{key:'UK',home:'United Kingdom',cam:[54.2,-1.2,84],doc:'항만 장부',
   CAPE:{n:'희망봉 항로',d:'케이프타운·시드니',p:[[48.6,-6.5],[35,-15],[10,-19],[-15,0],[-33.9,18.4]],c:[['호주산 양모·밀','f',3,'Australia'],['남아프리카 광석','s',2,'South Africa']]},
   MED:{n:'지중해·수에즈 항로',d:'봄베이·아바단',p:[[49.9,-3],[48.6,-6.5],[43,-10.5],[36.0,-6.5],[36.4,0],[37.2,10.5],[33.5,25],[31.3,32.3],[20,38.5],[12.6,45],[15,60],[18.9,72.8]],c:[['인도산 차·황마','f',2,'India'],['페르시아 석유','o',5,'Iran']]},
   NS:{n:'북해 항로',d:'베르겐·나르비크',p:[[55.5,2],[58.2,4],[62,4.6],[66,11],[68.4,17.4]],c:[['스웨덴 철광석','s',4,'Sweden'],['노르웨이 목재','s',1,'Norway']]}},
- ag:{t:'플리머스 입항 화물 우선순위 미정',s:'북대서양 밀 6 · 남대서양 냉동육 4 — 항구를 눌러 지정',go:'f:PLY',done:o=>o.cargo||(o.proj||[]).includes('UK_PLY')}},
+ ag:{t:'플리머스 입항 화물 — 우선순위 미결',s:'항만청 보고: 북대서양 밀 6척, 남대서양 냉동육 4척 대기',go:'f:PLY',done:o=>o.cargo||(o.proj||[]).includes('UK_PLY')}},
 USA:{key:'USA',home:'United States',cam:[38.6,-96.5,178],doc:'연방 공공사업 예산안',
  f:[['WAS','cap','워싱턴',38.90,-77.04],['NYC','port','뉴욕',40.71,-74.0,{r:['ATL'],cap:34}],['BOS','port','보스턴',42.36,-71.06,{r:['ATL'],cap:14}],['PHL','fac','필라델피아',39.95,-75.17],
   ['PIT','fac','피츠버그',40.44,-79.99],['DET','fac','디트로이트',42.33,-83.05],['CHI','fac','시카고',41.88,-87.63],['STL','city','세인트루이스',38.63,-90.2],
@@ -453,7 +509,7 @@ USA:{key:'USA',home:'United States',cam:[38.6,-96.5,178],doc:'연방 공공사�
   PLN:{n:'대평원',p:[[45.9,-104],[45.9,-96.6],[43,-96.4],[40,-95.3],[37,-94.6],[37,-102],[41,-102],[41,-104]],pj:'US_REA',farm:'밀 농가 대부분 전력망 밖 · 가뭄 피해 지역'},
   SOU:{n:'남부 농촌',p:[[35,-85.6],[34.2,-83],[32.0,-81.1],[31,-85],[31,-91.5],[33,-91.1],[35,-90.2]],pj:'US_SOU',farm:'면화 농가 전화율 3% 미만'},
   COL:{n:'컬럼비아 강 유역',p:[[49,-123],[49,-116.9],[46,-116.9],[45.5,-121.2],[45.6,-123.9],[48,-124.7]],pj:'US_COL',farm:'과수원·제재소 지역, 수력 잠재량 큼'}},
- ag:{t:'테네시 계곡 전력망 사업 승인 대기',s:'예산 40 · 3분기 공사 — 지역을 눌러 연결 구간 확인',go:'z:TVA',done:o=>(o.proj||[]).some(p=>/^US_/.test(p))}},
+ ag:{t:'테네시 계곡 송전망 — 예산 승인 대기',s:'공공사업청: 예산 40, 공기 3분기',go:'z:TVA',done:o=>(o.proj||[]).some(p=>/^US_/.test(p))}},
 KOR:{key:'KOR',home:'Korea',cam:[34.2,125.5,128],doc:'서신함 · 후원 장부',org:1,
  f:[['ZJ','cap','전장 (임시정부 청사)',32.19,119.42,{org:1}],['HZ','base','항저우 (1932~35 청사)',30.27,120.15,{org:1}],['NJ','base','난징 (민족혁명당)',32.06,118.8,{org:1}],['SH','port','상하이 (프랑스 조계)',31.23,121.47,{org:1}],
   ['YJ','base','용정 (북간도 연락처)',42.77,129.42,{org:1}],['VLD','city','블라디보스토크 (연해주 동포)',43.12,131.89,{org:1}],['SEL','city','경성 (국내 비밀 연락망)',37.57,126.98,{org:1}],
@@ -467,7 +523,7 @@ KOR:{key:'KOR',home:'Korea',cam:[34.2,125.5,128],doc:'서신함 · 후원 장부
  dom:{cam:[37.6,127.6,34],f:[['SEL','cap','서울',37.57,126.98],['INC','port','인천',37.46,126.7,{r:['YS'],cap:12}],['BUS','port','부산',35.1,129.04,{r:['KJ'],cap:18}],['PYG','fac','평양',39.03,125.75],['HAM','fac','함흥',39.92,127.54],['WON','port','원산',39.15,127.44,{r:['KJ'],cap:8}],['DAE','city','대구',35.87,128.6],['GWJ','city','광주',35.16,126.85],['SIN','city','신의주',40.1,124.4],['DJN','city','대전',36.35,127.38]],
   rails:'SEL-DJN DJN-DAE DAE-BUS SEL-PYG PYG-SIN SEL-WON WON-HAM DJN-GWJ SEL-INC',
   routes:{YS:{n:'황해 항로',d:'상하이·다롄',p:[[37.2,125.5],[35,123.5],[31.4,122]],c:[['중국산 면포','s',2,'China']]},KJ:{n:'대한해협 항로',d:'시모노세키·오사카',p:[[34.6,129.6],[34,131],[34.6,135.2]],c:[['일본산 기계','s',2,'Japan']]}}},
- ag:{t:'샌프란시스코 대한인국민회 서신 도착',s:'의연금 8 · 군사 간부 양성 요청 — 서신을 눌러 발신지 확인',go:'L:L1',done:o=>o.indep||(o.proj||[]).some(p=>/^KR_/.test(p))}},
+ ag:{t:'대한인국민회 서신 도착 (샌프란시스코)',s:'의연금 8 동봉 — 군사 간부 양성을 청함',go:'L:L1',done:o=>o.indep||(o.proj||[]).some(p=>/^KR_/.test(p))}},
 JPN:{key:'JPN',home:'Japan',cam:[36.4,136.8,112],doc:'수입 원료 배분표',
  f:[['TYO','cap','도쿄',35.68,139.69],['YKH','port','요코하마',35.44,139.64,{r:['USW'],cap:24,ore:1,out:[[35.0,139.9]]}],['KOB','port','고베',34.69,135.2,{r:['SOUTH'],cap:22,ore:1,out:[[34.2,135]]}],['MOJ','port','모지',33.95,130.96,{r:['MAN'],cap:16,ore:1}],
   ['OSK','fac','오사카 공업지대',34.69,135.5],['NGY','fac','나고야 (항공기)',35.18,136.91],['YWT','fac','야하타 제철소',33.88,130.82],['NGS','fac','나가사키 조선소',32.75,129.87],
@@ -478,7 +534,7 @@ JPN:{key:'JPN',home:'Japan',cam:[36.4,136.8,112],doc:'수입 원료 배분표',
   USW:{n:'북태평양 항로',d:'샌프란시스코',p:[[34,146],[39,170],[39,195],[37.8,237.6]],c:[['미국산 석유','o',5,'United States'],['미국산 고철','s',4,'United States']]},
   MAN:{n:'대륙 항로',d:'다롄·칭다오',p:[[34.2,129.5],[36.5,124.5],[38.9,121.6]],c:[['만주 석탄·대두','f',3,'China'],['대야 철광석','s',3,'China']]}},
  alloc:[['YWT','야하타 제철소','ind','강재 생산 주문 · 철도 차량·선박용 강판'],['KUR','구레 해군 공창','def','함정 건조 주문 · 장갑판'],['NGY','나고야 항공기 공장','res','항공기·발동기 시험 생산']],
- ag:{t:'고베 입항 철광석 배분 대상 미정',s:'말라야 철광석 4 — 항구를 눌러 기다리는 공업지대 확인',go:'f:KOB',done:o=>o.focus&&o.cargo}},
+ ag:{t:'고베항 철광석 배분 미결',s:'말라야산 철광석 4척 입항. 배분처 지정 요망',go:'f:KOB',done:o=>o.focus&&o.cargo}},
 FRA:{key:'FRA',home:'France',cam:[46.6,2.6,66],doc:'1936년도 예산안',
  f:[['PAR','cap','파리',48.86,2.35],['LIL','fac','릴',50.63,3.06],['LYO','fac','리옹',45.76,4.84],['CLF','fac','클레르몽페랑',45.78,3.08],['MRS','port','마르세유',43.3,5.37,{r:['ALG','SAI'],cap:24}],
   ['BDX','port','보르도',44.84,-0.58,{r:['WAF'],cap:14,out:[[45.6,-1.3]]}],['LHV','port','르아브르',49.49,0.11,{r:['NYR'],cap:20}],['NTS','port','낭트·생나제르',47.22,-1.55,{cap:10,out:[[47.2,-2.4]]}],
@@ -492,7 +548,7 @@ FRA:{key:'FRA',home:'France',cam:[46.6,2.6,66],doc:'1936년도 예산안',
  budget:[['FR_RAIL','남서부 철도 전철화','오를레앙–리모주–툴루즈 구간 전기 견인 전환',35,['ORL','LIM','TLS'],['NTS','BRE'],'브르타뉴 항만 공사 착공 1년 지연'],
   ['FR_MAG','마지노선 북부 보강','릴–메스 사이 요새 보강·포대 증설',30,['LIL','MTZ'],['TLS','CLF'],'남부 공장 설비 갱신 보류'],
   ['FR_PORT','마르세유 항만 확장','지중해 부두 증설·창고 신축',20,['MRS'],['LIL'],'북부 탄광 지원금 감액']],
- ag:{t:'예산안 심의: 철도 확충 항목',s:'수혜 지역과 착공이 늦어질 지역 비교 — 눌러서 예산안 열기',go:'b:FR_RAIL',done:o=>(o.proj||[]).some(p=>/^FR_/.test(p))}},
+ ag:{t:'예산안 의회 심의 — 철도 확충 항목',s:'수혜 지역과 지연 지역을 대조할 것',go:'b:FR_RAIL',done:o=>(o.proj||[]).some(p=>/^FR_/.test(p))}},
 FIN:{key:null,home:'Finland',cam:[63.2,26.2,62],doc:'지역별 인력 현황',
  f:[['HEL','cap','헬싱키',60.17,24.94,{w:[38,9]}],['TUR','port','투르쿠',60.45,22.27,{r:['BAL'],cap:10,w:[14,5]}],['TMP','fac','탐페레',61.5,23.76,{w:[22,6]}],['VII','port','비푸리',60.71,28.75,{r:['BAL'],cap:9,w:[12,8]}],
   ['KOT','port','코트카',60.47,26.95,{r:['BAL'],cap:7,w:[6,3]}],['OUL','port','오울루',65.01,25.47,{cap:5,w:[7,4]}],['KUO','city','쿠오피오',62.89,27.68,{w:[8,6]}],['JYV','city','위바스퀼레',62.24,25.75,{w:[7,5]}],
@@ -500,37 +556,37 @@ FIN:{key:null,home:'Finland',cam:[63.2,26.2,62],doc:'지역별 인력 현황',
  rails:'HEL-TMP TMP-TUR HEL-KOT KOT-VII VII-KAR VII-MIK MIK-KUO TMP-JYV JYV-KUO KUO-OUL OUL-KEM KEM-ROV',
  routes:{BAL:{n:'발트해 항로',d:'슈테틴·런던',p:[[59.6,22.5],[57.5,19.5],[55,14],[54.5,11]],c:[['독일산 석탄','o',2,'Germany'],['영국산 기계','s',1,'United Kingdom']]}},
  lakes:[[61.25,28.3,1.2,.42,-20],[61.55,25.5,.22,.85,8],[61.65,23.75,.12,.3,0],[64.3,27.2,.5,.18,0],[62.4,27.9,.35,.6,0],[61.05,24.15,.25,.1,0],[69.0,27.8,.55,.3,0]],
- ag:{t:'동원 규모 결정',s:'민간 산업 인력과 예비 인력 조정 — 지역을 눌러 생산 전망 확인',go:'f:TMP',done:o=>o.pol&&o.pol.mil}},
+ ag:{t:'동원 규모 결정 요망',s:'국방위원회: 민간 산업 인력과 예비 인력의 배분',go:'f:TMP',done:o=>o.pol&&o.pol.mil}},
 GER:{key:'GER',home:'Germany',cam:[51.6,10.8,58],doc:'국가 개요',
  f:[['BER','cap','베를린',52.52,13.4],['HAM','port','함부르크',53.55,9.99,{r:['NSG'],cap:24}],['BRM','port','브레멘',53.08,8.8,{r:['NSG'],cap:14}],['KOE','port','쾨니히스베르크',54.71,20.51,{cap:8}],
   ['ESS','fac','루르 (에센)',51.46,7.01],['STG','fac','슈투트가르트',48.78,9.18],['MUN','city','뮌헨',48.14,11.58],['DRE','city','드레스덴',51.05,13.74],['FRK','city','프랑크푸르트',50.11,8.68],['KIE','base','킬',54.32,10.14]],
  rails:'BER-HAM HAM-BRM BRM-ESS ESS-FRK FRK-STG STG-MUN MUN-DRE DRE-BER BER-FRK HAM-KIE',
  routes:{NSG:{n:'북해 항로',d:'로테르담·나르비크',p:[[54.2,8],[55.5,6],[62,4.6],[68.4,17.4]],c:[['스웨덴 철광석','s',5,'Sweden']]}},
- ag:{t:'루르 공업지대 원료 점검',s:'철광석 수입 의존 — 함부르크를 눌러 항로 확인',go:'f:HAM'}},
+ ag:{t:'루르 공업지대 원료 점검',s:'경제부: 철광석 대부분이 북해 항로로 들어옴',go:'f:HAM'}},
 ITA:{key:'ITA',home:'Italy',cam:[42.2,12.6,62],doc:'국가 개요',
  f:[['ROM','cap','로마',41.9,12.5],['MIL','fac','밀라노',45.46,9.19],['TRN','fac','토리노',45.07,7.69],['GEN','port','제노바',44.41,8.93,{r:['MDI'],cap:20}],['NAP','port','나폴리',40.85,14.27,{r:['MDI'],cap:16}],
   ['VEN','port','베네치아',45.44,12.32,{cap:10}],['PAL','port','팔레르모',38.12,13.36,{cap:8,isl:1}],['CAG','port','칼리아리',39.22,9.12,{cap:6,isl:1}],['TAR','base','타란토',40.46,17.25]],
  rails:'MIL-TRN TRN-GEN MIL-VEN MIL-ROM ROM-NAP NAP-TAR GEN-ROM',
  routes:{MDI:{n:'지중해 항로',d:'트리폴리·마사와',p:[[40,12],[36,13],[32.9,13.2]],c:[['리비아 보급 물자','f',1,'Libya']]}},
- ag:{t:'에티오피아 점령지 보급 점검',s:'나폴리–마사와 항로 수송 여력 확인',go:'f:NAP'}},
+ ag:{t:'동아프리카 점령지 보급 점검',s:'식민부: 나폴리–마사와 항로 수송 여력 부족',go:'f:NAP'}},
 RUS:{key:'RUS',home:'Russia',cam:[54,40,150],doc:'국가 개요',
  f:[['MOS','cap','모스크바',55.76,37.62],['LEN','port','레닌그라드',59.94,30.31,{cap:18}],['MUR','port','무르만스크',68.97,33.08,{cap:8}],['ODS','port','오데사',46.48,30.72,{cap:12}],['STA','fac','스탈린그라드',48.71,44.51],
   ['KHA','fac','하리코프',49.99,36.23],['MAG','fac','마그니토고르스크',53.41,58.98],['BAK','fac','바쿠 유전',40.41,49.87],['KYV','city','키예프',50.45,30.52],['NOV','city','노보시비르스크',55.03,82.92],['VLA','port','블라디보스토크',43.12,131.89,{cap:10}]],
  rails:'LEN-MOS MOS-KHA MOS-STA MOS-KYV KYV-ODS MOS-MAG MAG-NOV NOV-VLA LEN-MUR STA-BAK',
- ag:{t:'제2차 5개년 계획 점검',s:'우랄 공업지대 생산 확인',go:'f:MAG'}},
+ ag:{t:'제2차 5개년 계획 점검',s:'고스플란: 마그니토고르스크 생산 실적 보고',go:'f:MAG'}},
 CHN:{key:'CHN',home:'China',cam:[31,113,120],doc:'국가 개요',
  f:[['NKG','cap','난징',32.06,118.8],['SHA','port','상하이',31.23,121.47,{cap:22}],['CAN','port','광저우',23.13,113.26,{cap:14}],['TJN','port','톈진',39.08,117.2,{cap:12}],['WUH','fac','우한',30.59,114.3],
   ['PEK','city','베이핑',39.9,116.4],['CQG','city','충칭',29.56,106.55],['XIA','city','시안',34.34,108.94]],
  rails:'PEK-TJN PEK-WUH WUH-CAN TJN-NKG NKG-SHA',
- ag:{t:'화북 정세 대응',s:'베이핑·톈진 방면 — 수도를 눌러 내각 소집',go:'f:NKG'}},
+ ag:{t:'화북 정세 긴박',s:'군사위원회: 베이핑·톈진 방면 일본군 증강',go:'f:NKG'}},
 ESP:{key:'ESP',home:'Spain',cam:[40.2,-3.6,52],doc:'국가 개요',
  f:[['MAD','cap','마드리드',40.42,-3.7],['BCN','port','바르셀로나',41.39,2.17,{cap:18}],['BIL','fac','빌바오',43.26,-2.93],['VAL','port','발렌시아',39.47,-0.38,{cap:10}],['CAD','port','카디스',36.53,-6.29,{cap:8}],['SEV','city','세비야',37.39,-5.98],['CTG','base','카르타헤나',37.6,-0.98]],
  rails:'MAD-BCN MAD-BIL MAD-SEV SEV-CAD MAD-VAL',
- ag:{t:'국내 정세 불안',s:'수도를 눌러 내각과 정책 확인',go:'f:MAD'}},
+ ag:{t:'국내 정세 불안',s:'내무부: 좌우 충돌이 각지로 번지는 중',go:'f:MAD'}},
 POL:{key:null,home:'Poland',cam:[52,19.4,40],doc:'국가 개요',
  f:[['WAR','cap','바르샤바',52.23,21.01],['GDY','port','그디니아',54.52,18.53,{cap:12}],['KAT','fac','카토비체',50.26,19.02],['LOD','fac','우치',51.76,19.46],['KRK','city','크라쿠프',50.06,19.94],['LWO','city','르부프',49.84,24.03],['POZ','city','포즈난',52.41,16.93]],
  rails:'WAR-GDY WAR-LOD LOD-KAT KAT-KRK KRK-LWO WAR-POZ POZ-GDY',
- ag:{t:'중앙 공업지구 계획 검토',s:'카토비체 공업지대 — 눌러서 생산 확인',go:'f:KAT'}}
+ ag:{t:'중앙 공업지구 계획 검토',s:'재무부: 카토비체 공업지대 실적 보고',go:'f:KAT'}}
 };
 const PFE={Finland:'FIN',Poland:'POL'};
 // ════════ 국가별 고증 체계: 지도자·국가 정신·군사 교리·역사적 결정·고유 부대 ════════
@@ -543,20 +599,20 @@ function annexReg(s,n,en){const k=NK[en];if(k&&s.R[k]){s.R[k].o=n;s.R[k].occ=nul
 function pactOn(s,a,b,ty){if(!a||!b||!s.N[a]||!s.N[b]||pact(s,a,b,ty))return;s.TR.push({id:'h'+s.t+a+b+ty,ty,a,b,st:'on'})}
 const UNITS0=[['제1군',25],['제2군',25],['기동 예비군',50]];
 const NAT={
- UK:{lead:[[1936,'스탠리 볼드윈 총리'],[1937,'네빌 체임벌린 총리'],[1940,'윈스턴 처칠 총리']],gov:'입헌군주제 · 의회 민주주의',cap:'런던',doc:'왕립 해군과 해상 봉쇄',docD:'세계 최대의 함대로 본토를 지키고, 교전국의 해상 수송로를 끊습니다.',units:[['본국 원정군 (BEF)',25],['영국령 인도군',25],['근위 기갑사단',50]]},
- GER:{lead:[[1936,'아돌프 히틀러 총통']],gov:'국가사회주의 일당 독재',cap:'베를린',doc:'전격전 (기동전)',docD:'기갑부대와 항공 지원을 한곳에 모아 짧고 결정적인 돌파를 노립니다. 장기전에는 자원이 부족합니다.',units:[['기갑 군단',25],['자동차화 보병 군단',25],['기갑 집단',50]]},
- RUS:{lead:[[1936,'이오시프 스탈린 서기장']],gov:'공산당 일당제 · 계획경제',cap:'모스크바',doc:'종심 작전과 동장군',docD:'광대한 국토를 내주며 적을 지치게 하고, 겨울에 반격합니다.',units:[['소총병 군단',25],['기계화 군단',25],['시베리아 예비군',50]]},
- FRA:{lead:[[1936,'레옹 블룸 총리 (인민전선)'],[1938,'에두아르 달라디에 총리'],[1940,'폴 레노 총리']],gov:'제3공화국 · 의회 민주주의',cap:'파리',doc:'마지노선 방어 교리',docD:'요새선에 기댄 방어전을 준비합니다. 방어는 강하지만 공세에는 소극적입니다.',units:[['마지노 요새 사단',25],['식민지 보병 (세네갈 저격병)',25],['경기계화 사단 (DLM)',50]]},
- USA:{lead:[[1936,'프랭클린 D. 루스벨트 대통령']],gov:'연방 공화국 · 대통령제',cap:'워싱턴',doc:'물량전 (민주주의의 병기창)',docD:'거대한 공업력을 그대로 군사력으로 바꿉니다. 개전 전에는 고립주의 여론에 묶여 있습니다.',units:[['보병 사단',25],['해병 사단',25],['기갑 사단',50]]},
- JPN:{lead:[[1936,'히로타 고키 총리'],[1937,'고노에 후미마로 총리'],[1941,'도조 히데키 총리']],gov:'입헌군주제 · 군부의 정치 개입',cap:'도쿄',doc:'해군 항공과 상륙전',docD:'항공모함과 육전대로 바다 건너를 빠르게 공격합니다. 원료는 거의 수입에 의존합니다.',units:[['관동군',25],['해군 육전대',25],['전차 연대',50]]},
- ITA:{lead:[[1936,'베니토 무솔리니 총리']],gov:'파시스트 일당 독재 · 왕정',cap:'로마',doc:'지중해 해군과 산악전',docD:'알프스와 지중해를 지키는 데는 능하지만, 육군의 장비는 열세입니다.',units:[['알피니 산악 사단',25],['베르살리에리 연대',25],['아리에테 기갑 사단',50]]},
- CHN:{lead:[[1936,'장제스 군사위원회 위원장']],gov:'국민당 국민정부',cap:'난징',doc:'공간과 시간의 교환',docD:'넓은 내륙으로 물러나며 버티는 지구전. 땅을 잃을수록 저항이 단단해집니다.',units:[['중앙군',25],['팔로군',25],['지방 연합군',50]]},
- KOR:{lead:[[1936,'이동녕 주석 · 김구 국무위원'],[1940,'김구 주석']],gov:'대한민국 임시정부 (망명 정부)',cap:'전장 → 창사 → 충칭',doc:'독립군 유격전',docD:'정규전 대신 의거와 유격전으로 독립을 앞당깁니다. 해외 동포의 의연금이 재정의 기둥입니다.',units:[['한국광복군 제1지대',25],['한국광복군 제2지대',25],['조선의용대',50]]},
- FIN:{lead:[[1936,'스빈후부드 대통령 · 만네르헤임 국방위원장'],[1937,'칼리오 대통령 · 만네르헤임 국방위원장']],gov:'공화국 · 의회 민주주의',cap:'헬싱키',doc:'시수와 모티 전술',docD:'숲과 눈 속에서 적을 작게 끊어 포위합니다. 겨울 방어전에서 특히 강합니다.',units:[['스키 대대',25],['보병 사단',25],['예비군 (로타 지원)',50]]},
- POL:{lead:[[1936,'모시치츠키 대통령 · 리츠시미그위 원수']],gov:'공화국 · 사나치아 체제',cap:'바르샤바',doc:'기병과 평원 방어',docD:'두 강대국 사이의 평원에서 기동력 있는 기병과 보병으로 국경을 지킵니다.',units:[['기병 여단',25],['보병 사단',25],['기계화 여단',50]]},
- ESP:{lead:[[1936,'마누엘 아사냐 대통령 (제2공화국)']],gov:'제2공화국 · 인민전선',cap:'마드리드',doc:'민병과 시가전',docD:'노조 민병과 국제여단이 도시를 지키는 방어전.',units:[['공화국 인민군',25],['국제여단',25],['돌격 근위대',50]]}
+ UK:{lead:[[1936,'스탠리 볼드윈 총리'],[1937,'네빌 체임벌린 총리'],[1940,'윈스턴 처칠 총리']],gov:'입헌군주제 · 의회 민주주의',cap:'런던',doc:'왕립 해군과 해상 봉쇄',docD:'세계 최대의 함대로 본토를 지키고, 교전국의 해상 수송로를 끊는다.',units:[['본국 원정군 (BEF)',25],['영국령 인도군',25],['근위 기갑사단',50]]},
+ GER:{lead:[[1936,'아돌프 히틀러 총통']],gov:'국가사회주의 일당 독재',cap:'베를린',doc:'전격전 (기동전)',docD:'기갑부대와 항공 지원을 한곳에 모아 짧고 결정적인 돌파를 노린다. 장기전에는 자원이 모자란다.',units:[['기갑 군단',25],['자동차화 보병 군단',25],['기갑 집단',50]]},
+ RUS:{lead:[[1936,'이오시프 스탈린 서기장']],gov:'공산당 일당제 · 계획경제',cap:'모스크바',doc:'종심 작전과 동장군',docD:'광대한 국토를 내주며 적을 지치게 하고, 겨울에 반격한다.',units:[['소총병 군단',25],['기계화 군단',25],['시베리아 예비군',50]]},
+ FRA:{lead:[[1936,'레옹 블룸 총리 (인민전선)'],[1938,'에두아르 달라디에 총리'],[1940,'폴 레노 총리']],gov:'제3공화국 · 의회 민주주의',cap:'파리',doc:'마지노선 방어 교리',docD:'요새선에 기댄 방어전을 준비한다. 방어는 단단하나 공세에는 굼뜨다.',units:[['마지노 요새 사단',25],['식민지 보병 (세네갈 저격병)',25],['경기계화 사단 (DLM)',50]]},
+ USA:{lead:[[1936,'프랭클린 D. 루스벨트 대통령']],gov:'연방 공화국 · 대통령제',cap:'워싱턴',doc:'물량전 (민주주의의 병기창)',docD:'거대한 공업력을 그대로 군사력으로 바꾼다. 개전 전에는 고립주의 여론에 묶여 있다.',units:[['보병 사단',25],['해병 사단',25],['기갑 사단',50]]},
+ JPN:{lead:[[1936,'히로타 고키 총리'],[1937,'고노에 후미마로 총리'],[1941,'도조 히데키 총리']],gov:'입헌군주제 · 군부의 정치 개입',cap:'도쿄',doc:'해군 항공과 상륙전',docD:'항공모함과 육전대로 바다 건너를 빠르게 공격한다. 원료는 거의 다 수입이다.',units:[['관동군',25],['해군 육전대',25],['전차 연대',50]]},
+ ITA:{lead:[[1936,'베니토 무솔리니 총리']],gov:'파시스트 일당 독재 · 왕정',cap:'로마',doc:'지중해 해군과 산악전',docD:'알프스와 지중해를 지키는 데는 능하나 육군 장비는 뒤처진다.',units:[['알피니 산악 사단',25],['베르살리에리 연대',25],['아리에테 기갑 사단',50]]},
+ CHN:{lead:[[1936,'장제스 군사위원회 위원장']],gov:'국민당 국민정부',cap:'난징',doc:'공간과 시간의 교환',docD:'넓은 내륙으로 물러나며 버티는 지구전. 땅을 잃을수록 저항이 단단해진다.',units:[['중앙군',25],['팔로군',25],['지방 연합군',50]]},
+ KOR:{lead:[[1936,'이동녕 주석 · 김구 국무위원'],[1940,'김구 주석']],gov:'대한민국 임시정부 (망명 정부)',cap:'전장 → 창사 → 충칭',doc:'독립군 유격전',docD:'정규전 대신 의거와 유격전으로 독립을 앞당긴다. 해외 동포의 의연금이 재정의 기둥이다.',units:[['한국광복군 제1지대',25],['한국광복군 제2지대',25],['조선의용대',50]]},
+ FIN:{lead:[[1936,'스빈후부드 대통령 · 만네르헤임 국방위원장'],[1937,'칼리오 대통령 · 만네르헤임 국방위원장']],gov:'공화국 · 의회 민주주의',cap:'헬싱키',doc:'시수와 모티 전술',docD:'숲과 눈 속에서 적을 작게 끊어 포위한다. 겨울 방어전에 특히 강하다.',units:[['스키 대대',25],['보병 사단',25],['예비군 (로타 지원)',50]]},
+ POL:{lead:[[1936,'모시치츠키 대통령 · 리츠시미그위 원수']],gov:'공화국 · 사나치아 체제',cap:'바르샤바',doc:'기병과 평원 방어',docD:'두 강대국 사이의 평원에서 기동력 있는 기병과 보병으로 국경을 지킨다.',units:[['기병 여단',25],['보병 사단',25],['기계화 여단',50]]},
+ ESP:{lead:[[1936,'마누엘 아사냐 대통령 (제2공화국)']],gov:'제2공화국 · 인민전선',cap:'마드리드',doc:'민병과 시가전',docD:'노조 민병과 국제여단이 도시를 지킨다.',units:[['공화국 인민군',25],['국제여단',25],['돌격 근위대',50]]}
 };
-const leaderOf=(n,y)=>{const N=NAT[PID(n)];if(!N)return null;let l=N.lead[0][1];N.lead.forEach(([a,b])=>{if(y>=a)l=b});return l};
+const leaderOf=(n,y)=>{const N=natFor(n);if(!N||!N.lead)return null;let l=N.lead[0][1];N.lead.forEach(([a,b])=>{if(y>=a)l=b});return l};
 // 국가 정신: on(조건)·tick(매 분기 효과)·m(전투 보정: kind=att|def|loss)
 const SPS=[
  {id:'uk_emp',n:'UK',t:'해가 지지 않는 제국',d:'식민지 지역 수 × 0.15 만큼 국고 · 식량 +1 / 분기',tick:(s,n,N)=>{N.g+=held(s,n).length*.15;N.st.f+=1}},
@@ -633,19 +689,180 @@ const DECS=[
  {id:'fi_lotta',n:'FIN',t:'로타 스바르드 · 민방위 동원',y0:1939,y1:1945,cost:0,hy:[1939,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'군사력 +인구×3% · 지지 +3',h:'여성 자원봉사 조직 로타 스바르드가 후방 보급과 경계를 맡았다.',eff:(s,n,N)=>{N.mil+=N.pop*.03;N.sup+=3}},
  {id:'pl_cop',n:'POL',t:'중앙 공업지구 (COP)',y0:1936,y1:1939,cost:30,hy:[1937,1],d:'산업력 +4',h:'1936년부터 국경에서 먼 중부에 제철소와 군수 공장을 세웠다.',eff:(s,n,N)=>{N.ind+=4}},
  {id:'pl_enig',n:'POL',t:'에니그마 해독 성과 공유',y0:1939,y1:1939,cost:0,hy:[1939,3],d:'조약국마다 군사력 +2',h:'1939년 7월 폴란드 암호국이 에니그마 해독 기술을 영국·프랑스에 넘겼다.',eff:(s,n)=>s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).forEach(t=>{const o=t.a==n?t.b:t.a;if(s.N[o])s.N[o].mil+=2})},
- {id:'es_ib',n:'ESP',t:'국제여단 지원 요청',y0:1936,y1:1938,cost:0,hy:[1936,3],d:'군사력 +4 · 지지 +2',h:'세계 각지의 의용병 수만 명이 공화국을 지키러 스페인에 왔다.',eff:(s,n,N)=>{N.mil+=4;N.sup+=2}},
- {id:'g_army',n:'*',t:'군 현대화 계획',y0:1936,y1:1945,cost:20,d:'군사력 +3',h:'낡은 소총과 대포를 교체하는 장비 갱신 계획.',eff:(s,n,N)=>{N.mil+=3}},
- {id:'g_ind',n:'*',t:'산업 진흥 계획',y0:1910,y1:1945,cost:25,d:'산업력 +2',h:'외국 자본을 들여 철도와 공장을 세우는 진흥 계획.',eff:(s,n,N)=>{N.ind+=2}}
+ {id:'es_ib',n:'ESP',t:'국제여단 지원 요청',y0:1936,y1:1938,cost:0,hy:[1936,3],d:'군사력 +4 · 지지 +2',h:'세계 각지의 의용병 수만 명이 공화국을 지키러 스페인에 왔다.',eff:(s,n,N)=>{N.mil+=4;N.sup+=2}}
 ];
-function spiritsOf(s,n){const pid=PID(n),N=s.N[n];if(!N)return[];const X=(s.SPX||{})[n]||{};return SPS.filter(p=>p.n==pid&&(!p.add||(X[p.id]||0)>s.t)&&(!p.on||p.on(s,n,N)))}
+function archKey(n){const tg=tagsOf(n);return['colony','mtn','isl','desert','nordic','balkan','latam','africa','asia','plain'].find(x=>tg.includes(x))||'plain'}
+function spiritsOf(s,n){const id=NID(n),N=s.N[n];if(!N)return[];const X=(s.SPX||{})[n]||{},tg=tagsOf(n),ownD=SPS.some(p=>p.n==id&&p.doc),ownS=SPS.some(p=>p.n==id&&!p.doc&&!p.add),ak=archKey(n);
+ return SPS.filter(p=>{let ok=p.n==id;if(!ok&&p.n[0]=='@'){const t=p.n.slice(1);ok=tg.includes(t)&&(p.add?true:p.doc?(!ownD&&t==ak):(!ownS||t=='colony'||t=='baltic'))}return ok&&(!p.add||(X[p.id]||0)>s.t)&&(!p.on||p.on(s,n,N))})}
 function docM(s,me,foe,r,k,c){if(!s.N[me])return 1;return spiritsOf(s,me).reduce((m,p)=>m*(p.m?p.m(s,me,foe,r,k,c):1),1)}
-function decsFor(n){const pid=PID(n);return DECS.filter(d=>d.n==pid||(d.n=='*'&&!NAT[pid]))}
+function decsFor(n){const id=NID(n),tg=tagsOf(n),own=DECS.some(d=>d.n==id);return DECS.filter(d=>d.n==id||(d.n[0]=='@'&&tg.includes(d.n.slice(1))&&(!own||['colony','any'].includes(d.n.slice(1)))))}
 function decOK(s,n,d){const N=s.N[n],y=yr(s);if(DTAKEN(s,n,d.id))return{ok:0,why:'이미 결정함'};if(y<d.y0)return{ok:0,why:d.y0+'년부터'};if(y>d.y1)return{ok:0,why:'시기가 지남'};if(d.req&&!d.req(s,n))return{ok:0,why:d.rq||'조건 미충족'};if(N.g<(d.cost||0))return{ok:0,why:'국고 부족'};return{ok:1}}
 function natStep(s,oo,ns,y,q){s.DC=s.DC||{};s.SPX=s.SPX||{};
+ for(const r in s.FR||{}){const F=s.FR[r];if(F.t<s.t)F.p-=20;const R=s.R[r];if(F.p<=0||!atWar(s,F.a,F.d)||!R||(R.occ||R.o)!=F.d)delete s.FR[r]}
  ns.forEach(n=>{const N=s.N[n],pid=PID(n),h=P_h(s,n);if(!N)return;let ids=h?((oo[n]||{}).dec||[]).slice():[];
-  if(!h)DECS.forEach(d=>{if(d.hy&&d.n==pid&&(y>d.hy[0]||(y==d.hy[0]&&q>=d.hy[1]))&&decOK(s,n,d).ok)ids.push(d.id)});
+  if(!h)decsFor(n).forEach(d=>{if(d.hy&&(y>d.hy[0]||(y==d.hy[0]&&q>=d.hy[1]))&&decOK(s,n,d).ok)ids.push(d.id)});
   ids.forEach(id=>{const d=DECS.find(x=>x.id==id);if(!d||!decsFor(n).includes(d)||!decOK(s,n,d).ok)return;N.g-=d.cost||0;(s.DC[n]=s.DC[n]||[]).push(id);if(d.add)(s.SPX[n]=s.SPX[n]||{})[d.add]=d.dur?s.t+d.dur:1e9;if(d.eff)d.eff(s,n,N,y);s.log.push(`${nm(n,y)}: ${d.t}`)});
   spiritsOf(s,n).forEach(p=>{if(p.tick)p.tick(s,n,N,y,oo[n])});N.sup=Math.max(0,Math.min(100,N.sup));N.g=Math.max(0,N.g);N.mil=Math.max(0,N.mil);N.ind=Math.max(1,N.ind);for(const k in N.st)N.st[k]=Math.max(0,N.st[k])})}
+// ════════ 전 국가 특성: 중소국 고증 + 지리·정체 유형별 특성 ════════
+const NATE={Sweden:'SWE',Norway:'NOR',Romania:'ROU',Hungary:'HUN',Greece:'GRC',Bulgaria:'BGR',Austria:'AUT',Switzerland:'CHE',Ireland:'IRL',Iran:'IRN','Saudi Arabia':'SAU',Afghanistan:'AFG',Thailand:'THA',Mongolia:'MNG',Brazil:'BRA',Argentina:'ARG',Mexico:'MEX',Egypt:'EGY',Estonia:'EST',Latvia:'LVA',Lithuania:'LTU',Albania:'ALB',Chile:'CHL',Peru:'PER',Colombia:'COL',Venezuela:'VEN',Cuba:'CUB',Bolivia:'BOL',Paraguay:'PRY',Uruguay:'URY',Liberia:'LBR',Nepal:'NPL',Yemen:'YEM'};
+Object.assign(NAT,{
+ IND:{lead:[[1936,'린리스고 후작 (인도 총독)']],gov:'영국령 인도 제국 · 총독 통치',cap:'뉴델리',doc:'영국령 인도군',docD:'세계 최대의 지원병 군대. 다만 충성은 총독부와 국민회의 사이에서 흔들린다.',units:[['인도 보병 사단',25],['구르카 여단',25],['인도 기병',50]]},
+ SWE:{lead:[[1936,'페르 알빈 한손 총리']],gov:'입헌군주제 · 사회민주당 정부',cap:'스톡홀름',doc:'무장 중립',docD:'어느 편에도 서지 않되, 넘보는 자에게는 비싼 값을 치르게 한다.',units:[['노를란드 보병',25],['보포스 포병',25],['스코네 기갑 여단',50]]},
+ NOR:{lead:[[1936,'요한 뉘고르스볼 총리']],gov:'입헌군주제 · 노동당 정부',cap:'오슬로',doc:'피오르 방어',docD:'좁은 협만과 산길이 곧 요새다.',units:[['산악 보병',25],['해안 포대',25],['노르웨이 근위대',50]]},
+ DEN:{lead:[[1936,'토르발 스타우닝 총리']],gov:'입헌군주제 · 사회민주당 정부',cap:'코펜하겐',doc:'평지의 소국',docD:'막을 산도 강도 없다. 외교가 첫째 방패다.',units:[['유틀란트 보병',25],['근위 경기병',25],['코펜하겐 수비대',50]]},
+ NED:{lead:[[1936,'헨드릭 콜레인 총리 · 빌헬미나 여왕']],gov:'입헌군주제 · 의회 민주주의',cap:'헤이그',doc:'홀란트 수로 방어선',docD:'둑을 열어 들판을 물에 잠그면 적의 전차도 멈춘다.',units:[['그레버 방어선 보병',25],['동인도 왕립군',25],['경기병 연대',50]]},
+ BEL:{lead:[[1936,'레오폴드 3세 · 반 제일란트 총리']],gov:'입헌군주제 · 의회 민주주의',cap:'브뤼셀',doc:'에방에말 요새',docD:'뫼즈 강과 알베르 운하를 따라 요새를 쌓았다.',units:[['아르덴 엽병',25],['요새 수비대',25],['콩고 공안군',50]]},
+ POR:{lead:[[1936,'안토니우 살라자르 총리']],gov:'에스타두 노부 (권위주의 공화국)',cap:'리스본',doc:'식민지 수비대',docD:'본국은 작으나 아프리카와 아시아에 넓은 식민지를 두었다.',units:[['본국 보병',25],['앙골라 원주민 부대',25],['리스본 수비대',50]]},
+ OTT:{lead:[[1936,'무스타파 케말 아타튀르크 대통령'],[1939,'이스메트 이뇌뉘 대통령']],gov:'공화국 · 공화인민당 일당제',cap:'앙카라',doc:'해협 방어',docD:'보스포루스와 다르다넬스를 쥔 자가 흑해를 쥔다.',units:[['아나톨리아 보병',25],['해협 요새 포병',25],['기병 사단',50]]},
+ YUG:{lead:[[1936,'섭정 파블레 공 · 스토야디노비치 총리']],gov:'입헌군주제 · 섭정 정부',cap:'베오그라드',doc:'산악 유격전',docD:'디나르알프스의 골짜기마다 싸울 사람이 있다.',units:[['세르비아 보병',25],['산악 유격대',25],['기병 사단',50]]},
+ CZE:{lead:[[1936,'에드바르트 베네시 대통령']],gov:'제1공화국 · 의회 민주주의',cap:'프라하',doc:'체코 요새선',docD:'수데티 산지를 따라 토치카 수천 개를 세웠다.',units:[['요새 보병',25],['슈코다 포병',25],['기동 사단',50]]},
+ ROU:{lead:[[1936,'카롤 2세 국왕']],gov:'입헌군주제 (국왕 친정 강화)',cap:'부쿠레슈티',doc:'카르파티아 방어',docD:'산맥과 다뉴브 강 사이에서 국경을 지킨다.',units:[['산악 엽병',25],['로시오리 기병',25],['보병 사단',50]]},
+ HUN:{lead:[[1936,'호르티 미클로시 섭정']],gov:'왕국 · 섭정 정부',cap:'부다페스트',doc:'후서르 기병 전통',docD:'트리아농에서 잃은 땅을 되찾을 날을 기다린다.',units:[['혼베드 보병',25],['후서르 기병',25],['기동 군단',50]]},
+ GRC:{lead:[[1936,'이오아니스 메탁사스 총리 · 게오르기오스 2세']],gov:'입헌군주제 · 8월 4일 체제',cap:'아테네',doc:'메탁사스선',docD:'불가리아 국경 산지에 요새선을 쌓았다.',units:[['에브조네스 근위대',25],['산악 보병',25],['보병 사단',50]]},
+ BGR:{lead:[[1936,'보리스 3세 국왕']],gov:'왕국 · 국왕 친정',cap:'소피아',doc:'발칸 산악전',docD:'뇌이 조약으로 잃은 땅에 대한 미련이 깊다.',units:[['발칸 보병',25],['기병 사단',25],['국경 수비대',50]]},
+ AUT:{lead:[[1936,'쿠르트 슈슈니크 총리']],gov:'연방국 · 조국전선 일당제',cap:'빈',doc:'알프스 방어',docD:'군은 작고, 북쪽 이웃의 그림자는 짙다.',units:[['티롤 엽병',25],['연방군 보병',25],['향토 방위대',50]]},
+ CHE:{lead:[[1936,'연방 평의회']],gov:'연방 공화국 · 직접 민주주의',cap:'베른',doc:'국가 보루 (레뒤)',docD:'알프스 깊숙이 진지를 파고 국경 전체를 민병으로 지킨다.',units:[['민병 보병',25],['산악 여단',25],['요새 포병',50]]},
+ IRL:{lead:[[1936,'에이먼 데 발레라 행정위원회 의장']],gov:'아일랜드 자유국 · 의회 민주주의',cap:'더블린',doc:'중립과 민병',docD:'영국과도, 대륙과도 거리를 둔다.',units:[['국방군 보병',25],['지역 방위대',25],['기병 중대',50]]},
+ IRN:{lead:[[1936,'레자 샤 팔라비']],gov:'군주제 · 샤 친정',cap:'테헤란',doc:'고원 방어',docD:'자그로스 산맥이 서쪽을 막고 있다.',units:[['제국 보병',25],['부족 기병',25],['근위 사단',50]]},
+ SAU:{lead:[[1936,'이븐 사우드 국왕']],gov:'절대군주제',cap:'리야드',doc:'사막의 기마전',docD:'이크완의 낙타 기병은 모래 위에서 누구보다 빠르다.',units:[['이크완 낙타 기병',25],['부족 민병',25],['국왕 근위대',50]]},
+ AFG:{lead:[[1936,'무함마드 자히르 샤']],gov:'군주제',cap:'카불',doc:'산악 부족 방어',docD:'세 번의 앵글로–아프간 전쟁이 증명했다. 이 산은 넘기 어렵다.',units:[['부족 라슈카르',25],['카불 보병',25],['국왕 근위대',50]]},
+ THA:{lead:[[1936,'프라야 파혼 총리'],[1938,'플랙 피분송크람 총리']],gov:'입헌군주제 · 인민당 정부',cap:'방콕',doc:'완충국 외교',docD:'영국령과 프랑스령 사이에서 독립을 지켜 왔다.',units:[['왕립 육군 보병',25],['해병대',25],['기병 대대',50]]},
+ MNG:{lead:[[1936,'아난딘 아마르 총리'],[1939,'허를로깅 초이발산 총리']],gov:'인민공화국 · 인민혁명당 일당제',cap:'울란바토르',doc:'초원 기병',docD:'초원에서는 말이 곧 보급선이다.',units:[['몽골 기병 사단',25],['장갑차 여단',25],['국경 수비대',50]]},
+ BRA:{lead:[[1936,'제툴리우 바르가스 대통령']],gov:'공화국 · 1937년부터 에스타두 노부',cap:'리우데자네이루',doc:'대륙의 거인',docD:'땅은 넓고 사람은 많으나 공업은 이제 막 걸음마다.',units:[['연방군 보병',25],['가우슈 기병',25],['해안 포병',50]]},
+ ARG:{lead:[[1936,'아구스틴 후스토 대통령'],[1938,'로베르토 오르티스 대통령']],gov:'공화국 · 보수 연합 (부정 선거의 10년)',cap:'부에노스아이레스',doc:'팜파스 기병',docD:'세계의 곡물 창고. 영국 자본과 철도가 경제를 쥐고 있다.',units:[['팜파스 기병',25],['보병 사단',25],['산악 엽병',50]]},
+ MEX:{lead:[[1936,'라사로 카르데나스 대통령']],gov:'공화국 · 국민혁명당 정부',cap:'멕시코시티',doc:'혁명 민병',docD:'혁명을 겪은 농민들이 총을 들 줄 안다.',units:[['연방군 보병',25],['농민 민병',25],['기병 연대',50]]},
+ EGY:{lead:[[1936,'파루크 1세 국왕']],gov:'입헌군주제 · 와프드당 정부',cap:'카이로',doc:'수에즈의 문지기',docD:'운하는 이집트 땅에 있으나 열쇠는 영국이 쥐고 있다.',units:[['이집트군 보병',25],['낙타 군단',25],['카이로 수비대',50]]},
+ EST:{lead:[[1936,'콘스탄틴 패츠 국가원수']],gov:'공화국 · 권위주의 체제',cap:'탈린',doc:'숲의 형제',docD:'작은 나라지만 숲과 늪이 많다.',units:[['보병 사단',25],['방위 연맹',25],['해안 포대',50]]},
+ LVA:{lead:[[1936,'카를리스 울마니스 총리']],gov:'공화국 · 권위주의 체제',cap:'리가',doc:'다우가바 방어',docD:'리가 만과 다우가바 강을 낀 국경.',units:[['보병 사단',25],['아이즈사르기 민병',25],['기병 연대',50]]},
+ LTU:{lead:[[1936,'안타나스 스메토나 대통령']],gov:'공화국 · 민족주의 연합 일당제',cap:'카우나스',doc:'네무나스 방어',docD:'빌뉴스를 폴란드에 빼앗긴 채 카우나스를 임시 수도로 삼았다.',units:[['보병 사단',25],['소총병 연맹',25],['경기병',50]]},
+ ALB:{lead:[[1936,'조그 1세 국왕']],gov:'왕국 · 국왕 친정',cap:'티라나',doc:'산악 씨족 전사',docD:'씨족마다 총을 지니고 있다. 다만 나라 살림은 이탈리아 차관에 기대고 있다.',units:[['씨족 의용병',25],['왕립 보병',25],['헌병대',50]]},
+ CHL:{lead:[[1936,'아르투로 알레산드리 대통령'],[1938,'페드로 아기레 세르다 대통령']],gov:'공화국 · 대통령제',cap:'산티아고',units:[['산악 보병',25],['기병 연대',25],['해군 육전대',50]]},
+ PER:{lead:[[1936,'오스카르 베나비데스 대통령']],gov:'공화국 · 군부 정권',cap:'리마',units:[['안데스 보병',25],['기병 연대',25],['해안 수비대',50]]},
+ COL:{lead:[[1936,'알폰소 로페스 푸마레호 대통령']],gov:'공화국 · 자유당 정부 ("진군하는 혁명")',cap:'보고타',units:[['보병 대대',25],['안데스 산악대',25],['기병 연대',50]]},
+ VEN:{lead:[[1936,'엘레아사르 로페스 콘트레라스 대통령']],gov:'공화국 · 고메스 사후 과도 체제',cap:'카라카스',units:[['보병 대대',25],['야네로 기병',25],['국민 방위대',50]]},
+ CUB:{lead:[[1936,'풀헨시오 바티스타 육군 참모총장']],gov:'공화국 · 군부의 실권 장악',cap:'아바나',units:[['육군 보병',25],['농촌 경비대',25],['해안 포병',50]]},
+ BOL:{lead:[[1936,'다비드 토로 대통령']],gov:'공화국 · 군사 사회주의 정권',cap:'라파스',units:[['차코 참전 보병',25],['고원 산악대',25],['기병 연대',50]]},
+ PRY:{lead:[[1936,'라파엘 프랑코 대통령']],gov:'공화국 · 2월 혁명 정부',cap:'아순시온',units:[['차코 보병',25],['기병 연대',25],['하천 함대 육전대',50]]},
+ URY:{lead:[[1936,'가브리엘 테라 대통령']],gov:'공화국 · 테라 정권',cap:'몬테비데오',units:[['보병 대대',25],['기병 연대',25],['해안 포병',50]]},
+ LBR:{lead:[[1936,'에드윈 바클레이 대통령']],gov:'공화국 · 진정휘그당 일당제',cap:'몬로비아',units:[['변경 수비대',25],['민병대',25],['대통령 근위대',50]]},
+ NPL:{lead:[[1936,'주다 숨셰르 라나 총리']],gov:'왕국 · 라나 가문 세습 총리제',cap:'카트만두',units:[['구르카 소총병',25],['산악 보병',25],['라나 근위대',50]]},
+ YEM:{lead:[[1936,'야히야 이맘']],gov:'무타와킬리 왕국 · 이맘 통치',cap:'사나',units:[['부족 전사',25],['이맘 근위대',25],['산악 민병',50]]}
+});
+// 간이 정의: [id, 대상(국가 또는 @유형), 이름, 효과(분기마다), 전투 보정, 조건, 시대 문구]
+const FXN={g:'국고',f:'식량',s:'철강',o:'석유',ind:'산업력',mil:'군사력',sup:'지지',ind2:'독립 진척'};
+const MDN={def:'방어',hdef:'본토 방어',wdef:'겨울 방어',mdef:'산악 방어',att:'공격',loss:'공격해 온 적의 손실'};
+const fxParse=t=>(t||'').split(' ').filter(Boolean).map(x=>{const[k,v]=x.split(':');return[k,+v]});
+const fxText=t=>fxParse(t).map(([k,v])=>`${FXN[k]||k} ${v>0?'+':'−'}${Math.abs(v)}`).join(' · ');
+const mdText=t=>fxParse(t).map(([k,v])=>`${MDN[k]||k} ${v>=1?'+':'−'}${Math.round(Math.abs(v-1)*100)}%`).join(' · ');
+function fxApply(N,t,mult=1){fxParse(t).forEach(([k,v])=>{v*=mult;if(k in{f:1,s:1,o:1})N.st[k]+=v;else if(k in N)N[k]+=v})}
+function condOK(s,n,c){if(!c)return true;const N=s.N[n],y=yr(s);return c.split(' ').every(x=>x=='war'?wars(s,n).length>0:x=='peace'?!wars(s,n).length:x=='lord'?!!N.lord:x=='free'?!N.lord:x[0]=='y'?(x[1]=='<'?y<=+x.slice(2):y>=+x.slice(2)):true)}
+const MTNC=['Switzerland','Austria','Afghanistan','Nepal','Bhutan','Bolivia','Albania','Andorra','Liechtenstein','Ethiopia','Peru','Ecuador','Kyrgyzstan','Tajikistan','Georgia','Armenia','Montenegro','Lesotho','Yemen','Colombia','Chile','Iran','Norway','Greece','Bulgaria','Serbia','Macedonia','Kosovo'];
+function mdApply(s,me,foe,r,k,spec){let m=1;fxParse(spec).forEach(([kk,v])=>{if(kk==k)m*=v;else if(k=='def'&&kk=='hdef'&&r==HOMEK2(s,me))m*=v;else if(k=='def'&&kk=='wdef'&&WIN(s))m*=v;else if(k=='def'&&kk=='mdef'&&MTNC.includes(ENN[r]))m*=v});return m}
+function HOMEK2(s,n){const h=HOMEK(n);if(h)return h;const L=held(s,n);return L.reduce((a,r)=>!a||(SD2[r]||0)>(SD2[a]||0)?r:a,null)}
+const SPC=[
+ ['swe_ore','SWE','키루나 철광석 수출','g:2 s:1','','','"독일 제철소의 절반이 스웨덴 광석으로 돌아간다."'],['swe_neu','SWE','무장 중립','','def:1.3','','',1],
+ ['nor_ship','NOR','세계 4위의 상선단','g:1.5','','','"노르웨이 배가 실어 나르지 않는 바다는 없다."'],['nor_fj','NOR','피오르 방어','','hdef:1.3 wdef:1.2','','',1],
+ ['den_agr','DEN','버터와 베이컨의 수출국','f:2 g:1','','','"런던 식탁의 버터는 덴마크산이다."'],['den_flat','DEN','평지의 소국','','def:0.9','','',1],
+ ['ned_oil','NED','동인도의 석유와 고무','o:2 g:1','','','"바타비아에서 오는 배가 끊기면 나라 살림이 멈춘다."'],['ned_wl','NED','홀란트 수로 방어선','','hdef:1.35','','',1],
+ ['bel_cg','BEL','콩고의 광물','s:2 g:1','','','"카탕가 광산의 구리와 우라늄."'],['bel_fort','BEL','에방에말 요새','','hdef:1.3','','',1],
+ ['por_emp','POR','대서양 식민 제국','g:1 f:1','','','"우리는 작은 나라가 아니다." — 1934년 식민지 박람회 표어'],['por_gar','POR','식민지 수비대','','def:1.1','','',1],
+ ['tur_kem','OTT','케말주의 개혁','ind:0.3 sup:0.3','','',''],['tur_str','OTT','해협 방어','','hdef:1.35','','',1],
+ ['yug_eth','YUG','민족 갈등','sup:-0.5','','','"세르비아인과 크로아티아인은 한 왕관 아래서도 서로를 믿지 않는다."'],['yug_mtn','YUG','산악 유격전','','def:1.2 mdef:1.15','','',1],
+ ['cze_sko','CZE','슈코다 군수 공장','ind:0.4 mil:0.3','','','"유럽에서 손꼽히는 대포가 플젠에서 나온다."'],['cze_fort','CZE','체코 요새선','','hdef:1.4','','',1],
+ ['rou_oil','ROU','플로이에슈티 유전','o:3','','','"유럽에서 소련 다음가는 산유국."'],['rou_def','ROU','카르파티아 방어','','def:1.1 mdef:1.15','','',1],
+ ['hun_tri','HUN','트리아농의 상처','mil:0.3 sup:0.2','','','"아니, 아니, 결코!" — 실지 회복 운동의 구호'],['hun_hus','HUN','후서르 기병 전통','','att:1.1','','',1],
+ ['grc_aug','GRC','8월 4일 체제','mil:0.3 sup:-0.3','','y>1936',''],['grc_met','GRC','메탁사스선','','hdef:1.3 mdef:1.15','','',1],
+ ['bgr_nq','BGR','뇌이 조약의 그늘','mil:0.2','','',''],['bgr_mtn','BGR','발칸 산악전','','def:1.15','','',1],
+ ['aut_pr','AUT','북쪽의 압력','sup:-0.5','','peace',''],['aut_alp','AUT','알프스 방어','','mdef:1.3 def:1.1','','',1],
+ ['che_red','CHE','국가 보루 (레뒤)','','def:1.5 mdef:1.2','','',1],['che_bank','CHE','스위스 은행','g:2','','','"금은 베른의 지하 금고에서 가장 안전하다."'],
+ ['irl_neu','IRL','중립','sup:0.5','','peace',''],['irl_mil','IRL','중립과 민병','','hdef:1.25','','',1],
+ ['irn_oil','IRN','앵글로–이란 석유 회사','o:2 g:1','','','"아바단 정유소는 세계 최대다."'],['irn_pl','IRN','고원 방어','','def:1.15 mdef:1.2','','',1],
+ ['sau_tr','SAU','부족 연합 왕국','mil:0.2 sup:-0.2','','',''],['sau_cam','SAU','사막의 기마전','','att:1.15 def:1.1','','',1],
+ ['afg_tr','AFG','산악 부족 방어','','def:1.25 mdef:1.3','','',1],
+ ['tha_buf','THA','완충국 외교','sup:0.5','','',''],['tha_doc','THA','왕립 해군 증강','','hdef:1.15','','',1],
+ ['mng_sov','MNG','소련의 위성국','mil:0.3 sup:-0.2','','',''],['mng_cav','MNG','초원 기병','','att:1.2','','',1],
+ ['bra_cof','BRA','커피 경제','g:2 f:1','','','"커피 값이 떨어지면 정권이 흔들린다."'],['bra_doc','BRA','대륙의 거인','','def:1.15','','',1],
+ ['arg_gr','ARG','세계의 곡물 창고','f:3 g:1','','',''],['arg_cav','ARG','팜파스 기병','','att:1.1','','',1],
+ ['mex_rev','MEX','혁명 민병','','def:1.2','','',1],['mex_ag','MEX','에히도 토지 개혁','f:1 sup:0.5','','',''],
+ ['egy_suez','EGY','수에즈 운하','g:1.5','','',''],['egy_doc','EGY','사막 요새','','hdef:1.15','','',1],
+ ['bal_ent','@baltic','발트 협상','sup:0.3','','','"셋이 모여도 이웃 강대국 하나에 못 미친다."'],
+ ['alb_it','ALB','이탈리아 차관','g:1 sup:-0.3','','',''],['alb_cl','ALB','산악 씨족 전사','','def:1.25 mdef:1.2','','',1],
+ ['ind_gan','IND','비폭력 불복종 운동','sup:-0.5 ind2:3','','lord','"인도를 떠나라." — 국민회의'],['ind_army','IND','영국령 인도군','','def:1.1','','',1],
+ // 유형별 특성
+ ['ar_mtn','@mtn','험준한 국토','ind:-0.2','','',''],['ad_mtn','@mtn','산악 요새 방어','','def:1.25 mdef:1.2','','',1],
+ ['ar_isl','@isl','해상 교역','g:1','','',''],['ad_isl','@isl','해안 방어','','hdef:1.3','','',1],
+ ['ar_des','@desert','유목 부족 연합','mil:0.2 sup:-0.2','','',''],['ad_des','@desert','사막 기동전','','att:1.15 def:1.1','','',1],
+ ['ar_nor','@nordic','협동조합 경제','sup:0.5','','',''],['ad_nor','@nordic','설원 방어','','wdef:1.4','','',1],
+ ['ar_lat','@latam','1차 산품 수출','g:1 f:1','','','"커피, 설탕, 구리, 질산염 — 값은 런던과 뉴욕에서 정해진다."'],['ad_lat','@latam','카우디요 민병','','def:1.15','','',1],
+ ['ar_bal','@balkan','민족주의 열기','mil:0.3 sup:-0.3','','',''],['ad_bal','@balkan','산악 유격대','','def:1.2','','',1],
+ ['ar_afr','@africa','자급 농업','f:1','','',''],['ad_afr','@africa','부족 징집병','','def:1.1','','',1],
+ ['ar_asi','@asia','농업 사회','f:1 ind:-0.1','','',''],['ad_asi','@asia','지방군 방어','','def:1.15','','',1],
+ ['ar_col','@colony','식민 통치','sup:-0.5','','lord','"총독부의 명령은 본국 의회를 거치지 않는다."'],
+ ['ad_def','@plain','국경 수비대','','def:1.1','','',1]
+];
+SPC.forEach(([id,n,t,fx,md,c,q,doc])=>SPS.push({id,n,t,q,doc:doc?1:0,d:[fxText(fx)?fxText(fx)+' / 분기':'',mdText(md)].filter(Boolean).join(' · ')+(c=='peace'?' · 평시에만':c=='war'?' · 전시에만':''),on:c?(s,n)=>condOK(s,n,c):null,tick:fx?(s,n,N)=>fxApply(N,fx):null,m:md?(s,me,f,r,k)=>mdApply(s,me,f,r,k,md):null}));
+// [id, 대상, 이름, y0, y1, 비용, 효과, 사료 문구, 역사적 시점(AI), 조건, 추가]
+const DCC=[
+ ['swe_bof','SWE','보포스 대포 증산',1936,1945,15,'mil:3 ind:1','보포스사의 40mm 기관포는 양 진영이 모두 사들였다.',[1937,2]],
+ ['swe_ns','SWE','중립 선언과 철광석 수출 협정',1939,1941,0,'g:12 sup:2','개전 직후 스웨덴은 중립을 선언하고 독일·영국 모두와 교역을 이어 갔다.',[1939,4]],
+ ['nor_nort','NOR','노르트라쉽 — 상선단 해외 이관',1939,1945,0,'g:15','1940년 정부는 상선 천여 척을 런던의 국영 해운 조직에 맡겼다.',[1940,2],'war'],
+ ['den_nap','DEN','독일과 불가침 조약',1939,1940,0,'nap:GER sup:2','1939년 5월 북유럽 국가 가운데 덴마크만이 독일의 제안을 받아들였다.',[1939,2]],
+ ['ned_inund','NED','수로 방어선 범람',1937,1945,0,'f:-6 add:ned_flood:4','둑을 열어 들판에 무릎 높이의 물을 채웠다.',null,'war'],
+ ['bel_neu','BEL','독자 중립 노선 선언',1936,1937,0,'sup:3','1936년 10월 레오폴드 3세는 프랑스와의 군사 협정을 끝내고 중립으로 돌아섰다.',[1936,4]],
+ ['por_all','POR','영국–포르투갈 동맹 재확인',1936,1945,0,'ally:UK','1386년 윈저 조약 이래 이어진 세계에서 가장 오래된 동맹.',null,'peace'],
+ ['tur_mont','OTT','몽트뢰 해협 협약',1936,1936,0,'mil:3 sup:4','1936년 7월 터키는 해협 재무장 권리를 되찾았다.',[1936,3]],
+ ['tur_hat','OTT','하타이 귀속 교섭',1938,1939,10,'sup:5 g:5','1939년 프랑스령 시리아의 하타이가 터키에 넘어왔다.',[1939,2]],
+ ['yug_tri','YUG','삼국 동맹 가입 교섭',1941,1941,0,'nap:GER sup:-8','1941년 3월 가입 서명 이틀 뒤 베오그라드에서 쿠데타가 일어났다.',[1941,1]],
+ ['cze_mob','CZE','1938년 5월 부분 동원령',1938,1938,0,'mil:6 sup:2','주데텐 위기 속에 체코군은 국경 요새로 들어갔다.',[1938,2]],
+ ['rou_oilg','ROU','독일과 석유 협정',1939,1940,0,'g:12 o:-2','1939년 3월 경제 협정으로 루마니아 석유가 독일로 향했다.',[1939,1]],
+ ['hun_vie','HUN','빈 중재 판정 수용',1938,1940,0,'sup:6 mil:2','1938·1940년 두 차례 빈 중재로 헝가리는 잃었던 땅 일부를 돌려받았다.',[1938,4]],
+ ['grc_aug4','GRC','8월 4일 체제 수립',1936,1936,0,'mil:4 sup:-3','1936년 8월 4일 메탁사스가 의회를 해산했다.',[1936,3]],
+ ['grc_ohi','GRC','"오히!" — 최후통첩 거부',1940,1941,0,'sup:12 mil:3','1940년 10월 28일 메탁사스는 이탈리아의 최후통첩을 한마디로 거절했다.',[1940,4],'war'],
+ ['aut_plb','AUT','독립 국민투표 강행',1938,1938,0,'sup:6','슈슈니크는 1938년 3월 13일 국민투표를 발표했으나 투표 전날 독일군이 국경을 넘었다.',[1938,1]],
+ ['che_gen','CHE','기잔 장군 총사령관 임명',1939,1945,0,'mil:5 add:che_red2:999','1939년 8월 의회는 앙리 기잔을 총사령관으로 뽑았다.',[1939,3]],
+ ['irl_con','IRL','1937년 헌법 국민투표',1937,1937,0,'sup:6','새 헌법으로 국호를 에이레로 바꾸었다.',[1937,3]],
+ ['irn_rail','IRN','이란 종단 철도 완공',1936,1939,25,'ind:3','카스피 해에서 페르시아 만까지 1,394km. 1938년 개통.',[1938,3]],
+ ['sau_oil','SAU','다란 유전 개발',1936,1945,0,'o:6 g:10','1938년 3월 담맘 7호정에서 석유가 쏟아졌다.',[1938,1]],
+ ['tha_name','THA','국호를 태국으로',1939,1940,0,'sup:4','1939년 6월 시암은 국호를 쁘라텟 타이로 바꾸었다.',[1939,2]],
+ ['mng_pro','MNG','소련–몽골 상호원조 의정서',1936,1937,0,'ally:RUS','1936년 3월 체결. 소련군이 몽골에 주둔하게 됐다.',[1936,1]],
+ ['bra_est','BRA','에스타두 노부 선포',1937,1938,0,'sup:-3 ind:2','1937년 11월 바르가스는 의회를 닫고 새 헌법을 공포했다.',[1937,4]],
+ ['bra_vr','BRA','볼타 헤돈다 제철소',1940,1945,30,'ind:4 s:3','미국 차관으로 남미 첫 일관 제철소를 세웠다.',[1941,1]],
+ ['arg_roca','ARG','로카–런시먼 협정 갱신',1936,1937,0,'g:10 sup:-2','영국에 쇠고기 수출 쿼터를 보장받는 대가로 영국 자본에 특혜를 주었다.',[1936,4]],
+ ['mex_oil','MEX','석유 국유화',1938,1939,0,'o:5 sup:8 g:-5','1938년 3월 18일 카르데나스는 외국 석유 회사를 몰수했다.',[1938,1]],
+ ['egy_tr','EGY','영국–이집트 조약',1936,1936,0,'ally:UK sup:2','1936년 8월. 영국군은 운하 지대로 물러나되 남았다.',[1936,3]],
+ ['ind_ele','IND','1937년 지방 선거',1937,1937,0,'sup:5 ind2:5','국민회의가 11개 주 가운데 8개 주에서 정부를 세웠다.',[1937,1]],
+ ['ind_quit','IND','인도를 떠나라 운동',1942,1945,0,'sup:-6 ind2:20','1942년 8월 간디의 호소로 대규모 불복종 운동이 일어났다.',[1942,3],'lord'],
+ ['alb_it2','ALB','이탈리아 군사 고문단 수용',1936,1939,0,'mil:3 sup:-2','이탈리아 장교들이 알바니아군을 훈련시켰다.',[1936,2]],
+ // 유형별 결정
+ ['ar_auto','@colony','자치 청원',1910,1945,10,'sup:3 ind2:10','본국 의회에 자치권 확대를 청원했다.'],
+ ['ar_isi','@latam','수입 대체 공업화',1930,1945,20,'ind:2','수입이 막히자 국내 공장을 세우기 시작했다.'],
+ ['ar_oilc','@desert','석유 이권 양허',1930,1945,0,'o:4 g:10 sup:-1','외국 회사에 채굴권을 내주고 선금을 받았다.'],
+ ['ar_ns','@nordic','북유럽 공동 중립 선언',1936,1940,0,'sup:3','1938년 스톡홀름 선언. 북유럽 국가들은 함께 중립을 천명했다.'],
+ ['ar_bp','@balkan','발칸 협상 갱신',1934,1940,0,'sup:2 mil:2','1934년 유고슬라비아·그리스·루마니아·터키가 맺은 상호 보장.'],
+ ['ar_cst','@isl','해안 포대 건설',1910,1945,15,'add:ar_cst2:999','항구 입구에 해안포를 들였다.'],
+ ['ar_mfo','@mtn','산악 요새 구축',1910,1945,15,'add:ar_mfo2:999','고개마다 토치카를 세웠다.'],
+ ['ar_mod','@plain','군 현대화',1910,1945,20,'mil:3','소총과 기관총을 새것으로 바꾸었다.'],
+ ['ar_ind','@any','산업 진흥 계획',1910,1945,25,'ind:2','외국 자본을 들여 철도와 공장을 세웠다.']
+];
+SPS.push({id:'ned_flood',n:'NED',add:1,t:'범람한 방어선',d:'방어 +50%',m:(s,me,f,r,k)=>k=='def'?1.5:1},{id:'che_red2',n:'CHE',add:1,t:'기잔의 보루 전략',d:'방어 +20%',m:(s,me,f,r,k)=>k=='def'?1.2:1},
+ {id:'ar_cst2',n:'@isl',add:1,t:'해안 포대',d:'본토 방어 +15%',m:(s,me,f,r,k)=>k=='def'&&r==HOMEK2(s,me)?1.15:1},{id:'ar_mfo2',n:'@mtn',add:1,t:'산악 요새',d:'방어 +15%',m:(s,me,f,r,k)=>k=='def'?1.15:1});
+DCC.forEach(([id,n,t,y0,y1,cost,ef,h,hy,rq])=>{const al=(ef.match(/ally:(\w+)/)||[])[1],np=(ef.match(/nap:(\w+)/)||[])[1],ad=(ef.match(/add:(\w+):(\d+)/)||[]),fx=ef.replace(/(ally|nap|add):\S+/g,'').trim();
+ DECS.push({id,n,t,y0,y1,cost,h,hy,req:rq?(s,n)=>condOK(s,n,rq):null,rq:rq=='war'?'전시에만':rq=='peace'?'평시에만':rq=='lord'?'속령일 때':null,add:ad[1],dur:ad[2]&&+ad[2]<999?+ad[2]:0,
+  d:[fxText(fx),al?nm(al,1936)+'와 동맹':'',np?nm(np,1936)+'와 불가침':'',ad[1]?(SPS.find(p=>p.id==ad[1])||{}).t+' 적용':''].filter(Boolean).join(' · '),
+  eff:(s,n,N)=>{fxApply(N,fx);if(al)pactOn(s,n,al,'ally');if(np)pactOn(s,n,np,'nap')}})});
+// 국가 유형 판정
+const ISL=['Iceland','Ireland','Cuba','Haiti','Dominican Rep.','Jamaica','Sri Lanka','Madagascar','New Zealand','Philippines','Japan','Cyprus','Malta','Fiji','Bahamas','Trinidad and Tobago','Indonesia','Papua New Guinea','Puerto Rico','Taiwan','Solomon Is.','Vanuatu','Bahrain','Singapore','Mauritius','Comoros','Cape Verde'];
+const TAGC={};
+function tagsOf(n){if(!S||!S.N[n])return[];const ck=n+(S.N[n].lord?'L':'');if(TAGC[ck])return TAGC[ck];const r=HOMEK2(S,n),t=r&&T2[r],en=ENN[r]||'',L=[];
+ if(S.N[n].lord)L.push('colony');if(['Estonia','Latvia','Lithuania'].includes(en))L.push('baltic');
+ if(t){const lon=t.cx*.36-180,lat=80-t.cy*138/560;
+  if(MTNC.includes(en))L.push('mtn');if(ISL.includes(en))L.push('isl');
+  if(lat>54&&lon>-25&&lon<40)L.push('nordic');else if(lon<-30&&lat<33)L.push('latam');else if(lon>12&&lon<30&&lat>38&&lat<47)L.push('balkan');else if(lat>12&&lat<36&&lon>-18&&lon<62)L.push('desert');else if(lon>-20&&lon<52&&lat<12)L.push('africa');else if(lon>60)L.push('asia')}
+ L.push('plain','any');return TAGC[ck]=L}
+const ARCH={mtn:['산악 요새 방어','산과 고개가 곧 성벽이다. 지키기는 쉽고 넘어가기는 어렵다.',[['산악 보병 여단',25],['국경 수비대',25],['예비 연대',50]]],isl:['해안 방어','바다가 해자 노릇을 한다.',[['해병 수비대',25],['해안 포병',25],['민병대',50]]],desert:['사막 기동전','물을 아는 쪽이 사막에서 이긴다.',[['낙타 기병대',25],['부족 민병',25],['차량화 수색대',50]]],nordic:['설원 방어','겨울이 오면 적의 보급선이 얼어붙는다.',[['스키 대대',25],['국토 방위대',25],['해안 포병',50]]],latam:['카우디요 민병','정규군은 작으나 지방 유력자마다 사병을 거느린다.',[['연방군 보병',25],['기병 연대',25],['국가 헌병대',50]]],balkan:['산악 유격대','골짜기마다 오래된 원한과 총이 있다.',[['산악 보병',25],['향토 유격대',25],['기병 사단',50]]],colony:['식민지 수비대','본국이 보낸 장교와 현지 징집병으로 꾸린 군대.',[['식민지 보병',25],['토착민 경찰대',25],['수비대',50]]],africa:['부족 징집병','넓은 땅에 흩어진 부족들이 국경을 지킨다.',[['토착 보병',25],['기병대',25],['근위대',50]]],asia:['지방군 방어','중앙의 명령보다 지방 군벌의 셈이 앞선다.',[['보병 사단',25],['지방군',25],['기병 여단',50]]],plain:['국경 수비대','특별한 교리는 없다. 예산과 징병으로 군을 키운다.',UNITS0]};
+function NID(n){if(!n)return null;if(NAT[n])return n;const p=PID(n);if(p&&NAT[p])return p;const e=ENN[n];return e&&NATE[e]||null}
+function natFor(n){const id=NID(n),A=id&&NAT[id];if(A&&A.doc)return A;const tg=tagsOf(n),k=['colony','mtn','isl','desert','nordic','balkan','latam','africa','asia','plain'].find(x=>tg.includes(x))||'plain',a=ARCH[k],N=S&&S.N[n];
+ return Object.assign({gov:N&&N.lord?'속령 · '+nm(N.lord,yr(S))+'의 통치':'독립국',cap:'—',doc:a[0],docD:a[1],units:a[2]},A||{})}
 
 const PM=[['volunteer','모병제','기본 · 추가 비용 없음'],['conscript','징병제','군사력 +인구 1%/턴 · 지지도 -1/턴'],['mobilize','총동원','군사력 +인구 2.5%/턴 · 산업 -0.4/턴 · 국고 -인구 10%/턴'],['garrison','방어 태세','방어력 +30% · 군사력 소폭 증가']],PC=[['none','현상 유지',''],['welfare','복지 확대','지지도 +2/턴 · 국고 -인구 5%/턴'],['planned','계획경제','산업 +0.6/턴 · 지지도 -0.5/턴'],['ration','배급제','식량 +인구/50 · 지지도 -1/턴']],PR=[['none','연구 없음',''],['arms','무기 개발','군사력 +1.5%/턴'],['econ','산업 기술','국고 +산업×6%/턴'],['agri','농업 개량','식량 +3/턴']];
 // 사업 목록 — 승인(명령) → 착공 → 완공. 효과는 기존 지표(산업·군사·국고)에 반영
@@ -692,7 +909,11 @@ const SM={};function sd(t){if(SM[t.k])return SM[t.k];if(!t.rs)return SM[t.k]=t.d
 const curve=pts=>window.d3?d3.line().curve(d3.curveCatmullRom.alpha(.5))(pts):'M'+pts.map(p=>p.join(',')).join('L');
 const lin=pts=>'M'+pts.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join('L');
 // ── 국기 (당시 기준, 단순화) ──
-function flag(n,w=30,h=20){const pid=n&&PID(n),col=n?NM[n][1]:'#666';let b='';
+const FLX={SWE:'<rect width="30" height="20" fill="#006aa7"/><path d="M11 0V20M0 10H30" stroke="#fecc00" stroke-width="4"/>',NOR:'<rect width="30" height="20" fill="#ba0c2f"/><path d="M11 0V20M0 10H30" stroke="#fff" stroke-width="5"/><path d="M11 0V20M0 10H30" stroke="#00205b" stroke-width="2.5"/>',DEN:'<rect width="30" height="20" fill="#c8102e"/><path d="M11 0V20M0 10H30" stroke="#fff" stroke-width="3.5"/>',CHE:'<rect width="30" height="20" fill="#d52b1e"/><path d="M15 5V15M10 10H20" stroke="#fff" stroke-width="3.5"/>',
+ NED:'h:#ae1c28,#fff,#21468b',BEL:'v:#111,#fae042,#ed2939',POR:'<rect width="12" height="20" fill="#046a38"/><rect x="12" width="18" height="20" fill="#da291c"/><circle cx="12" cy="10" r="3.5" fill="#ffe900"/>',OTT:'<rect width="30" height="20" fill="#e30a17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#e30a17"/><path d="M17.5 10l3.4-1.1-2.1 2.9v-3.6l2.1 2.9Z" fill="#fff"/>',IRL:'v:#169b62,#fff,#ff883e',ROU:'v:#002b7f,#fcd116,#ce1126',HUN:'h:#ce2939,#fff,#477050',BGR:'h:#fff,#00966e,#d62612',AUT:'h:#ed2939,#fff,#ed2939',EST:'h:#0072ce,#111,#fff',LVA:'<rect width="30" height="20" fill="#9e3039"/><rect y="8" width="30" height="4" fill="#fff"/>',LTU:'h:#fdb913,#006a44,#c1272d',MEX:'v:#006847,#fff,#ce1126',ARG:'h:#74acdf,#fff,#74acdf',
+ BRA:'<rect width="30" height="20" fill="#009c3b"/><path d="M15 2L28 10L15 18L2 10Z" fill="#ffdf00"/><circle cx="15" cy="10" r="4.2" fill="#002776"/>',THA:'<rect width="30" height="20" fill="#a51931"/><rect y="3.3" width="30" height="13.4" fill="#f4f5f8"/><rect y="6.7" width="30" height="6.6" fill="#2d2a4a"/>',EGY:'<rect width="30" height="20" fill="#0a7e3e"/><circle cx="13" cy="10" r="5" fill="#fff"/><circle cx="14.6" cy="10" r="4.1" fill="#0a7e3e"/>',CZE:'<rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#d7141a"/><path d="M0 0L15 10L0 20Z" fill="#11457e"/>',YUG:'h:#0c4076,#fff,#c6363c',GRC:'<rect width="30" height="20" fill="#0d5eaf"/>'+[1,3,5,7].map(i=>`<rect y="${i*20/9}" width="30" height="${20/9}" fill="#fff"/>`).join('')+'<rect width="11" height="11.1" fill="#0d5eaf"/><path d="M5.5 0V11.1M0 5.55H11" stroke="#fff" stroke-width="2.2"/>',IRN:'h:#239f40,#fff,#da0000',AFG:'v:#111,#be0000,#007a36',CHL:'<rect width="30" height="20" fill="#fff"/><rect y="10" width="30" height="10" fill="#d52b1e"/><rect width="10" height="10" fill="#0039a6"/><circle cx="5" cy="5" r="1.8" fill="#fff"/>',IND:'<rect width="30" height="20" fill="#c8102e"/><rect width="13" height="9" fill="#26386b"/><path d="M0 0L13 9M13 0L0 9M6.5 0V9M0 4.5H13" stroke="#fff" stroke-width="1.2"/><circle cx="22" cy="12" r="3.5" fill="#f6d77a"/>'};
+function flagX(id){const f=FLX[id];if(!f)return null;if(f[1]==':'){const c=f.slice(2).split(','),v=f[0]=='v';return c.map((x,i)=>v?`<rect x="${i*10}" width="10" height="20" fill="${x}"/>`:`<rect y="${i*20/3}" width="30" height="${20/3+.1}" fill="${x}"/>`).join('')}return f}
+function flag(n,w=30,h=20){const fx=n&&flagX(NID(n));if(fx)return`<svg class="flg" width="${w}" height="${h}" viewBox="0 0 30 20">${fx}</svg>`;const pid=n&&PID(n),col=n?NM[n][1]:'#666';let b='';
  const tri=(cx,cy,rot,pt)=>`<g transform="translate(${cx} ${cy}) rotate(${rot})">${pt.map((p,i)=>p?`<rect x="-2.2" y="${i*1.25-1.8}" width="4.4" height=".8"/>`:`<rect x="-2.2" y="${i*1.25-1.8}" width="1.8" height=".8"/><rect x=".4" y="${i*1.25-1.8}" width="1.8" height=".8"/>`).join('')}</g>`;
  switch(pid){
  case 'UK':b=`<rect width="30" height="20" fill="#26386b"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#c8102e" stroke-width="1.3"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="6"/><path d="M15 0V20M0 10H30" stroke="#c8102e" stroke-width="3.4"/>`;break;
@@ -737,12 +958,6 @@ function presetCam(n){const pid=PID(n);if(pid){let c=PF[pid].cam;if(pid=='KOR'&&
  const h=held(S,n).filter(r=>T2[r]);if(!h.length)return{x:500,y:280,w:1000};const a=h.reduce((p,r)=>T2[r].np>T2[p].np?r:p),A=T2[a];let x0=A.x0,x1=A.x1,y0=A.y0,y1=A.y1;
  h.forEach(r=>{const t=T2[r];if(Math.hypot(t.cx-A.cx,t.cy-A.cy)<60){x0=Math.min(x0,t.x0);x1=Math.max(x1,t.x1);y0=Math.min(y0,t.y0);y1=Math.max(y1,t.y1)}});
  return{x:(x0+x1)/2,y:(y0+y1)/2,w:Math.max(36,(x1-x0)*1.7,(y1-y0)*1.7*VW/VH)}}
-let MVT=0;function moving(){const sv=$('#map');if(!sv)return;sv.classList.add('mv');sv.parentNode.classList.add('mv');clearTimeout(MVT);MVT=setTimeout(()=>{sv.classList.remove('mv');sv.parentNode.classList.remove('mv')},180)}
-function applyCam(){const sv=$('#map');if(!sv)return;const v=camVB();const cp=$('#copies');if(cp)cp.style.display=v[0]<0||v[0]+v[2]>1000?'':'none';sv.setAttribute('viewBox',v.map(n=>n.toFixed(3)).join(' '));const k=CAM.w/VW;
- sv.classList.toggle('z1',CAM.w<430);sv.classList.toggle('z2',CAM.w<250);sv.classList.toggle('z3',CAM.w<110);
- for(const e of SCL)e.setAttribute('transform',`translate(${e.__x} ${e.__y}) scale(${k.toFixed(5)})`);
- for(const t of NLS){const px=t.__fs/k;t.style.display=px<8?'none':'';t.style.fontSize=(Math.min(px,46)*k).toFixed(3)+'px'}
- if(Math.abs(CAM.w-LCW)/CAM.w>.03||LCD){LCW=CAM.w;LCD=0;declutter()}placeTags();placePop()}
 let LCW=0,LCD=1;const PRI={cap:5,port:4,fac:3,base:2,city:1};
 function declutter(){const k=CAM.w/VW,bx=[],H=(b)=>bx.some(c=>b[0]<c[2]&&b[2]>c[0]&&b[1]<c[3]&&b[3]>c[1]);const L=SCL.filter(e=>e.classList.contains('ft')).map(e=>{const t=e.querySelector('text');return{e,t,p:(PRI[e.classList[1]]||0)+(e.classList.contains('own')?3:0)-(e.classList.contains('dim')?6:0)}}).filter(o=>o.t).sort((a,b)=>b.p-a.p);
  L.forEach(o=>{const x=o.e.__x/k,y=o.e.__y/k,h=o.e.classList.contains('city')?3:8;bx.push([x-h,y-h,x+h,y+h])});
@@ -757,30 +972,55 @@ function zoomAt(f,sx,sy){cancelAnimationFrame(ANIM);ANIM=0;const v=camVB(),mx=v[
 function clampCam(){CAM.y=Math.max(-40,Math.min(600,CAM.y));if(CAM.x<-350)CAM.x+=1000;if(CAM.x>1350)CAM.x-=1000}
 // ── 정적 층: 경위선·산맥·하천·주 경계 ──
 let T2={},SCL=[],NLS=[],TAGS=[],BASESIG='';
-function buildStatic(){const sv=$('#map');let g='';for(let lo=-180;lo<=360;lo+=10){const x=LL(0,lo)[0];g+=`<path d="M${x.toFixed(1)} -40V600"/>`}for(let la=-60;la<=80;la+=10){const y=LL(la,0)[1];g+=`<path d="M-1000 ${y.toFixed(1)}H2000"/>`}
- $('#grat').innerHTML=g;let m='';
- MT.forEach(L=>{const P=L.map(p=>LL(p[0],p[1]));for(let i=0;i<P.length-1;i++){const[a,b]=[P[i],P[i+1]],d=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.round(d/.55)),ux=(b[0]-a[0])/d,uy=(b[1]-a[1])/d;
-  for(let j=0;j<n;j++){const t=(j+.5)/n,x=a[0]+(b[0]-a[0])*t,y=a[1]+(b[1]-a[1])*t,s=.32;m+=`M${(x-ux*s).toFixed(2)},${(y-uy*s).toFixed(2)}L${(x-uy*s*1.1).toFixed(2)},${(y+ux*s*1.1-.0).toFixed(2)}L${(x+ux*s).toFixed(2)},${(y+uy*s).toFixed(2)}`}}});
- $('#terr').innerHTML=`<path class="mt l1" d="${m}"/>${RIV.map(r=>`<path class="riv l1" d="${curve(r.map(p=>LL(p[0],p[1])))}"/>`).join('')}`+
-  PF.FIN.lakes.map(([la,lo,rx,ry,ro])=>{const[x,y]=LL(la,lo);return`<ellipse class="lake l2" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" rx="${(rx*2.778).toFixed(2)}" ry="${(ry*4.058).toFixed(2)}" transform="rotate(${ro} ${x.toFixed(2)} ${y.toFixed(2)})"/>`}).join('');
- const us=NK['United States'],ut=CT&&CT.find(t=>t.k==us);
- $('#usl').innerHTML=ut?`<clipPath id="usc"><path d="${sd(ut)}"/></clipPath><g clip-path="url(#usc)" class="l2">${USL.map(L=>`<path class="usl" d="${lin(L.map(p=>LL(p[0],p[1])))}"/>`).join('')}</g>`:''}
-// ── 국토 층 ──
-function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R)+(FLsig||'');if(sig==BASESIG)return;BASESIG=sig;const y=yr(S),oc=new Set();Object.values(S.R).forEach(R=>R&&R.occ&&oc.add(R.occ));
- let ls='';CT.forEach(t=>ls+=sd(t));
- $('#defs').innerHTML=[...oc].map(k=>`<pattern id="h${k}" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45) scale(.12)"><rect width="3.2" height="7" fill="${darker(NM[k][1],.8)}" opacity=".85"/></pattern>`).join('')+
-  `<path id="ls" d="${ls}" vector-effect="non-scaling-stroke"/><clipPath id="lc"><path d="${ls}"/></clipPath><pattern id="gridhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45) scale(.14)"><rect width="1.4" height="6" fill="#c9a33a" opacity=".55"/></pattern>`+
-  `<pattern id="forest" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="scale(.09)"><path d="M3 7L4.5 3L6 7Z M7.5 9.5L8.6 6.6L9.7 9.5Z" fill="#5d6b45" opacity=".55"/></pattern><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#a3361b"/></marker>`;
- $('#halo').innerHTML=`<use href="#ls" class="h1"/>`;
- const G={};$('#land').innerHTML=CT.map(c=>{const R=S.R[c.k];if(!R)return`<path d="${sd(c)}" fill="#d9cfb6"/>`;(G[R.o]=G[R.o]||[]).push(c);
-  return`<g class="c${FL.has(c.k)?' fl':''}" data-r="${c.k}"><path d="${sd(c)}" fill="${paperize(NM[R.o][1])}"/>${R.occ?`<path d="${sd(c)}" fill="url(#h${R.occ})"/>`:''}</g>`}).join('');
- const fin=NK.Finland,ft=CT.find(t=>t.k==fin),win=qt(S)==1||qt(S)==4;
- $('#coast').innerHTML=`<use href="#ls" class="ci" clip-path="url(#lc)"/>${ft?`<path class="l2" d="${sd(ft)}" fill="url(#forest)" pointer-events="none"/>${win?`<path class="l1" d="${sd(ft)}" fill="#f7fbfc" opacity=".42" pointer-events="none"/>`:''}`:''}<use href="#ls" class="co"/>`;
- $('#copies').innerHTML=`<use href="#world" x="-1000"/><use href="#world" x="1000"/>`;
+// ── 캔버스 지도: 국토·해안·국경·국명은 캔버스 한 장에 그린다 (SVG 수백 개를 매 프레임 다시 그리던 끊김 해소) ──
+let CV=null,CX=null,HITX=null,P2={},LANDP=null,STP=null,DRAWQ=0,MOVING=0,LABS=[],HATCH={},FLON=0,FLT=0;
+const MAPC={sea:'#c9c2a0',grat:'rgba(96,74,44,.22)',halo:'rgba(110,98,66,.32)',coast:'#3a2716',bord:'rgba(104,58,36,.72)',lab:'rgba(66,42,22,.66)',dim:'rgba(228,214,178,.66)',sh:'rgba(92,66,36,.26)'};
+const p2=t=>P2[t.k]||(P2[t.k]=new Path2D(sd(t)));
+let MVT=0;function moving(){MOVING=1;clearTimeout(MVT);MVT=setTimeout(()=>{MOVING=0;requestDraw();declutterSoon(0)},170)}
+function requestDraw(){if(DRAWQ)return;DRAWQ=requestAnimationFrame(()=>{DRAWQ=0;drawMap()})}
+let DCT=0;function declutterSoon(ms=140){clearTimeout(DCT);DCT=setTimeout(()=>{LCW=CAM.w;declutter()},ms)}
+function applyCam(){const sv=$('#map');if(!sv)return;const v=camVB();sv.setAttribute('viewBox',v.map(n=>n.toFixed(3)).join(' '));const k=CAM.w/VW;
+ sv.classList.toggle('z1',CAM.w<430);sv.classList.toggle('z2',CAM.w<250);sv.classList.toggle('z3',CAM.w<110);
+ const tr=` scale(${k.toFixed(5)})`;for(const e of SCL)e.setAttribute('transform',`translate(${e.__x} ${e.__y})`+tr);
+ if(LCD){LCD=0;LCW=CAM.w;declutter()}else if(Math.abs(CAM.w-LCW)/CAM.w>.03)declutterSoon();
+ requestDraw();placeTags();placePop()}
+function buildStatic(){if(!CT)return;LANDP=new Path2D();CT.forEach(t=>LANDP.addPath(p2(t)));
+ const g=new Path2D();for(let lo=-180;lo<=360;lo+=10){const x=LL(0,lo)[0];g.moveTo(x,-40);g.lineTo(x,600)}for(let la=-60;la<=80;la+=10){const y=LL(la,0)[1];g.moveTo(-1000,y);g.lineTo(2000,y)}
+ const mt=new Path2D();MT.forEach(L=>{const P=L.map(p=>LL(p[0],p[1]));for(let i=0;i<P.length-1;i++){const[a,b]=[P[i],P[i+1]],d=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.round(d/.55)),ux=(b[0]-a[0])/d,uy=(b[1]-a[1])/d;
+  for(let j=0;j<n;j++){const t=(j+.5)/n,x=a[0]+(b[0]-a[0])*t,y=a[1]+(b[1]-a[1])*t,s=.32;mt.moveTo(x-ux*s,y-uy*s);mt.lineTo(x-uy*s*1.1,y+ux*s*1.1);mt.lineTo(x+ux*s,y+uy*s)}}});
+ const riv=new Path2D();RIV.forEach(r=>riv.addPath(new Path2D(curve(r.map(p=>LL(p[0],p[1]))))));
+ const lake=new Path2D();PF.FIN.lakes.forEach(([la,lo,rx,ry,ro])=>{const[x,y]=LL(la,lo);lake.moveTo(x+rx*2.778,y);lake.ellipse(x,y,rx*2.778,ry*4.058,ro*Math.PI/180,0,Math.PI*2)});
+ const usl=new Path2D();USL.forEach(L=>{L.forEach((p,i)=>{const[x,y]=LL(p[0],p[1]);i?usl.lineTo(x,y):usl.moveTo(x,y)})});
+ const us=T2[NK['United States']];STP={g,mt,riv,lake,usl,us:us?p2(us):null}}
+function hatch(k,U){let h=HATCH[k];if(!h){const c=document.createElement('canvas');c.width=c.height=12;const x=c.getContext('2d');x.strokeStyle=darker(NM[k][1],.7);x.lineWidth=4;x.beginPath();for(let i=-12;i<=24;i+=12){x.moveTo(i,12);x.lineTo(i+12,0)}x.stroke();h=HATCH[k]=CX.createPattern(c,'repeat')}h.setTransform(new DOMMatrix([U*.9,0,0,U*.9,0,0]));return h}
+function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R);if(sig==BASESIG){requestDraw();return}BASESIG=sig;const y=yr(S),G={};
+ CT.forEach(c=>{const R=S.R[c.k];if(R)(G[R.o]=G[R.o]||[]).push(c)});
  const LB=[];Object.keys(G).forEach(o=>{const L=G[o].slice().sort((a,b)=>b.np-a.np),used=new Set(),t=nm(o,y);
   L.forEach(a=>{if(used.has(a.k))return;L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25)).forEach(c=>used.add(c.k));const P=innerPt(a);if(!P)return;const fs=Math.min(24,P.w*.92/(t.length*1.4),P.h*.8);if(fs<.6)return;LB.push({t,x:P.x,y:P.y,fs})})});
- LB.sort((a,b)=>b.fs-a.fs);const plc=[];let lo='';LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);lo+=`<text class="nl" data-fs="${l.fs.toFixed(2)}" x="${l.x.toFixed(1)}" y="${(l.y+l.fs*.36).toFixed(1)}">${esc(l.t)}</text>`});$('#nlab').innerHTML=lo;
- NLS=[...$('#nlab').children];NLS.forEach(t=>t.__fs=+t.dataset.fs)}
+ LB.sort((a,b)=>b.fs-a.fs);const plc=[];LABS=[];LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);LABS.push(l)});requestDraw()}
+function flash(){FLT=Date.now();clearInterval(window.__fli);window.__fli=setInterval(()=>{FLON=!FLON;requestDraw();if(Date.now()-FLT>5600){clearInterval(window.__fli);FLON=0;requestDraw()}},380)}
+function drawMap(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H=CV.height,v=camVB(),sc=W/v[2],U=dpr/sc,mv=MOVING,world=!V.nat&&V.tab!='mil';
+ CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);
+ const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);
+ const keep=V.nat?new Set(V.nat=='KOR'&&S.N.KOR&&S.N.KOR.lord?['Korea','Dem. Rep. Korea','China'].map(e=>NK[e]):held(S,V.nat)):null;
+ CX.lineJoin='round';
+ for(const off of offs){CX.setTransform(sc,0,0,sc,(off-v[0])*sc,-v[1]*sc);
+  CX.strokeStyle=MAPC.grat;CX.lineWidth=.7*U;CX.stroke(STP.g);
+  if(!mv){CX.strokeStyle=MAPC.halo;CX.lineWidth=6*U;CX.stroke(LANDP)}
+  for(const t of CT){const R=S.R[t.k],P=p2(t);CX.fillStyle=R?paperize(NM[R.o][1]):'#ddd0ae';CX.fill(P);if(R&&R.occ){CX.fillStyle=hatch(R.occ,U);CX.fill(P)}}
+  if(keep){CX.fillStyle=MAPC.dim;for(const t of CT)if(!keep.has(t.k))CX.fill(p2(t))}
+  if(FLON&&FL.size){CX.fillStyle='rgba(163,54,27,.28)';FL.forEach(k=>{const t=T2[k];if(t)CX.fill(p2(t))})}
+  if(!mv){CX.save();CX.clip(LANDP);CX.strokeStyle=MAPC.sh;CX.lineWidth=7*U;CX.stroke(LANDP);CX.restore()}
+  CX.strokeStyle=MAPC.bord;CX.lineWidth=.9*U;if(!mv)CX.setLineDash([4*U,1.6*U,1*U,1.6*U]);for(const t of CT)CX.stroke(p2(t));CX.setLineDash([]);
+  CX.strokeStyle=MAPC.coast;CX.lineWidth=.95*U;CX.stroke(LANDP);
+  if(!world&&CAM.w<430){CX.strokeStyle='rgba(109,86,57,.8)';CX.lineWidth=.9*U;CX.stroke(STP.mt);CX.strokeStyle='rgba(84,110,118,.9)';CX.lineWidth=1.1*U;CX.stroke(STP.riv)}
+  if(!world&&CAM.w<250){CX.fillStyle=MAPC.sea;CX.fill(STP.lake);CX.strokeStyle=MAPC.coast;CX.lineWidth=.7*U;CX.stroke(STP.lake);if(STP.us&&!mv){CX.save();CX.clip(STP.us);CX.strokeStyle='rgba(110,63,53,.55)';CX.lineWidth=.8*U;CX.setLineDash([2*U,2*U]);CX.stroke(STP.usl);CX.setLineDash([]);CX.restore()}}
+  if(V.sel&&V.sel.t=='r'&&T2[V.sel.id]){const P=p2(T2[V.sel.id]);CX.strokeStyle='rgba(255,246,222,.85)';CX.lineWidth=5*U;CX.stroke(P);CX.strokeStyle='#8f2a17';CX.lineWidth=2.4*U;CX.stroke(P)}}
+ CX.setTransform(dpr,0,0,dpr,0,0);const k=VW/v[2];CX.textAlign='center';CX.textBaseline='middle';CX.fillStyle=MAPC.lab;
+ for(const l of LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46);for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.font=`700 ${f.toFixed(1)}px "Noto Serif KR",serif`;if('letterSpacing' in CX)CX.letterSpacing=(f*.3).toFixed(1)+'px';CX.fillText(l.t,sx,sy)}}
+ if('letterSpacing' in CX)CX.letterSpacing='0px'}
+function regionAt(cx,cy){if(!HITX||!CT)return null;const r=$('#map').getBoundingClientRect(),v=camVB();let mx=v[0]+(cx-r.left)/VW*v[2];const my=v[1]+(cy-r.top)/VH*v[3];mx=((mx%1000)+1000)%1000;
+ for(let i=CT.length-1;i>=0;i--){const t=CT[i];if(!S.R[t.k])continue;if(mx<t.x0-1||mx>t.x1+1||my<t.y0-1||my>t.y1+1)continue;if(HITX.isPointInPath(p2(t),mx,my))return t.k}return null}
 let FLsig='';
 // 영토 안쪽에서 가장 넓은 자리를 찾아 국가명 위치로 사용
 function innerPt(t){if(t.lab!==undefined)return t.lab;const R=(t.rs||[]).reduce((a,r)=>!a||r.length>a.length?r:a,null);if(!R||R.length<3)return t.lab=null;
@@ -800,7 +1040,7 @@ function cargoOf(f){const F=profFeats(f.pid),out=[];(f.o.r||[]).forEach(id=>{con
 function portCap(f){const N=S.N[f.n];let c=Math.round((f.o.cap||10)*clamp((N?N.ind:40)/60,.6,1.5));for(const id in PJC){const d=PJC[id];if(d.at==f.fid&&d.pid==f.pid&&d.cap&&pjState(id).s=='done')c+=d.cap}return c}
 function railNb(f){const F=profFeats(f.pid);return(F.rails||'').split(' ').filter(Boolean).map(s=>s.split('-')).filter(p=>p.includes(f.fid)).map(p=>FTI[f.pid+'.'+(p[0]==f.fid?p[1]:p[0])]).filter(Boolean)}
 function myUnits(){const me=mine();if(!me||!S.N[me])return[];const pid=PID(me),bs=FT.filter(f=>f.pid==pid&&f.ty=='base'&&f.n==me&&!f.occ&&!f.o.far),cap=capOf(me),N=S.N[me];
- return((NAT[pid]||{}).units||UNITS0).map(([nmn,c],i)=>{const b=bs.length?bs[i%bs.length]:null;return{i,nm:nmn,c,x:b?b.x:cap[0],y:b?b.y:cap[1],at:b?b.nm:'수도',str:Math.round(N.mil*c/100),dy:bs.length>i?0:i}})}
+ return(natFor(me).units||UNITS0).map(([nmn,c],i)=>{const b=bs.length?bs[i%bs.length]:null;return{i,nm:nmn,c,x:b?b.x:cap[0],y:b?b.y:cap[1],at:b?b.nm:'수도',str:Math.round(N.mil*c/100),dy:bs.length>i?0:i}})}
 function validTgt(me){const h=held(S,me);return Object.keys(S.R).filter(r=>{const d=S.R[r].occ||S.R[r].o;return d!=me&&h.some(x=>dist(x,r)<=1)})}
 // ════════ 오버레이 ════════
 function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vpid=PID(vn),mpid=PID(me),selF=V.sel&&V.sel.t=='f'?FTI[V.sel.id]:V.sel&&V.sel.t=='L'?FTI['KOR.'+((PF.KOR.letters.find(l=>l[0]==V.sel.id)||[])[1])]:null,P=(la,lo)=>LL(la,lo);let o='',ft='';TAGS=[];
@@ -808,9 +1048,6 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
  const usn=natOf('USA');
  if((vn&&vn==usn)||(V.sel&&V.sel.t=='z')){o+=PF.USA.grid.map(g=>`<path class="gridz l1" d="${lin(g.map(p=>P(p[0],p[1])))}Z"/>`).join('');
   for(const z in PF.USA.zones){const Z=PF.USA.zones[z],st=pjState(Z.pj).s;o+=`<path class="zone l1${V.sel&&V.sel.id==z?' on':''}" data-z="${z}" d="${lin(Z.p.map(p=>P(p[0],p[1])))}Z"${st=='done'?' style="fill:url(#gridhatch)"':''}/>`}}
- if(vn&&CT){const ks=held(S,vn);let rs=ks.filter(k=>T2[k]).map(k=>sd(T2[k])).join('');if(vpid=='KOR'&&S.N.KOR.lord){rs=['Korea','Dem. Rep. Korea','China'].map(n=>T2[NK[n]]&&sd(T2[NK[n]])).join('')}
-  o+=`<path class="dimm" d="M-1500 -600H2500V1300H-1500Z${rs}"/>`}
- if(V.sel&&V.sel.t=='r'&&T2[V.sel.id]){const d=sd(T2[V.sel.id]);o+=`<path class="selr2" d="${d}"/><path class="selr" d="${d}"/>`}
  if(V.tab=='mil'&&me&&alive(S,me)){const W=wars(S,me),h=held(S,me);W.forEach(e=>{Object.keys(S.R).forEach(r=>{const d=S.R[r].occ||S.R[r].o;if(d==e&&T2[r]&&h.some(x=>dist(x,r)<=1))o+=`<path class="front" d="${sd(T2[r])}"/>`})});
   h.forEach(r=>{if(T2[r]&&W.some(e=>Object.keys(S.R).some(q=>(S.R[q].occ||S.R[q].o)==e&&dist(r,q)<=1)))o+=`<path class="frm" d="${sd(T2[r])}"/>`});
   if(V.bt.u!=null)validTgt(me).forEach(r=>{if(T2[r])o+=`<path class="tgt" data-tgt="${r}" d="${sd(T2[r])}"/>`});
@@ -845,6 +1082,8 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
  // 부대 말판
  if(me&&alive(S,me)&&(mil||vn==me)){const U=myUnits(),col=NM[me][1];U.forEach(u=>{ft+=`<g class="ctr${V.bt.u==u.i?' sel':''}${mil?'':' l1'}" data-u="${u.i}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(-34 ${22+u.dy*25})">${ctr(col,u.str,u.c>=50?'XXX':'XX')}${mil?`<text x="21" y="4" style="font:600 10px var(--sans);fill:#1a1a1a;paint-order:stroke;stroke:#efe6cf;stroke-width:3px">${u.nm}</text>`:''}</g></g>`})}
  Object.keys(S.N).filter(n=>mil&&n!=me&&alive(S,n)&&atWar(S,me,n)).forEach(n=>{const c=capOf(n),w=me&&atWar(S,me,n);ft+=`<g class="ctr en${w?'':' l1'}" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}"><g transform="translate(-30 18)">${ctr(NM[n][1],w?Math.round(S.N[n].mil):'?','XXX')}</g></g>`});
+ Object.entries(S.FR||{}).forEach(([r,F])=>{const t=T2[r],P=t&&innerPt(t),c=P?[P.x,P.y]:LBL[r];if(!c||!S.N[F.a])return;const a=F.p/100*Math.PI*2,x=Math.sin(a)*11,y=-Math.cos(a)*11,mine2=F.a==me||F.d==me;
+  ft+=`<g class="frt${mine2?' me':''}" data-fr="${r}" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}"><circle class="fb" r="14"/><circle r="11" fill="none" stroke="#c9b78f" stroke-width="3"/>${F.p>0?`<path d="M0 -11A11 11 0 ${F.p>50?1:0} 1 ${x.toFixed(2)} ${y.toFixed(2)}" fill="none" stroke="${darker(NM[F.a][1],.75)}" stroke-width="3.4"/>`:''}<path d="M-5 -5L5 5M5 -5L-5 5" stroke="#2a1f14" stroke-width="1.6"/><text y="25" text-anchor="middle">${F.p}%</text></g>`});
  V.pulse.forEach(p=>ft+=`<g data-sx="${p.x.toFixed(3)}" data-sy="${p.y.toFixed(3)}"><circle class="pulse" r="16"/><circle class="pulse" r="16" style="animation-delay:.5s"/></g>`);
  $('#fts').innerHTML=ft;LCD=1;SCL=[...$('#map').querySelectorAll('[data-sx]')];SCL.forEach(e=>{e.__x=+e.dataset.sx;e.__y=+e.dataset.sy});applyCam()}
 const ctr=(col,str,sz)=>`<rect class="b" x="-17" y="-11" width="34" height="22" fill="${paperize(col)}" stroke="#1d1d1d"/><rect x="-17" y="-11" width="34" height="5" fill="${darker(col,.5)}"/><text x="-6.5" y="-6.9" text-anchor="middle" style="font:700 4.6px var(--sans);fill:#fff;letter-spacing:.5px">${sz}</text><rect x="-14" y="-3.5" width="14" height="9.5" fill="#efe6cf" stroke="#1d1d1d" stroke-width=".9"/><path d="M-14-3.5L0 6M0-3.5L-14 6" stroke="#1d1d1d" stroke-width=".8"/><text x="8.5" y="5.2" text-anchor="middle">${str}</text>`;
@@ -853,10 +1092,10 @@ function placeTags(){const el=$('#tags');if(!el)return;const m=26,de=$('#doc'),d
   return`<div class="et${t.hot?' hot':''}" data-act="${t.act}" style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px">${esc(t.t)}</div>`}).join('')}
 // ════════ 셸 ════════
 function shell(){if($('#play'))return;app.className='';app.innerHTML=`<div id="play" class="play"><header class="bar" id="bar"></header><nav class="tabs" id="tabs"></nav>
-<div class="mapw" id="mapw"><svg id="map" xmlns="http://www.w3.org/2000/svg"><defs id="defs"></defs><rect x="-1500" y="-600" width="4000" height="1900" class="sea"/><g id="grat"></g><g id="copies"></g><g id="world"><g id="halo"></g><g id="land"></g><g id="coast"></g><g id="terr"></g><g id="usl"></g></g><g id="ovl"></g><g id="nlab"></g><g id="fts"></g></svg>
+<div class="mapw" id="mapw"><canvas id="cv"></canvas><svg id="map" xmlns="http://www.w3.org/2000/svg"><defs id="defs"><pattern id="gridhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45) scale(.14)"><rect width="1.4" height="6" fill="#b08a2e" opacity=".55"/></pattern><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8f2a17"/></marker></defs><g id="ovl"></g><g id="fts"></g></svg>
 <div class="grain" id="grain"></div><div id="plate" class="plate"></div><div class="zm"><button data-act="zin" aria-label="확대">+</button><button data-act="zout" aria-label="축소">−</button><button data-act="zhome" aria-label="내 국가로">⌂</button></div>
 <div id="tags"></div><div id="pop"></div><section id="sheet" class="sheet"></section><aside id="doc" class="doc"></aside><div id="agenda" class="agenda" data-act="agenda"></div></div></div>`;
- grain();const sv=$('#map'),mw=$('#mapw');const rs=()=>{const r=mw.getBoundingClientRect();VW=r.width||1;VH=r.height||1;applyCam()};new ResizeObserver(rs).observe(mw);rs();
+ grain();const sv=$('#map'),mw=$('#mapw');CV=$('#cv');CX=CV.getContext('2d');HITX=document.createElement('canvas').getContext('2d');const rs=()=>{const r=mw.getBoundingClientRect();VW=r.width||1;VH=r.height||1;const d=Math.min(2,window.devicePixelRatio||1);CV.__dpr=d;CV.width=Math.round(VW*d);CV.height=Math.round(VH*d);CV.style.width=VW+'px';CV.style.height=VH+'px';applyCam()};new ResizeObserver(rs).observe(mw);rs();
  const PTS={};let mv=0,lastTap=0,lastR=null;
  sv.addEventListener('pointerdown',e=>{for(const k in PTS)if(k!=e.pointerId&&e.pointerType=='mouse')delete PTS[k];PTS[e.pointerId]=[e.clientX,e.clientY];mv=0;cancelAnimationFrame(ANIM);ANIM=0});
  window.addEventListener('pointermove',e=>{if(!PTS[e.pointerId])return;if(e.pointerType=='mouse'&&!e.buttons){delete PTS[e.pointerId];return}const ks=Object.keys(PTS),o=PTS[e.pointerId];
@@ -865,8 +1104,9 @@ function shell(){if($('#play'))return;app.className='';app.innerHTML=`<div id="p
  const up=e=>{delete PTS[e.pointerId]};window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);
  sv.addEventListener('wheel',e=>{e.preventDefault();const r=sv.getBoundingClientRect();zoomAt(Math.pow(1.0018,e.deltaY*(e.deltaMode?30:1)),e.clientX-r.left,e.clientY-r.top)},{passive:false});
  sv.addEventListener('click',e=>{if(mv>6)return;const t=e.target,f=t.closest('[data-f]'),u=t.closest('[data-u]'),tg=t.closest('[data-tgt]'),z=t.closest('[data-z]'),rt=t.closest('[data-rt]'),c=t.closest('[data-r]');
+  const fr=t.closest('[data-fr]');if(fr&&!(V.bt.u!=null)){act('r:'+fr.dataset.fr);return}
   if(u){act('unit:'+u.dataset.u);return}if(tg&&V.bt.u!=null){act('tgt:'+tg.dataset.tgt);return}if(f){act('f:'+f.dataset.f);return}if(z){act('z:'+z.dataset.z);return}if(rt){act('rt:'+rt.dataset.rt);return}
-  if(c){const r=c.dataset.r,now=Date.now();if(r==lastR&&now-lastTap<420){act('enter:'+(S.R[r].occ||S.R[r].o));lastR=null;return}lastTap=now;lastR=r;act('r:'+r);return}
+  const r=c?c.dataset.r:regionAt(e.clientX,e.clientY);if(r){const now=Date.now();if(r==lastR&&now-lastTap<420){act('enter:'+(S.R[r].occ||S.R[r].o));lastR=null;return}lastTap=now;lastR=r;act('r:'+r);return}
   if(V.sel||V.bt.t){V.sel=null;V.bt.t=null;V.bt.st=0;ui()}});
  $('#play').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.closest('#map'))return;if(b.disabled)return;e.stopPropagation();act(b.dataset.act,b)});
  buildStatic()}
@@ -886,66 +1126,66 @@ function plateHTML(){const n=V.nat,y=yr(S);if(!n)return`<span style="color:#c8cd
  return`<button data-act="back" style="height:28px">← 세계지도</button>${flag(n,30,20)}<b>${esc(nm(n,y))}</b><small>${y}년 ${qt(S)}분기</small>${me?'':'<span class="vt">방문</span>'}`}
 // ════════ 안건 ════════
 function agendaFor(me){if(!me||!S.N[me])return null;const y=yr(S),N=S.N[me];const pt=S.TR.find(t=>t.st=='p'&&t.b==me&&!(O.sign||[]).includes(t.id)&&!(O.rej||[]).includes(t.id));
- if(pt){const np=S.TR.filter(t=>t.st=='p'&&t.b==me&&!(O.sign||[]).includes(t.id)&&!(O.rej||[]).includes(t.id)).length;return{t:np>1?`조약안 ${np}건 도착 (${nm(pt.a,y)} 외)`:`${nm(pt.a,y)}에서 ${TY[pt.ty]} 조약안 도착`,s:'외교 탭에서 수정 조항을 펼쳐 서명 또는 거절',go:'tab:dip'}}
- const W=wars(S,me);if(W.length&&!(O.atk||[]).length)return{t:`${W.map(x=>nm(x,y)).join('·')} 전선 명령 없음`,s:'군정 탭에서 부대 말판을 골라 목표 지정',go:'tab:mil'};
- const dd=decDue(me);if(dd)return{t:'역사적 결정: '+dd.t,s:dd.d+' — 눌러서 국가 전략 열기',go:'strat',pf:1};
- const pid=PID(me),P=pid&&PF[pid];if(pid=='KOR'&&!N.lord)return{t:'독립 후 첫 행정 예산 편성',s:'재정 장부에서 세출 중점을 정하세요',go:'tab:fin'};if(P&&P.ag){const done=P.ag.done?!!P.ag.done(O):false;if(!done)return{...P.ag,pf:1,done}}
- const lo=Object.entries(N.st).sort((a,b)=>a[1]-b[1])[0];if(lo[1]<12)return{t:`${KIND[lo[0]]} 비축 부족 (${lo[1]|0})`,s:'항구·공장을 눌러 확보 방안 지정',go:'tab:ind'};
- return{t:'이번 분기 명령 정리 완료',s:'준비 완료를 눌러 다음 분기로',go:'ready',done:1}}
-function agendaHTML(){const me=mine(),a=agendaFor(me);if(!a)return'';return`<div style="flex:1;min-width:0"><small>이번 분기 안건</small><b>${esc(a.t)}</b><span>${esc(a.s)}</span></div><span class="go">›</span>`}
+ if(pt){const np=S.TR.filter(t=>t.st=='p'&&t.b==me&&!(O.sign||[]).includes(t.id)&&!(O.rej||[]).includes(t.id)).length;return{t:np>1?`조약안 ${np}건 도착 (${nm(pt.a,y)} 외)`:`${nm(pt.a,y)}에서 ${TY[pt.ty]} 조약안 도착`,s:'외무부 서류함 — 서명 대기',go:'tab:dip'}}
+ const W=wars(S,me);if(W.length&&!(O.atk||[]).length)return{t:`${W.map(x=>nm(x,y)).join('·')} 전선 명령 없음`,s:'참모본부 — 작전 명령 대기',go:'tab:mil'};
+ const dd=decDue(me);if(dd)return{t:'역사적 결정: '+dd.t,s:'사료: '+dd.h.slice(0,34)+'…',go:'strat',pf:1};
+ const pid=PID(me),P=pid&&PF[pid];if(pid=='KOR'&&!N.lord)return{t:'독립 후 첫 행정 예산 편성',s:'재무부: 세출 중점을 정할 것',go:'tab:fin'};if(P&&P.ag){const done=P.ag.done?!!P.ag.done(O):false;if(!done)return{...P.ag,pf:1,done}}
+ const lo=Object.entries(N.st).sort((a,b)=>a[1]-b[1])[0];if(lo[1]<12)return{t:`${KIND[lo[0]]} 비축 부족 (${lo[1]|0})`,s:'산업부 보고 — 확보 방안을 지시할 것',go:'tab:ind'};
+ return{t:'금 분기 결재 완료',s:'남은 서류 없음. 분기를 마감하시오.',go:'ready',done:1}}
+function agendaHTML(){const me=mine(),a=agendaFor(me);if(!a)return'';return`<div style="flex:1;min-width:0"><small>금 분기 안건</small><b>${esc(a.t)}</b><span>${esc(a.s)}</span></div><span class="go">›</span>`}
 // ════════ 정보창 ════════
 function sheetHTML(){const s=V.sel;if(!s)return null;const me=mine(),y=yr(S);
  if(s.t=='f'){const f=FTI[s.id];if(!f)return null;return featPanel(f)}
  if(s.t=='r'){const k=s.id,R=S.R[k];if(!R)return null;const o=R.o,v=RG[k][5],nb2=Object.keys(S.R).filter(r=>r!=k&&dist(k,r)<=1&&(S.R[r].occ||S.R[r].o)!=o).map(r=>S.R[r].occ||S.R[r].o).filter((x,i,a)=>a.indexOf(x)==i).slice(0,6);
   return{ic:flag(o,26,18),t:RG[k][0],s:`${nm(o,y)}${R.occ?' · 점령: '+nm(R.occ,y):''}`,b:`<div class="kv"><div><small>식량</small><b>${v[0]}</b></div><div><small>철강</small><b>${v[1]}</b></div><div><small>석유</small><b>${v[2]}</b></div></div>
-   ${R.occ?`<div class="warn">${esc(nm(R.occ,y))} 군이 이 지역을 점령 중입니다. 생산은 점령국으로 넘어갑니다.</div>`:''}<div class="sec"><span>인접 세력</span></div><div class="note" style="margin:0">${nb2.map(x=>esc(nm(x,y))).join(' · ')||'없음'}</div>
+   ${R.occ?`<div class="warn">${esc(nm(R.occ,y))} 군 점령 중. 이 지역의 산출은 점령국으로 넘어간다.</div>`:''}${frontHTML(k)}<div class="sec"><span>인접 세력</span></div><div class="note" style="margin:0">${nb2.map(x=>esc(nm(x,y))).join(' · ')||'없음'}</div>
    <div class="cmds"><button class="pri" data-act="enter:${R.occ||o}">${esc(nm(R.occ||o,y))} 내부 지도 열기</button>${me&&o!=me?`<button data-act="dipto:${o}">회담 준비</button>`:''}${V.tab=='mil'&&me&&validTgt(me).includes(k)?`<button data-act="tab:mil">부대 배정</button>`:''}</div>`}}
  if(s.t=='z')return zonePanel(s.id);
  if(s.t=='rt'){const[pid,id]=s.id.split('.'),R=profFeats(pid).routes[id],ps=FT.filter(f=>f.pid==pid&&(f.o.r||[]).includes(id));if(!R)return null;const cs=ps.length?cargoOf(ps[0]).filter(c=>c.rid==id):[];
   return{ic:`<svg class="ic" viewBox="-13 -13 26 26">${IC.port}</svg>`,t:R.n,s:`${ps.map(f=>f.nm).join('·')} ↔ ${R.d}`,b:`<div class="sec"><span>이 항로로 들어오는 화물</span><span>분기당</span></div>${cs.map(c=>`<div class="ln"><div class="g">${esc(c.l)}<small>${KIND[c.k]} · ${esc(EN2KR[c.en]||c.en)}${c.so?' ('+esc(nm(c.so,y))+')':''}</small></div>${c.cut?'<span class="tag bad">중단</span>':''}<div class="v">${c.cut?0:c.a}</div></div>`).join('')}
-   <div class="note">항로를 지나는 화물은 기항 항구의 수송 여력을 씁니다. 출발지와 교전하면 화물이 끊깁니다.</div><div class="cmds">${ps.map(f=>`<button data-act="f:${f.id}">${esc(f.nm)} 항구 정보</button>`).join('')}</div>`}}
+   <div class="note">기항 항구의 수송 여력을 쓴다. 출발지와 교전하면 끊긴다.</div><div class="cmds">${ps.map(f=>`<button data-act="f:${f.id}">${esc(f.nm)} 항구 정보</button>`).join('')}</div>`}}
  if(s.t=='L')return letterPanel(s.id);return null}
 function featPanel(f){const me=mine(),y=yr(S),n=f.n,N=n&&S.N[n],mineF=me&&me==n,ic=`<svg class="ic" viewBox="-13 -13 26 26">${IC[f.ty]||IC.city}</svg>`,occ=f.occ;
  const ownerS=n?nm(n,y):'',sub={cap:'수도 · 내각과 정책',port:'항구 · 무역과 수송',fac:'공업도시 · 생산과 기술',base:'군사 거점 · 주둔 편제',city:'도시'}[f.ty]+(ownerS?' · '+ownerS:'');
  let b='';if(occ)b+=`<div class="warn"><b>통제 상태: ${esc(nm(occ,y))} 점령</b><br>이 시설의 계약과 수송은 중단되었습니다.</div>`;
- if(!N&&!f.org){return{ic,t:f.nm,s:sub,b:b+'<div class="note">이 지역을 다스리는 국가가 없습니다.</div>'}}
+ if(!N&&!f.org){return{ic,t:f.nm,s:sub,b:b+'<div class="note">주인 없는 땅.</div>'}}
  // 대한민국 임시정부 조직 표식
  if(f.org&&f.pid=='KOR'){const L=PF.KOR.letters.filter(l=>l[1]==f.fid),K=S.N.KOR;b+=`<div class="kv"><div><small>임시정부 자금</small><b>${K?K.g|0:0}</b></div><div><small>독립 추진</small><b>${K?Math.round(K.ind2):0}%</b></div><div><small>지지</small><b>${K?K.sup|0:0}</b></div></div>`;
   if(L.length&&me=='KOR')b+=`<div class="sec"><span>이곳에서 온 서신</span></div>`+L.map(l=>`<button class="letter${V.sel&&V.sel.id==l[0]?' hot':''}${V.seen[l[1]]?'':' new'}" data-act="L:${l[0]}"><b>${esc(l[2])}</b>${esc(l[3])}</button>`).join('');
   const pj=Object.keys(PJC).filter(id=>PJC[id].pid=='KOR'&&(PJC[id].at==f.fid||f.o.pj==id));pj.forEach(id=>b+=pjRow(id,mineF||me=='KOR'));
-  if(f.fid=='YJ'||f.fid=='SEL')b+=`<div class="sec"><span>국내 연락 업무</span></div><div class="note" style="margin:0">독립 추진: 자금의 10%를 써서 진행도 +25%. 100%에 이르면 종주국에서 벗어납니다.</div>${me=='KOR'?`<div class="cmds"><button class="${O.indep?'on':'pri'}" data-act="indep">${O.indep?'독립 추진 명령됨 (취소)':'독립 추진 명령'}</button></div>`:''}`;
+  if(f.fid=='YJ'||f.fid=='SEL')b+=`<div class="sec"><span>국내 연락 업무</span></div><div class="note" style="margin:0">독립 추진 — 자금의 10%를 들여 진척 +25%. 100%에 이르면 종주국에서 벗어난다.</div>${me=='KOR'?`<div class="cmds"><button class="${O.indep?'on':'pri'}" data-act="indep">${O.indep?'독립 추진 명령됨 (취소)':'독립 추진 명령'}</button></div>`:''}`;
   if(f.o.pj&&pjState(f.o.pj).s=='done')b+=`<div class="sec"><span>거점 업무</span></div><div class="ln"><div class="g">동포 후원금 정기 수령<small>매 분기 자금 +1</small></div><span class="tag ok">운영 중</span></div>`;
   return{ic,t:f.nm,s:'대한민국 임시정부 활동 거점',b}}
  if(f.ty=='port'){const cs=cargoOf(f),cap=portCap(f),used=cs.filter(c=>!c.cut).reduce((a,c)=>a+c.a,0),rem=Math.max(0,cap-used),tr=S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)).length,stl=Math.min(...Object.values(N.st));
   b+=`<div class="kv"><div><small>수송 여력</small><b>${rem}<span style="font-size:11px;color:var(--mu)"> / ${cap}척</span></b></div><div><small>입항 화물</small><b>${used}</b></div><div><small>통상 계약</small><b>${tr}</b></div></div><div class="bar2"><i style="width:${cap?Math.min(100,used/cap*100):0}%" class="u"></i></div>`;
   const byR={};cs.forEach(c=>(byR[c.rid]=byR[c.rid]||{n:c.rn,c:[]}).c.push(c));
   b+=`<div class="sec"><span>들어오는 화물 · 항로별</span><span>분기당 척</span></div>`+Object.entries(byR).map(([rid,R])=>`<div class="ln cl${V.hl==f.pid+'.'+rid?' hot':''}" data-act="hl:${f.pid}.${rid}"><div class="g"><b style="font-weight:600">${esc(R.n)}</b>${R.c.map(c=>`<small>${esc(c.l)} · ${KIND[c.k]}${c.cut?' · <span style="color:var(--bad)">중단</span>':''}</small>`).join('')}</div><div class="v">${R.c.reduce((a,c)=>a+(c.cut?0:c.a),0)}</div></div>`).join('')||'<div class="note">정기 항로 없음</div>';
-  const blk={secure:`<div class="sec"><span>원료 확보 · 우선 처리 화물</span></div>${mineF&&!occ?`<div class="cmds">${['f','s','o'].map(k=>`<button class="${O.cargo==k?'on':''}" data-act="cargo:${k}">${KIND[k]} 우선</button>`).join('')}</div><div class="note">지정한 화물 +2, 나머지 −1 (다음 분기 비축에 반영)</div>`:'<div class="note">우선 처리 화물은 소유국만 지정할 수 있습니다.</div>'}`,
+  const blk={secure:`<div class="sec"><span>원료 확보 · 우선 처리 화물</span></div>${mineF&&!occ?`<div class="cmds">${['f','s','o'].map(k=>`<button class="${O.cargo==k?'on':''}" data-act="cargo:${k}">${KIND[k]} 우선</button>`).join('')}</div><div class="note">지정 화물 +2, 그 외 −1. 다음 분기 비축에 반영.</div>`:'<div class="note">화물 지정은 해당국 항만청 소관.</div>'}`,
    contract:`<div class="sec"><span>통상 계약</span></div>${[...new Set(cs.map(c=>c.so).filter(x=>x&&x!=n&&S.N[x]))].map(x=>{const p=pact(S,n,x,'trade');return`<div class="ln"><div class="g">${esc(nm(x,y))}<small>${occ?'점령으로 계약 중단':p?'무역 협정 유효':atWar(S,n,x)?'교전 중 · 거래 불가':'협정 없음'}</small></div>${mineF&&!p&&!occ&&!atWar(S,n,x)?`<button data-act="prop:${x}:trade">협정 제안</button>`:p?'<span class="tag ok">유효</span>':''}</div>`}).join('')||'<div class="note">계약 상대 없음</div>'}`,
    link:`<div class="sec"><span>본토 연결</span></div><div class="ln"><div class="g">본토 연락선·철도<small>${railNb(f).length?'철도로 '+railNb(f).map(x=>x.nm).join('·')+' 연결':'철도 연결 없음 · 연락선 의존'}</small></div><span class="tag">${occ?'중단':'운항 중'}</span></div>${Object.keys(PJC).filter(id=>PJC[id].pid==f.pid&&PJC[id].p&&PJC[id].p.some(p=>Math.hypot(LL(p[0],p[1])[0]-f.x,LL(p[0],p[1])[1]-f.y)<1)).map(id=>pjRow(id,mineF)).join('')}`};
   let ord=['secure','contract'];if(f.o.isl)ord=['link','secure','contract'];else if(tr>0)ord=['contract','secure'];else if(stl<15)ord=['secure','contract'];
   b+=ord.map(k=>blk[k]).join('');if(f.o.pj)b+=`<div class="sec"><span>항만 사업</span></div>`+pjRow(f.o.pj,mineF&&!occ);
   if(f.o.ore&&PF[f.pid].alloc)b+=allocBlock(f,mineF);
-  if(!mineF&&me&&me!=n&&!occ)b+=`<div class="cmds"><button class="pri" data-act="prop:${n}:trade">${esc(nm(n,y))}에 무역 제안</button></div><div class="note">방문국 항구: 화물 지정과 항만 예산은 비공개입니다.</div>`;
+  if(!mineF&&me&&me!=n&&!occ)b+=`<div class="cmds"><button class="pri" data-act="prop:${n}:trade">${esc(nm(n,y))}에 무역 제안</button></div><div class="note">외국 항구. 화물 목록과 항만 예산은 열람 불가.</div>`;
   return{ic,t:f.nm,s:sub,b}}
- if(f.ty=='cap'){if(mineF){b+=`<div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>지지</small><b>${N.sup|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div></div><div class="sec"><span>내각 · 국내 정책</span></div>${pols(N,'civ',PC,true)}`;
+ if(f.ty=='cap'){if(mineF){b+=`<div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>지지</small><b>${N.sup|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div></div><div class="sec"><span>내각 법령</span></div>${pols(N,'civ',PC,true)}`;
    if(N.lord)b+=`<div class="sec"><span>독립 추진</span><span>${Math.round(N.ind2)}%</span></div><div class="cmds"><button class="${O.indep?'on':'pri'}" data-act="indep">${O.indep?'독립 추진 명령됨':'독립 추진 (국고 10%)'}</button></div>`;
    b+=`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(n)}`}
   else{b+=pubInfo(n)}return{ic,t:f.nm,s:sub,b}}
  if(f.ty=='fac'){if(mineF){const fo=O.focus||'ind';b+=`<div class="kv"><div><small>산업력</small><b>${N.ind|0}</b></div><div><small>철강 비축</small><b>${N.st.s|0}</b></div><div><small>석유 비축</small><b>${N.st.o|0}</b></div></div><div class="sec"><span>예산 중점</span><span>지출 ${(N.g*.2)|0}</span></div><div class="cmds">${[['ind','산업'],['wel','복지'],['res','연구'],['def','국방']].map(([k,l])=>`<button class="${fo==k?'on':''}" data-act="focus:${k}">${l}</button>`).join('')}</div><div class="sec"><span>연구 방향</span></div>${pols(N,'res',PR,true)}`;
    const al=PF[f.pid].alloc&&PF[f.pid].alloc.find(a=>a[0]==f.fid);if(al)b+=`<div class="sec"><span>배분 대기 원료</span></div><div class="ln"><div class="g">${esc(al[3])}<small>원료 배분 시 예산 중점이 ‘${{ind:'산업',def:'국방',res:'연구'}[al[2]]}’으로 바뀝니다</small></div><button class="${O.focus==al[2]?'on':''}" data-act="alloc:${f.pid}.${f.fid}">이곳에 배분</button></div>`}
-  else b+=`<div class="kv"><div><small>산업력 (공개)</small><b>${N.ind|0}</b></div><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>교역 협정</small><b>${S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)).length}</b></div></div><div class="note">생산 주문과 연구 방향은 비공개입니다.</div>`;
+  else b+=`<div class="kv"><div><small>산업력 (공개)</small><b>${N.ind|0}</b></div><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>교역 협정</small><b>${S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)).length}</b></div></div><div class="note">생산 주문과 연구 방향은 열람 불가.</div>`;
   b+=cityExtra(f,mineF);return{ic,t:f.nm,s:sub,b}}
- if(f.ty=='base'){if(mineF){const U=myUnits().filter(u=>u.at==f.nm);b+=`<div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${wars(S,n).length}</b></div><div><small>주둔 말판</small><b>${U.length}</b></div></div><div class="sec"><span>주둔 편제</span></div>${U.map(u=>`<div class="ln"><div class="g">${u.nm}<small>군사력의 ${u.c}% · 병력 ${u.str}</small></div><button data-act="unit:${u.i}">말판 선택</button></div>`).join('')||'<div class="note">이 거점에 배치된 말판이 없습니다.</div>'}<div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}<div class="cmds"><button class="pri" data-act="tab:mil">군정 화면 열기</button></div>`;
+ if(f.ty=='base'){if(mineF){const U=myUnits().filter(u=>u.at==f.nm);b+=`<div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${wars(S,n).length}</b></div><div><small>주둔 말판</small><b>${U.length}</b></div></div><div class="sec"><span>주둔 편제</span></div>${U.map(u=>`<div class="ln"><div class="g">${u.nm}<small>군사력의 ${u.c}% · 병력 ${u.str}</small></div><button data-act="unit:${u.i}">말판 선택</button></div>`).join('')||'<div class="note">주둔 부대 없음.</div>'}<div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}<div class="cmds"><button class="pri" data-act="tab:mil">군정 화면 열기</button></div>`;
    Object.keys(PJC).filter(id=>PJC[id].at==f.fid&&PJC[id].pid==f.pid).forEach(id=>b+=pjRow(id,true))}
-  else b+=`<div class="kv"><div><small>추정 군사력</small><b>${N.mil>60?'강':N.mil>30?'중':'약'}</b></div><div><small>교전국</small><b>${wars(S,n).length}</b></div><div><small>동맹</small><b>${S.TR.filter(t=>t.st=='on'&&t.ty=='ally'&&(t.a==n||t.b==n)).length}</b></div></div><div class="note">주둔 편제와 군사 정책은 비공개 군정 자료입니다.</div>`;
+  else b+=`<div class="kv"><div><small>추정 군사력</small><b>${N.mil>60?'강':N.mil>30?'중':'약'}</b></div><div><small>교전국</small><b>${wars(S,n).length}</b></div><div><small>동맹</small><b>${S.TR.filter(t=>t.st=='on'&&t.ty=='ally'&&(t.a==n||t.b==n)).length}</b></div></div><div class="note">주둔 편제와 군사 정책은 열람 불가.</div>`;
   return{ic,t:f.nm,s:sub,b}}
  b+=cityExtra(f,mineF);return{ic,t:f.nm,s:sub,b}}
 function cityExtra(f,mineF){let b='';const nb=railNb(f);if(nb.length)b+=`<div class="sec"><span>철도 연결</span></div><div class="note" style="margin:0">${nb.map(x=>`<a data-act="f:${x.id}" style="color:inherit;cursor:pointer;text-decoration:underline">${esc(x.nm)}</a>`).join(' · ')}</div>`;
  Object.keys(PJC).filter(id=>{const d=PJC[id];return d.pid==f.pid&&d.p&&d.p.some(p=>Math.abs(p[0]-f.la)<.05&&Math.abs(p[1]-f.lo)<.05)}).forEach(id=>{const st=pjState(id).s;b+=`<div class="sec"><span>${st=='done'?'개통 노선 · 이용 가능':'연결 사업'}</span></div>`+pjRow(id,mineF)});
  if(f.pid=='FIN'&&f.o.w)b+=finBlock(f,mineF);return b}
 function pjRow(id,can){const d=PJC[id],st=pjState(id),N=S.N[natOf(d.pid)];return`<div class="ln"><div class="g">${esc(d.name)}<small>예산 ${d.cost} · ${d.q}분기${d.ind?' · 완공 시 산업력 +'+d.ind:''}${d.mil?' · 군사력 +'+d.mil:''}${d.gpt?' · 매 분기 국고 +'+d.gpt:''}${d.cap?' · 수송 여력 +'+d.cap:''}</small></div>${pjLabel(id)}${can&&st.s=='none'?`<button class="pri" data-act="proj:${id}" ${N&&N.g<d.cost?'disabled':''}>승인</button>`:can&&st.s=='plan'?`<button data-act="unproj:${id}">취소</button>`:''}</div>`}
-function allocBlock(f,can){const A=PF[f.pid].alloc;return`<div class="sec"><span>이 원료를 기다리는 국내 공업지대</span></div>${A.map(a=>{const t=FTI[f.pid+'.'+a[0]];return`<div class="ln cl" data-act="f:${f.pid}.${a[0]}"><div class="g">${esc(a[1])}<small>${esc(a[3])}</small></div>${can?`<button class="${O.focus==a[2]?'on':''}" data-act="alloc:${f.pid}.${a[0]}">배분</button>`:''}</div>`}).join('')}<div class="note">배분 대상을 바꾸면 예산 중점과 생산 주문이 함께 바뀝니다.</div>`}
+function allocBlock(f,can){const A=PF[f.pid].alloc;return`<div class="sec"><span>이 원료를 기다리는 국내 공업지대</span></div>${A.map(a=>{const t=FTI[f.pid+'.'+a[0]];return`<div class="ln cl" data-act="f:${f.pid}.${a[0]}"><div class="g">${esc(a[1])}<small>${esc(a[3])}</small></div>${can?`<button class="${O.focus==a[2]?'on':''}" data-act="alloc:${f.pid}.${a[0]}">배분</button>`:''}</div>`}).join('')}<div class="note">배분처를 바꾸면 예산 중점과 생산 주문도 바뀐다.</div>`}
 function finBlock(f,can){const N=S.N[natOf('FIN')];if(!N)return'';const lv=V.mob||(O.pol&&O.pol.mil)||(N.pol&&N.pol.mil)||'volunteer',share={volunteer:.08,conscript:.2,mobilize:.45,garrison:.12}[lv]||.08,[w,r]=f.o.w,res=Math.round(r+w*share),civ=Math.max(0,w-Math.round(w*share));
  const indD={volunteer:0,conscript:0,mobilize:-.4,garrison:0}[lv],milD={volunteer:0,conscript:N.pop*.01,mobilize:N.pop*.025,garrison:N.pop*.004}[lv],win=qt(S)==1||qt(S)==4;
  return`<div class="sec"><span>지역 인력 · ${win?'겨울 (벌목·수송 감소)':'여름 (농번기)'}</span><span>천 명</span></div><div class="kv"><div><small>민간 산업 인력</small><b>${civ}</b></div><div><small>예비 인력</small><b>${res}</b></div><div><small>동원 비율</small><b>${Math.round(share*100)}%</b></div></div>
@@ -953,21 +1193,24 @@ function finBlock(f,can){const N=S.N[natOf('FIN')];if(!N)return'';const lv=V.mob
  <div class="ln"><div class="g">다음 분기 생산 전망<small>산업력 ${indD?indD.toFixed(1):'±0'} · 군사력 +${milD.toFixed(1)}${lv=='conscript'?' · 지지 −1':''}${lv=='mobilize'?' · 국고 −'+(N.pop*.1).toFixed(0):''}</small></div>${can?`<button class="pri" data-act="pol:mil:${lv}" ${((O.pol&&O.pol.mil)||(N.pol&&N.pol.mil)||'volunteer')==lv?'disabled':''}>확정</button>`:''}</div>`}
 function zonePanel(z){const Z=PF.USA.zones[z],d=PJC[Z.pj],usn=natOf('USA'),me=mine(),st=pjState(Z.pj).s;
  return{ic:`<svg class="ic" viewBox="-13 -13 26 26"><circle class="bgc" r="9"/><path d="M1-7L-4 1H0L-1 7L4-1H0Z" fill="#7b5a12"/></svg>`,t:Z.n,s:'공공사업 지역 · 미국',b:`<div class="kv"><div><small>전력망</small><b>${st=='done'?'연결':'미연결'}</b></div><div><small>필요 예산</small><b>${d.cost}</b></div><div><small>공사 기간</small><b>${d.q}분기</b></div></div>
- <div class="note" style="margin:0 0 6px">${esc(Z.farm)}</div><div class="sec"><span>연결 예정 구간</span></div>${pjRow(Z.pj,me==usn)}<div class="note">승인하면 다음 분기부터 지도에 공사 구간이 표시되고, 분기마다 연장됩니다.</div>`}}
+ <div class="note" style="margin:0 0 6px">${esc(Z.farm)}</div><div class="sec"><span>연결 예정 구간</span></div>${pjRow(Z.pj,me==usn)}<div class="note">승인하면 다음 분기 착공. 공사 구간은 분기마다 늘어난다.</div>`}}
 function letterPanel(id){const L=PF.KOR.letters.find(l=>l[0]==id),f=FTI['KOR.'+L[1]],K=S.N.KOR,me=mine();if(!L||!f)return null;const can=me=='KOR';let link='';
  if(L[5]=='indep')link=`<div class="ln"><div class="g">독립 추진<small>자금의 10% 사용 · 진행도 ${K?Math.round(K.ind2):0}%</small></div>${can?`<button class="${O.indep?'on':'pri'}" data-act="indep">${O.indep?'명령됨':'추진'}</button>`:''}</div>`;else if(L[5])link=pjRow(L[5],can);
  return{ic:`<svg class="ic" viewBox="-13 -13 26 26">${IC.letter}</svg>`,t:L[2],s:`발신: ${f.nm}`,b:`<div style="background:#f7f1e0;color:#211c16;border:1px solid #bcae8e;padding:10px 12px;font-size:12.5px;line-height:1.6">${esc(L[3])}</div>
  <div class="kv" style="margin-top:10px"><div><small>동봉 의연금</small><b>${L[4]}</b></div><div><small>사용 가능 자금</small><b>${K?K.g|0:0}</b></div><div><small>진행 중 사업</small><b>${(S.PJ||[]).filter(p=>p.n=='KOR'&&!p.ok).length}</b></div></div>
- <div class="sec"><span>연결된 사업</span></div>${link||'<div class="note">이 서신에 연결된 사업이 없습니다. 의연금은 국고 수입으로 잡힙니다.</div>'}<div class="cmds"><button data-act="f:KOR.${L[1]}">발신지 표식 보기</button></div>`}}
+ <div class="sec"><span>연결된 사업</span></div>${link||'<div class="note">연결된 사업 없음. 의연금은 국고 수입으로 처리.</div>'}<div class="cmds"><button data-act="f:KOR.${L[1]}">발신지 표식 보기</button></div>`}}
 function pubInfo(n){const y=yr(S),N=S.N[n],me=mine(),T=S.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n));
  return`<div class="kv"><div><small>산업력 (공개)</small><b>${N.ind|0}</b></div><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>추정 군사력</small><b>${N.mil>60?'강':N.mil>30?'중':'약'}</b></div></div>
  <div class="sec"><span>공개 외교 관계</span></div>${T.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==n?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">체결된 조약 없음</div>'}${wars(S,n).length?`<div class="note">교전 중: ${wars(S,n).map(x=>esc(nm(x,y))).join(', ')}</div>`:''}
- ${me&&me!=n&&alive(S,me)?`<div class="sec"><span>회담 요청 · 무역 제안</span></div><div class="cmds"><button class="pri" data-act="prop:${n}:trade">무역 제안</button><button data-act="prop:${n}:nap">불가침 회담 요청</button><button data-act="prop:${n}:ally">동맹 회담 요청</button></div>`:''}<div class="note">예산 편성과 군정 자료는 비공개입니다.</div>`}
+ ${me&&me!=n&&alive(S,me)?`<div class="sec"><span>회담 요청 · 무역 제안</span></div><div class="cmds"><button class="pri" data-act="prop:${n}:trade">무역 제안</button><button data-act="prop:${n}:nap">불가침 회담 요청</button><button data-act="prop:${n}:ally">동맹 회담 요청</button></div>`:''}<div class="note">예산·군정 문서는 열람 불가.</div>`}
+const POLX={'mil:volunteer':['지원병제','"군대는 원하는 자들로 꾸린다." 평시의 상비군 체제.'],'mil:conscript':['국민 징병법','성년 남자는 2년간 병역을 진다.'],'mil:mobilize':['국가 총동원령','공장과 농장과 철도가 모두 전쟁을 위해 돌아간다.'],'mil:garrison':['국경 수비 태세','요새와 참호에 병력을 묶어 둔다.'],
+ 'civ:none':['현행 유지','지난 회기의 법령을 그대로 둔다.'],'civ:welfare':['사회 보장 확대','실업 수당과 노령 연금을 늘린다.'],'civ:planned':['계획 경제령','생산 목표는 정부가 정하고 공장은 따른다.'],'civ:ration':['배급 통제령','빵과 설탕과 석탄을 표로 나눈다.'],
+ 'res:none':['연구 보류','연구비는 다른 곳에 쓴다.'],'res:arms':['병기 개발 계획','새 전차와 항공기의 시제품을 주문한다.'],'res:econ':['산업 합리화 연구','공정을 고쳐 같은 공장에서 더 뽑아낸다.'],'res:agri':['농업 증산 연구','비료와 종자를 개량한다.']};
 function pols(N,k,L,me){const now=(N.pol&&N.pol[k])||L[0][0],cur=(O.pol&&O.pol[k])||now;return`<div class="opts">`+L.map(([v,t,d])=>{const on=cur==v,fx=(d||'추가 효과 없음').split(' · ').map(x=>{const up=/\+/.test(x),dn=/-|−/.test(x);return`<span class="fx${dn?' dn':up?' up':''}">${esc(x)}</span>`}).join('');
- return`<button class="opt${on?' on':''}" ${me?`data-act="pol:${k}:${v}"`:'disabled'}><i class="rd"></i><b>${t}</b>${on?`<em>${cur!=now?'다음 분기 시행':'시행 중'}</em>`:''}<span class="fxs">${fx}</span></button>`}).join('')+'</div>'}
+ const X=POLX[k+':'+v]||[t,''];return`<button class="opt${on?' on':''}" ${me?`data-act="pol:${k}:${v}"`:'disabled'}><i class="rd"></i><b>${X[0]}</b>${on?`<em>${cur!=now?'다음 분기 공포':'시행 중'}</em>`:''}${X[1]?`<span class="q">${X[1]}</span>`:''}<span class="fxs">${fx}</span></button>`}).join('')+'</div>'}
 function guide(n){const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*4+e[1]-1<=S.t+S.Y0*4+8);
  return L.length?L.map(e=>{const tg=e[4],diff=e[3]=='war'?(pact(S,n,tg,'nap')?'불가침 조약이 있어 역사와 다릅니다':!alive(S,tg)?'대상국이 이미 사라졌습니다':'조건이 역사와 비슷합니다'):'';
-  return`<div class="ln"><div class="g">${e[0]}년 ${e[1]}분기 · ${esc(e[5])}<small>${esc(e[6])} — ${diff||'조건 확인 중'}</small></div></div>`}).join(''):'<div class="note" style="margin:0">앞으로 2년 안에 이 국가의 주요 역사 결정은 없습니다.</div>'}
+  return`<div class="ln"><div class="g">${e[0]}년 ${e[1]}분기 · ${esc(e[5])}<small>${esc(e[6])} — ${diff||'조건 확인 중'}</small></div></div>`}).join(''):'<div class="note" style="margin:0">향후 2년간 예정된 역사적 고비 없음.</div>'}
 // ════════ 문서 패널 ════════
 function docHTML(){const me=mine(),y=yr(S),N=me&&S.N[me];if(V.nat&&V.nat!=me&&(!V.tab||V.tab=='gov'))return{t:`공개 자료 — ${nm(V.nat,y)}`,b:visitDoc(V.nat)+natHTML(V.nat)};if(!V.tab)return null;
  if(V.tab=='log')return{t:'분기 기록 · 역사 흐름',b:`<div class="sec"><span>${y}년 ${qt(S)}분기 이전 처리 결과</span></div>${S.log.map(l=>`<div class="ln"><div class="g">${esc(l)}</div></div>`).join('')}${me?`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(me)}`:''}${S.phase=='end'?endDoc():''}`};
@@ -982,8 +1225,8 @@ function govDoc(me){const pid=PID(me),P=pid&&PF[pid],N=S.N[me],y=yr(S),q=qt(S);i
    <div class="sec"><span>주요 항구</span></div>${ports.map(f=>`<div class="ln cl" data-act="f:${f.id}"><div class="g">${esc(f.nm)}<small>${(f.o.r||[]).map(r=>R[r].n).join(' · ')||'연안 항구'}</small></div><div class="v">${portCap(f)}</div></div>`).join('')}<div class="sec"><span>항만·철도 사업</span></div>${pjRow('UK_PLY',1)}${pjRow('UK_RAIL',1)}`}}
  if(pid=='USA'){return{t:`${P.doc} — ${y}회계연도`,b:`<div class="kv"><div><small>가용 국고</small><b>${N.g|0}</b></div><div><small>승인 대기</small><b>${Object.values(P.zones).filter(z=>pjState(z.pj).s=='none').length}</b></div><div><small>공사 중</small><b>${(S.PJ||[]).filter(p=>p.n==me&&!p.ok).length}</b></div></div>
   <div class="sec"><span>전력망 사업 · 지역별</span><span>지역을 눌러 구간 확인</span></div><table class="ledger"><tr><th>지역 · 사업</th><th class="r">예산</th><th class="r">상태</th></tr>${Object.entries(P.zones).map(([z,Z])=>`<tr class="cl${V.sel&&V.sel.id==z?' hot':''}" data-act="z:${z}"><td><b>${esc(Z.n)}</b><br><small style="color:#6d6250">${esc(PJC[Z.pj].name)}</small></td><td class="r">${PJC[Z.pj].cost}</td><td class="r">${pjLabel(Z.pj).replace(/class="tag[^"]*"/,'style="font-size:11px"')}</td></tr>`).join('')}</table>
-  <div class="note">지도에서 노란 빗금은 이미 전력망이 닿은 지역, 점선 테두리는 미연결 지역입니다.</div>`}}
- if(pid=='KOR'){if(!N.lord)return{t:'행정 운영 지도 — 국내 각 도',b:`<div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>과세 지역</small><b>${held(S,me).length}</b></div><div><small>지지</small><b>${N.sup|0}</b></div></div><div class="sec"><span>주요 도시</span></div>${FT.filter(f=>f.pid=='KOR').map(f=>`<div class="ln cl" data-act="f:${f.id}"><div class="g">${esc(f.nm)}<small>${{cap:'수도',port:'항구',fac:'공업도시',city:'도시',base:'거점'}[f.ty]}</small></div></div>`).join('')}<div class="note">독립 이후 국내 지역과 과세권을 확보해 행정 지도로 전환되었습니다.</div>`};
+  <div class="note">노란 빗금은 송전 완료 지역, 점선은 미연결 지역.</div>`}}
+ if(pid=='KOR'){if(!N.lord)return{t:'행정 운영 지도 — 국내 각 도',b:`<div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>과세 지역</small><b>${held(S,me).length}</b></div><div><small>지지</small><b>${N.sup|0}</b></div></div><div class="sec"><span>주요 도시</span></div>${FT.filter(f=>f.pid=='KOR').map(f=>`<div class="ln cl" data-act="f:${f.id}"><div class="g">${esc(f.nm)}<small>${{cap:'수도',port:'항구',fac:'공업도시',city:'도시',base:'거점'}[f.ty]}</small></div></div>`).join('')}<div class="note">독립으로 국내 지역과 과세권을 되찾았다. 이제 행정 지도로 나라를 꾸린다.</div>`};
   const inc=PF.KOR.letters.reduce((a,l)=>a+l[4],0);return{t:`${P.doc} — ${y}년 ${q}분기`,b:`<div class="sec"><span>도착한 외교 서신</span><span>발신지를 눌러 이동</span></div>${PF.KOR.letters.map(l=>{const f=FTI['KOR.'+l[1]];return`<button class="letter${V.sel&&V.sel.id==l[0]?' hot':''}${V.seen[l[1]]?'':' new'}" data-act="L:${l[0]}"><b>${esc(l[2])}</b><small>${esc(f?f.nm:'')}</small><br>${esc(l[3].slice(0,46))}…</button>`}).join('')}
   <div class="sec"><span>해외 후원 장부</span><span>분기</span></div><table class="ledger"><tr><th>후원처</th><th class="r">의연금</th></tr>${PF.KOR.letters.filter(l=>l[4]).map(l=>`<tr class="cl" data-act="L:${l[0]}"><td>${esc(l[2])}</td><td class="r">${l[4]}</td></tr>`).join('')}<tr><td><b>합계 (참고)</b></td><td class="r"><b>${inc}</b></td></tr><tr><td>현재 사용 가능 자금</td><td class="r"><b>${N.g|0}</b></td></tr><tr><td>종주국 수탈 (국고의 10%)</td><td class="r">−${(N.g*.1)|0}</td></tr></table>
   <div class="sec"><span>진행 중인 외교·독립 활동</span></div><div class="ln"><div class="g">독립 추진 진행도<small>100%에 이르면 국내 지역 행정으로 전환</small></div><div class="v">${Math.round(N.ind2)}%</div></div>${['KR_NJ','KR_HAW','KR_GZ'].map(id=>pjRow(id,true)).join('')}`}}
@@ -991,9 +1234,9 @@ function govDoc(me){const pid=PID(me),P=pid&&PF[pid],N=S.N[me],y=yr(S),q=qt(S);i
   <div class="sec"><span>항구별 입항 원료</span><span>항구를 눌러 공업지대 확인</span></div><table class="ledger"><tr><th>항구</th><th>원료</th><th class="r">척</th></tr>${ports.map(f=>{const cs=cargoOf(f);return`<tr class="cl" data-act="f:${f.id}"><td><b>${esc(f.nm)}</b></td><td>${cs.map(c=>esc(c.l)+(c.cut?' (중단)':'')).join('<br>')}</td><td class="r">${cs.reduce((a,c)=>a+(c.cut?0:c.a),0)}</td></tr>`}).join('')}</table>
   <div class="sec"><span>배분 대상 · 생산 주문</span></div>${P.alloc.map(a=>`<div class="ln cl" data-act="f:JPN.${a[0]}"><div class="g">${esc(a[1])}<small>${esc(a[3])}</small></div>${O.focus==a[2]?'<span class="tag acc">배분 중</span>':''}</div>`).join('')}${pjRow('JP_RAIL',1)}`}}
  if(pid=='FRA'){return{t:`${P.doc} (의회 심의 중)`,b:`<div class="kv"><div><small>가용 국고</small><b>${N.g|0}</b></div><div><small>지지</small><b>${N.sup|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div></div><div class="sec"><span>심의 항목</span><span>항목을 눌러 지도에서 비교</span></div>
-  ${P.budget.map(b=>{const on=V.cmp==b[0];return`<div class="ln cl${on?' hot':''}" data-act="cmp:${b[0]}"><div class="g"><b style="font-weight:600">${esc(b[1])}</b><small>${esc(b[2])}</small>${on?`<small style="color:#4f7a45">● 수혜: ${b[4].map(i=>FTI['FRA.'+i]?.nm).join('·')}</small><small style="color:#7a6a55">● 지연: ${b[5].map(i=>FTI['FRA.'+i]?.nm).join('·')} — ${esc(b[6])}</small>`:''}</div><div class="v">${b[3]}</div></div>${on?pjRow(b[0],true):''}`}).join('')}<div class="note">항목을 고르면 지도에 초록 원(수혜)과 회색 사선 원(착공 지연)이 함께 표시됩니다.</div>`}}
+  ${P.budget.map(b=>{const on=V.cmp==b[0];return`<div class="ln cl${on?' hot':''}" data-act="cmp:${b[0]}"><div class="g"><b style="font-weight:600">${esc(b[1])}</b><small>${esc(b[2])}</small>${on?`<small style="color:#4f7a45">● 수혜: ${b[4].map(i=>FTI['FRA.'+i]?.nm).join('·')}</small><small style="color:#7a6a55">● 지연: ${b[5].map(i=>FTI['FRA.'+i]?.nm).join('·')} — ${esc(b[6])}</small>`:''}</div><div class="v">${b[3]}</div></div>${on?pjRow(b[0],true):''}`}).join('')}<div class="note">초록 원은 수혜 지역, 사선 원은 착공이 밀리는 지역.</div>`}}
  if(pid=='FIN'){const fs=FT.filter(f=>f.pid=='FIN'&&f.o.w),lv=(O.pol&&O.pol.mil)||(N.pol&&N.pol.mil)||'volunteer',sh={volunteer:.08,conscript:.2,mobilize:.45,garrison:.12}[lv];return{t:`${P.doc} — ${q==1||q==4?'겨울':'여름'}`,b:`<div class="kv"><div><small>인구</small><b>${N.pop|0}</b></div><div><small>동원 단계</small><b>${{volunteer:'평시',conscript:'징병',mobilize:'총동원',garrison:'방어'}[lv]}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div></div>
-  <table class="ledger"><tr><th>지역</th><th class="r">민간 산업</th><th class="r">예비</th></tr>${fs.map(f=>`<tr class="cl${V.sel&&V.sel.id==f.id?' hot':''}" data-act="f:${f.id}"><td>${esc(f.nm)}</td><td class="r">${f.o.w[0]-Math.round(f.o.w[0]*sh)}</td><td class="r">${f.o.w[1]+Math.round(f.o.w[0]*sh)}</td></tr>`).join('')}</table><div class="note">지역을 눌러 동원 규모를 바꾸면 그 지역의 다음 분기 생산 전망이 함께 바뀝니다. ${q==1||q==4?'겨울에는 호수가 얼어 내륙 수송이 썰매·철도에 의존합니다.':''}</div>`}}
+  <table class="ledger"><tr><th>지역</th><th class="r">민간 산업</th><th class="r">예비</th></tr>${fs.map(f=>`<tr class="cl${V.sel&&V.sel.id==f.id?' hot':''}" data-act="f:${f.id}"><td>${esc(f.nm)}</td><td class="r">${f.o.w[0]-Math.round(f.o.w[0]*sh)}</td><td class="r">${f.o.w[1]+Math.round(f.o.w[0]*sh)}</td></tr>`).join('')}</table><div class="note">동원 규모에 따라 지역별 다음 분기 생산 전망이 달라진다. ${q==1||q==4?'겨울에는 호수가 얼어 내륙 수송을 썰매와 철도에 의존한다.':''}</div>`}}
  return{t:P.doc,b:genericGov(me)}}
 function genericGov(me){const N=S.N[me],y=yr(S),h=held(S,me),pr={f:0,s:0,o:0};h.forEach(r=>{const v=RG[r][5];pr.f+=+v[0];pr.s+=+v[1];pr.o+=+v[2]});const top=Object.entries(pr).sort((a,b)=>b[1]-a[1])[0],pid=PID(me),fs=FT.filter(f=>f.pid==pid&&f.n==me);
  return`<div class="kv"><div><small>보유 지역</small><b>${h.length}</b></div><div><small>핵심 산출</small><b>${KIND[top[0]]}</b></div><div><small>지지</small><b>${N.sup|0}</b></div></div><div class="sec"><span>대표 지역</span></div>${h.slice(0,6).map(r=>`<div class="ln cl" data-act="r:${r}"><div class="g">${esc(RG[r][0])}<small>식량 ${RG[r][5][0]} · 철강 ${RG[r][5][1]} · 석유 ${RG[r][5][2]}</small></div></div>`).join('')}
@@ -1008,7 +1251,7 @@ function finDoc(me){const N=S.N[me],h=held(S,me),tr=S.TR.filter(t=>t.st=='on'&&t
  const rows=[['ind','산업 투자'],['wel','복지'],['res','연구'],['def','국방']].map(([k,l])=>{const a=B*(fo==k?.5:.1667);return`<tr class="${fo==k?'hot':''}"><td>${l}${fo==k?' <small style="color:#a3361b">중점</small>':''}</td><td class="r">${a.toFixed(0)}<span class="stp"><button data-act="focus:${k==fo?'ind':k}" ${k==fo&&k=='ind'?'disabled':''} aria-label="감액">−</button><button data-act="focus:${k}" ${k==fo?'disabled':''} aria-label="증액">+</button></span></td></tr>`}).join('');
  return{t:`재정 장부 — ${yr(S)}년 ${qt(S)}분기`,b:`<div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>분기 지출</small><b>${B|0}</b></div><div><small>예상 수입</small><b>${inc.reduce((a,b)=>a+b[1],0)|0}</b></div></div>
  <div class="sec"><span>세입</span></div><table class="ledger">${inc.map(([l,v])=>`<tr><td>${l}</td><td class="r">${v.toFixed(0)}</td></tr>`).join('')}${N.lord?`<tr><td>종주국 상납 (10%)</td><td class="r">−${(N.g*.1).toFixed(0)}</td></tr>`:''}</table>
- <div class="sec"><span>세출 배분</span><span>＋ 를 누르면 중점 항목이 됩니다</span></div><table class="ledger"><tr><th>항목</th><th class="r">금액</th></tr>${rows}</table><div class="note">중점 항목에 지출의 50%, 나머지에 각 1/6이 배분됩니다. 효과는 다음 분기 지표에 반영됩니다.</div>
+ <div class="sec"><span>세출 배분</span><span>＋ 로 중점 지정</span></div><table class="ledger"><tr><th>항목</th><th class="r">금액</th></tr>${rows}</table><div class="note">중점 항목에 지출의 절반, 나머지에 6분의 1씩. 다음 분기 결산에 반영.</div>
  <div class="sec"><span>국내 정책</span></div>${pols(N,'civ',PC,true)}`}}
 function indDoc(me){const N=S.N[me],h=held(S,me),pr={f:0,s:0,o:0};h.forEach(r=>{const v=RG[r][5];pr.f+=+v[0];pr.s+=+v[1];pr.o+=+v[2]});const tr=S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==me||t.b==me)).length,need={f:N.pop/10,s:N.ind/25,o:N.ind/25},pid=PID(me);
  const fs=FT.filter(f=>f.pid==pid&&f.ty=='fac'),pj=Object.keys(PJC).filter(id=>PJC[id].pid==pid);
@@ -1019,31 +1262,37 @@ function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목
  return{t:'군정 — 편제표',b:`${docBlock(me)}<div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>
  <div class="sec"><span>부대 말판</span><span>${V.bt.u!=null?st:'말판을 고른 뒤 지도에서 목표 지정'}</span></div>${U.map(u=>`<div class="ln cl${V.bt.u==u.i?' hot':''}" data-act="unit:${u.i}"><div class="g">${u.nm} · ${u.at}<small>군사력의 ${u.c}% · 병력 ${u.str}</small></div><div class="v">${u.c>=50?'XXX':'XX'}</div></div>`).join('')}
  <div class="sec"><span>내린 공격 명령</span></div>${(O.atk||[]).map((a,i)=>`<div class="ln"><div class="g">${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${a.c}% 투입</small></div><button data-act="uatk:${i}">취소</button></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}
- <div class="sec"><span>교전 상황</span></div><div class="note" style="margin:0">${W.map(x=>esc(nm(x,y))).join(', ')||'교전 중인 국가 없음'}</div><div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}`}}
+ <div class="sec"><span>전선</span><span>${W.map(x=>esc(nm(x,y))).join(' · ')||'평시'}</span></div>${frontsDoc(me)}<div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}`}}
 const CL={trade:['양국 상선은 상대국 항구에 자유로이 입항한다.','관세는 현행 세율의 절반으로 낮춘다.','전략 물자는 별도 목록으로 정한다.'],nap:['양국은 상대국을 무력으로 공격하지 않는다.','제3국이 공격할 때 그 국가를 돕지 않는다.','유효 기간은 10년으로 한다.'],ally:['한쪽이 공격받으면 다른 쪽은 즉시 참전한다.','양국 참모 본부는 정기 협의를 연다.','단독 강화를 맺지 않는다.'],cease:['조약 발효와 함께 모든 전선에서 사격을 멈춘다.','현재 점령선을 경계로 인정한다.','포로는 석 달 안에 교환한다.'],ret:['점령 지역을 원 소유국에 반환한다.','반환은 다음 분기 안에 마친다.','주민 재산은 보전한다.']};
 function treatyDoc(t,y,mode){const k=t.id,open=V.open[k]||mode=='draft',cl=CL[t.ty]||[],mod=(k.length+(t.a||'').length)%cl.length;
  return`<div class="treaty"><button data-act="open:${k}"><h6>${esc(nm(t.a,y))}–${esc(nm(t.b,y))} ${TY[t.ty]} 조약${mode=='draft'?' (초안)':' (안)'}</h6><small>${mode=='in'?`${esc(nm(t.a,y))} 외무부 송부 · 수정 조항 1건 · ${open?'접기':'눌러서 펼치기'}`:mode=='draft'?'발송 전 검토':'체결됨'}</small></button>
  ${open?`<ol>${cl.map((c,i)=>`<li class="${mode=='in'&&i==mod?'mod':''}">${esc(c)}</li>`).join('')}</ol>${mode=='in'?`<div class="rowf">${(O.sign||[]).includes(k)?'<span class="tag ok">서명함 · 턴 처리 시 발효</span>':(O.rej||[]).includes(k)?'<span class="tag bad">거절함</span>':`<button data-act="rej:${k}">거절</button><button class="pri" data-act="sign:${k}">서명</button>`}</div>`:''}`:''}</div>`}
 function dipDoc(me){const y=yr(S),pend=S.TR.filter(t=>t.st=='p'&&t.b==me),act=S.TR.filter(t=>t.st=='on'&&(t.a==me||t.b==me)),sent=S.TR.filter(t=>t.st=='p'&&t.a==me),to=V.dto&&S.N[V.dto]&&V.dto!=me?V.dto:null;
- return{t:'외교 — 조약 문서',b:`<div class="sec"><span>도착한 조약안</span><span>${pend.length}건</span></div>${pend.map(t=>treatyDoc(t,y,'in')).join('')||'<div class="note" style="margin:0">도착한 조약안이 없습니다.</div>'}
- <div class="sec"><span>새 조약 초안</span></div><div class="note" style="margin:0 0 6px">지도에서 국가를 누르거나 목록에서 고르세요.</div><div class="rowf"><select data-in="dto" style="flex:1"><option value="">상대국 선택</option>${Object.keys(S.N).filter(x=>x!=me&&alive(S,x)).sort((a,b)=>nm(a,y).localeCompare(nm(b,y))).map(x=>`<option value="${x}" ${x==to?'selected':''}>${esc(nm(x,y))}</option>`).join('')}</select></div>
+ return{t:'외교 — 조약 문서',b:`<div class="sec"><span>도착한 조약안</span><span>${pend.length}건</span></div>${pend.map(t=>treatyDoc(t,y,'in')).join('')||'<div class="note" style="margin:0">도착한 조약안 없음.</div>'}
+ <div class="sec"><span>새 조약 초안</span></div><div class="note" style="margin:0 0 6px">지도에서 나라를 누르거나 목록에서 고른다.</div><div class="rowf"><select data-in="dto" style="flex:1"><option value="">상대국 선택</option>${Object.keys(S.N).filter(x=>x!=me&&alive(S,x)).sort((a,b)=>nm(a,y).localeCompare(nm(b,y))).map(x=>`<option value="${x}" ${x==to?'selected':''}>${esc(nm(x,y))}</option>`).join('')}</select></div>
  <div class="cmds">${Object.entries(TY).map(([k,v])=>`<button class="${V.dty==k?'on':''}" data-act="dty:${k}">${v}</button>`).join('')}</div>${to?treatyDoc({id:'draft',ty:V.dty,a:me,b:to},y,'draft')+`<div class="rowf" style="justify-content:flex-end"><button class="pri" data-act="prop:${to}:${V.dty}">초안 발송</button></div>`:''}
- ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>턴 처리 시 전달 · AI는 즉시 답합니다</small></div></div>`).join('')}`:''}
+ ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>분기 마감 때 전달</small></div></div>`).join('')}`:''}
  ${sent.length?`<div class="sec"><span>회신 대기</span></div>${sent.map(t=>`<div class="ln"><div class="g">${esc(nm(t.b,y))} · ${TY[t.ty]}</div></div>`).join('')}`:''}
  <div class="sec"><span>체결된 조약</span></div>${act.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==me?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}`}}
+// ════════ 전선 ════════
+function frontHTML(k){const F=(S.FR||{})[k];if(!F||!S.N[F.a])return'';const y=yr(S),L=F.last||{};return`<div class="front-c"><div class="sec"><span>전선 상황</span><span>${esc(nm(F.a,y))} → ${esc(nm(F.d,y))}</span></div>
+ <div class="bar2 fr"><i style="width:${F.p}%"></i></div><div class="ln"><div class="g">점령까지 남은 진척<small>100%에 이르면 점령. 공세가 끊기면 분기마다 20%씩 후퇴.</small></div><div class="v">${F.p}%</div></div>
+ ${L.g!=null?`<div class="ln"><div class="g">지난 전투<small>전력비 ${L.r} : 1 · 진척 ${L.g>0?'+':''}${L.g}%</small></div><div class="v">−${L.ca|0} / −${L.cd|0}</div></div>`:''}</div>`}
+function frontsDoc(me){const y=yr(S),L=Object.entries(S.FR||{}).filter(([r,F])=>F.a==me||F.d==me);if(!L.length)return'<div class="note" style="margin:0">교전 중인 전선 없음.</div>';
+ return L.map(([r,F])=>`<div class="ln cl" data-act="r:${r}"><div class="g">${esc(RG[r][0])} ${F.a==me?'<span class="tag acc">공세</span>':'<span class="tag bad">방어</span>'}<small>${esc(nm(F.a,y))} → ${esc(nm(F.d,y))}${F.last?` · 지난 전투 손실 ${F.last.ca|0} 대 ${F.last.cd|0}`:''}</small><div class="bar2 fr" style="margin-top:4px"><i style="width:${F.p}%"></i></div></div><div class="v">${F.p}%</div></div>`).join('')}
 // ════════ 국가 전략 화면 ════════
 function decDue(n){if(!n||!S.N[n])return null;const y=yr(S),q=qt(S);return decsFor(n).find(d=>d.hy&&(y>d.hy[0]||(y==d.hy[0]&&q>=d.hy[1]))&&decOK(S,n,d).ok&&!(O.dec||[]).includes(d.id))||null}
-function docBlock(n){const A=NAT[PID(n)],sp=spiritsOf(S,n).filter(p=>p.doc||p.m);return`<div class="docx"><small>군사 교리</small><b>${esc(A?A.doc:'일반 교리')}</b><p>${esc(A?A.docD:'특별한 교리 보정이 없습니다. 군사 정책과 예산으로 군을 키우세요.')}</p>${sp.map(p=>`<div class="fxl"><span class="fx up">${esc(p.t)}</span> ${esc(p.d)}</div>`).join('')}</div>`}
-function natHTML(n){const A=NAT[PID(n)],y=yr(S),me=mine()==n,sp=spiritsOf(S,n).filter(p=>!p.doc),ds=decsFor(n),N=S.N[n];
+function docBlock(n){const A=natFor(n),sp=spiritsOf(S,n).filter(p=>p.doc||p.m);return`<div class="docx"><small>군사 교리</small><b>${esc(A?A.doc:'일반 교리')}</b><p>${esc(A?A.docD:'특별한 교리 없음.')}</p>${sp.map(p=>`<div class="fxl"><span class="fx up">${esc(p.t)}</span> ${esc(p.d)}</div>`).join('')}</div>`}
+function natHTML(n){const A=natFor(n),y=yr(S),me=mine()==n,sp=spiritsOf(S,n).filter(p=>!p.doc),ds=decsFor(n),N=S.N[n];
  return`<div class="nat"><div class="nat-h">${flag(n,48,32)}<div><b>${esc(leaderOf(n,y)||nm(n,y)+' 정부')}</b><small>${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</small></div></div>
  ${docBlock(n)}
- <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b><span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+|×1\.[1-9]/.test(x)?' up':''}">${esc(x)}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">적용 중인 국가 정신이 없습니다.</div>'}
+ <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b>${p.q?`<span class="q" style="display:block;margin:-2px 0 5px">${esc(p.q)}</span>`:''}<span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+|×1\.[1-9]/.test(x)?' up':''}">${esc(x)}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">해당 없음.</div>'}
  ${me?`<div class="sec"><span>역사적 결정</span><span>국고 ${N.g|0}</span></div>${ds.map(d=>{const ok=decOK(S,n,d),or=(O.dec||[]).includes(d.id),tk=DTAKEN(S,n,d.id);return`<div class="dec${tk?' tk':''}${or?' or':''}${!ok.ok&&!tk&&!or?' lk':''}"><div class="dt"><b>${esc(d.t)}</b><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span></div><div class="dd"><span class="fx up">${esc(d.d)}</span>${d.cost?`<span class="fx">비용 ${d.cost}</span>`:''}${d.rq?`<span class="fx">조건: ${esc(d.rq)}</span>`:''}</div><div class="dh2">${esc(d.h)}</div><div class="da">${tk?'<span class="tag ok">결정됨</span>':or?`<span class="tag acc">다음 분기 시행</span><button data-act="undec:${d.id}">취소</button>`:ok.ok?`<button class="pri" data-act="dec:${d.id}">결정</button>`:`<span class="tag">${esc(ok.why)}</span>`}</div></div>`}).join('')}`:''}
  <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
 // ════════ 지도 위 작전 창 ════════
 function popHTML(){const me=mine();if(V.tab!='mil'||V.bt.u==null||!V.bt.t||!me)return'';const u=myUnits()[V.bt.u],r=V.bt.t,R=S.R[r],d=R.occ||R.o,y=yr(S),A=S.N[me],D=S.N[d],use=A.mil*u.c/100;
  const am=docM(S,me,d,r,'att',u.c),dm=docM(S,d,me,r,'def',u.c),def=(D.mil*.6+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1)*dm,pct=Math.round(clamp((use*am-def*.8)/(def*.4+use*am*.4)*50+50,3,97)),p=pact(S,me,d,'nap')||pact(S,me,d,'ally'),w=atWar(S,me,d);
- if(V.bt.st==2)return`<div class="st">작전 1/3 · <i>명령 미리보기</i></div><h5>${esc(u.nm)} → ${esc(RG[r][0])}</h5><dl><dt>방어 세력</dt><dd>${esc(nm(d,y))}</dd><dt>투입 병력</dt><dd>${use.toFixed(0)} (${u.c}%)</dd><dt>상대 방어 추정</dt><dd>${def.toFixed(0)}</dd><dt>교리 보정</dt><dd>공격 ×${am.toFixed(2)} · 방어 ×${dm.toFixed(2)}</dd><dt>점령 가능성</dt><dd>${pct}%</dd></dl><div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3">소모 예산 확인 →</button></div>`;
+ if(V.bt.st==2)return`<div class="st">작전 1/3 · <i>명령 미리보기</i></div><h5>${esc(u.nm)} → ${esc(RG[r][0])}</h5><dl><dt>방어 세력</dt><dd>${esc(nm(d,y))}</dd><dt>투입 병력</dt><dd>${use.toFixed(0)} (${u.c}%)</dd><dt>상대 방어 추정</dt><dd>${def.toFixed(0)}</dd><dt>교리 보정</dt><dd>공격 ×${am.toFixed(2)} · 방어 ×${dm.toFixed(2)}</dd><dt>예상 전선 진척</dt><dd>${(()=>{const F=(S.FR||{})[r],g=Math.round(Math.max(-25,Math.min(90,(use*am/Math.max(.5,def)-.6)*100)));return(F&&F.a==me?F.p+'% → ':'')+(g>0?'+':'')+g+'%'})()}</dd></dl><div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3">소모 예산 확인 →</button></div>`;
  return`<div class="st">작전 2/3 · <i>소모 예산 확인</i></div><h5>${esc(RG[r][0])} 공격</h5><dl><dt>성공 시 손실</dt><dd>군사력 −${(use*.3).toFixed(0)}</dd><dt>실패 시 손실</dt><dd>군사력 −${(use*.5).toFixed(0)}</dd>${w?'':`<dt>외교</dt><dd style="color:var(--bad)">${esc(nm(d,y))}에 선전포고</dd>`}${p?`<dt>조약</dt><dd style="color:var(--bad)">${TY[p.ty]} 파기 · 지지 −10</dd>`:''}</dl><div class="rowf"><button data-act="bt:2">← 뒤로</button><button class="pri" data-act="bt:ok">명령 확정</button></div>`}
 function placePop(){const el=$('#pop');if(!el||!el.firstChild||!V.bt.t)return;const t=LBL[V.bt.t];if(!t)return;const[x,y]=toScr(t[0],t[1]),de=$('#doc'),dw=VW>=760&&de&&de.classList.contains('on')?de.offsetWidth+12:0;el.firstChild.style.left=clamp(x,135,VW-dw-135)+'px';el.firstChild.style.top=clamp(y,250,VH)+'px'}
 // ════════ 그리기 ════════
@@ -1060,7 +1309,7 @@ function selFeat(id,flyTo){const f=FTI[id];if(!f)return;if(!V.nat&&V.tab!='mil')
  if(flyTo)focusOn(f.x,f.y,f.o.far?140:Math.min(CAM.w,Math.max(70,CAM.w*.8)));ui()}
 function focusOn(x,y,w,force){const mob=VW<760,de=$('#doc'),dw=!mob&&de&&de.classList.contains('on')?de.offsetWidth+24:0,sx=mob?VW/2:(450+VW-dw)/2,sy=mob?VH*.3:VH*.42,[cx,cy]=toScr(x,y),ok=!force&&cx>(mob?30:470)&&cx<VW-dw-40&&cy>60&&cy<(mob?VH*.5:VH-90)&&CAM.w<=w*1.3;if(ok)return;
  const k=w/VW;flyXY(x-(sx-VW/2)*k,y-(sy-VH/2)*k,w)}
-function enterNation(n){if(!n||!S.N[n])return;if(!V.nat)V.prev={...CAM};V.nat=n;V.sel=null;V.hl=null;V.cmp=null;V.tab=n==mine()?'gov':null;V.docOn=1;FL=new Set(held(S,n));FLsig='e'+Date.now();ui();
+function enterNation(n){if(!n||!S.N[n])return;if(!V.nat)V.prev={...CAM};V.nat=n;V.sel=null;V.hl=null;V.cmp=null;V.tab=n==mine()?'gov':null;V.docOn=1;FL=new Set(held(S,n));flash();ui();
  setTimeout(()=>{const c=presetCam(n),on=$('#doc').classList.contains('on'),dw=VW>=760&&on?$('#doc').offsetWidth+12:0,dh=VW<760&&on?$('#doc').offsetHeight:0;flyXY(c.x+dw/2*c.w/VW,c.y+dh/2*c.w/VW,c.w,520)},140);setTimeout(()=>{FL.clear();FLsig='';ui()},1700)}
 function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S);
  switch(k){
@@ -1098,7 +1347,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'news':return newsGo();case'newsx':return newsClose()}}
 // ════════ 분기 전환: 지도 강조 + 신문 ════════
 function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S);feats();
- FL=new Set(Object.keys(S.R).filter(r=>p.R[r]&&(p.R[r].o!=S.R[r].o||p.R[r].occ!=S.R[r].occ)));FLsig='q'+S.t;
+ FL=new Set(Object.keys(S.R).filter(r=>p.R[r]&&(p.R[r].o!=S.R[r].o||p.R[r].occ!=S.R[r].occ)));flash();
  if(me&&p.N[me]&&S.N[me]){const a=p.N[me],b=S.N[me];V.dl={g:b.g-a.g,f:b.st.f-a.st.f,i:b.ind-a.ind,t:Date.now()};setTimeout(()=>{if($('#bar'))$('#bar').innerHTML=barHTML()},7200)}
  const ev=[],pos=(id)=>{const d=PJC[id];if(d.p){const m=d.p[Math.floor(d.p.length/2)];return LL(m[0],m[1])}if(d.at2)return LL(d.at2[0],d.at2[1]);const f=FTI[d.pid+'.'+d.at];return f?[f.x,f.y]:capOf(natOf(d.pid))};
  (S.PJ||[]).forEach(q=>{const d=PJC[q.id],old=(p.PJ||[]).find(x=>x.id==q.id);if(!d)return;const mineP=q.n==me;
@@ -1110,11 +1359,12 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
  {const np=S.TR.filter(t=>t.st=='p'&&t.b==me&&!p.TR.find(x=>x.id==t.id)),big=np.filter(t=>held(S,t.a).length>=3);if(np.length){const t0=big[0]||np[0];ev.push({pri:big.length?65:20,h:np.length>1?`각국 외무부, 조약안 ${np.length}건 송부`:`${nm(t0.a,y)} 외무부, ${TY[t0.ty]} 조약안 송부`,s:`${np.slice(0,4).map(t=>nm(t.a,y)).join('·')}${np.length>4?' 등':''}에서 보낸 조약안이 외교 탭에 도착했다.`,at:capOf(t0.a),sel:'tab:dip',ty:'mail'})}}
  (S.DC?Object.entries(S.DC):[]).forEach(([n,L])=>{const old=((p.DC||{})[n])||[];L.filter(id=>!old.includes(id)).forEach(id=>{const d=DECS.find(x=>x.id==id);if(d&&d.n!='*')ev.push({pri:n==me?88:(held(S,n).length>=5?70:40),h:`${nm(n,y)}, ${d.t}`,s:d.h,at:capOf(n),ty:'border'})})});
  if(me&&p.N[me]&&S.N[me]&&p.N[me].lord&&!S.N[me].lord)ev.push({pri:99,h:`${nm(me,y)}, 독립 선포`,s:'국내 영토와 과세권을 확보했다.',at:capOf(me),ty:'border'});
- if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국이 다음 분기 계획을 다듬고 있다.',at:me?capOf(me):[500,280],ty:'none'})}
+ if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국 정부는 다음 분기 예산을 짜는 중이다.',at:me?capOf(me):[500,280],ty:'none'})}
+ (S.BT||[]).forEach(b=>{const inv=b.a==me||b.d==me;if(!inv&&Math.abs(b.g)<40)return;ev.push({pri:inv?(b.d==me?92:86):45,h:`${RG[b.rid][0]} 전투 — ${nm(b.a,y)} ${b.g>0?b.g+'% 진격':'공세 저지'}`,s:`${nm(b.a,y)} 군이 ${nm(b.d,y)} 방어선을 공격했다. 공격 측 손실 ${b.ca|0}, 방어 측 손실 ${b.cd|0}. 전선 진척 ${b.p}%.`,at:LBL[b.rid],sel:'r:'+b.rid,ty:'border'})});
  ev.sort((a,b)=>b.pri-a.pri);V.news={y,q:qt(S),ev};V.pulse=ev.filter(e=>e.at&&e.ty!='none').slice(0,6).map(e=>({x:e.at[0],y:e.at[1]}));
  setTimeout(()=>{V.pulse=[];FL.clear();FLsig='';if($('#play'))ui()},7000);if($('#play'))ui()}
 function newsShow(){const N=V.news;if(!N)return;const h=N.ev[0],o=N.ev.slice(1,4),d=document.createElement('div');d.className='news';d.id='news';
- d.innerHTML=`<div class="paperN" id="paperN"><div class="mast"><b>세계 통신</b><small>${N.y}년 ${N.q}분기 · 호외</small></div><button class="hl" data-act="news"><h2>${esc(h.h)}</h2><p>${esc(h.s)}</p><span class="go">제목을 누르면 지도에서 현장을 봅니다 ›</span></button>${o.length?`<div class="cols">${o.map(e=>`<div><b>${esc(e.h)}</b>${esc(e.s)}</div>`).join('')}</div>`:''}<div class="rowf"><button data-act="newsx" style="background:#18140f;color:#efe7d2">신문 접기</button></div></div>`;
+ d.innerHTML=`<div class="paperN" id="paperN"><div class="mast"><b>세계 통신</b><small>${N.y}년 ${N.q}분기 · 호외</small></div><button class="hl" data-act="news"><h2>${esc(h.h)}</h2><p>${esc(h.s)}</p><span class="go">제목을 누르면 현장 지도로 ›</span></button>${o.length?`<div class="cols">${o.map(e=>`<div><b>${esc(e.h)}</b>${esc(e.s)}</div>`).join('')}</div>`:''}<div class="rowf"><button data-act="newsx" style="background:#18140f;color:#efe7d2">신문 접기</button></div></div>`;
  d.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b)act(b.dataset.act);else if(e.target==d)newsClose()});document.body.appendChild(d)}
 function newsClose(){const d=$('#news');V.news=null;if(!d)return;$('#paperN').classList.add('fold');setTimeout(()=>d.remove(),430)}
 function newsGo(){const N=V.news,h=N&&N.ev[0];newsClose();if(!h)return;setTimeout(()=>{if(h.at)flyXY(h.at[0],h.at[1],Math.min(CAM.w,h.ty=='build'?90:160),650);if(h.sel){const[t,...r]=h.sel.split(':');if(t=='tab')act(h.sel);else if(t=='f')selFeat(r.join(':'),0);else{V.sel={t,id:r.join(':')};ui()}}},300)}
@@ -1129,7 +1379,7 @@ const ornCorners=()=>['c1','c2','c3','c4'].map(c=>`<span class="cn ${c}">${ORN}<
 const SCN={w1:['1910','제1차 세계대전','열강의 동맹망이 촘촘히 얽힌 시대. 발칸의 총성 한 발이 대륙 전체를 전쟁으로 끌어들이기 직전에서 시작합니다.','1910–1918 · 36분기',['UK','FRA','GER','RUS','DAN','OTT'],'제1호'],
  w2:['1936','제2차 세계대전','대공황의 상처가 아물기 전, 라인란트에 군대가 들어섰습니다. 항로와 공장, 조약 문서로 다음 10년을 지휘하세요.','1936–1945 · 40분기',['UK','USA','FRA','GER','ITA','JPN','RUS','KOR'],'제2호'],
  camp:['1910→45','통합 캠페인','두 번의 세계대전을 한 판으로 이어 갑니다. 첫 전쟁에서 그은 국경과 맺은 조약이 다음 시대의 출발선이 됩니다.','1910–1945 · 144분기',['UK','FRA','GER','RUS','USA','JPN'],'제3호']};
-const BLURB={UK:'해운 제국. 대서양과 수에즈를 잇는 항로로 식량과 원료를 들여오고, 항만 장부로 수송 여력을 운영합니다.',USA:'대륙의 공업국. 공공사업으로 전력망과 철도를 넓히며 대공황에서 회복해 갑니다.',KOR:'망명 정부. 해외 동포 사회의 후원과 외교 서신으로 독립을 준비하고, 독립하면 국내 행정을 맡습니다.',JPN:'섬나라 공업국. 수입한 철광석과 석유를 제철소·공창·항공기 공장에 배분합니다.',FRA:'철도의 공화국. 의회 예산안을 심의하며 어느 지방의 사업을 먼저 착공할지 고릅니다.',FIN:'호수와 숲의 나라. 계절에 따라 달라지는 인력을 민간 산업과 예비 병력 사이에서 저울질합니다.',GER:'중부 유럽의 공업국. 루르 공업지대는 북해 항로로 들어오는 철광석에 기대고 있습니다.',ITA:'지중해 왕국. 아프리카 점령지로 가는 보급 항로를 지켜야 합니다.',RUS:'사회주의 대국. 5개년 계획으로 우랄 너머에 새 공업 도시를 세웁니다.',CHN:'분열된 공화국. 화북의 압력 속에서 난징 정부의 권위를 지켜야 합니다.',ESP:'흔들리는 공화국. 국내 정세가 내전 직전까지 치닫고 있습니다.',POL:'되살아난 공화국. 두 강대국 사이에서 중앙 공업지구를 일으킵니다.'};
+const BLURB={UK:'해운 제국. 대서양과 수에즈를 잇는 항로로 식량과 원료를 들여온다. 항구의 수송 여력이 곧 국력이다.',USA:'대륙의 공업국. 공공사업으로 전력망과 철도를 넓히며 대공황의 늪을 빠져나오는 중이다.',KOR:'망명 정부. 해외 동포 사회의 후원과 외교 서신으로 독립을 준비한다.',JPN:'섬나라 공업국. 수입한 철광석과 석유를 제철소·공창·항공기 공장에 나눈다.',FRA:'철도의 공화국. 의회 예산안을 심의하며 어느 지방의 사업을 먼저 착공할지가 늘 정쟁거리다.',FIN:'호수와 숲의 나라. 계절에 따라 달라지는 인력을 민간 산업과 예비 병력 사이에서 저울질한다.',GER:'중부 유럽의 공업국. 루르 공업지대는 북해 항로로 들어오는 철광석에 목줄이 잡혀 있다.',ITA:'지중해 왕국. 아프리카 점령지로 가는 보급 항로를 지켜야 한다.',RUS:'사회주의 대국. 5개년 계획으로 우랄 너머에 새 공업 도시를 세운다.',CHN:'분열된 공화국. 화북의 압력 속에서 난징 정부의 권위를 지켜야 한다.',ESP:'흔들리는 공화국. 국내 정세가 내전 직전까지 치닫고 있다.',POL:'되살아난 공화국. 두 강대국 사이에서 중앙 공업지구를 일으킨다.'};
 function menuBg(){if(BGURL||!CT)return BGURL;let g='';for(let x=0;x<=1000;x+=27.78)g+=`M${x.toFixed(1)} 0V560`;for(let y=0;y<=560;y+=40.6)g+=`M0 ${y.toFixed(1)}H1000`;
  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice"><rect x="-100" y="-100" width="1200" height="800" fill="#9aa595"/><path d="${g}" stroke="#6f7a69" stroke-width=".35" fill="none"/>${CT.map(t=>`<path d="${t.d}" fill="#e3d3a9" stroke="#5a3a24" stroke-width=".35" stroke-opacity=".75"/>`).join('')}</svg>`;
  return BGURL='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
@@ -1138,17 +1388,42 @@ function routesSVG(){const P=[[[51.5,-0.1],[40.7,-74]],[[51.5,-0.1],[36,-6],[31.
 const bgHTML=(dk)=>`<div class="scr-bg">${menuBg()?`<img src="${menuBg()}" alt="">`:''}${dk?'':routesSVG()}</div><div class="scr-veil${dk?' dk':''}"></div>`;
 const INKSTROKE=`<svg class="ttl-ink" viewBox="0 0 560 22" preserveAspectRatio="none"><path d="M6 14C80 6 170 18 260 11S430 4 554 12"/></svg>`;
 const HDR=(back,lbl)=>`<header class="scr-h"><button ${back}>${lbl}</button><div class="logo">Borders <i>in</i> Ink</div>${S&&code?`<div class="rc">방 코드 <b>${esc(code)}</b></div>`:''}</header>`;
-function home(){app.className='';if(MS=='title'){app.innerHTML=`<div class="scr">${bgHTML()}<div class="scr-c"><div class="ttl"><div class="ttl-box orn">${ornCorners()}<div class="ttl-k">AN ATLAS OF WAR AND STATECRAFT</div><h1 class="logo">Borders <i>in</i> Ink</h1>${INKSTROKE}<div class="ttl-ko">잉크로 그은 국경 · 1910 — 1945</div></div>
+// ════════ 시작 화면: 양피지 위 출항 장면 ════════
+function seaScene(){let r=7;const rnd=()=>(r=(r*9301+49297)%233280)/233280,I='#3b2a1a',P='#efe1bc';
+ let g='';for(let x=0;x<=1600;x+=100)g+=`M${x} 0V900`;for(let y=0;y<=900;y+=100)g+=`M0 ${y}H1600`;
+ let w='';for(let i=0;i<170;i++){const x=330+rnd()*1270,y=430+rnd()*470,s=6+rnd()*9*(y/700);if(x<420&&y>600)continue;w+=`M${x.toFixed(0)} ${y.toFixed(0)}q${(s/2).toFixed(1)} ${(-s/3).toFixed(1)} ${s.toFixed(1)} 0q${(s/2).toFixed(1)} ${(-s/3).toFixed(1)} ${s.toFixed(1)} 0`}
+ const coast='M0 330C70 345 130 380 175 430S250 520 238 575S300 655 296 705S330 800 318 900L0 900Z';
+ let town='';[[40,418],[70,428],[100,440],[128,452],[60,470],[95,482],[132,494],[160,505],[118,525],[150,540],[185,555]].forEach(([x,y],i)=>{const h=12+(i%3)*4;town+=`<rect x="${x}" y="${y-h}" width="22" height="${h}" fill="${P}" stroke="${I}" stroke-width="1.6"/><path d="M${x-2} ${y-h}L${x+11} ${y-h-9}L${x+24} ${y-h}Z" fill="#b5643f" stroke="${I}" stroke-width="1.4"/><rect x="${x+8}" y="${y-6}" width="5" height="6" fill="${I}"/>`});
+ town+=`<rect x="200" y="470" width="16" height="44" fill="${P}" stroke="${I}" stroke-width="1.6"/><path d="M196 470L208 442L220 470Z" fill="${I}"/><path d="M208 442V432M204 436H212" stroke="${I}" stroke-width="1.5"/>`;
+ const lh=`<g transform="translate(282 640)"><path d="M-9 0L-6 -58H6L9 0Z" fill="${P}" stroke="${I}" stroke-width="2"/><path d="M-7 -40H7M-8 -20H8" stroke="#8f2a17" stroke-width="5"/><rect x="-8" y="-70" width="16" height="12" fill="#f6d77a" stroke="${I}" stroke-width="2"/><path d="M-10 -70L0 -80L10 -70Z" fill="${I}"/><path d="M12 -64L70 -84M12 -62L74 -62M12 -60L70 -42" stroke="#b08a2e" stroke-width="1.5" stroke-dasharray="4 4"/></g>`;
+ const steamer=(f)=>`<g class="bob"><path d="M-36 58q-22 5 -44 0M-30 52q-16 4 -32 0" class="ink" stroke-width="1.6"/><path d="M8 40L196 40L180 61L22 61Z" fill="${I}"/><path d="M16 47H186" stroke="${P}" stroke-width="1.6"/>
+  <path d="M30 40V4M170 40V8M30 6L95 20M170 10L118 20" class="ink" stroke-width="1.4"/><rect x="52" y="26" width="96" height="14" fill="${P}" stroke="${I}" stroke-width="1.8"/><rect x="72" y="16" width="56" height="10" fill="${P}" stroke="${I}" stroke-width="1.8"/>
+  ${[62,74,86,98,110,122,134].map(x=>`<rect x="${x}" y="30" width="5" height="5" fill="${I}"/>`).join('')}${f.map(x=>`<rect x="${x}" y="0" width="13" height="17" fill="${I}"/><rect x="${x}" y="4" width="13" height="3.5" fill="#8f2a17"/>`).join('')}
+  ${f.map(x=>`<g class="smk" transform="translate(${x+6} -2)">${[0,1.3,2.6].map(d=>`<circle r="7" style="animation-delay:${d}s"/>`).join('')}</g>`).join('')}</g>`;
+ const sailer=`<g class="bob"><path d="M-30 64q-20 4 -40 0" class="ink" stroke-width="1.5"/><path d="M10 50Q100 64 194 46L178 66Q100 78 26 66Z" fill="${I}"/>
+  ${[62,102,142].map((m,i)=>`<path d="M${m} 52V${-6+i*4}" class="ink" stroke-width="2"/><path d="M${m-24} ${4+i*4}Q${m} ${-2+i*4} ${m+24} ${4+i*4}L${m+22} ${20+i*4}Q${m} ${14+i*4} ${m-22} ${20+i*4}Z" fill="#f6ead0" stroke="${I}" stroke-width="1.6"/><path d="M${m-20} ${24+i*4}Q${m} ${18+i*4} ${m+20} ${24+i*4}L${m+18} ${40+i*4}Q${m} ${34+i*4} ${m-18} ${40+i*4}Z" fill="#f6ead0" stroke="${I}" stroke-width="1.6"/>`).join('')}<path d="M194 46L232 30" class="ink" stroke-width="1.5"/><path d="M62 -6l12 4l-12 4Z" fill="#8f2a17"/></g>`;
+ const SH=[[300,640,1720,840,1,steamer([86,108]),62,-12],[300,640,1720,470,.7,sailer,96,-44],[300,640,1720,640,.52,steamer([96]),80,-58],[300,640,1720,740,.82,steamer([80,100,120]),70,-33],[262,700,620,790,.38,steamer([96]),46,-8]];
+ const ships=SH.map(([x0,y0,x1,y1,k,body,d,dl])=>`<g transform="translate(${x0} ${y0}) scale(${k})"><g class="ship" style="--tx:${((x1-x0)/k).toFixed(0)}px;--ty:${((y1-y0)/k).toFixed(0)}px;--d:${d}s;--dl:${dl}s">${body}</g></g>`).join('');
+ const routes=[[1600,470,'→ 핼리팩스 · 뉴욕'],[1600,640,'→ 지브롤터 · 수에즈 · 봄베이'],[1600,820,'→ 케이프타운 · 시드니']].map(([x,y,t])=>`<path d="M320 650Q${(320+x)/2} ${(650+y)/2-60} ${x} ${y}" class="ink" stroke-width="1.6" stroke-dasharray="2 7" opacity=".7"/><text x="${x-150}" y="${y-14}" text-anchor="end" style="font:italic 400 22px 'IM Fell English',var(--serif);fill:${I}">${t}</text>`).join('');
+ let rose='';for(let i=0;i<16;i++){const a=i*Math.PI/8,L=i%4==0?120:i%2==0?78:52,wd=i%4==0?14:8,x=Math.sin(a)*L,y=-Math.cos(a)*L,px=Math.cos(a)*wd,py=Math.sin(a)*wd;rose+=`<path d="M0 0L${(px).toFixed(1)} ${(py).toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}Z" fill="${i%2?P:I}" stroke="${I}" stroke-width="1.2"/>`}
+ return`<svg class="sea-scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><path d="${g}" stroke="#8a7350" stroke-width=".8" opacity=".35"/>
+  <path d="${w}" class="ink" stroke-width="1.4" opacity=".55"/><path d="${coast}" transform="translate(14 0)" fill="none" stroke="${I}" stroke-width="1" opacity=".35"/><path d="${coast}" transform="translate(28 0)" fill="none" stroke="${I}" stroke-width="1" opacity=".22"/>
+  <path d="${coast}" fill="#d9c595" stroke="${I}" stroke-width="2.4"/><path d="M0 600C60 620 120 700 160 760" class="ink" stroke-width="1" opacity=".5"/>${town}<path d="M238 646L330 654" class="ink" stroke-width="5"/>${lh}
+  ${routes}<text x="470" y="800" style="font:italic 400 30px 'IM Fell English',serif;fill:${I};letter-spacing:.45em;opacity:.45">OCEANUS ATLANTICUS</text>
+  <g transform="translate(1400 190)" opacity=".85"><circle r="132" fill="none" stroke="${I}" stroke-width="1.5"/><circle r="124" fill="none" stroke="${I}" stroke-width=".8"/>${rose}<circle r="6" fill="${P}" stroke="${I}" stroke-width="1.5"/><text y="-142" text-anchor="middle" style="font:400 24px 'IM Fell English SC',serif;fill:${I}">N</text></g>
+  ${ships}</svg>`}
+
+function home(){app.className='';if(MS=='title'){app.innerHTML=`<div class="scr pp">${seaScene()}<div class="scr-veil"></div><div class="scr-c"><div class="ttl"><div class="ttl-box orn">${ornCorners()}<div class="ttl-k">AN ATLAS OF WAR AND STATECRAFT</div><h1 class="logo">Borders <i>in</i> Ink</h1>${INKSTROKE}<div class="ttl-ko">잉크로 그은 국경 · 1910 — 1945</div></div>
   ${DBERR?`<div class="warn" style="max-width:420px;margin-top:30px">공유 저장소를 쓸 수 없어 방을 만들 수 없습니다. claude.ai에 로그인한 상태로 이 페이지를 열어 주세요.</div>`:`<div class="ttl-menu"><button class="mb pri" data-m="new">새 게임 <span>❧</span></button><button class="mb" data-m="join">방 참가 · 이어하기 <span>❧</span></button></div>`}
   <div class="ttl-foot">MULTIPLAYER · SIMULTANEOUS TURNS · HISTORICAL BORDERS OF 1910 &amp; 1936</div></div></div></div>`}
  else if(MS=='new'){window.__rc=window.__rc||('INK'+Math.floor(100+Math.random()*900));app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('data-m="title"','← 처음으로')}<div class="mw">
-  <h2 class="mt">새 게임</h2><p class="ms">시대를 고르고 방을 엽니다. 함께할 사람에게는 방 코드를 알려 주세요.</p><div class="lab2">작전 시나리오</div>
+  <h2 class="mt">새 게임</h2><p class="ms">시대를 고르고 방을 연다. 함께할 사람에게는 방 코드를 알려 줄 것.</p><div class="lab2">작전 시나리오</div>
   <div class="scn">${Object.entries(SCN).map(([k,[y,t,d,n,fs,no]])=>`<button class="sc ppr${EM==k?' on':''}" data-e="${k}"><span class="tabx">시나리오 ${no}</span><span class="yr">${y}</span><h3>${t}</h3><p>${d}</p><span class="fls">${fs.map(f=>flag(f,27,18)).join('')}</span><span class="tn">${n}</span><span class="stp">채택</span></button>`).join('')}</div>
   <div class="mfrm ppr"><div style="display:flex;gap:30px;flex-wrap:wrap"><div class="fld"><label>방 코드</label><div class="row"><input id="c1" value="${esc(window.__rc)}" maxlength="10" aria-label="방 코드"><button class="chip" data-m="rc">다시 만들기</button></div></div>
    <div class="fld"><label>분기당 제한 시간</label><div class="row">${[60,90,180,300].map(s=>`<button class="chip${SECS==s?' on':''}" data-s="${s}">${s<120?s+'초':s/60+'분'}</button>`).join('')}</div></div></div><button class="pri big" id="mk">방 열기 →</button></div>
-  <p class="note2">방장 기기가 켜져 있어야 분기가 넘어갑니다. 모든 플레이어가 준비를 누르거나 제한 시간이 지나면 다음 분기로 진행합니다.</p></div></div></div>`}
+  <p class="note2">분기는 방장의 기기에서 넘어간다. 모두 결재를 마치거나 시한이 차면 마감.</p></div></div></div>`}
  else{app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('data-m="title"','← 처음으로')}<div class="mw" style="max-width:660px">
-  <h2 class="mt">방 참가 · 이어하기</h2><p class="ms">초대받은 방 코드를 입력하세요. 같은 코드로 다시 들어오면 저장된 분기부터 이어집니다.</p>
+  <h2 class="mt">방 참가 · 이어하기</h2><p class="ms">초대받은 방 코드를 넣는다. 같은 코드로 다시 들어오면 저장된 분기부터 이어진다.</p>
   <div class="mfrm ppr"><div class="fld"><label>방 코드</label><div class="row"><input id="c2" placeholder="INK123" maxlength="10" aria-label="방 코드" style="width:270px"></div></div><button class="pri big" id="jn">입장 →</button></div></div></div></div>`}
  app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const m=b.dataset.m;if(m=='rc'){window.__rc='INK'+Math.floor(100+Math.random()*900);$('#c1').value=window.__rc;return}MS=m;home()});
  app.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{EM=b.dataset.e;app.querySelectorAll('[data-e]').forEach(x=>x.classList.toggle('on',x==b))});
@@ -1161,24 +1436,24 @@ function miniMap(n){if(!CT)return'';const c=presetCam(n),h=c.w*.5,hs=new Set(hel
 function leaveRoom(){unsub.forEach(u=>u());unsub=[];S=null;code='';O={};V.init=0;LSEL=null;MS='title';const pl=$('#play');if(pl)pl.remove();home()}
 const miniCtr=(col,sz)=>`<svg width="30" height="20" viewBox="-17 -11 34 22">${ctr(col,'',sz).replace(/<text x="8.5"[^<]*<\/text>/,'')}</svg>`;
 function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL||!S.N[LSEL])LSEL=me||'UK';if(!S.N[LSEL])LSEL=Object.keys(S.N)[0];
- const all=Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length),major=all.filter(n=>NAT[PID(n)]),rest=all.filter(n=>!major.includes(n)&&(!LQ||nm(n,y).includes(LQ)));
+ const all=Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length),major=all.filter(n=>NID(n)&&(held(S,n).length>=3||PF[PID(n)])),rest=all.filter(n=>!major.includes(n)&&(!LQ||nm(n,y).includes(LQ)));
  const row=n=>{const N=S.N[n],tk=taken.includes(n),mineN=me==n;return`<button class="nt${LSEL==n?' on':''}" data-n="${n}">${flag(n,36,24)}<span><b>${esc(nm(n,y))}</b><small>${esc(leaderOf(n,y)||(N.lord?'속령 · '+nm(N.lord,y)+' 지배':'독립국'))}</small></span>${mineN?'<span class="who">내 국가</span>':tk?'<span class="who">플레이어</span>':''}</button>`};
- const n=LSEL,N=S.N[n],pid=PID(n),A=NAT[pid],tk=taken.includes(n)&&me!=n,mil=N.mil>60?'강':N.mil>30?'중':'약',sp=spiritsOf(S,n),ds=decsFor(n).filter(d=>d.n!='*').slice(0,4);
- const plist=Object.entries(ps).map(([u,x])=>`<span>${flag(x,21,14)}${esc(nm(x,y))}${u==uid?' (나)':''}</span>`).join('')||'<span>아직 아무도 국가를 고르지 않았습니다</span>';
+ const n=LSEL,N=S.N[n],pid=PID(n),A=natFor(n),tk=taken.includes(n)&&me!=n,mil=N.mil>60?'강':N.mil>30?'중':'약',sp=spiritsOf(S,n),ds=decsFor(n).filter(d=>d.n[0]!='@').slice(0,4);
+ const plist=Object.entries(ps).map(([u,x])=>`<span>${flag(x,21,14)}${esc(nm(x,y))}${u==uid?' (나)':''}</span>`).join('')||'<span>아직 아무도 나라를 고르지 않았다</span>';
  const prev=$('.lob-ls'),st=prev?prev.scrollTop:0,no=String(Math.abs(hs(n))%9000+1000);
  app.className='';app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('id="lv"','← 방 나가기')}<div class="mw">
- <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 국가의 브리핑 문서를 검토하세요. 분기당 ${S.secs}초 · 고르지 않은 국가는 AI가 역사대로 움직입니다.</p>
- <div class="lob"><aside class="lob-l ppr"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">열강 · 고유 전략 보유</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">그 밖의 국가</div>${rest.map(row).join('')}</div></aside>
+ <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 나라를 고르시오. 분기당 ${S.secs}초. 고르지 않은 나라는 역사대로 움직인다.</p>
+ <div class="lob"><aside class="lob-l ppr"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">주요국</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">중소국 · 속령</div>${rest.map(row).join('')}</div></aside>
  <section class="brief ppr"><div class="brief-hd"><span>국가 브리핑 문서 제 ${y}-${no}호</span><b>기밀</b></div>${tk?'<div class="stamp">지휘 중</div>':''}
   <div class="brief-top">${flag(n,84,56)}<div><h2>${esc(nm(n,y))}</h2><div class="gv">${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</div></div><figure class="photo" style="margin:0"><img src="${miniMap(n)}" alt=""><figcaption>영토 · ${held(S,n).length}개 지역</figcaption></figure></div>
   <table><tr><td>지도자</td><td>${esc(leaderOf(n,y)||'—')}</td></tr><tr><td>수도</td><td>${esc(A?A.cap:'—')}</td></tr><tr><td>군사 교리</td><td>${esc(A?A.doc+' — '+A.docD:'일반 교리')}</td></tr></table>
-  <p class="bl">${esc(BLURB[pid]||`${held(S,n).length}개 지역을 다스리는 ${N.lord?'속령':'독립국'}입니다. 주요 산출과 이웃 나라를 살펴 첫 분기 계획을 세우세요.`)}</p>
+  <p class="bl">${esc(BLURB[pid]||`${A.gov}. 영토 ${held(S,n).length}개 지역. 교리는 ${A.doc}.`)}</p>
   <div class="sg"><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>국고</small><b>${N.g|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div><div><small>군사력</small><b>${mil}</b></div></div>
   ${sp.length?`<div class="bsec">국가 정신</div><div class="bgrid">${sp.map(p=>`<div class="bsp${p.doc?' d':''}"><b>${esc(p.t)}</b><small>${esc(p.d)}</small></div>`).join('')}</div>`:''}
   ${ds.length?`<div class="bsec">역사적 결정</div>${ds.map(d=>`<div class="bdec"><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span>${esc(d.t)}</div>`).join('')}`:''}
   <div class="bsec">고유 부대</div><div class="uts">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}${esc(u[0])}</span>`).join('')}</div>
   <div class="bsec">이 방의 플레이어</div><div class="pl">${plist}</div>
-  <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0">방장이 시작하길 기다리는 중…</span>'}</div></section></div></div></div></div>`;
+  <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0">방장의 개전 명령을 기다리는 중…</span>'}</div></section></div></div></div></div>`;
  const ls=$('.lob-ls');if(ls)ls.scrollTop=st;
  app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{LSEL=b.dataset.n;lobby()});const q=$('#lq');q.oninput=()=>{LQ=q.value.trim();lobby();const q2=$('#lq');q2.focus();q2.setSelectionRange(q2.value.length,q2.value.length)};
  $('#lv').onclick=leaveRoom;const cl=$('#cl');if(cl)cl.onclick=()=>claim(n);if(host&&$('#go'))$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}

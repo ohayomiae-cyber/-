@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>Borders in Ink</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Special+Elite&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#151d26;--ink2:#1c2630;--ink3:#27333e;--ln:#3a4855;--tx:#e7e2d4;--mu:#97a1a7;--acc:#c4532d;--acc2:#e07a4f;--ok:#7fa36f;--bad:#e0745a;--paper:#ece2c8;--paper2:#f2ebd8;--pink:#211c16;--sea:#a7b9be;--serif:'Noto Serif KR','Nanum Myeongjo',serif;--sans:'IBM Plex Sans KR','Noto Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;color-scheme:dark}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#151d26;--tx:#e7e2d4;--paper:#ece2c8;color-scheme:dark}}
@@ -14,80 +14,102 @@ button:hover{border-color:#6a7884}button:disabled{opacity:.4;cursor:default}
 button.pri{background:var(--acc);border-color:var(--acc2);color:#fff}button.on{background:#e9e3d2;color:#151b22;border-color:#fff}
 input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);border:1px solid #475563;border-radius:2px;height:32px;padding:0 8px}
 .num{font-variant-numeric:tabular-nums}
-/* ── 로딩·타이틀·메뉴 ── */
-.logo{font-family:'IM Fell English SC','IM Fell English',Georgia,serif;font-weight:400;color:#efe6cf;letter-spacing:.02em;line-height:.95;margin:0}
-.logo i{font-family:'IM Fell English',Georgia,serif;font-style:italic;color:#d4693f;font-size:.62em;letter-spacing:0;margin:0 .06em;position:relative;top:-.12em}
-#splash{position:fixed;inset:0;z-index:100;background:#0d1318;display:grid;place-items:center;color:#efe6cf;transition:opacity .6s ease,visibility .6s}
+/* ── 로딩·타이틀·메뉴 (고풍 지도책) ── */
+:root{--parch:#ecdfbf;--parch2:#e2d2ab;--sepia:#2a1f14;--brass:#b39a68;--ox:#7d2417;--ox2:#a3361b;--type:'Special Elite','Courier New',monospace;--noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+.logo{font-family:'IM Fell English SC','IM Fell English',Georgia,serif;font-weight:400;color:#f1e6c8;letter-spacing:.02em;line-height:.95;margin:0}
+.logo i{font-family:'IM Fell English',Georgia,serif;font-style:italic;color:#c8553a;font-size:.6em;letter-spacing:0;margin:0 .06em;position:relative;top:-.14em}
+.ppr{background:var(--parch) var(--noise);color:var(--sepia);border:1px solid #7a6440;box-shadow:inset 0 0 70px rgba(122,88,38,.28),0 8px 26px rgba(0,0,0,.55)}
+.orn{position:relative;outline:1px solid var(--brass);outline-offset:6px}
+.orn>.cn{position:absolute;width:34px;height:34px;pointer-events:none}.orn>.cn path{fill:none;stroke:var(--brass);stroke-width:1.3}
+.orn>.c1{left:-12px;top:-12px}.orn>.c2{right:-12px;top:-12px;transform:scaleX(-1)}.orn>.c3{left:-12px;bottom:-12px;transform:scaleY(-1)}.orn>.c4{right:-12px;bottom:-12px;transform:scale(-1)}
+#splash{position:fixed;inset:0;z-index:100;background:#1b140d var(--noise);display:grid;place-items:center;color:#f1e6c8;transition:opacity .7s ease,visibility .7s;overflow:hidden}
 #splash.out{opacity:0;visibility:hidden}
-.sp-in{text-align:center;width:min(560px,86vw)}
-.sp-rose{width:92px;height:92px;margin:0 auto 22px;display:block}
-.sp-rose path,.sp-rose circle{fill:none;stroke:#b9a57a;stroke-width:1.2;stroke-dasharray:400;stroke-dashoffset:400;animation:ink 2.2s ease forwards}
-.sp-rose .n{fill:#c4532d;stroke:none;opacity:0;animation:fade .6s 1.4s forwards}
-@keyframes ink{to{stroke-dashoffset:0}}@keyframes fade{to{opacity:1}}
-#splash .logo{font-size:clamp(46px,9vw,84px);opacity:0;animation:fade 1s .3s forwards}
-.sp-sub{font:500 13px var(--serif);letter-spacing:.32em;color:#9aa3a8;margin:14px 0 34px;opacity:0;animation:fade 1s .7s forwards}
-.sp-bar{height:2px;background:#26313a;position:relative;overflow:hidden}.sp-bar i{position:absolute;inset:0 auto 0 0;width:8%;background:#c4532d;transition:width .5s ease}
-.sp-st{display:flex;justify-content:space-between;font:500 12px var(--sans);color:#8d979d;margin-top:10px;letter-spacing:.04em}
-.scr{position:fixed;inset:0;overflow:hidden;background:#0d1318;color:var(--tx)}
-.scr-bg{position:absolute;inset:-4%;animation:drift 70s ease-in-out infinite alternate}
-.scr-bg img,.scr-bg svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#splash .sp-map{position:absolute;inset:-3%;opacity:0;transition:opacity 1.6s ease;filter:sepia(.6) brightness(.55) contrast(1.05)}#splash .sp-map.on{opacity:.55}#splash .sp-map img{width:100%;height:100%;object-fit:cover}
+#splash .sp-vig{position:absolute;inset:0;background:radial-gradient(ellipse 70% 62% at 50% 48%,transparent,rgba(16,11,6,.92) 78%)}
+.sp-in{position:relative;text-align:center;width:min(640px,88vw)}
+.cart{padding:34px 30px 30px;background:rgba(22,16,10,.62);border:1px solid var(--brass)}
+.sp-k{font:400 12px var(--type);letter-spacing:.34em;color:var(--brass);margin-bottom:18px}
+#splash .logo{font-size:clamp(46px,9vw,88px)}
+.sp-rule{display:flex;align-items:center;gap:14px;margin:16px auto 10px;width:80%;font:400 12px 'IM Fell English',serif;letter-spacing:.3em;color:var(--brass)}.sp-rule::before,.sp-rule::after{content:'';flex:1;border-top:1px solid var(--brass)}
+.sp-sub{font:600 14px var(--serif);letter-spacing:.34em;color:#d8cba8}
+.sp-scale{margin:30px auto 0;width:min(460px,80vw)}
+.sp-cells{display:grid;grid-template-columns:repeat(10,1fr);height:9px;border:1px solid #d8cba8}.sp-cells i{border-right:1px solid #d8cba8;transition:background .35s}.sp-cells i:last-child{border-right:0}.sp-cells i.f:nth-child(odd){background:#f1e6c8}.sp-cells i.f:nth-child(even){background:#3a2c1d}
+.sp-lbl{display:flex;justify-content:space-between;font:400 11px var(--type);color:#bfb18d;margin-top:5px;letter-spacing:.06em}
+.sp-st{display:flex;justify-content:space-between;font:500 12.5px var(--sans);color:#cbbd98;margin:14px auto 0;width:min(460px,80vw)}
+.sp-q{margin-top:26px;font:italic 400 15px 'IM Fell English',var(--serif);color:#e9dcb9;min-height:22px;transition:opacity .4s}.sp-q b{font:600 13px var(--serif);font-style:normal;color:var(--brass);margin-right:8px}
+.scr{position:fixed;inset:0;overflow:hidden;background:#1b140d;color:var(--tx)}
+.scr-bg{position:absolute;inset:-4%;animation:drift 80s ease-in-out infinite alternate}
+.scr-bg img,.scr-bg svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.scr-bg img{filter:sepia(.45) brightness(.82)}
 @keyframes drift{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.1) translate(-2.5%,1.5%)}}
-.scr-veil{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(13,19,24,.35),rgba(13,19,24,.9) 75%,#0d1318);pointer-events:none}
-.scr-veil.dk{background:rgba(13,19,24,.78)}
-.rts path{fill:none;stroke:#d4693f;stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-dasharray:6 5;opacity:.85}
-.rts circle{fill:#efe6cf}
+.scr-veil{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(27,20,13,.25),rgba(22,16,10,.88) 75%,#16100a);pointer-events:none}
+.scr-veil.dk{background:rgba(22,16,10,.72)}
+.rts path{fill:none;stroke:#c8553a;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:6 5;opacity:.9}.rts circle{fill:#f1e6c8}
 .scr-c{position:relative;height:100%;overflow:auto}
-.ttl{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
-.ttl-k{font:600 12px var(--sans);letter-spacing:.42em;color:#b9a57a;margin-bottom:22px}
-.ttl .logo{font-size:clamp(58px,11vw,138px);text-shadow:0 2px 0 #0008}
-.ttl-ink{display:block;width:min(560px,70vw);height:22px;margin:6px auto 0}.ttl-ink path{fill:none;stroke:#c4532d;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:ink 1.6s .4s ease forwards}
-.ttl-ko{font:600 clamp(15px,2vw,19px) var(--serif);letter-spacing:.3em;color:#d9d0bb;margin:18px 0 44px}
-.ttl-menu{display:grid;gap:10px;width:min(320px,80vw)}
-.mb{height:52px;font:600 15px var(--sans);letter-spacing:.08em;background:rgba(21,29,38,.82);border:1px solid #4a5763;color:#efe6cf;border-radius:2px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;transition:background .15s,border-color .15s}
-.mb:hover{background:#efe6cf;color:#151b22;border-color:#efe6cf}.mb span{font-size:18px;opacity:.7}
-.mb.pri{background:#c4532d;border-color:#e07a4f;color:#fff}.mb.pri:hover{background:#d4693f;color:#fff}
-.ttl-foot{position:absolute;bottom:22px;left:0;right:0;font:500 12px var(--sans);color:#7d878d;letter-spacing:.12em}
-.scr-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:14px 24px;background:rgba(13,19,24,.88);border-bottom:1px solid #26313a}
-.scr-h .logo{font-size:26px;flex:1}.scr-h button{height:36px;font-size:13px;background:transparent}
-.scr-h .rc{display:flex;align-items:center;gap:10px;font:500 13px var(--sans);color:#9aa3a8}.scr-h .rc b{font:700 20px var(--sans);letter-spacing:.14em;color:#efe6cf}
-.mw{max-width:1180px;margin:0 auto;padding:28px 24px 40px}
-.mt{font:700 30px var(--serif);margin:0 0 4px}.ms{color:#9aa3a8;font-size:14px;margin:0 0 24px}
-.lab2{font:600 12px var(--sans);letter-spacing:.16em;color:#b9a57a;margin:26px 0 10px}
-.scn{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.sc{height:auto;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:20px 20px 18px;background:rgba(21,29,38,.86);border:1px solid #3a4855;border-top:3px solid #3a4855;border-radius:2px;min-height:250px;color:var(--tx);transition:border-color .15s,background .15s}
-.sc:hover{border-color:#6a7884}.sc.on{color:var(--tx);border-color:#c4532d;border-top-color:#c4532d;background:rgba(32,42,52,.95)}
-.sc .yr{font-family:'IM Fell English SC',Georgia,serif;font-size:52px;line-height:1;color:#efe6cf}
-.sc h3{font:700 20px var(--serif);margin:10px 0 8px}.sc p{font:400 13.5px/1.65 var(--sans);color:#b4bcc0;margin:0 0 14px;flex:1}
-.sc .fls{display:flex;gap:5px;flex-wrap:wrap}.sc .tn{font:600 12px var(--sans);color:#9aa3a8;margin-top:12px;letter-spacing:.04em}
-.sc .ck{align-self:flex-end;font:700 11px var(--sans);letter-spacing:.12em;color:#e07a4f;margin-top:-8px;visibility:hidden}.sc.on .ck{visibility:visible}
-.mfrm{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;background:rgba(21,29,38,.86);border:1px solid #3a4855;padding:18px 20px;margin-top:14px}
-.fld label{display:block;font:600 12px var(--sans);color:#9aa3a8;margin-bottom:8px;letter-spacing:.06em}
+.ttl{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px 70px}
+.ttl-box{padding:40px 56px 34px;background:rgba(22,16,10,.55);border:1px solid var(--brass)}
+.ttl-k{font:400 13px var(--type);letter-spacing:.36em;color:var(--brass);margin-bottom:22px}
+.ttl .logo{font-size:clamp(58px,10.5vw,136px);text-shadow:0 3px 0 rgba(0,0,0,.6)}
+.ttl-ink{display:block;width:min(560px,70vw);height:22px;margin:4px auto 0}.ttl-ink path{fill:none;stroke:#c8553a;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:ink 1.6s .4s ease forwards}
+@keyframes ink{to{stroke-dashoffset:0}}
+.ttl-ko{font:600 clamp(15px,2vw,19px) var(--serif);letter-spacing:.32em;color:#e3d6b4;margin:16px 0 0}
+.ttl-menu{display:grid;gap:12px;width:min(340px,82vw);margin-top:40px}
+.mb{height:56px;font:700 16px var(--serif);letter-spacing:.14em;background:var(--parch) var(--noise);color:var(--sepia);border:1px solid #5d4a2c;border-radius:0;box-shadow:inset 0 0 0 4px var(--parch),inset 0 0 0 5px #8b744c,0 4px 0 rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;gap:12px;transition:transform .12s,filter .12s}
+.mb:hover{filter:brightness(1.06);transform:translateY(-1px)}.mb span{font-family:'IM Fell English',serif;font-size:20px;color:var(--ox)}
+.mb.pri{background:var(--ox) var(--noise);color:#f6ead0;border-color:#3c0f08;box-shadow:inset 0 0 0 4px var(--ox),inset 0 0 0 5px #d9a27c,0 4px 0 rgba(0,0,0,.45)}.mb.pri span{color:#f6ead0}
+.ttl-foot{position:absolute;bottom:22px;left:0;right:0;font:400 12px var(--type);color:#a99a76;letter-spacing:.14em}
+.scr-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(22,16,10,.92);border-bottom:1px solid #5d4a2c}
+.scr-h .logo{font-size:26px;flex:1}.scr-h button{height:36px;font:600 13px var(--serif);background:transparent;border-color:#6b5636;color:#e9dcb9}
+.scr-h .rc{display:flex;align-items:center;gap:10px;font:500 13px var(--serif);color:#bfb18d}.scr-h .rc b{font:400 22px var(--type);letter-spacing:.12em;color:#f1e6c8}
+.mw{max-width:1200px;margin:0 auto;padding:30px 24px 44px}
+.mt{font:700 32px var(--serif);margin:0 0 4px;color:#f1e6c8}.ms{color:#cbbd98;font:400 15px var(--serif);margin:0 0 24px}
+.lab2{font:400 13px var(--type);letter-spacing:.24em;color:var(--brass);margin:28px 0 12px;display:flex;align-items:center;gap:12px}.lab2::after{content:'';flex:1;border-top:1px solid #5d4a2c}
+.scn{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sc{height:auto;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:22px 22px 18px;border-radius:0;min-height:270px;position:relative;transition:transform .15s}
+.sc:hover{transform:translateY(-2px)}.sc.on{outline:2px solid var(--ox2);outline-offset:4px}
+.sc .tabx{position:absolute;top:-1px;right:18px;font:400 11px var(--type);letter-spacing:.14em;background:#2a1f14;color:var(--parch);padding:4px 9px}
+.sc .yr{font-family:'IM Fell English SC',Georgia,serif;font-size:56px;line-height:1;color:#2a1f14}
+.sc h3{font:900 21px var(--serif);margin:10px 0 8px;color:#2a1f14}.sc p{font:400 14px/1.7 var(--serif);color:#4a3a26;margin:0 0 14px;flex:1}
+.sc .fls{display:flex;gap:5px;flex-wrap:wrap}.sc .tn{font:400 12.5px var(--type);color:#5d4a2c;margin-top:12px}
+.sc .stp{position:absolute;right:16px;bottom:18px;font:900 15px var(--serif);color:var(--ox2);border:2.5px solid var(--ox2);padding:4px 10px;transform:rotate(-8deg);opacity:0;letter-spacing:.2em}.sc.on .stp{opacity:.85}
+.mfrm{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;padding:20px 22px;margin-top:18px}
+.fld label{display:block;font:400 12.5px var(--type);color:#5d4a2c;margin-bottom:8px;letter-spacing:.12em}
 .fld .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.fld input{height:44px;font:700 18px var(--sans);letter-spacing:.16em;text-transform:uppercase;width:200px;background:#0d1318;border-color:#4a5763}
-.chip{height:40px;padding:0 14px;font-size:13px;background:#0d1318}.chip.on{background:#efe6cf;color:#151b22;border-color:#efe6cf}
-.big{height:52px;padding:0 30px;font:700 15px var(--sans);letter-spacing:.06em}
-.note2{color:#8d979d;font-size:13px;line-height:1.6;margin-top:14px}
-.lob{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:18px;align-items:start}
-.lob-l{background:rgba(21,29,38,.9);border:1px solid #3a4855;max-height:calc(100vh - 170px);display:flex;flex-direction:column}
-.lob-l input{margin:12px 12px 4px;height:38px;font-size:14px;background:#0d1318}
-.lob-ls{overflow:auto;padding:0 6px 10px}
-.seg{font:600 11.5px var(--sans);letter-spacing:.16em;color:#b9a57a;padding:14px 8px 6px}
-.nt{width:100%;height:auto;display:flex;align-items:center;gap:12px;text-align:left;padding:9px 10px;margin:1px 0;background:transparent;border:1px solid transparent;border-radius:2px}
-.nt:hover{background:#ffffff0a}.nt.on{background:#efe6cf;color:#151b22}.nt.on small{color:#5d5240}
-.nt b{display:block;font:600 14.5px var(--sans)}.nt small{display:block;font:400 12px var(--sans);color:#8d979d;margin-top:2px}.nt>span{flex:1;min-width:0}
-.nt .who{font:700 10.5px var(--sans);letter-spacing:.08em;padding:3px 6px;border:1px solid currentColor;color:#e07a4f}.nt.on .who{color:#a3361b}
-.lob-r{background:rgba(21,29,38,.9);border:1px solid #3a4855;overflow:hidden}
-.lob-map{height:240px;background:#a7b9be;position:relative;border-bottom:1px solid #000}.lob-map img{width:100%;height:100%;object-fit:cover;display:block}
-.lob-d{padding:22px 24px 24px}
-.lob-n{display:flex;align-items:center;gap:16px;margin-top:-58px;position:relative}
-.lob-n .flg{border:2px solid #efe6cf;box-shadow:0 3px 0 #0006}
-.lob-n h2{font:700 34px var(--serif);margin:26px 0 0;text-shadow:0 2px 0 #000a}
-.st2{font:600 12.5px var(--sans);color:#b9a57a;letter-spacing:.06em;margin:16px 0 6px}
-.bl{font:400 15px/1.7 var(--sans);color:#d9d0bb;margin:0 0 18px}
-.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#3a4855;border:1px solid #3a4855;margin-bottom:18px}.sg div{background:#151d26;padding:10px 12px}.sg small{display:block;font-size:12px;color:#8d979d}.sg b{font:700 22px var(--sans);font-variant-numeric:tabular-nums}
-.pl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}.pl span{font:600 12.5px var(--sans);padding:5px 10px;border:1px solid #4a5763;display:flex;gap:7px;align-items:center}
-.acts{display:flex;gap:10px;flex-wrap:wrap}
-@media (max-width:860px){.scn{grid-template-columns:1fr}.sc{min-height:0}.mfrm{grid-template-columns:1fr}.lob{grid-template-columns:1fr}.lob-l{max-height:44vh}.sg{grid-template-columns:repeat(2,1fr)}.scr-h{padding:12px 14px}.scr-h .logo{font-size:20px}.mw{padding:20px 14px 30px}}
+.fld input{height:46px;font:400 22px var(--type);letter-spacing:.16em;text-transform:uppercase;width:210px;background:#f8f0dc;color:#2a1f14;border:1px solid #7a6440;border-radius:0}
+.chip{height:42px;padding:0 15px;font:600 14px var(--serif);background:transparent;color:#2a1f14;border:1px solid #7a6440;border-radius:0}.chip:hover{background:#f8f0dc}.chip.on{background:#2a1f14;color:var(--parch);border-color:#2a1f14}
+.big{height:54px;padding:0 32px;font:700 16px var(--serif);letter-spacing:.1em;border-radius:0}
+.big.pri,.ppr button.pri{background:var(--ox);border-color:#3c0f08;color:#f6ead0;box-shadow:inset 0 0 0 3px var(--ox),inset 0 0 0 4px #d9a27c}
+.big:disabled{opacity:.45}
+.note2{color:#5d4a2c;font:400 14px/1.6 var(--serif);margin-top:14px}.scr .mw>.note2{color:#bfb18d}
+.lob{display:grid;grid-template-columns:minmax(300px,370px) 1fr;gap:22px;align-items:start}
+.lob-l{max-height:calc(100vh - 170px);display:flex;flex-direction:column}
+.lob-l input{margin:14px 14px 6px;height:40px;font:500 14px var(--serif);background:#f8f0dc;color:#2a1f14;border:1px solid #7a6440;border-radius:0}
+.lob-ls{overflow:auto;padding:0 8px 12px}
+.seg{font:400 12px var(--type);letter-spacing:.2em;color:#7a2a1a;padding:16px 8px 6px;border-bottom:1.5px solid #2a1f14;margin-bottom:2px}
+.nt{width:100%;height:auto;display:flex;align-items:center;gap:12px;text-align:left;padding:9px 8px;background:transparent;border:0;border-bottom:1px solid #c9b78f;border-radius:0;color:#2a1f14}
+.nt:hover{background:#00000008}.nt.on{background:#2a1f14;color:var(--parch)}.nt.on small{color:#cbbd98}
+.nt b{display:block;font:700 15px var(--serif)}.nt small{display:block;font:400 12.5px var(--serif);color:#5d4a2c;margin-top:2px}.nt>span{flex:1;min-width:0}
+.nt .who{font:400 10.5px var(--type);letter-spacing:.06em;padding:3px 6px;border:1px solid currentColor;color:#a3361b}.nt.on .who{color:#e9a487}
+.brief{position:relative;padding:26px 30px 28px}
+.brief-hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px double #2a1f14;padding-bottom:8px;font:400 12px var(--type);letter-spacing:.14em;color:#5d4a2c}.brief-hd b{font:400 14px var(--type);color:#7a2a1a;letter-spacing:.3em}
+.brief-top{display:grid;grid-template-columns:auto 1fr 280px;gap:20px;align-items:start;margin-top:18px}
+.brief-top .flg{border:1px solid #2a1f14;box-shadow:2px 3px 0 rgba(0,0,0,.25)}
+.brief h2{font:900 34px/1.15 var(--serif);margin:0;color:#2a1f14}
+.brief .gv{font:400 14px var(--serif);color:#5d4a2c;margin-top:4px}
+.photo{border:1px solid #2a1f14;background:#a7b9be;padding:0;box-shadow:2px 3px 0 rgba(0,0,0,.25)}.photo img{display:block;width:100%;height:160px;object-fit:cover;filter:sepia(.35)}.photo figcaption{font:400 11px var(--type);color:#5d4a2c;padding:4px 6px;background:var(--parch2)}
+.brief table{width:100%;border-collapse:collapse;margin-top:14px;font:400 14px var(--serif)}.brief td{padding:5px 0;border-bottom:1px dotted #9c8a64;vertical-align:top}.brief td:first-child{width:96px;font:400 12px var(--type);color:#5d4a2c;letter-spacing:.06em;padding-top:7px}
+.bsec{font:400 12px var(--type);letter-spacing:.2em;color:#7a2a1a;margin:22px 0 8px;display:flex;align-items:center;gap:10px}.bsec::after{content:'';flex:1;border-top:1px solid #9c8a64}
+.bl{font:400 15px/1.75 var(--serif);color:#3a2c1c;margin:12px 0 0}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bsp{border-left:3px solid #8b744c;padding:4px 0 4px 10px}.bsp b{display:block;font:700 14.5px var(--serif)}.bsp small{display:block;font:400 13px/1.5 var(--serif);color:#4a3a26}.bsp.d{border-left-color:var(--ox2)}
+.bdec{display:flex;gap:10px;align-items:baseline;font:400 14px var(--serif);padding:4px 0;border-bottom:1px dotted #c9b78f}.bdec span{font:400 12px var(--type);color:#7a2a1a;min-width:74px}
+.uts{display:flex;flex-wrap:wrap;gap:8px}.uts span{display:inline-flex;align-items:center;gap:7px;font:600 13.5px var(--serif);padding:5px 10px 5px 6px;border:1px solid #7a6440;background:#f8f0dc}
+.uts svg{flex:none}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid #2a1f14;margin-top:16px}.sg div{padding:8px 12px;border-right:1px solid #9c8a64}.sg div:last-child{border-right:0}.sg small{display:block;font:400 11.5px var(--type);color:#5d4a2c}.sg b{font:400 24px var(--type)}
+.pl{display:flex;flex-wrap:wrap;gap:6px}.pl span{font:600 13px var(--serif);padding:5px 10px;border:1px solid #7a6440;display:flex;gap:7px;align-items:center;background:#f8f0dc}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;align-items:center}
+.ppr .big:not(.pri){background:#f8f0dc;color:#2a1f14;border:1px solid #2a1f14}
+.stamp{position:absolute;top:70px;right:34px;font:900 18px var(--serif);letter-spacing:.24em;color:var(--ox2);border:3px solid var(--ox2);padding:6px 14px;transform:rotate(9deg);opacity:.7;pointer-events:none}
+@media (max-width:900px){.scn{grid-template-columns:1fr}.sc{min-height:0}.mfrm{grid-template-columns:1fr}.lob{grid-template-columns:1fr}.lob-l{max-height:44vh}.sg{grid-template-columns:repeat(2,1fr)}.brief-top{grid-template-columns:auto 1fr}.brief-top .photo{grid-column:1/-1}.bgrid{grid-template-columns:1fr}.scr-h{padding:10px 14px}.scr-h .logo{font-size:20px}.mw{padding:20px 14px 30px}.ttl-box{padding:28px 20px}.brief{padding:20px 16px}}
 .fl svg,.flg{display:block;flex:none;border:1px solid #0009}.bar .flg,.plate .flg{outline:1px solid #ffffff38}
 /* ── 플레이 화면 ── */
 .play{position:fixed;inset:0;display:grid;grid-template-rows:52px 1fr;grid-template-columns:68px 1fr}
@@ -116,7 +138,7 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .c:hover>path:first-child{filter:brightness(1.05) saturate(1.1)}
 .c.fl>path:first-child{animation:fl 1.2s ease-in-out 4}@keyframes fl{50%{filter:brightness(.82) saturate(1.6)}}
 .ci{fill:none;stroke:#5c4a33;stroke-opacity:.28;stroke-width:7;vector-effect:non-scaling-stroke}.co{fill:none;stroke:#3f4b4f;stroke-width:.9;vector-effect:non-scaling-stroke;stroke-linejoin:round}
-#copies{pointer-events:none}
+#copies{pointer-events:none}#map.wv #terr,#map.wv #usl{display:none}
 #map.mv .h1,#map.mv .h2,#map.mv .ci,#map.mv #grat,#map.mv .mt,#map.mv .usl,#map.mv .lake,#map.mv .riv,#map.mv #copies{display:none}#map.mv .c>path{stroke-dasharray:none}.mapw.mv .grain{display:none}
 .mt{stroke:#6d5639;stroke-width:.9;fill:none;vector-effect:non-scaling-stroke;opacity:.75}
 .lake{fill:#a7b9be;stroke:#3f4b4f;stroke-width:.7;vector-effect:non-scaling-stroke}
@@ -206,6 +228,15 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .treaty h6{margin:0;font:700 15px var(--serif)}.treaty small{color:#6d6250;font-weight:400}
 .treaty ol{margin:0;padding:6px 14px 6px 32px;font-size:13.5px;line-height:1.55;border-top:1px dashed #bcae8e}.treaty li{margin:5px 0}.treaty li.mod{background:#c4532d1a;outline:1px dashed #a3361b;outline-offset:2px}.treaty li.mod::after{content:' — 상대측 수정';color:#a3361b;font-size:11px}
 .treaty .rowf{padding:0 10px 10px;justify-content:flex-end}
+.subt{display:flex;gap:0;margin:-2px 0 10px;border:1px solid #2a333b}.subt button{flex:1;border:0;border-radius:0;height:36px;background:#e6dcc4;color:#3a3020;font-size:13.5px}.db .subt button.on{background:#151d26;color:#fff;outline:0}
+.nat-h{display:flex;gap:12px;align-items:center;padding:4px 0 10px;border-bottom:2px solid #4a4030}.nat-h b{display:block;font:700 18px var(--serif)}.nat-h small{color:#6d6250;font-size:13px}
+.docx{margin:12px 0 4px;padding:10px 12px;border-left:4px solid #a3361b;background:#00000006}.docx small{display:block;font:700 11.5px var(--sans);letter-spacing:.1em;color:#a3361b}.docx b{display:block;font:700 16px var(--serif);margin:2px 0}.docx p{margin:2px 0 6px;font-size:13px;line-height:1.55;color:#4a4030}.fxl{font-size:12.5px;margin-top:4px;color:#4a4030}
+.sb .docx{background:#ffffff08}.sb .docx p,.sb .fxl{color:#c3cace}
+.spr{padding:8px 0;border-bottom:1px solid #d6cbb0}.spr b{display:block;font:700 14.5px var(--sans);margin-bottom:4px}.spr .fxs{display:flex;flex-wrap:wrap;gap:5px}
+.dec{padding:10px 12px;margin:8px 0;border:1px solid #c9bc9c;background:#fbf7ec}.dec.lk{opacity:.62}.dec.tk{background:#ece4cf;border-style:dashed}.dec.or{border-color:#a3361b;box-shadow:inset 3px 0 0 #a3361b}
+.dec .dt{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.dec .dt b{font:700 15px var(--serif)}.dec .dt span{font:600 12px var(--sans);color:#7a5a2c;white-space:nowrap}
+.dec .dd{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}.dec .dh2{font:italic 400 12.5px/1.5 var(--serif);color:#6d6250}.dec .da{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:8px}
+.uts2{display:grid;gap:6px}.uts2>span{display:flex;align-items:center;gap:10px;padding:6px 8px;border:1px solid #c9bc9c;background:#fbf7ec}.uts2 b{font:700 14px var(--sans);flex:1}.uts2 small{font-size:12px;color:#6d6250}
 .agenda{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:10px;max-width:min(400px,calc(100% - 24px));background:var(--ink);border:1px solid #000;border-left:3px solid var(--acc);padding:8px 10px 8px 11px;cursor:pointer;z-index:3}
 .agenda small{display:block;font:700 11px var(--sans);letter-spacing:.12em;color:var(--acc2)}.agenda b{font:700 14.5px var(--sans);display:block}.agenda span{color:#aab3b8;font-size:12.5px}
 .agenda .go{font-size:16px;color:var(--mu)}
@@ -230,7 +261,9 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
  .plate{left:8px;top:8px}.plate small{display:none}.plate.w{display:none}.zm{left:8px;top:56px}
  .cols{grid-template-columns:1fr}
 }
-</style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="sp-in"><svg class="sp-rose" viewBox="-50 -50 100 100"><circle r="44"/><circle r="30"/><path d="M0-46L6-6L46 0L6 6L0 46L-6 6L-46 0L-6-6Z"/><path class="n" d="M0-46L6-6L-6-6Z"/></svg><h1 class="logo">Borders <i>in</i> Ink</h1><div class="sp-sub">1910 — 1945 · 잉크로 그은 국경</div><div class="sp-bar"><i id="spb"></i></div><div class="sp-st"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">8%</span></div></div></div><main id="app"></main>
+</style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="sp-map" id="spm"></div><div class="sp-vig"></div><div class="sp-in"><div class="cart orn"><span class="cn c1"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c2"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c3"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><span class="cn c4"><svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg></span><div class="sp-k">AN ATLAS OF WAR AND STATECRAFT</div><h1 class="logo">Borders <i>in</i> Ink</h1><div class="sp-rule"><span>MCMX — MCMXLV</span></div><div class="sp-sub">잉크로 그은 국경 · 세계대전 국가경영</div></div><div class="sp-scale"><div class="sp-cells"><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="sp-lbl"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000 KM</span></div></div><div class="sp-st"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q" id="spq"></div></div></div>
+<script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
+<main id="app"></main>
 <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 const NM0={UK:['영국','#b33'],FRA:['프랑스','#36b'],GER:['독일','#777'],DAN:['오스트리아-헝가리','#a84'],RUS:['러시아','#3a6'],OTT:['오스만','#c90'],ITA:['이탈리아','#6a3'],ESP:['스페인','#d73'],USA:['미국','#29c'],JPN:['일본','#d5a'],CHN:['중국','#c66'],POL:['폴란드','#a3c'],BAL:['발칸(세르비아 등)','#689'],SCA:['스칸디나비아','#5aa'],IND:['인도','#a96'],KOR:['한국','#48a'],LAT:['라틴아메리카','#7a4'],IRL:['아일랜드','#2a8']};
@@ -269,8 +302,9 @@ function attack(s,a,rid,c,why){const R=s.R[rid],d=R.occ||R.o;if(d==a||!alive(s,a
  if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));
   s.TR.filter(t=>t.st=='on'&&t.ty=='ally').forEach(t=>{for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(!P_h(s,y)&&alive(s,y)&&y!=d&&!atWar(s,y,d)&&(x==a)){s.W.push(y+'|'+d);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(d,yr(s))}에 참전`)}
    for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
- const A=s.N[a],D=s.N[d],use=A.mil*c/100,att=use*(.8+Math.random()*.4),def=(D.mil*.5*1.2*(.8+Math.random()*.4)+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1);
- if(att>def){R.occ=a==R.o?null:a;A.mil-=use*.3;D.mil*=.8;s.log.push(`${nm(a,yr(s))}가 ${RG[rid][0]} 점령 성공`)}else{A.mil-=use*.5;s.log.push(`${nm(a,yr(s))}의 ${RG[rid][0]} 공격 실패`)}}
+ const A=s.N[a],D=s.N[d],use=A.mil*c/100;let att=use*(.8+Math.random()*.4),def=(D.mil*.5*1.2*(.8+Math.random()*.4)+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1);
+ att*=docM(s,a,d,rid,'att',c);def*=docM(s,d,a,rid,'def',c); // 국가별 군사 교리 보정
+ if(att>def){R.occ=a==R.o?null:a;A.mil-=use*.3;D.mil*=.8;s.log.push(`${nm(a,yr(s))}가 ${RG[rid][0]} 점령 성공`)}else{A.mil-=use*.5*docM(s,d,a,rid,'loss',c);s.log.push(`${nm(a,yr(s))}의 ${RG[rid][0]} 공격 실패`)}}
 const P_h=(s,n)=>Object.values(s.P).includes(n);
 function peace(s,t){const{a,b}=t;s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);
  if(t.ty=='cease')for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o)){R.o=R.occ;R.occ=null}}
@@ -317,6 +351,7 @@ function step(s,ords){const y=yr(s),q=qt(s);s.log=[`— ${y}년 ${q}분기 —`]
   if(pl.res=='arms')N.mil*=1.015;if(pl.res=='econ')N.g+=N.ind*.06;if(pl.res=='agri')N.st.f+=3;
   N.sup=Math.max(0,Math.min(100,N.sup));N.g=Math.max(0,N.g);
   if(N.lord&&s.N[N.lord]){const tax=N.g*.1;N.g-=tax;s.N[N.lord].g+=tax}});
+ natStep(s,oo,ns,y,q); // 국가 정신·역사적 결정
  // 사업·우선 화물 (추가 명령: 승인한 사업은 국고에서 비용을 내고 분기마다 진행, 완공 시 기존 지표에 반영)
  s.PJ=s.PJ||[];
  s.PJ.forEach(p=>{const d=PJC[p.id],N=s.N[p.n];if(!d||!N||p.ok)return;const k=NK[d.rg],R=k&&s.R[k];if(R&&R.occ&&R.occ!=p.n){p.hold=1;return}p.hold=0;if(--p.left<=0){p.ok=1;p.at=s.t+1;if(d.ind)N.ind+=d.ind;if(d.mil)N.mil+=d.mil;s.log.push(`${nm(p.n,y)}: ${d.done}`)}});
@@ -365,6 +400,11 @@ function world(){if(CT)return CT;if(!window.WORLD)return null;try{const W=window
  const nid={},m10={},m36={};T.forEach(t=>nid[t.n]=t.k);
  const asg=(tab,out)=>{for(const o in tab)tab[o].split('|').forEach(n=>{if(nid[n])out[nid[n]]=o})};asg(T10,m10);asg(T36,m36);
  T.forEach(t=>{if(/Ivoire/.test(t.n)){m10[t.k]='FRA';m36[t.k]='FRA'}});
+ // 식민지·속령 보정 (지도 데이터 이름에 맞춤)
+ const XC={USA:'American Samoa|Guam|U.S. Virgin Is.',UK:'Bermuda|Cayman Is.|Turks and Caicos Is.|Montserrat|Saint Helena|Br. Indian Ocean Ter.|Isle of Man|Jersey|Antigua and Barb.|Barbados|Dominica|Grenada|Saint Lucia|St. Vin. and Gren.|Trinidad and Tobago|Malta|Mauritius|Seychelles|Bahrain|Singapore|S. Geo. and S. Sandw. Is.|Kiribati|Tonga|Vanuatu|Niue|Oman|Heard I. and McDonald Is.',FRA:'Lao PDR|Comoros|St. Pierre and Miquelon|Fr. S. Antarctic Lands',POR:'Cape Verde|São Tomé and Principe',NED:'Curaçao',DEN:'Faeroe Is.',IND:'Siachen Glacier'};
+ const xa=(out,tab)=>{for(const o in tab)tab[o].split('|').forEach(n=>{if(nid[n]&&!out[nid[n]])out[nid[n]]=o})};xa(m10,XC);xa(m36,XC);
+ xa(m36,{JPN:'Micronesia|Palau|N. Mariana Is.',UK:'Samoa'});xa(m10,{GER:'Micronesia|Palau|N. Mariana Is.|Samoa'});
+ if(nid.Aland){m10[nid.Aland]='RUS';if(nid.Finland)m36[nid.Aland]=nid.Finland}
  const R2={};T.forEach(t=>{const h=hs(t.k),ov=OV[t.k],f=ov?ov[0]:1+h%4,s=ov?ov[1]:(h>>2)%3,o=ov?ov[2]:(h>>4)%2;const nmk=EN2KR[t.n]||KR[t.k]||t.n;NK[t.n]=t.k;ENN[t.k]=t.n;R2[t.k]=[nmk,t.cx,t.cy,m10[t.k]||t.k,m36[t.k]||t.k,''+f+s+o];if(!KR[t.k])IDN[t.k]=EN2KR[t.n]||t.n;LBL[t.k]=[t.cx,t.cy]});
  const km=new Map(),A={};T.forEach(t=>{A[t.k]=new Set();t.keys.forEach(q=>{let a=km.get(q);if(!a)km.set(q,a=[]);if(a[a.length-1]!==t.k)a.push(t.k)})});
  km.forEach(a=>{for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){A[a[i]].add(a[j]);A[a[j]].add(a[i])}});
@@ -373,7 +413,7 @@ function world(){if(CT)return CT;if(!window.WORLD)return null;try{const W=window
 
 // ════════ 지도 자료 (1936 기준 지명·시설) ════════
 const LL=(a,o)=>[(o+180)*1000/360,(80-a)*560/138];
-const EN2KR={'United Kingdom':'영국',France:'프랑스',Germany:'독일',Italy:'이탈리아',Spain:'스페인',Portugal:'포르투갈',Ireland:'아일랜드',Belgium:'벨기에',Netherlands:'네덜란드',Luxembourg:'룩셈부르크',Switzerland:'스위스',Austria:'오스트리아',Hungary:'헝가리','Czech Rep.':'체코',Slovakia:'슬로바키아',Poland:'폴란드',Lithuania:'리투아니아',Latvia:'라트비아',Estonia:'에스토니아',Finland:'핀란드',Sweden:'스웨덴',Norway:'노르웨이',Denmark:'덴마크',Iceland:'아이슬란드',Greenland:'그린란드',Romania:'루마니아',Bulgaria:'불가리아',Greece:'그리스',Albania:'알바니아',Serbia:'세르비아',Montenegro:'몬테네그로',Croatia:'크로아티아',Slovenia:'슬로베니아','Bosnia and Herz.':'보스니아',Macedonia:'마케도니아',Kosovo:'코소보',Moldova:'몰도바',Ukraine:'우크라이나',Belarus:'벨라루스',Russia:'러시아',Turkey:'터키',Syria:'시리아',Lebanon:'레바논',Iraq:'이라크',Iran:'페르시아',Afghanistan:'아프가니스탄','Saudi Arabia':'사우디아라비아',Yemen:'예멘',Oman:'오만',Jordan:'요르단',Israel:'팔레스타인',Palestine:'팔레스타인',Kuwait:'쿠웨이트',Qatar:'카타르','United Arab Emirates':'휴전 해안',Egypt:'이집트',Libya:'리비아',Tunisia:'튀니지',Algeria:'알제리',Morocco:'모로코',Sudan:'수단','S. Sudan':'남수단',Ethiopia:'에티오피아',Eritrea:'에리트레아',Somalia:'소말릴란드',Kenya:'케냐',Uganda:'우간다',Tanzania:'탕가니카',Nigeria:'나이지리아',Ghana:'골드코스트','South Africa':'남아프리카',Namibia:'남서아프리카',Angola:'앙골라',Mozambique:'모잠비크','Dem. Rep. Congo':'벨기에령 콩고',Congo:'프랑스령 콩고',Madagascar:'마다가스카르',Liberia:'라이베리아',Senegal:'세네갈',Mali:'수단(프)',Niger:'니제르',Chad:'차드',Cameroon:'카메룬',India:'인도',Pakistan:'인도 서부',Bangladesh:'벵골',Nepal:'네팔',Bhutan:'부탄','Sri Lanka':'실론',Myanmar:'버마',Thailand:'시암',Vietnam:'인도차이나',Laos:'라오스',Cambodia:'캄보디아',Malaysia:'말라야',Indonesia:'동인도',Philippines:'필리핀',China:'중국',Mongolia:'몽골',Taiwan:'대만',Japan:'일본',Korea:'한반도 남부','Dem. Rep. Korea':'한반도 북부',Kazakhstan:'카자흐',Uzbekistan:'우즈베크',Turkmenistan:'투르크멘',Tajikistan:'타지크',Kyrgyzstan:'키르기스',Georgia:'그루지야',Armenia:'아르메니아',Azerbaijan:'아제르바이잔','United States':'미국',Canada:'캐나다',Mexico:'멕시코',Cuba:'쿠바',Guatemala:'과테말라',Honduras:'온두라스',Nicaragua:'니카라과','Costa Rica':'코스타리카',Panama:'파나마',Colombia:'콜롬비아',Venezuela:'베네수엘라',Ecuador:'에콰도르',Peru:'페루',Bolivia:'볼리비아',Brazil:'브라질',Paraguay:'파라과이',Uruguay:'우루과이',Argentina:'아르헨티나',Chile:'칠레',Australia:'호주','New Zealand':'뉴질랜드','Papua New Guinea':'뉴기니'};
+const EN2KR={'United Kingdom':'영국',France:'프랑스',Germany:'독일',Italy:'이탈리아',Spain:'스페인',Portugal:'포르투갈',Ireland:'아일랜드',Belgium:'벨기에',Netherlands:'네덜란드',Luxembourg:'룩셈부르크',Switzerland:'스위스',Austria:'오스트리아',Hungary:'헝가리','Czech Rep.':'체코',Slovakia:'슬로바키아',Poland:'폴란드',Lithuania:'리투아니아',Latvia:'라트비아',Estonia:'에스토니아',Finland:'핀란드',Sweden:'스웨덴',Norway:'노르웨이',Denmark:'덴마크',Iceland:'아이슬란드',Greenland:'그린란드',Romania:'루마니아',Bulgaria:'불가리아',Greece:'그리스',Albania:'알바니아',Serbia:'세르비아',Montenegro:'몬테네그로',Croatia:'크로아티아',Slovenia:'슬로베니아','Bosnia and Herz.':'보스니아',Macedonia:'마케도니아',Kosovo:'코소보',Moldova:'몰도바',Ukraine:'우크라이나',Belarus:'벨라루스',Russia:'러시아',Turkey:'터키',Syria:'시리아',Lebanon:'레바논',Iraq:'이라크',Iran:'페르시아',Afghanistan:'아프가니스탄','Saudi Arabia':'사우디아라비아',Yemen:'예멘',Oman:'오만',Jordan:'요르단',Israel:'팔레스타인',Palestine:'팔레스타인',Kuwait:'쿠웨이트',Qatar:'카타르','United Arab Emirates':'휴전 해안',Egypt:'이집트',Libya:'리비아',Tunisia:'튀니지',Algeria:'알제리',Morocco:'모로코',Sudan:'수단','S. Sudan':'남수단',Ethiopia:'에티오피아',Eritrea:'에리트레아',Somalia:'소말릴란드',Kenya:'케냐',Uganda:'우간다',Tanzania:'탕가니카',Nigeria:'나이지리아',Ghana:'골드코스트','South Africa':'남아프리카',Namibia:'남서아프리카',Angola:'앙골라',Mozambique:'모잠비크','Dem. Rep. Congo':'벨기에령 콩고',Congo:'프랑스령 콩고',Madagascar:'마다가스카르',Liberia:'라이베리아',Senegal:'세네갈',Mali:'수단(프)',Niger:'니제르',Chad:'차드',Cameroon:'카메룬',India:'인도',Pakistan:'인도 서부',Bangladesh:'벵골',Nepal:'네팔',Bhutan:'부탄','Sri Lanka':'실론',Myanmar:'버마',Thailand:'시암',Vietnam:'인도차이나',Laos:'라오스',Cambodia:'캄보디아',Malaysia:'말라야',Indonesia:'동인도',Philippines:'필리핀',China:'중국',Mongolia:'몽골',Taiwan:'대만',Japan:'일본',Korea:'한반도 남부','Dem. Rep. Korea':'한반도 북부',Kazakhstan:'카자흐',Uzbekistan:'우즈베크',Turkmenistan:'투르크멘',Tajikistan:'타지크',Kyrgyzstan:'키르기스',Georgia:'그루지야',Armenia:'아르메니아',Azerbaijan:'아제르바이잔','United States':'미국',Haiti:'아이티','Dominican Rep.':'도미니카','El Salvador':'엘살바도르',Liechtenstein:'리히텐슈타인',Andorra:'안도라',Jamaica:'자메이카',Guyana:'영국령 기아나',Suriname:'네덜란드령 기아나',Belize:'영국령 온두라스',Brunei:'브루나이','Timor-Leste':'포르투갈령 티모르','Lao PDR':'라오스',Singapore:'싱가포르',Malta:'몰타',Bahamas:'바하마',Fiji:'피지','New Caledonia':'뉴칼레도니아','Fr. Polynesia':'프랑스령 폴리네시아',Micronesia:'남양 군도',Palau:'팔라우','N. Mariana Is.':'마리아나 제도',Guam:'괌','Puerto Rico':'푸에르토리코','Falkland Is.':'포클랜드',Greenland:'그린란드',Iceland:'아이슬란드',Cyprus:'키프로스','N. Cyprus':'북키프로스',Djibouti:'지부티',Gabon:'가봉',Togo:'토골란드',Benin:'다호메',Guinea:'기니','Burkina Faso':'오트볼타',Mauritania:'모리타니','W. Sahara':'스페인령 사하라','Eq. Guinea':'스페인령 기니',Rwanda:'르완다',Burundi:'부룬디',Zambia:'북로디지아',Zimbabwe:'남로디지아',Malawi:'니아살랜드',Botswana:'베추아날란드',Swaziland:'스와질란드',Lesotho:'바수톨란드',Gambia:'감비아','Sierra Leone':'시에라리온','Guinea-Bissau':'포르투갈령 기니','Central African Rep.':'우방기샤리',Cameroon:'카메룬','Papua New Guinea':'파푸아',Trinidad:'트리니다드',Canada:'캐나다',Mexico:'멕시코',Cuba:'쿠바',Guatemala:'과테말라',Honduras:'온두라스',Nicaragua:'니카라과','Costa Rica':'코스타리카',Panama:'파나마',Colombia:'콜롬비아',Venezuela:'베네수엘라',Ecuador:'에콰도르',Peru:'페루',Bolivia:'볼리비아',Brazil:'브라질',Paraguay:'파라과이',Uruguay:'우루과이',Argentina:'아르헨티나',Chile:'칠레',Australia:'호주','New Zealand':'뉴질랜드','Papua New Guinea':'뉴기니'};
 let NK={},ENN={},SD2={},CT=null,LBL={},FL=new Set();
 // 국가별 프로필: cam=[위도,경도,가로폭], f=[id,종류,이름,위도,경도,옵션], rails="A-B …", routes, 첫 안건
 const PF={
@@ -493,6 +533,120 @@ POL:{key:null,home:'Poland',cam:[52,19.4,40],doc:'국가 개요',
  ag:{t:'중앙 공업지구 계획 검토',s:'카토비체 공업지대 — 눌러서 생산 확인',go:'f:KAT'}}
 };
 const PFE={Finland:'FIN',Poland:'POL'};
+// ════════ 국가별 고증 체계: 지도자·국가 정신·군사 교리·역사적 결정·고유 부대 ════════
+const HOMEK=n=>{const P=PF[PID(n)];return P&&NK[P.home]};
+const DTAKEN=(s,n,id)=>((s.DC||{})[n]||[]).includes(id);
+const WIN=s=>qt(s)==1||qt(s)==4;
+const NATK=(s,en)=>{const k=NK[en];return k&&s.R[k]?s.R[k].o:null};
+function annexNat(s,n,en){const o=NATK(s,en);if(!o||o==n)return;for(const r in s.R)if(s.R[r].o==o){s.R[r].o=n;s.R[r].occ=null}s.W=s.W.filter(w=>!w.split('|').includes(o));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==o||t.b==o))t.st='x'})}
+function annexReg(s,n,en){const k=NK[en];if(k&&s.R[k]){s.R[k].o=n;s.R[k].occ=null}}
+function pactOn(s,a,b,ty){if(!a||!b||!s.N[a]||!s.N[b]||pact(s,a,b,ty))return;s.TR.push({id:'h'+s.t+a+b+ty,ty,a,b,st:'on'})}
+const UNITS0=[['제1군',25],['제2군',25],['기동 예비군',50]];
+const NAT={
+ UK:{lead:[[1936,'스탠리 볼드윈 총리'],[1937,'네빌 체임벌린 총리'],[1940,'윈스턴 처칠 총리']],gov:'입헌군주제 · 의회 민주주의',cap:'런던',doc:'왕립 해군과 해상 봉쇄',docD:'세계 최대의 함대로 본토를 지키고, 교전국의 해상 수송로를 끊습니다.',units:[['본국 원정군 (BEF)',25],['영국령 인도군',25],['근위 기갑사단',50]]},
+ GER:{lead:[[1936,'아돌프 히틀러 총통']],gov:'국가사회주의 일당 독재',cap:'베를린',doc:'전격전 (기동전)',docD:'기갑부대와 항공 지원을 한곳에 모아 짧고 결정적인 돌파를 노립니다. 장기전에는 자원이 부족합니다.',units:[['기갑 군단',25],['자동차화 보병 군단',25],['기갑 집단',50]]},
+ RUS:{lead:[[1936,'이오시프 스탈린 서기장']],gov:'공산당 일당제 · 계획경제',cap:'모스크바',doc:'종심 작전과 동장군',docD:'광대한 국토를 내주며 적을 지치게 하고, 겨울에 반격합니다.',units:[['소총병 군단',25],['기계화 군단',25],['시베리아 예비군',50]]},
+ FRA:{lead:[[1936,'레옹 블룸 총리 (인민전선)'],[1938,'에두아르 달라디에 총리'],[1940,'폴 레노 총리']],gov:'제3공화국 · 의회 민주주의',cap:'파리',doc:'마지노선 방어 교리',docD:'요새선에 기댄 방어전을 준비합니다. 방어는 강하지만 공세에는 소극적입니다.',units:[['마지노 요새 사단',25],['식민지 보병 (세네갈 저격병)',25],['경기계화 사단 (DLM)',50]]},
+ USA:{lead:[[1936,'프랭클린 D. 루스벨트 대통령']],gov:'연방 공화국 · 대통령제',cap:'워싱턴',doc:'물량전 (민주주의의 병기창)',docD:'거대한 공업력을 그대로 군사력으로 바꿉니다. 개전 전에는 고립주의 여론에 묶여 있습니다.',units:[['보병 사단',25],['해병 사단',25],['기갑 사단',50]]},
+ JPN:{lead:[[1936,'히로타 고키 총리'],[1937,'고노에 후미마로 총리'],[1941,'도조 히데키 총리']],gov:'입헌군주제 · 군부의 정치 개입',cap:'도쿄',doc:'해군 항공과 상륙전',docD:'항공모함과 육전대로 바다 건너를 빠르게 공격합니다. 원료는 거의 수입에 의존합니다.',units:[['관동군',25],['해군 육전대',25],['전차 연대',50]]},
+ ITA:{lead:[[1936,'베니토 무솔리니 총리']],gov:'파시스트 일당 독재 · 왕정',cap:'로마',doc:'지중해 해군과 산악전',docD:'알프스와 지중해를 지키는 데는 능하지만, 육군의 장비는 열세입니다.',units:[['알피니 산악 사단',25],['베르살리에리 연대',25],['아리에테 기갑 사단',50]]},
+ CHN:{lead:[[1936,'장제스 군사위원회 위원장']],gov:'국민당 국민정부',cap:'난징',doc:'공간과 시간의 교환',docD:'넓은 내륙으로 물러나며 버티는 지구전. 땅을 잃을수록 저항이 단단해집니다.',units:[['중앙군',25],['팔로군',25],['지방 연합군',50]]},
+ KOR:{lead:[[1936,'이동녕 주석 · 김구 국무위원'],[1940,'김구 주석']],gov:'대한민국 임시정부 (망명 정부)',cap:'전장 → 창사 → 충칭',doc:'독립군 유격전',docD:'정규전 대신 의거와 유격전으로 독립을 앞당깁니다. 해외 동포의 의연금이 재정의 기둥입니다.',units:[['한국광복군 제1지대',25],['한국광복군 제2지대',25],['조선의용대',50]]},
+ FIN:{lead:[[1936,'스빈후부드 대통령 · 만네르헤임 국방위원장'],[1937,'칼리오 대통령 · 만네르헤임 국방위원장']],gov:'공화국 · 의회 민주주의',cap:'헬싱키',doc:'시수와 모티 전술',docD:'숲과 눈 속에서 적을 작게 끊어 포위합니다. 겨울 방어전에서 특히 강합니다.',units:[['스키 대대',25],['보병 사단',25],['예비군 (로타 지원)',50]]},
+ POL:{lead:[[1936,'모시치츠키 대통령 · 리츠시미그위 원수']],gov:'공화국 · 사나치아 체제',cap:'바르샤바',doc:'기병과 평원 방어',docD:'두 강대국 사이의 평원에서 기동력 있는 기병과 보병으로 국경을 지킵니다.',units:[['기병 여단',25],['보병 사단',25],['기계화 여단',50]]},
+ ESP:{lead:[[1936,'마누엘 아사냐 대통령 (제2공화국)']],gov:'제2공화국 · 인민전선',cap:'마드리드',doc:'민병과 시가전',docD:'노조 민병과 국제여단이 도시를 지키는 방어전.',units:[['공화국 인민군',25],['국제여단',25],['돌격 근위대',50]]}
+};
+const leaderOf=(n,y)=>{const N=NAT[PID(n)];if(!N)return null;let l=N.lead[0][1];N.lead.forEach(([a,b])=>{if(y>=a)l=b});return l};
+// 국가 정신: on(조건)·tick(매 분기 효과)·m(전투 보정: kind=att|def|loss)
+const SPS=[
+ {id:'uk_emp',n:'UK',t:'해가 지지 않는 제국',d:'식민지 지역 수 × 0.15 만큼 국고 · 식량 +1 / 분기',tick:(s,n,N)=>{N.g+=held(s,n).length*.15;N.st.f+=1}},
+ {id:'uk_app',n:'UK',t:'유화 정책 여론',d:'지지 +1, 군사력 −0.5 / 분기 · 재무장 결정이나 개전 시 해제',on:(s,n)=>!wars(s,n).length&&!DTAKEN(s,n,'uk_rearm'),tick:(s,n,N)=>{N.sup+=1;N.mil-=.5}},
+ {id:'uk_navy',n:'UK',doc:1,t:'왕립 해군',d:'본토 방어 ×1.4 · 교전국 석유 비축 매 분기 −1 (해상 봉쇄)',tick:(s,n)=>wars(s,n).forEach(e=>{if(s.N[e])s.N[e].st.o=Math.max(0,s.N[e].st.o-1)}),m:(s,me,f,r,k)=>k=='def'&&r==HOMEK(me)?1.4:1},
+ {id:'uk_radar',n:'UK',add:1,t:'체인 홈 레이더망',d:'본토 방어 ×1.2 추가',m:(s,me,f,r,k)=>k=='def'&&r==HOMEK(me)?1.2:1},
+ {id:'uk_chu',n:'UK',add:1,t:'전시 연립 내각',d:'지지 +1 · 군사력 +산업×2% / 분기',tick:(s,n,N)=>{N.sup+=1;N.mil+=N.ind*.02}},
+ {id:'ger_4yp',n:'GER',t:'4개년 계획',d:'산업 +0.6 · 식량 −1 / 분기 (1936~1940, 자급자족 추진)',on:s=>yr(s)<=1940,tick:(s,n,N)=>{N.ind+=.6;N.st.f-=1}},
+ {id:'ger_res',n:'GER',t:'원자재 부족',d:'석유 −1 · 철강 −1 / 분기 · 합성 연료 결정 시 해제',on:(s,n)=>!DTAKEN(s,n,'ger_leuna'),tick:(s,n,N)=>{N.st.o-=1;N.st.s-=1}},
+ {id:'ger_blitz',n:'GER',doc:1,t:'전격전',d:'군사력 50% 이상 투입한 공격 ×1.3',m:(s,me,f,r,k,c)=>k=='att'&&c>=50?1.3:1},
+ {id:'sov_5yp',n:'RUS',t:'5개년 계획',d:'산업 +0.8 · 지지 −0.4 / 분기',tick:(s,n,N)=>{N.ind+=.8;N.sup-=.4}},
+ {id:'sov_purge',n:'RUS',t:'대숙청',d:'군사력 매 분기 −3% · 지지 −0.5 (1937~1938, 장교 복권 결정 시 해제)',on:(s,n)=>yr(s)>=1937&&yr(s)<=1938&&!DTAKEN(s,n,'sov_rehab'),tick:(s,n,N)=>{N.mil*=.97;N.sup-=.5}},
+ {id:'sov_deep',n:'RUS',doc:1,t:'종심 방어 · 동장군',d:'겨울(1·4분기) 방어 ×1.35 · 영토를 잃으면 방어 ×1.2',m:(s,me,f,r,k)=>k!='def'?1:(WIN(s)?1.35:1)*(held(s,me).length<s.N[me].start?1.2:1)},
+ {id:'fra_mag',n:'FRA',doc:1,t:'마지노선',d:'본토 방어 ×1.5 · 공격 ×0.85',m:(s,me,f,r,k)=>k=='def'&&r==HOMEK(me)?1.5:k=='att'?.85:1},
+ {id:'fra_pf',n:'FRA',t:'인민전선 정부',d:'지지 +1 · 산업 −0.3 / 분기 (1936~1938, 레노 개혁 시 해제)',on:(s,n)=>yr(s)<=1938&&!DTAKEN(s,n,'fra_reyn'),tick:(s,n,N)=>{N.sup+=1;N.ind-=.3}},
+ {id:'us_nd',n:'USA',t:'뉴딜',d:'산업 +0.5 · 지지 +0.5 · 국고 −2 / 분기 (1936~1941)',on:s=>yr(s)<=1941,tick:(s,n,N)=>{N.ind+=.5;N.sup+=.5;N.g-=2}},
+ {id:'us_iso',n:'USA',t:'고립주의',d:'지지 +0.5 · 군사력 −0.6 / 분기 · 무기대여법이나 개전 시 해제',on:(s,n)=>!wars(s,n).length&&!DTAKEN(s,n,'us_lend'),tick:(s,n,N)=>{N.sup+=.5;N.mil-=.6}},
+ {id:'us_mat',n:'USA',doc:1,t:'물량전',d:'군사력 +산업×1% / 분기 · 공격·방어 ×1.1',tick:(s,n,N)=>{N.mil+=N.ind*.01},m:(s,me,f,r,k)=>k=='loss'?1:1.1},
+ {id:'us_arsenal',n:'USA',add:1,t:'민주주의의 병기창',d:'군사력 +산업×3% / 분기',tick:(s,n,N)=>{N.mil+=N.ind*.03}},
+ {id:'jp_mil',n:'JPN',t:'군부의 정치 개입',d:'군사력 +0.5 · 지지 −0.3 / 분기',tick:(s,n,N)=>{N.mil+=.5;N.sup-=.3}},
+ {id:'jp_imp',n:'JPN',t:'원료 수입 의존',d:'무역 협정이 없으면 산업 −0.5 / 분기',tick:(s,n,N)=>{if(!s.TR.some(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)))N.ind-=.5}},
+ {id:'jp_nav',n:'JPN',doc:1,t:'해군 항공 · 상륙전',d:'공격 ×1.15 · 본토 방어 ×1.2',m:(s,me,f,r,k)=>k=='att'?1.15:k=='def'&&r==HOMEK(me)?1.2:1},
+ {id:'it_eth',n:'ITA',t:'에티오피아 점령 부담',d:'국고 −2 · 지지 +1 / 분기 (1936~1938)',on:s=>yr(s)<=1938,tick:(s,n,N)=>{N.g-=2;N.sup+=1}},
+ {id:'it_aut',n:'ITA',t:'자급자족 정책',d:'식량 +1 · 산업 −0.2 / 분기',tick:(s,n,N)=>{N.st.f+=1;N.ind-=.2}},
+ {id:'it_mare',n:'ITA',doc:1,t:'지중해 해군 · 산악전',d:'본토 방어 ×1.25 · 공격 ×0.9',m:(s,me,f,r,k)=>k=='def'&&r==HOMEK(me)?1.25:k=='att'?.9:1},
+ {id:'cn_war',n:'CHN',t:'군벌 분열',d:'산업 −0.3 · 군사력 −0.3 / 분기 · 국공합작 시 해제',on:(s,n)=>!DTAKEN(s,n,'cn_xian'),tick:(s,n,N)=>{N.ind-=.3;N.mil-=.3}},
+ {id:'cn_space',n:'CHN',doc:1,t:'공간과 시간의 교환',d:'방어 ×1.1 · 영토를 잃으면 방어 ×1.3',m:(s,me,f,r,k)=>k=='def'?(held(s,me).length<s.N[me].start?1.3:1.1):1},
+ {id:'cn_flood',n:'CHN',add:1,t:'황허 범람',d:'방어 ×1.5 (4분기 동안)',m:(s,me,f,r,k)=>k=='def'?1.5:1},
+ {id:'kr_exile',n:'KOR',t:'해외 동포의 의연금',d:'국고 +2 / 분기 (망명 중)',on:(s,n)=>!!s.N[n].lord,tick:(s,n,N)=>{N.g+=2}},
+ {id:'kr_guer',n:'KOR',doc:1,t:'독립군 유격전',d:'독립 추진 시 진행도 +10 추가 · 종주국 상대 공격 ×1.3',tick:(s,n,N,y,o)=>{if(o&&o.indep&&N.lord)N.ind2+=10},m:(s,me,f,r,k)=>k=='att'&&f==s.N[me].lord?1.3:1},
+ {id:'fi_sisu',n:'FIN',doc:1,t:'시수 · 모티 전술',d:'방어 ×1.3, 겨울에는 ×1.6 · 공격에 실패한 적의 손실 ×1.4',m:(s,me,f,r,k)=>k=='def'?(WIN(s)?1.6:1.3):k=='loss'?1.4:1},
+ {id:'fi_line',n:'FIN',add:1,t:'만네르헤임선',d:'방어 ×1.2 추가',m:(s,me,f,r,k)=>k=='def'?1.2:1},
+ {id:'pl_btw',n:'POL',doc:1,t:'두 강대국 사이',d:'지지 +0.5 / 분기 · 방어 ×1.1',tick:(s,n,N)=>{N.sup+=.5},m:(s,me,f,r,k)=>k=='def'?1.1:1},
+ {id:'es_civ',n:'ESP',t:'내전의 그림자',d:'지지 −1 · 군사력 +0.5 / 분기 (1936~1939)',on:s=>yr(s)<=1939,tick:(s,n,N)=>{N.sup-=1;N.mil+=.5}},
+ {id:'es_mil',n:'ESP',doc:1,t:'민병과 시가전',d:'본토 방어 ×1.25',m:(s,me,f,r,k)=>k=='def'&&r==HOMEK(me)?1.25:1}
+];
+// 역사적 결정: y0~y1 기간 · 비용 · 조건 · 효과 · hy=AI가 역사대로 내리는 시점
+const DECS=[
+ {id:'uk_shadow',n:'UK',t:'그림자 공장 계획',y0:1936,y1:1938,cost:30,hy:[1936,2],d:'산업력 +4',h:'1936년 공군 확장을 위해 정부 지원으로 자동차 회사들이 항공기 공장을 세웠다.',eff:(s,n,N)=>{N.ind+=4}},
+ {id:'uk_radar',n:'UK',t:'체인 홈 레이더망 구축',y0:1937,y1:1941,cost:25,hy:[1937,3],add:'uk_radar',d:'본토 방어 ×1.2 (영구)',h:'동해안을 따라 레이더 기지를 세워 1940년 영국 본토 항공전을 대비했다.'},
+ {id:'uk_rearm',n:'UK',t:'재무장 가속 (국방 백서)',y0:1937,y1:1940,cost:20,hy:[1938,4],d:'군사력 +6 · 지지 −3 · 유화 여론 해제',h:'뮌헨 협정 이후 영국은 재무장 속도를 크게 높였다.',eff:(s,n,N)=>{N.mil+=6;N.sup-=3}},
+ {id:'uk_chu',n:'UK',t:'처칠 전시 연립 내각',y0:1939,y1:1945,cost:0,hy:[1940,2],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',add:'uk_chu',d:'지지 +6 · 전시 연립 내각 정신',h:'1940년 5월 처칠이 거국 내각을 꾸리고 끝까지 싸우겠다고 선언했다.',eff:(s,n,N)=>{N.sup+=6}},
+ {id:'ger_rhine',n:'GER',t:'라인란트 재무장',y0:1936,y1:1936,cost:5,hy:[1936,1],d:'군사력 +4 · 지지 +5',h:'1936년 3월 7일 독일군이 베르사유 조약을 어기고 라인란트 비무장지대에 진주했다.',eff:(s,n,N)=>{N.mil+=4;N.sup+=5}},
+ {id:'ger_leuna',n:'GER',t:'합성 연료 공장 확충',y0:1936,y1:1941,cost:30,hy:[1937,1],d:'석유 +5 · 원자재 부족 해제',h:'석탄을 액화해 석유를 만드는 로이나 공장 등을 대규모로 늘렸다.',eff:(s,n,N)=>{N.st.o+=5}},
+ {id:'ger_anschluss',n:'GER',t:'오스트리아 병합 (안슐루스)',y0:1938,y1:1939,cost:10,hy:[1938,1],req:(s,n)=>{const o=NATK(s,'Austria');return o&&o!=n&&alive(s,o)&&s.N[o].mil<s.N[n].mil*.6},rq:'오스트리아가 독립국이고 군사력이 독일의 60% 미만',d:'오스트리아 영토 편입',h:'1938년 3월 독일군이 오스트리아로 들어가 병합을 선포했다.',eff:(s,n)=>annexNat(s,n,'Austria')},
+ {id:'ger_sudet',n:'GER',t:'주데텐란트 요구 (뮌헨 협정)',y0:1938,y1:1939,cost:10,hy:[1938,3],req:(s,n)=>{const o=NATK(s,'Czech Rep.');return o&&o!=n&&!wars(s,n).includes(o)},rq:'체코 지역이 다른 나라 소유',d:'체코 지역 편입 · 지지 +3',h:'1938년 9월 뮌헨 회담에서 영국과 프랑스는 주데텐란트 할양을 받아들였다.',eff:(s,n,N)=>{annexReg(s,n,'Czech Rep.');N.sup+=3}},
+ {id:'ger_molotov',n:'GER',t:'독소 불가침 조약',y0:1939,y1:1941,cost:0,hy:[1939,3],req:(s,n)=>alive(s,'RUS')&&!atWar(s,n,'RUS'),rq:'소련과 교전 중이 아닐 때',d:'소련과 불가침 조약 즉시 발효',h:'1939년 8월 몰로토프와 리벤트로프가 비밀 의정서가 딸린 불가침 조약에 서명했다.',eff:(s,n)=>pactOn(s,n,'RUS','nap')},
+ {id:'sov_stakh',n:'RUS',t:'스타하노프 운동',y0:1936,y1:1940,cost:10,hy:[1936,1],d:'산업력 +2 · 지지 −2',h:'초과 생산 노동자를 영웅으로 내세우며 작업 할당량을 끌어올렸다.',eff:(s,n,N)=>{N.ind+=2;N.sup-=2}},
+ {id:'sov_rehab',n:'RUS',t:'숙청 장교 복권',y0:1939,y1:1942,cost:5,hy:[1940,1],d:'대숙청 해제 · 군사력 +4',h:'겨울전쟁의 고전 뒤 로코솝스키 등 수감 장교 일부가 복귀했다.',eff:(s,n,N)=>{N.mil+=4}},
+ {id:'sov_ural',n:'RUS',t:'공장 동쪽 이전',y0:1939,y1:1945,cost:20,hy:[1941,3],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'산업력 +4',h:'1941년 하반기 1500여 개 공장을 기차에 실어 우랄과 시베리아로 옮겼다.',eff:(s,n,N)=>{N.ind+=4}},
+ {id:'sov_mob',n:'RUS',t:'대조국전쟁 총동원',y0:1939,y1:1945,cost:0,hy:[1941,3],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'군사력 +인구×4% · 지지 +4',h:'"조국이 부른다" — 전 인민을 전쟁에 동원했다.',eff:(s,n,N)=>{N.mil+=N.pop*.04;N.sup+=4}},
+ {id:'fra_matig',n:'FRA',t:'마티뇽 협정 · 주 40시간 노동제',y0:1936,y1:1937,cost:0,hy:[1936,2],d:'지지 +6 · 산업력 −2',h:'1936년 6월 총파업 끝에 임금 인상과 유급 휴가, 주 40시간 노동이 도입됐다.',eff:(s,n,N)=>{N.sup+=6;N.ind-=2}},
+ {id:'fra_nat',n:'FRA',t:'군수산업 국유화',y0:1936,y1:1938,cost:15,hy:[1936,3],d:'산업력 +3',h:'1936년 8월 법으로 주요 군수 공장과 항공기 회사를 국유화했다.',eff:(s,n,N)=>{N.ind+=3}},
+ {id:'fra_reyn',n:'FRA',t:'레노 경제 개혁',y0:1938,y1:1939,cost:0,hy:[1938,4],d:'인민전선 정부 정신 해제 · 산업력 +2 · 지지 −2',h:'재무장관 레노가 40시간 노동제를 완화하고 생산 확대를 밀어붙였다.',eff:(s,n,N)=>{N.ind+=2;N.sup-=2}},
+ {id:'us_neut',n:'USA',t:'중립법 연장',y0:1936,y1:1939,cost:0,hy:[1936,1],d:'지지 +3',h:'의회는 교전국에 무기를 팔지 못하도록 중립법을 거듭 연장했다.',eff:(s,n,N)=>{N.sup+=3}},
+ {id:'us_navy',n:'USA',t:'2대양 해군법',y0:1940,y1:1942,cost:40,hy:[1940,3],d:'군사력 +8',h:'1940년 7월 대서양과 태평양 양쪽을 맡을 함대 확장 예산이 통과됐다.',eff:(s,n,N)=>{N.mil+=8}},
+ {id:'us_lend',n:'USA',t:'무기대여법',y0:1941,y1:1945,cost:20,hy:[1941,1],req:(s,n)=>s.TR.some(t=>t.st=='on'&&(t.a==n||t.b==n)&&wars(s,t.a==n?t.b:t.a).length),rq:'조약을 맺은 나라가 교전 중일 때',d:'교전 중인 조약국마다 국고 +15 · 고립주의 해제',h:'1941년 3월 영국 등 연합국에 무기와 물자를 빌려주는 법이 통과됐다.',eff:(s,n)=>s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).forEach(t=>{const o=t.a==n?t.b:t.a;if(s.N[o]&&wars(s,o).length)s.N[o].g+=15})},
+ {id:'us_arsenal',n:'USA',t:'민주주의의 병기창',y0:1940,y1:1945,cost:0,hy:[1941,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',add:'us_arsenal',d:'군사력 +산업×3% / 분기',h:'자동차 공장이 전차와 폭격기를 찍어 내기 시작했다.'},
+ {id:'jp_226',n:'JPN',t:'2·26 사건 수습',y0:1936,y1:1936,cost:0,hy:[1936,1],d:'군사력 +2 · 지지 +3',h:'1936년 2월 청년 장교들의 쿠데타가 진압된 뒤 군부의 발언권은 오히려 커졌다.',eff:(s,n,N)=>{N.mil+=2;N.sup+=3}},
+ {id:'jp_man',n:'JPN',t:'만주 산업개발 5개년 계획',y0:1937,y1:1941,cost:25,hy:[1937,2],d:'산업력 +3 · 철강 +3',h:'만주국에 중공업 기지를 세우는 5개년 계획이 시작됐다.',eff:(s,n,N)=>{N.ind+=3;N.st.s+=3}},
+ {id:'jp_mob',n:'JPN',t:'국가총동원법',y0:1938,y1:1945,cost:0,hy:[1938,2],d:'군사력 +인구×2% · 지지 −4',h:'1938년 4월 정부가 인력과 물자를 의회 동의 없이 동원할 수 있게 됐다.',eff:(s,n,N)=>{N.mil+=N.pop*.02;N.sup-=4}},
+ {id:'jp_south',n:'JPN',t:'남진 정책',y0:1940,y1:1945,cost:10,hy:[1940,3],d:'석유 +6',h:'1940년 9월 북부 인도차이나에 진주하며 남방 자원 확보에 나섰다.',eff:(s,n,N)=>{N.st.o+=6}},
+ {id:'it_axis',n:'ITA',t:'로마–베를린 추축',y0:1936,y1:1939,cost:0,hy:[1936,4],req:(s,n)=>alive(s,'GER')&&!atWar(s,n,'GER'),rq:'독일과 교전 중이 아닐 때',d:'독일과 동맹 즉시 발효',h:'1936년 10월 이탈리아와 독일이 협력 의정서를 맺었다.',eff:(s,n)=>pactOn(s,n,'GER','ally')},
+ {id:'it_alb',n:'ITA',t:'알바니아 병합',y0:1939,y1:1940,cost:10,hy:[1939,2],req:(s,n)=>{const o=NATK(s,'Albania');return o&&o!=n&&alive(s,o)},rq:'알바니아가 독립국일 때',d:'알바니아 영토 편입',h:'1939년 4월 이탈리아군이 알바니아에 상륙해 왕국을 병합했다.',eff:(s,n)=>annexNat(s,n,'Albania')},
+ {id:'cn_xian',n:'CHN',t:'시안 사변 · 제2차 국공합작',y0:1936,y1:1937,cost:0,hy:[1936,4],d:'군벌 분열 해제 · 지지 +8 · 군사력 +6',h:'1936년 12월 장쉐량이 장제스를 감금해 내전 중지와 항일 연합을 요구했다.',eff:(s,n,N)=>{N.sup+=8;N.mil+=6}},
+ {id:'cn_yellow',n:'CHN',t:'황허 제방 파괴',y0:1937,y1:1945,cost:0,hy:[1938,2],req:(s,n)=>wars(s,n).includes('JPN'),rq:'일본과 교전 중일 때',add:'cn_flood',dur:4,d:'4분기 동안 방어 ×1.5 · 식량 −10 · 지지 −6',h:'1938년 6월 일본군 진격을 막으려 화위안커우 제방을 무너뜨려 수많은 피난민이 생겼다.',eff:(s,n,N)=>{N.st.f-=10;N.sup-=6}},
+ {id:'cn_cq',n:'CHN',t:'충칭 천도',y0:1937,y1:1945,cost:10,hy:[1938,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'산업력 +2 · 지지 +3',h:'국민정부는 내륙 깊숙한 충칭을 전시 수도로 삼아 저항을 이어갔다.',eff:(s,n,N)=>{N.ind+=2;N.sup+=3}},
+ {id:'kr_party',n:'KOR',t:'한국국민당 결성',y0:1936,y1:1937,cost:0,hy:[1936,1],d:'지지 +5',h:'1935년 11월 김구 등이 임시정부를 떠받칠 여당으로 한국국민당을 만들었다.',eff:(s,n,N)=>{N.sup+=5}},
+ {id:'kr_op',n:'KOR',t:'한인애국단 특무 공작',y0:1936,y1:1945,cost:10,d:'독립 진행도 +15 · 종주국 지지 −2',h:'이봉창·윤봉길 의거(1932)를 이은 한인애국단의 특무 활동.',req:(s,n)=>!!s.N[n].lord,rq:'망명 중일 때',eff:(s,n,N)=>{N.ind2+=15;const L=s.N[N.lord];if(L)L.sup-=2}},
+ {id:'kr_army',n:'KOR',t:'한국광복군 창설',y0:1940,y1:1945,cost:20,hy:[1940,3],d:'군사력 +8',h:'1940년 9월 충칭에서 임시정부의 정규군인 한국광복군이 창설됐다.',eff:(s,n,N)=>{N.mil+=8}},
+ {id:'kr_war',n:'KOR',t:'대일 선전포고',y0:1941,y1:1945,cost:0,hy:[1941,4],req:(s,n)=>s.N[n].lord=='JPN'&&wars(s,'JPN').length>0,rq:'일본이 다른 나라와 교전 중일 때',d:'일본과 전쟁 · 지지 +5 · 중국과 동맹',h:'1941년 12월 10일 임시정부는 일본에 정식으로 선전포고했다.',eff:(s,n,N)=>{if(!atWar(s,n,'JPN'))s.W.push(n+'|JPN');N.sup+=5;pactOn(s,n,'CHN','ally')}},
+ {id:'fi_line',n:'FIN',t:'만네르헤임선 구축',y0:1936,y1:1939,cost:20,hy:[1937,1],add:'fi_line',d:'방어 ×1.2 (영구)',h:'카렐리야 지협에 콘크리트 토치카와 참호선을 쌓았다.'},
+ {id:'fi_ski',n:'FIN',t:'스키 부대 편성',y0:1936,y1:1945,cost:10,hy:[1938,1],d:'군사력 +3',h:'흰 위장복을 입은 스키 부대가 숲길로 적의 보급선을 끊었다.',eff:(s,n,N)=>{N.mil+=3}},
+ {id:'fi_lotta',n:'FIN',t:'로타 스바르드 · 민방위 동원',y0:1939,y1:1945,cost:0,hy:[1939,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'군사력 +인구×3% · 지지 +3',h:'여성 자원봉사 조직 로타 스바르드가 후방 보급과 경계를 맡았다.',eff:(s,n,N)=>{N.mil+=N.pop*.03;N.sup+=3}},
+ {id:'pl_cop',n:'POL',t:'중앙 공업지구 (COP)',y0:1936,y1:1939,cost:30,hy:[1937,1],d:'산업력 +4',h:'1936년부터 국경에서 먼 중부에 제철소와 군수 공장을 세웠다.',eff:(s,n,N)=>{N.ind+=4}},
+ {id:'pl_enig',n:'POL',t:'에니그마 해독 성과 공유',y0:1939,y1:1939,cost:0,hy:[1939,3],d:'조약국마다 군사력 +2',h:'1939년 7월 폴란드 암호국이 에니그마 해독 기술을 영국·프랑스에 넘겼다.',eff:(s,n)=>s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).forEach(t=>{const o=t.a==n?t.b:t.a;if(s.N[o])s.N[o].mil+=2})},
+ {id:'es_ib',n:'ESP',t:'국제여단 지원 요청',y0:1936,y1:1938,cost:0,hy:[1936,3],d:'군사력 +4 · 지지 +2',h:'세계 각지의 의용병 수만 명이 공화국을 지키러 스페인에 왔다.',eff:(s,n,N)=>{N.mil+=4;N.sup+=2}},
+ {id:'g_army',n:'*',t:'군 현대화 계획',y0:1936,y1:1945,cost:20,d:'군사력 +3',h:'낡은 소총과 대포를 교체하는 장비 갱신 계획.',eff:(s,n,N)=>{N.mil+=3}},
+ {id:'g_ind',n:'*',t:'산업 진흥 계획',y0:1910,y1:1945,cost:25,d:'산업력 +2',h:'외국 자본을 들여 철도와 공장을 세우는 진흥 계획.',eff:(s,n,N)=>{N.ind+=2}}
+];
+function spiritsOf(s,n){const pid=PID(n),N=s.N[n];if(!N)return[];const X=(s.SPX||{})[n]||{};return SPS.filter(p=>p.n==pid&&(!p.add||(X[p.id]||0)>s.t)&&(!p.on||p.on(s,n,N)))}
+function docM(s,me,foe,r,k,c){if(!s.N[me])return 1;return spiritsOf(s,me).reduce((m,p)=>m*(p.m?p.m(s,me,foe,r,k,c):1),1)}
+function decsFor(n){const pid=PID(n);return DECS.filter(d=>d.n==pid||(d.n=='*'&&!NAT[pid]))}
+function decOK(s,n,d){const N=s.N[n],y=yr(s);if(DTAKEN(s,n,d.id))return{ok:0,why:'이미 결정함'};if(y<d.y0)return{ok:0,why:d.y0+'년부터'};if(y>d.y1)return{ok:0,why:'시기가 지남'};if(d.req&&!d.req(s,n))return{ok:0,why:d.rq||'조건 미충족'};if(N.g<(d.cost||0))return{ok:0,why:'국고 부족'};return{ok:1}}
+function natStep(s,oo,ns,y,q){s.DC=s.DC||{};s.SPX=s.SPX||{};
+ ns.forEach(n=>{const N=s.N[n],pid=PID(n),h=P_h(s,n);if(!N)return;let ids=h?((oo[n]||{}).dec||[]).slice():[];
+  if(!h)DECS.forEach(d=>{if(d.hy&&d.n==pid&&(y>d.hy[0]||(y==d.hy[0]&&q>=d.hy[1]))&&decOK(s,n,d).ok)ids.push(d.id)});
+  ids.forEach(id=>{const d=DECS.find(x=>x.id==id);if(!d||!decsFor(n).includes(d)||!decOK(s,n,d).ok)return;N.g-=d.cost||0;(s.DC[n]=s.DC[n]||[]).push(id);if(d.add)(s.SPX[n]=s.SPX[n]||{})[d.add]=d.dur?s.t+d.dur:1e9;if(d.eff)d.eff(s,n,N,y);s.log.push(`${nm(n,y)}: ${d.t}`)});
+  spiritsOf(s,n).forEach(p=>{if(p.tick)p.tick(s,n,N,y,oo[n])});N.sup=Math.max(0,Math.min(100,N.sup));N.g=Math.max(0,N.g);N.mil=Math.max(0,N.mil);N.ind=Math.max(1,N.ind);for(const k in N.st)N.st[k]=Math.max(0,N.st[k])})}
+
 const PM=[['volunteer','모병제','기본 · 추가 비용 없음'],['conscript','징병제','군사력 +인구 1%/턴 · 지지도 -1/턴'],['mobilize','총동원','군사력 +인구 2.5%/턴 · 산업 -0.4/턴 · 국고 -인구 10%/턴'],['garrison','방어 태세','방어력 +30% · 군사력 소폭 증가']],PC=[['none','현상 유지',''],['welfare','복지 확대','지지도 +2/턴 · 국고 -인구 5%/턴'],['planned','계획경제','산업 +0.6/턴 · 지지도 -0.5/턴'],['ration','배급제','식량 +인구/50 · 지지도 -1/턴']],PR=[['none','연구 없음',''],['arms','무기 개발','군사력 +1.5%/턴'],['econ','산업 기술','국고 +산업×6%/턴'],['agri','농업 개량','식량 +3/턴']];
 // 사업 목록 — 승인(명령) → 착공 → 완공. 효과는 기존 지표(산업·군사·국고)에 반영
 const PJC={
@@ -623,11 +777,17 @@ function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R)+(FLsig||'');if(
  const fin=NK.Finland,ft=CT.find(t=>t.k==fin),win=qt(S)==1||qt(S)==4;
  $('#coast').innerHTML=`<use href="#ls" class="ci" clip-path="url(#lc)"/>${ft?`<path class="l2" d="${sd(ft)}" fill="url(#forest)" pointer-events="none"/>${win?`<path class="l1" d="${sd(ft)}" fill="#f7fbfc" opacity=".42" pointer-events="none"/>`:''}`:''}<use href="#ls" class="co"/>`;
  $('#copies').innerHTML=`<use href="#world" x="-1000"/><use href="#world" x="1000"/>`;
- $('#nlab').innerHTML=Object.keys(G).map(o=>{const L=G[o].slice().sort((a,b)=>b.np-a.np),used=new Set(),t=nm(o,y);let out='';
-  L.forEach(a=>{if(used.has(a.k))return;const nr=L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25));nr.forEach(c=>used.add(c.k));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;nr.forEach(c=>{x0=Math.min(x0,c.bx0);x1=Math.max(x1,c.bx1);y0=Math.min(y0,c.by0);y1=Math.max(y1,c.by1)});
-   const fs=Math.min(26,(x1-x0)/(t.length*1.5),(y1-y0)*.8);if(fs<.9)return;out+=`<text class="nl" data-fs="${fs.toFixed(2)}" x="${((x0+x1)/2).toFixed(1)}" y="${((y0+y1)/2+fs*.35).toFixed(1)}">${esc(t)}</text>`});return out}).join('');
+ const LB=[];Object.keys(G).forEach(o=>{const L=G[o].slice().sort((a,b)=>b.np-a.np),used=new Set(),t=nm(o,y);
+  L.forEach(a=>{if(used.has(a.k))return;L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25)).forEach(c=>used.add(c.k));const P=innerPt(a);if(!P)return;const fs=Math.min(24,P.w*.92/(t.length*1.4),P.h*.8);if(fs<.6)return;LB.push({t,x:P.x,y:P.y,fs})})});
+ LB.sort((a,b)=>b.fs-a.fs);const plc=[];let lo='';LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);lo+=`<text class="nl" data-fs="${l.fs.toFixed(2)}" x="${l.x.toFixed(1)}" y="${(l.y+l.fs*.36).toFixed(1)}">${esc(l.t)}</text>`});$('#nlab').innerHTML=lo;
  NLS=[...$('#nlab').children];NLS.forEach(t=>t.__fs=+t.dataset.fs)}
 let FLsig='';
+// 영토 안쪽에서 가장 넓은 자리를 찾아 국가명 위치로 사용
+function innerPt(t){if(t.lab!==undefined)return t.lab;const R=(t.rs||[]).reduce((a,r)=>!a||r.length>a.length?r:a,null);if(!R||R.length<3)return t.lab=null;
+ let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;R.forEach(p=>{x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1])});if(x1-x0>600){x0=Math.max(x0,560);x1=Math.min(x1,990)}
+ const span=(v,ax)=>{const o=[];for(let i=0,j=R.length-1;i<R.length;j=i++){const a=R[i],b=R[j],ai=ax?a[0]:a[1],bi=ax?b[0]:b[1];if((ai>v)!=(bi>v)){const k=(v-ai)/(bi-ai);o.push(ax?a[1]+(b[1]-a[1])*k:a[0]+(b[0]-a[0])*k)}}return o.sort((p,q)=>p-q)};
+ let best=null;for(let i=1;i<16;i++){const yy=y0+(y1-y0)*i/16,xs=span(yy,0);for(let k=0;k+1<xs.length;k+=2){const w=xs[k+1]-xs[k],cx=(xs[k]+xs[k+1])/2,ys=span(cx,1);let h=0;for(let m=0;m+1<ys.length;m+=2)if(ys[m]<=yy&&ys[m+1]>=yy)h=Math.min(yy-ys[m],ys[m+1]-yy)*2;const sc=Math.min(w,h*3.2);if(!best||sc>best.sc)best={sc,x:cx,y:yy,w,h}}}
+ return t.lab=best}
 
 // ════════ 화면 상태 ════════
 let V={tab:null,nat:null,sel:null,min:0,docOn:1,bt:{u:null,t:null,st:0},hl:null,cmp:null,prev:null,dto:null,dty:'trade',open:{},news:null,dl:null,pulse:[],seen:{},mob:null,init:0};
@@ -640,12 +800,13 @@ function cargoOf(f){const F=profFeats(f.pid),out=[];(f.o.r||[]).forEach(id=>{con
 function portCap(f){const N=S.N[f.n];let c=Math.round((f.o.cap||10)*clamp((N?N.ind:40)/60,.6,1.5));for(const id in PJC){const d=PJC[id];if(d.at==f.fid&&d.pid==f.pid&&d.cap&&pjState(id).s=='done')c+=d.cap}return c}
 function railNb(f){const F=profFeats(f.pid);return(F.rails||'').split(' ').filter(Boolean).map(s=>s.split('-')).filter(p=>p.includes(f.fid)).map(p=>FTI[f.pid+'.'+(p[0]==f.fid?p[1]:p[0])]).filter(Boolean)}
 function myUnits(){const me=mine();if(!me||!S.N[me])return[];const pid=PID(me),bs=FT.filter(f=>f.pid==pid&&f.ty=='base'&&f.n==me&&!f.occ&&!f.o.far),cap=capOf(me),N=S.N[me];
- return[['제1군',25],['제2군',25],['기동 예비군',50]].map(([nmn,c],i)=>{const b=bs.length?bs[i%bs.length]:null;return{i,nm:nmn,c,x:b?b.x:cap[0],y:b?b.y:cap[1],at:b?b.nm:'수도',str:Math.round(N.mil*c/100),dy:bs.length>i?0:i}})}
+ return((NAT[pid]||{}).units||UNITS0).map(([nmn,c],i)=>{const b=bs.length?bs[i%bs.length]:null;return{i,nm:nmn,c,x:b?b.x:cap[0],y:b?b.y:cap[1],at:b?b.nm:'수도',str:Math.round(N.mil*c/100),dy:bs.length>i?0:i}})}
 function validTgt(me){const h=held(S,me);return Object.keys(S.R).filter(r=>{const d=S.R[r].occ||S.R[r].o;return d!=me&&h.some(x=>dist(x,r)<=1)})}
 // ════════ 오버레이 ════════
 function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vpid=PID(vn),mpid=PID(me),selF=V.sel&&V.sel.t=='f'?FTI[V.sel.id]:V.sel&&V.sel.t=='L'?FTI['KOR.'+((PF.KOR.letters.find(l=>l[0]==V.sel.id)||[])[1])]:null,P=(la,lo)=>LL(la,lo);let o='',ft='';TAGS=[];
+ const mil=V.tab=='mil'&&me&&alive(S,me),EN=new Set(mil?wars(S,me):[]),showP=pid=>(vn&&pid==vpid)||(mil&&(pid==mpid||[...EN].some(e=>PID(e)==pid))),showF=f=>(selF&&selF.id==f.id)||(vn&&(f.pid==vpid||f.n==vn))||(mil&&(f.n==me||EN.has(f.n)));$('#map').classList.toggle('wv',!vn&&!mil);
  const usn=natOf('USA');
- if((vn&&vn==usn)||(!vn&&me&&me==usn)||(V.sel&&V.sel.t=='z')){o+=PF.USA.grid.map(g=>`<path class="gridz l1" d="${lin(g.map(p=>P(p[0],p[1])))}Z"/>`).join('');
+ if((vn&&vn==usn)||(V.sel&&V.sel.t=='z')){o+=PF.USA.grid.map(g=>`<path class="gridz l1" d="${lin(g.map(p=>P(p[0],p[1])))}Z"/>`).join('');
   for(const z in PF.USA.zones){const Z=PF.USA.zones[z],st=pjState(Z.pj).s;o+=`<path class="zone l1${V.sel&&V.sel.id==z?' on':''}" data-z="${z}" d="${lin(Z.p.map(p=>P(p[0],p[1])))}Z"${st=='done'?' style="fill:url(#gridhatch)"':''}/>`}}
  if(vn&&CT){const ks=held(S,vn);let rs=ks.filter(k=>T2[k]).map(k=>sd(T2[k])).join('');if(vpid=='KOR'&&S.N.KOR.lord){rs=['Korea','Dem. Rep. Korea','China'].map(n=>T2[NK[n]]&&sd(T2[NK[n]])).join('')}
   o+=`<path class="dimm" d="M-1500 -600H2500V1300H-1500Z${rs}"/>`}
@@ -657,22 +818,22 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
   if(V.bt.t&&V.bt.u!=null){const u=U[V.bt.u],t=LBL[V.bt.t];if(u&&t)o+=`<path class="arw p" d="${curve([[u.x,u.y],[(u.x+t[0])/2,(u.y+t[1])/2-Math.hypot(t[0]-u.x,t[1]-u.y)*.15],t])}"/>`}}
  // 철도·연결망·사업선
  let rl='',r2='',pl='',nt='';
- for(const pid in PF){const F=profFeats(pid),own=pid==vpid,cls=own?'':' l1';(F.rails||'').split(' ').filter(Boolean).forEach(s=>{const[a,b]=s.split('-'),A=FTI[pid+'.'+a],B=FTI[pid+'.'+b];if(A&&B){const d=`M${A.x.toFixed(2)},${A.y.toFixed(2)}L${B.x.toFixed(2)},${B.y.toFixed(2)}`;rl+=`<path class="rail0${cls}" d="${d}"/>`;r2+=`<path class="rail1${cls}" d="${d}"/>`}});
-  if(F.net&&(own||pid==mpid)){F.net.split(' ').forEach(s=>{const[a,b]=s.split('-'),A=FTI[pid+'.'+a],B=FTI[pid+'.'+b];if(A&&B){const hot=selF&&(selF.fid==a||selF.fid==b)&&selF.pid==pid;nt+=`<path class="net${hot?' hot':''}" d="${curve([[A.x,A.y],[(A.x+B.x)/2,(A.y+B.y)/2-Math.abs(B.x-A.x)*.12],[B.x,B.y]])}"/>`}})}}
- for(const id in PJC){const d=PJC[id];if(!d.p)continue;const st=pjState(id);if(st.s=='none'&&!(V.cmp==id||(V.sel&&V.sel.t=='z'&&PF.USA.zones[V.sel.id]&&PF.USA.zones[V.sel.id].pj==id)))continue;const pts=d.p.map(p=>P(p[0],p[1])),g=d.k=='grid';
+ for(const pid in PF){if(!showP(pid))continue;const F=profFeats(pid),own=pid==vpid,cls='';(F.rails||'').split(' ').filter(Boolean).forEach(s=>{const[a,b]=s.split('-'),A=FTI[pid+'.'+a],B=FTI[pid+'.'+b];if(A&&B){const d=`M${A.x.toFixed(2)},${A.y.toFixed(2)}L${B.x.toFixed(2)},${B.y.toFixed(2)}`;rl+=`<path class="rail0${cls}" d="${d}"/>`;r2+=`<path class="rail1${cls}" d="${d}"/>`}});
+  if(F.net&&own){F.net.split(' ').forEach(s=>{const[a,b]=s.split('-'),A=FTI[pid+'.'+a],B=FTI[pid+'.'+b];if(A&&B){const hot=selF&&(selF.fid==a||selF.fid==b)&&selF.pid==pid;nt+=`<path class="net${hot?' hot':''}" d="${curve([[A.x,A.y],[(A.x+B.x)/2,(A.y+B.y)/2-Math.abs(B.x-A.x)*.12],[B.x,B.y]])}"/>`}})}}
+ for(const id in PJC){const d=PJC[id];if(!d.p)continue;if(!showP(d.pid)&&V.cmp!=id&&!(V.sel&&V.sel.t=='z'))continue;const st=pjState(id);if(st.s=='none'&&!(V.cmp==id||(V.sel&&V.sel.t=='z'&&PF.USA.zones[V.sel.id]&&PF.USA.zones[V.sel.id].pj==id)))continue;const pts=d.p.map(p=>P(p[0],p[1])),g=d.k=='grid';
   if(st.s=='done')pl+=g?`<path class="grid0" d="${lin(pts)}" style="stroke-width:3"/>`:`<path class="railn" d="${lin(pts)}"/><path class="rail1" d="${lin(pts)}"/>`;
   else if(st.s=='build'){const tot=pts.slice(1).reduce((a,p,i)=>a+Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1]),0);let need=tot*st.pr,cut=[pts[0]];for(let i=1;i<pts.length&&need>0;i++){const sg=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);if(sg<=need){cut.push(pts[i]);need-=sg}else{const t=need/sg;cut.push([pts[i-1][0]+(pts[i][0]-pts[i-1][0])*t,pts[i-1][1]+(pts[i][1]-pts[i-1][1])*t]);need=0}}
    pl+=`<path class="${g?'gridp':'railp'}" d="${lin(pts)}"/><path class="${g?'grid0':'railb'}" d="${lin(cut)}"/>`}
   else pl+=`<path class="${g?'gridp':'railp'}" d="${lin(pts)}" style="stroke:#a3361b"/>`}
  // 항로
- let rt='';FT.filter(f=>f.ty=='port'&&f.o.r).forEach(f=>{const F=profFeats(f.pid);const show=f.pid==vpid||(selF&&selF.id==f.id)||(V.hl&&V.hl.startsWith(f.pid+'.'))||(!vn&&f.n==me);if(!show)return;
+ let rt='';FT.filter(f=>f.ty=='port'&&f.o.r).forEach(f=>{const F=profFeats(f.pid);const show=(vn&&f.pid==vpid)||(selF&&selF.id==f.id)||(vn&&V.hl&&V.hl.startsWith(f.pid+'.'));if(!show)return;
   f.o.r.forEach(id=>{const R=F.routes[id];if(!R)return;const pts=[[f.x,f.y],...(f.o.out||[]).map(p=>P(p[0],p[1])),...((f.o.north&&R.np)||R.p).map(p=>P(p[0],p[1]))],cut=cargoOf(f).filter(c=>c.rid==id).every(c=>c.cut);
    const hot=(selF&&selF.id==f.id)||V.hl==f.pid+'.'+id,off=(selF&&selF.id!=f.id)||(V.hl&&!hot);const d=curve(pts);rt+=`<path class="rt${hot?' hot':''}${off?' off':''}${cut?' cut':''}" d="${d}"/><path class="rth" data-rt="${f.pid}.${id}" d="${d}"/>`;
    if(hot||(f.pid==vpid&&!off)){const e=pts[pts.length-1];if(!TAGS.some(t=>t.k==id))TAGS.push({k:id,x:e[0],y:e[1],t:'→ '+R.d,hot,act:`rt:${f.pid}.${id}`})}})});
  $('#ovl').innerHTML=o+`<g>${rl}${r2}</g>${pl}${nt}${rt}`;
  // 표식
  const rel=new Set();if(selF){rel.add(selF.id);railNb(selF).forEach(f=>rel.add(f.id));const A=selF.o.ore&&PF[selF.pid].alloc;if(A){let al='';A.forEach(a=>{const t=FTI[selF.pid+'.'+a[0]];if(!t)return;rel.add(t.id);al+=`<path class="net hot" style="stroke:#9a6a12" d="${curve([[selF.x,selF.y],[(selF.x+t.x)/2,(selF.y+t.y)/2-Math.hypot(t.x-selF.x,t.y-selF.y)*.18],[t.x,t.y]])}"/>`});$('#ovl').insertAdjacentHTML('beforeend',al)}}
- FT.forEach(f=>{if(f.o.far&&f.pid!=vpid&&f.pid!=mpid)return;if(f.org&&f.pid!=vpid&&f.pid!=mpid&&!(selF&&selF.pid==f.pid))return;
+ FT.forEach(f=>{if(!showF(f))return;if(f.o.far&&f.pid!=vpid&&f.pid!=mpid)return;if(f.org&&f.pid!=vpid&&f.pid!=mpid&&!(selF&&selF.pid==f.pid))return;
   const own=f.pid==vpid,dim=(selF&&!rel.has(f.id))||(V.sel&&V.sel.t=='r'&&f.rk!=V.sel.id)||(vn&&!own&&f.n!=vn),lod=own?'':f.ty=='cap'?'':' l2';
   const ic=IC[f.ty]||IC.city,sel=selF&&selF.id==f.id;let ex='';
   for(const id in PJC){const d=PJC[id];if(d.at==f.fid&&d.pid==f.pid){const st=pjState(id).s;if(st=='build'||st=='plan')ex+=`<g transform="translate(-11 -11)">${IC.build}</g>`;else if(st=='done')ex+=`<rect x="5" y="-12" width="8" height="8" fill="#4f7a45" stroke="#efe6cf"/>`}}
@@ -682,8 +843,8 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
   ft+=`<g class="ft ${f.ty}${own?' own':''}${dim?' dim':''}${f.occ?' occ':''}${lod}" data-f="${f.id}" data-sx="${f.x.toFixed(3)}" data-sy="${f.y.toFixed(3)}">${sel?'<circle class="ring2" r="17"/><circle class="ring" r="12.5"/>':''}${ex}${ic}<text x="${f.ty=='city'?6:11}" y="4">${esc(f.nm)}</text></g>`;
   if(f.o.far&&own)TAGS.push({k:f.id,x:f.x,y:f.y,t:f.nm.split(' (')[0]+' →',hot:sel,act:'f:'+f.id,far:1})});
  // 부대 말판
- if(me&&alive(S,me)){const U=myUnits(),col=NM[me][1],mil=V.tab=='mil';U.forEach(u=>{ft+=`<g class="ctr${V.bt.u==u.i?' sel':''}${mil?'':' l1'}" data-u="${u.i}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(-34 ${22+u.dy*25})">${ctr(col,u.str,u.c>=50?'XXX':'XX')}${mil?`<text x="21" y="4" style="font:600 10px var(--sans);fill:#1a1a1a;paint-order:stroke;stroke:#efe6cf;stroke-width:3px">${u.nm}</text>`:''}</g></g>`})}
- Object.keys(S.N).filter(n=>n!=me&&alive(S,n)&&(S.N[n].mil>=40||(me&&atWar(S,me,n)))).forEach(n=>{const c=capOf(n),w=me&&atWar(S,me,n);ft+=`<g class="ctr en${w?'':' l1'}" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}"><g transform="translate(-30 18)">${ctr(NM[n][1],w?Math.round(S.N[n].mil):'?','XXX')}</g></g>`});
+ if(me&&alive(S,me)&&(mil||vn==me)){const U=myUnits(),col=NM[me][1];U.forEach(u=>{ft+=`<g class="ctr${V.bt.u==u.i?' sel':''}${mil?'':' l1'}" data-u="${u.i}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(-34 ${22+u.dy*25})">${ctr(col,u.str,u.c>=50?'XXX':'XX')}${mil?`<text x="21" y="4" style="font:600 10px var(--sans);fill:#1a1a1a;paint-order:stroke;stroke:#efe6cf;stroke-width:3px">${u.nm}</text>`:''}</g></g>`})}
+ Object.keys(S.N).filter(n=>mil&&n!=me&&alive(S,n)&&atWar(S,me,n)).forEach(n=>{const c=capOf(n),w=me&&atWar(S,me,n);ft+=`<g class="ctr en${w?'':' l1'}" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}"><g transform="translate(-30 18)">${ctr(NM[n][1],w?Math.round(S.N[n].mil):'?','XXX')}</g></g>`});
  V.pulse.forEach(p=>ft+=`<g data-sx="${p.x.toFixed(3)}" data-sy="${p.y.toFixed(3)}"><circle class="pulse" r="16"/><circle class="pulse" r="16" style="animation-delay:.5s"/></g>`);
  $('#fts').innerHTML=ft;LCD=1;SCL=[...$('#map').querySelectorAll('[data-sx]')];SCL.forEach(e=>{e.__x=+e.dataset.sx;e.__y=+e.dataset.sy});applyCam()}
 const ctr=(col,str,sz)=>`<rect class="b" x="-17" y="-11" width="34" height="22" fill="${paperize(col)}" stroke="#1d1d1d"/><rect x="-17" y="-11" width="34" height="5" fill="${darker(col,.5)}"/><text x="-6.5" y="-6.9" text-anchor="middle" style="font:700 4.6px var(--sans);fill:#fff;letter-spacing:.5px">${sz}</text><rect x="-14" y="-3.5" width="14" height="9.5" fill="#efe6cf" stroke="#1d1d1d" stroke-width=".9"/><path d="M-14-3.5L0 6M0-3.5L-14 6" stroke="#1d1d1d" stroke-width=".8"/><text x="8.5" y="5.2" text-anchor="middle">${str}</text>`;
@@ -719,14 +880,15 @@ function barHTML(){const me=mine(),N=me&&S.N[me],y=yr(S),q=qt(S),dl=V.dl&&Date.n
 function tickUI(){const b=$('#rdy'),t=$('#tm');if(!S||S.phase!='play')return;const s=Math.max(0,Math.ceil((S.deadline-Date.now())/1000)),ms=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
  if(t)t.textContent=`남은 시간 ${ms} · 준비 ${Object.keys(S.ready).length}/${Object.keys(S.P).length}`;
  if(b&&(S.ready[uid]||O.ready)){const w=Object.entries(S.P).filter(([u])=>u!=uid&&!S.ready[u]).map(([,n])=>nm(n,yr(S)));b.textContent=`${w.length?(w.length>1?w[0]+' 외 '+(w.length-1)+'개국':w[0]):'다른 국가'} 대기 중 · ${ms}`}}
-function tabsHTML(){const me=mine(),pend=me&&S.TR.some(t=>t.st=='p'&&t.b==me),ag=me&&agendaFor(me),T=[['gov','국정',ag&&ag.pf&&!ag.done],['fin','재정'],['ind','산업'],['mil','군정',me&&wars(S,me).length>0],['dip','외교',pend]];
+function tabsHTML(){const me=mine(),pend=me&&S.TR.some(t=>t.st=='p'&&t.b==me),ag=me&&agendaFor(me),T=[['gov','국정',(ag&&ag.pf&&!ag.done)||!!decDue(me)],['fin','재정'],['ind','산업'],['mil','군정',me&&wars(S,me).length>0],['dip','외교',pend]];
  return T.map(([k,l,e])=>`<button class="tb${V.tab==k?' on':''}" data-act="tab:${k}" ${me?'':'disabled'}>${l}${e?ENV:''}</button>`).join('')+`<div class="sp"></div><button class="tb sm${V.tab=='log'?' on':''}" data-act="tab:log">기록</button>`}
 function plateHTML(){const n=V.nat,y=yr(S);if(!n)return`<span style="color:#c8cdd0;font-size:11.5px">세계지도 · ${y}년 ${qt(S)}분기</span>`;const me=mine()==n;
  return`<button data-act="back" style="height:28px">← 세계지도</button>${flag(n,30,20)}<b>${esc(nm(n,y))}</b><small>${y}년 ${qt(S)}분기</small>${me?'':'<span class="vt">방문</span>'}`}
 // ════════ 안건 ════════
 function agendaFor(me){if(!me||!S.N[me])return null;const y=yr(S),N=S.N[me];const pt=S.TR.find(t=>t.st=='p'&&t.b==me&&!(O.sign||[]).includes(t.id)&&!(O.rej||[]).includes(t.id));
- if(pt)return{t:`${nm(pt.a,y)}에서 ${TY[pt.ty]} 조약안 도착`,s:'외교 탭에서 수정 조항을 펼쳐 서명 또는 거절',go:'tab:dip'};
+ if(pt){const np=S.TR.filter(t=>t.st=='p'&&t.b==me&&!(O.sign||[]).includes(t.id)&&!(O.rej||[]).includes(t.id)).length;return{t:np>1?`조약안 ${np}건 도착 (${nm(pt.a,y)} 외)`:`${nm(pt.a,y)}에서 ${TY[pt.ty]} 조약안 도착`,s:'외교 탭에서 수정 조항을 펼쳐 서명 또는 거절',go:'tab:dip'}}
  const W=wars(S,me);if(W.length&&!(O.atk||[]).length)return{t:`${W.map(x=>nm(x,y)).join('·')} 전선 명령 없음`,s:'군정 탭에서 부대 말판을 골라 목표 지정',go:'tab:mil'};
+ const dd=decDue(me);if(dd)return{t:'역사적 결정: '+dd.t,s:dd.d+' — 눌러서 국가 전략 열기',go:'strat',pf:1};
  const pid=PID(me),P=pid&&PF[pid];if(pid=='KOR'&&!N.lord)return{t:'독립 후 첫 행정 예산 편성',s:'재정 장부에서 세출 중점을 정하세요',go:'tab:fin'};if(P&&P.ag){const done=P.ag.done?!!P.ag.done(O):false;if(!done)return{...P.ag,pf:1,done}}
  const lo=Object.entries(N.st).sort((a,b)=>a[1]-b[1])[0];if(lo[1]<12)return{t:`${KIND[lo[0]]} 비축 부족 (${lo[1]|0})`,s:'항구·공장을 눌러 확보 방안 지정',go:'tab:ind'};
  return{t:'이번 분기 명령 정리 완료',s:'준비 완료를 눌러 다음 분기로',go:'ready',done:1}}
@@ -807,9 +969,9 @@ function guide(n){const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*
  return L.length?L.map(e=>{const tg=e[4],diff=e[3]=='war'?(pact(S,n,tg,'nap')?'불가침 조약이 있어 역사와 다릅니다':!alive(S,tg)?'대상국이 이미 사라졌습니다':'조건이 역사와 비슷합니다'):'';
   return`<div class="ln"><div class="g">${e[0]}년 ${e[1]}분기 · ${esc(e[5])}<small>${esc(e[6])} — ${diff||'조건 확인 중'}</small></div></div>`}).join(''):'<div class="note" style="margin:0">앞으로 2년 안에 이 국가의 주요 역사 결정은 없습니다.</div>'}
 // ════════ 문서 패널 ════════
-function docHTML(){const me=mine(),y=yr(S),N=me&&S.N[me];if(V.nat&&V.nat!=me&&(!V.tab||V.tab=='gov'))return{t:`공개 자료 — ${nm(V.nat,y)}`,b:visitDoc(V.nat)};if(!V.tab)return null;
+function docHTML(){const me=mine(),y=yr(S),N=me&&S.N[me];if(V.nat&&V.nat!=me&&(!V.tab||V.tab=='gov'))return{t:`공개 자료 — ${nm(V.nat,y)}`,b:visitDoc(V.nat)+natHTML(V.nat)};if(!V.tab)return null;
  if(V.tab=='log')return{t:'분기 기록 · 역사 흐름',b:`<div class="sec"><span>${y}년 ${qt(S)}분기 이전 처리 결과</span></div>${S.log.map(l=>`<div class="ln"><div class="g">${esc(l)}</div></div>`).join('')}${me?`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(me)}`:''}${S.phase=='end'?endDoc():''}`};
- if(!N)return null;if(V.tab=='gov')return govDoc(me);if(V.tab=='fin')return finDoc(me);if(V.tab=='ind')return indDoc(me);if(V.tab=='mil')return milDoc(me);if(V.tab=='dip')return dipDoc(me);return null}
+ if(!N)return null;if(V.tab=='gov'){const g=govDoc(me),st=V.gsub=='s';return{t:st?'국가 전략 — '+nm(me,y):g.t,b:`<div class="subt"><button class="${st?'':'on'}" data-act="gsub:d">국가 자료</button><button class="${st?'on':''}" data-act="gsub:s">국가 전략${decDue(me)?' ●':''}</button></div>`+(st?natHTML(me):g.b)}}if(V.tab=='fin')return finDoc(me);if(V.tab=='ind')return indDoc(me);if(V.tab=='mil')return milDoc(me);if(V.tab=='dip')return dipDoc(me);return null}
 function endDoc(){const y=yr(S);return`<div class="sec"><span>최종 순위</span></div>${Object.keys(S.N).filter(x=>alive(S,x)).sort((a,b)=>score(S,b)-score(S,a)).slice(0,10).map((x,i)=>`<div class="ln"><div class="g">${i+1}. ${esc(nm(x,y))}${Object.values(S.P).includes(x)?' · 플레이어':''}</div><div class="v">${score(S,x)}</div></div>`).join('')}`}
 function govDoc(me){const pid=PID(me),P=pid&&PF[pid],N=S.N[me],y=yr(S),q=qt(S);if(!P)return{t:'국가 개요',b:genericGov(me)};
  if(pid=='UK'){const ports=FT.filter(f=>f.pid=='UK'&&f.ty=='port'),R=P.routes;let rows='';for(const id in R){const ps=ports.filter(f=>(f.o.r||[]).includes(id)),cs=ps.length?cargoOf(ps[0]).filter(c=>c.rid==id):[];const tot=cs.reduce((a,c)=>a+(c.cut?0:c.a),0),hot=V.hl=='UK.'+id;
@@ -854,7 +1016,7 @@ function indDoc(me){const N=S.N[me],h=held(S,me),pr={f:0,s:0,o:0};h.forEach(r=>{
  ${fs.length?`<div class="sec"><span>공업도시</span><span>눌러서 생산과 기술</span></div>${fs.map(f=>`<div class="ln cl" data-act="f:${f.id}"><div class="g">${esc(f.nm)}${f.occ?' <span class="tag bad">점령</span>':''}</div></div>`).join('')}`:''}
  <div class="sec"><span>연구 방향</span></div>${pols(N,'res',PR,true)}${pj.length?`<div class="sec"><span>사업</span></div>${pj.map(id=>pjRow(id,true)).join('')}`:''}`}}
 function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목표 지역을 누르세요','작전 미리보기','소모 예산 확인'][V.bt.st]||'';
- return{t:'군정 — 편제표',b:`<div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>
+ return{t:'군정 — 편제표',b:`${docBlock(me)}<div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>
  <div class="sec"><span>부대 말판</span><span>${V.bt.u!=null?st:'말판을 고른 뒤 지도에서 목표 지정'}</span></div>${U.map(u=>`<div class="ln cl${V.bt.u==u.i?' hot':''}" data-act="unit:${u.i}"><div class="g">${u.nm} · ${u.at}<small>군사력의 ${u.c}% · 병력 ${u.str}</small></div><div class="v">${u.c>=50?'XXX':'XX'}</div></div>`).join('')}
  <div class="sec"><span>내린 공격 명령</span></div>${(O.atk||[]).map((a,i)=>`<div class="ln"><div class="g">${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${a.c}% 투입</small></div><button data-act="uatk:${i}">취소</button></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}
  <div class="sec"><span>교전 상황</span></div><div class="note" style="margin:0">${W.map(x=>esc(nm(x,y))).join(', ')||'교전 중인 국가 없음'}</div><div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}`}}
@@ -869,10 +1031,19 @@ function dipDoc(me){const y=yr(S),pend=S.TR.filter(t=>t.st=='p'&&t.b==me),act=S.
  ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>턴 처리 시 전달 · AI는 즉시 답합니다</small></div></div>`).join('')}`:''}
  ${sent.length?`<div class="sec"><span>회신 대기</span></div>${sent.map(t=>`<div class="ln"><div class="g">${esc(nm(t.b,y))} · ${TY[t.ty]}</div></div>`).join('')}`:''}
  <div class="sec"><span>체결된 조약</span></div>${act.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==me?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}`}}
+// ════════ 국가 전략 화면 ════════
+function decDue(n){if(!n||!S.N[n])return null;const y=yr(S),q=qt(S);return decsFor(n).find(d=>d.hy&&(y>d.hy[0]||(y==d.hy[0]&&q>=d.hy[1]))&&decOK(S,n,d).ok&&!(O.dec||[]).includes(d.id))||null}
+function docBlock(n){const A=NAT[PID(n)],sp=spiritsOf(S,n).filter(p=>p.doc||p.m);return`<div class="docx"><small>군사 교리</small><b>${esc(A?A.doc:'일반 교리')}</b><p>${esc(A?A.docD:'특별한 교리 보정이 없습니다. 군사 정책과 예산으로 군을 키우세요.')}</p>${sp.map(p=>`<div class="fxl"><span class="fx up">${esc(p.t)}</span> ${esc(p.d)}</div>`).join('')}</div>`}
+function natHTML(n){const A=NAT[PID(n)],y=yr(S),me=mine()==n,sp=spiritsOf(S,n).filter(p=>!p.doc),ds=decsFor(n),N=S.N[n];
+ return`<div class="nat"><div class="nat-h">${flag(n,48,32)}<div><b>${esc(leaderOf(n,y)||nm(n,y)+' 정부')}</b><small>${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</small></div></div>
+ ${docBlock(n)}
+ <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b><span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+|×1\.[1-9]/.test(x)?' up':''}">${esc(x)}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">적용 중인 국가 정신이 없습니다.</div>'}
+ ${me?`<div class="sec"><span>역사적 결정</span><span>국고 ${N.g|0}</span></div>${ds.map(d=>{const ok=decOK(S,n,d),or=(O.dec||[]).includes(d.id),tk=DTAKEN(S,n,d.id);return`<div class="dec${tk?' tk':''}${or?' or':''}${!ok.ok&&!tk&&!or?' lk':''}"><div class="dt"><b>${esc(d.t)}</b><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span></div><div class="dd"><span class="fx up">${esc(d.d)}</span>${d.cost?`<span class="fx">비용 ${d.cost}</span>`:''}${d.rq?`<span class="fx">조건: ${esc(d.rq)}</span>`:''}</div><div class="dh2">${esc(d.h)}</div><div class="da">${tk?'<span class="tag ok">결정됨</span>':or?`<span class="tag acc">다음 분기 시행</span><button data-act="undec:${d.id}">취소</button>`:ok.ok?`<button class="pri" data-act="dec:${d.id}">결정</button>`:`<span class="tag">${esc(ok.why)}</span>`}</div></div>`}).join('')}`:''}
+ <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
 // ════════ 지도 위 작전 창 ════════
 function popHTML(){const me=mine();if(V.tab!='mil'||V.bt.u==null||!V.bt.t||!me)return'';const u=myUnits()[V.bt.u],r=V.bt.t,R=S.R[r],d=R.occ||R.o,y=yr(S),A=S.N[me],D=S.N[d],use=A.mil*u.c/100;
- const def=(D.mil*.6+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1),pct=Math.round(clamp((use-def*.8)/(def*.4+use*.4)*50+50,3,97)),p=pact(S,me,d,'nap')||pact(S,me,d,'ally'),w=atWar(S,me,d);
- if(V.bt.st==2)return`<div class="st">작전 1/3 · <i>명령 미리보기</i></div><h5>${esc(u.nm)} → ${esc(RG[r][0])}</h5><dl><dt>방어 세력</dt><dd>${esc(nm(d,y))}</dd><dt>투입 병력</dt><dd>${use.toFixed(0)} (${u.c}%)</dd><dt>상대 방어 추정</dt><dd>${def.toFixed(0)}</dd><dt>점령 가능성</dt><dd>${pct}%</dd></dl><div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3">소모 예산 확인 →</button></div>`;
+ const am=docM(S,me,d,r,'att',u.c),dm=docM(S,d,me,r,'def',u.c),def=(D.mil*.6+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1)*dm,pct=Math.round(clamp((use*am-def*.8)/(def*.4+use*am*.4)*50+50,3,97)),p=pact(S,me,d,'nap')||pact(S,me,d,'ally'),w=atWar(S,me,d);
+ if(V.bt.st==2)return`<div class="st">작전 1/3 · <i>명령 미리보기</i></div><h5>${esc(u.nm)} → ${esc(RG[r][0])}</h5><dl><dt>방어 세력</dt><dd>${esc(nm(d,y))}</dd><dt>투입 병력</dt><dd>${use.toFixed(0)} (${u.c}%)</dd><dt>상대 방어 추정</dt><dd>${def.toFixed(0)}</dd><dt>교리 보정</dt><dd>공격 ×${am.toFixed(2)} · 방어 ×${dm.toFixed(2)}</dd><dt>점령 가능성</dt><dd>${pct}%</dd></dl><div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3">소모 예산 확인 →</button></div>`;
  return`<div class="st">작전 2/3 · <i>소모 예산 확인</i></div><h5>${esc(RG[r][0])} 공격</h5><dl><dt>성공 시 손실</dt><dd>군사력 −${(use*.3).toFixed(0)}</dd><dt>실패 시 손실</dt><dd>군사력 −${(use*.5).toFixed(0)}</dd>${w?'':`<dt>외교</dt><dd style="color:var(--bad)">${esc(nm(d,y))}에 선전포고</dd>`}${p?`<dt>조약</dt><dd style="color:var(--bad)">${TY[p.ty]} 파기 · 지지 −10</dd>`:''}</dl><div class="rowf"><button data-act="bt:2">← 뒤로</button><button class="pri" data-act="bt:ok">명령 확정</button></div>`}
 function placePop(){const el=$('#pop');if(!el||!el.firstChild||!V.bt.t)return;const t=LBL[V.bt.t];if(!t)return;const[x,y]=toScr(t[0],t[1]),de=$('#doc'),dw=VW>=760&&de&&de.classList.contains('on')?de.offsetWidth+12:0;el.firstChild.style.left=clamp(x,135,VW-dw-135)+'px';el.firstChild.style.top=clamp(y,250,VH)+'px'}
 // ════════ 그리기 ════════
@@ -884,8 +1055,8 @@ function ui(){if(!S||S.phase=='lobby'||!$('#play'))return;const me=mine();
  $('#agenda').innerHTML=agendaHTML();$('#agenda').style.display=me&&!(dc&&V.docOn&&VW<760)?'':'none';
  const ph=popHTML();$('#pop').innerHTML=ph?`<div class="pop">${ph}</div>`:'';placePop();
  if(V.news&&!$('#news'))newsShow()}
-function game(){const first=!$('#play');shell();if(first||!V.init){V.init=1;const me=mine();const c=me?presetCam(me):{x:500,y:250,w:1000};CAM={...c};applyCam()}ui()}
-function selFeat(id,flyTo){const f=FTI[id];if(!f)return;V.sel={t:'f',id};V.min=0;if(f.pid=='KOR')V.seen[f.fid]=1;if(V.hl&&!V.hl.startsWith(f.pid+'.'))V.hl=null;if(f.ty=='port')V.hl=null;
+function game(){const first=!$('#play');shell();if(first||!V.init){V.init=1;const me=mine();const c=me?presetCam(me):{x:500,y:250,w:1000};CAM={...c};if(me){V.nat=me;V.tab=null;V.prev={x:500,y:250,w:1000}}applyCam()}ui()}
+function selFeat(id,flyTo){const f=FTI[id];if(!f)return;if(!V.nat&&V.tab!='mil'){const n=f.org?natOf(f.pid):f.n;if(n){V.prev={...CAM};V.nat=n}}V.sel={t:'f',id};V.min=0;if(f.pid=='KOR')V.seen[f.fid]=1;if(V.hl&&!V.hl.startsWith(f.pid+'.'))V.hl=null;if(f.ty=='port')V.hl=null;
  if(flyTo)focusOn(f.x,f.y,f.o.far?140:Math.min(CAM.w,Math.max(70,CAM.w*.8)));ui()}
 function focusOn(x,y,w,force){const mob=VW<760,de=$('#doc'),dw=!mob&&de&&de.classList.contains('on')?de.offsetWidth+24:0,sx=mob?VW/2:(450+VW-dw)/2,sy=mob?VH*.3:VH*.42,[cx,cy]=toScr(x,y),ok=!force&&cx>(mob?30:470)&&cx<VW-dw-40&&cy>60&&cy<(mob?VH*.5:VH-90)&&CAM.w<=w*1.3;if(ok)return;
  const k=w/VW;flyXY(x-(sx-VW/2)*k,y-(sy-VH/2)*k,w)}
@@ -893,15 +1064,15 @@ function enterNation(n){if(!n||!S.N[n])return;if(!V.nat)V.prev={...CAM};V.nat=n;
  setTimeout(()=>{const c=presetCam(n),on=$('#doc').classList.contains('on'),dw=VW>=760&&on?$('#doc').offsetWidth+12:0,dh=VW<760&&on?$('#doc').offsetHeight:0;flyXY(c.x+dw/2*c.w/VW,c.y+dh/2*c.w/VW,c.w,520)},140);setTimeout(()=>{FL.clear();FLsig='';ui()},1700)}
 function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S);
  switch(k){
- case'zin':return zoomAt(.65,VW/2,VH/2);case'zout':return zoomAt(1.5,VW/2,VH/2);case'zhome':{const c=me?presetCam(me):{x:500,y:250,w:1000};return flyXY(c.x,c.y,c.w)}
+ case'zin':return zoomAt(.65,VW/2,VH/2);case'zout':return zoomAt(1.5,VW/2,VH/2);case'zhome':{if(me&&V.nat!=me)return enterNation(me);const c=me?presetCam(me):{x:500,y:250,w:1000};return flyXY(c.x,c.y,c.w)}
  case'tab':{if(v=='gov'){if(V.tab=='gov'&&V.nat==me){V.tab=null;ui();return}V.tab='gov';V.docOn=1;if(V.nat!=me)return enterNation(me);ui();return}V.tab=V.tab==v?null:v;V.docOn=1;if(V.tab!='mil'){V.bt={u:null,t:null,st:0}}ui();return}
  case'back':{V.nat=null;V.sel=null;V.hl=null;V.cmp=null;if(V.tab=='gov')V.tab=null;const p=V.prev;V.prev=null;ui();if(p)flyXY(p.x,p.y,p.w,480);return}
  case'enter':return enterNation(v);
  case'f':return selFeat(v,1);
- case'r':{const R=S.R[v];if(!R)return;const o=R.occ||R.o;if(V.tab=='dip'&&me&&o!=me){V.dto=o;ui();return}if(!V.nat&&CAM.w>=360)return enterNation(o);V.sel={t:'r',id:v};V.min=0;ui();return}
- case'z':{V.sel={t:'z',id:v};V.min=0;const Z=PF.USA.zones[v];if(Z){const c=Z.p.reduce((a,p)=>[a[0]+p[0]/Z.p.length,a[1]+p[1]/Z.p.length],[0,0]),[x,yy]=LL(c[0],c[1]);focusOn(x,yy,Math.min(CAM.w,150))}ui();return}
+ case'r':{const R=S.R[v];if(!R)return;const o=R.occ||R.o;if(V.tab=='dip'&&me&&o!=me){V.dto=o;ui();return}if(!V.nat&&V.tab!='mil')return enterNation(o);V.sel={t:'r',id:v};V.min=0;ui();return}
+ case'z':{if(!V.nat){V.prev={...CAM};V.nat=natOf('USA')}V.sel={t:'z',id:v};V.min=0;const Z=PF.USA.zones[v];if(Z){const c=Z.p.reduce((a,p)=>[a[0]+p[0]/Z.p.length,a[1]+p[1]/Z.p.length],[0,0]),[x,yy]=LL(c[0],c[1]);focusOn(x,yy,Math.min(CAM.w,150))}ui();return}
  case'rt':case'hl':{V.hl=V.hl==v&&k=='hl'?null:v;if(k=='rt')V.sel={t:'rt',id:v};ui();return}
- case'L':{const L=PF.KOR.letters.find(l=>l[0]==v);if(!L)return;V.seen[L[1]]=1;V.sel={t:'L',id:v};V.min=0;const f=FTI['KOR.'+L[1]];if(f)focusOn(f.x,f.y,f.o.far?150:Math.min(CAM.w,110),1);ui();return}
+ case'L':{const L=PF.KOR.letters.find(l=>l[0]==v);if(!L)return;if(!V.nat){V.prev={...CAM};V.nat='KOR'}V.seen[L[1]]=1;V.sel={t:'L',id:v};V.min=0;const f=FTI['KOR.'+L[1]];if(f)focusOn(f.x,f.y,f.o.far?150:Math.min(CAM.w,110),1);ui();return}
  case'b':case'cmp':{if(k=='b'){V.tab='gov';V.docOn=1;if(V.nat!=me){V.cmp=v;enterNation(me);V.cmp=v;return}}V.cmp=V.cmp==v&&k=='cmp'?null:v;ui();return}
  case'close':V.sel=null;V.hl=null;ui();return;case'min':V.min=V.min?0:1;ui();return;case'docx':if(V.tab=='gov'||!V.tab){V.docOn=0}else V.tab=null;ui();return
  case'agenda':{const g=agendaFor(me);if(!g)return;const[t,...rr]=g.go.split(':'),id=rr.join(':'),pid=PID(me);if(t=='f')return act('f:'+(id.includes('.')?id:pid+'.'+id));return act(g.go)}
@@ -922,6 +1093,8 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'tgt':{V.bt.t=v;V.bt.st=2;ui();return}
  case'bt':{if(v=='cancel'){V.bt={u:V.bt.u,t:null,st:1};ui();return}if(v=='ok'){const u=myUnits()[V.bt.u];sendO({atk:(O.atk||[]).concat({r:V.bt.t,c:u.c,u:u.i})});V.bt={u:null,t:null,st:0};ui();return}V.bt.st=+v;ui();return}
  case'uatk':{const a=(O.atk||[]).slice();a.splice(+v,1);sendO({atk:a});ui();return}
+ case'dec':sendO({dec:(O.dec||[]).filter(x=>x!=v).concat(v)});ui();return;case'undec':sendO({dec:(O.dec||[]).filter(x=>x!=v)});ui();return
+ case'gsub':V.gsub=v;ui();return;case'strat':{V.gsub='s';V.tab='gov';V.docOn=1;if(V.nat!=me)return enterNation(me);ui();return}
  case'news':return newsGo();case'newsx':return newsClose()}}
 // ════════ 분기 전환: 지도 강조 + 신문 ════════
 function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S);feats();
@@ -932,9 +1105,10 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
   if(q.ok&&!(old&&old.ok))ev.push({pri:mineP?100:60,h:d.done,s:`${nm(q.n,y)}의 ${d.name} 사업이 ${d.q}분기 공사 끝에 마무리됐다. ${d.ind?'인근 공업 도시의 산업력이 오른다.':d.gpt?'다음 분기부터 정기 수입이 생긴다.':d.mil?'군사력이 보강된다.':''}`,at:pos(q.id),sel:d.zone?'z:'+d.zone:d.at?'f:'+d.pid+'.'+d.at:null,ty:'build'});
   else if(!old)ev.push({pri:mineP?72:30,h:`${d.name} 착공`,s:`${nm(q.n,y)} 정부가 예산 ${d.cost}을 배정해 공사를 시작했다. 완공까지 ${d.q}분기.`,at:pos(q.id),sel:d.zone?'z:'+d.zone:d.at?'f:'+d.pid+'.'+d.at:null,ty:'build'})});
  S.W.filter(w=>!p.W.includes(w)).forEach(w=>{const[a,b]=w.split('|'),inv=a==me||b==me;ev.push({pri:inv?95:80,h:`${nm(a,y)}, ${nm(b,y)}에 선전포고`,s:'국경 지대에 병력이 집결하고 있다.',at:capOf(b),ty:'border'})});
- [...FL].forEach(r=>{const R=S.R[r],o=p.R[r];if(R.occ&&R.occ!=o.occ){const inv=R.occ==me||R.o==me;ev.push({pri:inv?90:74,h:`${nm(R.occ,y)} 군, ${RG[r][0]} 점령`,s:`${nm(R.o,y)}의 ${RG[r][0]} 지역이 점령되어 항구 계약과 수송이 끊겼다.`,at:LBL[r],sel:'r:'+r,ty:'border'})}else if(!R.occ&&o.occ)ev.push({pri:60,h:`${RG[r][0]} 탈환`,s:'점령이 풀려 원래 행정이 돌아왔다.',at:LBL[r],sel:'r:'+r,ty:'border'})});
- S.TR.filter(t=>t.st=='on'&&!(p.TR.find(x=>x.id==t.id&&x.st=='on'))).forEach(t=>{const inv=t.a==me||t.b==me;ev.push({pri:inv?85:40,h:`${nm(t.a,y)}·${nm(t.b,y)} ${TY[t.ty]} 조약 발효`,s:'양국 외무부가 조약 체결을 발표했다.',at:capOf(t.b==me?t.a:t.b),ty:'mail'})});
- S.TR.filter(t=>t.st=='p'&&t.b==me&&!p.TR.find(x=>x.id==t.id)).forEach(t=>ev.push({pri:65,h:`${nm(t.a,y)} 외무부, ${TY[t.ty]} 조약안 송부`,s:'외교 탭에서 수정 조항을 확인하고 서명할 수 있다.',at:capOf(t.a),sel:'tab:dip',ty:'mail'}));
+ [...FL].forEach(r=>{const R=S.R[r],o=p.R[r];if(R.occ&&R.occ!=o.occ){const inv=R.occ==me||R.o==me;ev.push({pri:inv?90:74,h:`${nm(R.occ,y)} 군, ${RG[r][0]} 점령`,s:`${nm(R.o,y)==RG[r][0]?RG[r][0]+' 전역':nm(R.o,y)+'의 '+RG[r][0]+' 지역'}이 점령되어 항구 계약과 수송이 끊겼다.`,at:LBL[r],sel:'r:'+r,ty:'border'})}else if(!R.occ&&o.occ)ev.push({pri:60,h:`${RG[r][0]} 탈환`,s:'점령이 풀려 원래 행정이 돌아왔다.',at:LBL[r],sel:'r:'+r,ty:'border'})});
+ S.TR.filter(t=>t.st=='on'&&!(p.TR.find(x=>x.id==t.id&&x.st=='on'))).forEach(t=>{const inv=t.a==me||t.b==me;if(!inv&&t.ty=='trade'&&held(S,t.a).length+held(S,t.b).length<8)return;ev.push({pri:inv?85:(t.ty=='trade'?15:45),h:`${nm(t.a,y)}·${nm(t.b,y)} ${TY[t.ty]} 조약 발효`,s:'양국 외무부가 조약 체결을 발표했다.',at:capOf(t.b==me?t.a:t.b),ty:'mail'})});
+ {const np=S.TR.filter(t=>t.st=='p'&&t.b==me&&!p.TR.find(x=>x.id==t.id)),big=np.filter(t=>held(S,t.a).length>=3);if(np.length){const t0=big[0]||np[0];ev.push({pri:big.length?65:20,h:np.length>1?`각국 외무부, 조약안 ${np.length}건 송부`:`${nm(t0.a,y)} 외무부, ${TY[t0.ty]} 조약안 송부`,s:`${np.slice(0,4).map(t=>nm(t.a,y)).join('·')}${np.length>4?' 등':''}에서 보낸 조약안이 외교 탭에 도착했다.`,at:capOf(t0.a),sel:'tab:dip',ty:'mail'})}}
+ (S.DC?Object.entries(S.DC):[]).forEach(([n,L])=>{const old=((p.DC||{})[n])||[];L.filter(id=>!old.includes(id)).forEach(id=>{const d=DECS.find(x=>x.id==id);if(d&&d.n!='*')ev.push({pri:n==me?88:(held(S,n).length>=5?70:40),h:`${nm(n,y)}, ${d.t}`,s:d.h,at:capOf(n),ty:'border'})})});
  if(me&&p.N[me]&&S.N[me]&&p.N[me].lord&&!S.N[me].lord)ev.push({pri:99,h:`${nm(me,y)}, 독립 선포`,s:'국내 영토와 과세권을 확보했다.',at:capOf(me),ty:'border'});
  if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국이 다음 분기 계획을 다듬고 있다.',at:me?capOf(me):[500,280],ty:'none'})}
  ev.sort((a,b)=>b.pri-a.pri);V.news={y,q:qt(S),ev};V.pulse=ev.filter(e=>e.at&&e.ty!='none').slice(0,6).map(e=>({x:e.at[0],y:e.at[1]}));
@@ -947,55 +1121,64 @@ function newsGo(){const N=V.news,h=N&&N.ev[0];newsClose();if(!h)return;setTimeou
 // ════════ 로딩·타이틀·메뉴·로비 ════════
 var EM='w2',MS='title',SECS=90,LSEL=null,LQ='',DBERR=0,BGURL=null;
 const T0=performance.now();
-function spl(p,t){const b=document.getElementById('spb'),s=document.getElementById('sps'),n=document.getElementById('spn');if(b)b.style.width=p+'%';if(s)s.textContent=t;if(n)n.textContent=p+'%'}
-function splashDone(){return new Promise(r=>{const w=Math.max(0,2300-(performance.now()-T0));setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('out');setTimeout(()=>s.remove(),700)}r()},w)})}
-const SCN={w1:['1910','제1차 세계대전','열강의 동맹망이 촘촘히 얽힌 시대. 발칸의 총성 한 발이 대륙 전체를 전쟁으로 끌어들이기 직전에서 시작합니다.','1910–1918 · 36분기',['UK','FRA','GER','RUS','DAN','OTT']],
- w2:['1936','제2차 세계대전','대공황의 상처가 아물기 전, 라인란트에 군대가 들어섰습니다. 항로와 공장, 조약 문서로 다음 10년을 지휘하세요.','1936–1945 · 40분기',['UK','USA','FRA','GER','ITA','JPN','RUS','KOR']],
- camp:['1910→45','통합 캠페인','두 번의 세계대전을 한 판으로 이어 갑니다. 첫 전쟁에서 그은 국경과 맺은 조약이 다음 시대의 출발선이 됩니다.','1910–1945 · 144분기',['UK','FRA','GER','RUS','USA','JPN']]};
+function spl(p,t){const c=document.querySelectorAll('.sp-cells i'),s=document.getElementById('sps'),n=document.getElementById('spn');c.forEach((e,i)=>e.classList.toggle('f',i<Math.round(p/10)));if(s)s.textContent=t;if(n)n.textContent=p+'%';
+ const m=document.getElementById('spm');if(m&&!m.firstChild&&menuBg()){m.innerHTML=`<img src="${menuBg()}" alt="">`;requestAnimationFrame(()=>m.classList.add('on'))}}
+function splashDone(){return new Promise(r=>{const w=Math.max(0,3200-(performance.now()-T0));setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('out');setTimeout(()=>s.remove(),800)}clearInterval(window.__spq);r()},w)})}
+const ORN=`<svg viewBox="0 0 34 34"><path d="M2 32V10Q2 2 10 2H32M6 32V12Q6 6 12 6H32M10 16a6 6 0 1 1 6-6"/></svg>`;
+const ornCorners=()=>['c1','c2','c3','c4'].map(c=>`<span class="cn ${c}">${ORN}</span>`).join('');
+const SCN={w1:['1910','제1차 세계대전','열강의 동맹망이 촘촘히 얽힌 시대. 발칸의 총성 한 발이 대륙 전체를 전쟁으로 끌어들이기 직전에서 시작합니다.','1910–1918 · 36분기',['UK','FRA','GER','RUS','DAN','OTT'],'제1호'],
+ w2:['1936','제2차 세계대전','대공황의 상처가 아물기 전, 라인란트에 군대가 들어섰습니다. 항로와 공장, 조약 문서로 다음 10년을 지휘하세요.','1936–1945 · 40분기',['UK','USA','FRA','GER','ITA','JPN','RUS','KOR'],'제2호'],
+ camp:['1910→45','통합 캠페인','두 번의 세계대전을 한 판으로 이어 갑니다. 첫 전쟁에서 그은 국경과 맺은 조약이 다음 시대의 출발선이 됩니다.','1910–1945 · 144분기',['UK','FRA','GER','RUS','USA','JPN'],'제3호']};
 const BLURB={UK:'해운 제국. 대서양과 수에즈를 잇는 항로로 식량과 원료를 들여오고, 항만 장부로 수송 여력을 운영합니다.',USA:'대륙의 공업국. 공공사업으로 전력망과 철도를 넓히며 대공황에서 회복해 갑니다.',KOR:'망명 정부. 해외 동포 사회의 후원과 외교 서신으로 독립을 준비하고, 독립하면 국내 행정을 맡습니다.',JPN:'섬나라 공업국. 수입한 철광석과 석유를 제철소·공창·항공기 공장에 배분합니다.',FRA:'철도의 공화국. 의회 예산안을 심의하며 어느 지방의 사업을 먼저 착공할지 고릅니다.',FIN:'호수와 숲의 나라. 계절에 따라 달라지는 인력을 민간 산업과 예비 병력 사이에서 저울질합니다.',GER:'중부 유럽의 공업국. 루르 공업지대는 북해 항로로 들어오는 철광석에 기대고 있습니다.',ITA:'지중해 왕국. 아프리카 점령지로 가는 보급 항로를 지켜야 합니다.',RUS:'사회주의 대국. 5개년 계획으로 우랄 너머에 새 공업 도시를 세웁니다.',CHN:'분열된 공화국. 화북의 압력 속에서 난징 정부의 권위를 지켜야 합니다.',ESP:'흔들리는 공화국. 국내 정세가 내전 직전까지 치닫고 있습니다.',POL:'되살아난 공화국. 두 강대국 사이에서 중앙 공업지구를 일으킵니다.'};
 function menuBg(){if(BGURL||!CT)return BGURL;let g='';for(let x=0;x<=1000;x+=27.78)g+=`M${x.toFixed(1)} 0V560`;for(let y=0;y<=560;y+=40.6)g+=`M0 ${y.toFixed(1)}H1000`;
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice"><rect x="-100" y="-100" width="1200" height="800" fill="#7f9399"/><path d="${g}" stroke="#5f757c" stroke-width=".35" fill="none"/>${CT.map(t=>`<path d="${t.d}" fill="#dccfae" stroke="#5a3a2c" stroke-width=".35" stroke-opacity=".7"/>`).join('')}</svg>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice"><rect x="-100" y="-100" width="1200" height="800" fill="#9aa595"/><path d="${g}" stroke="#6f7a69" stroke-width=".35" fill="none"/>${CT.map(t=>`<path d="${t.d}" fill="#e3d3a9" stroke="#5a3a24" stroke-width=".35" stroke-opacity=".75"/>`).join('')}</svg>`;
  return BGURL='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
-function routesSVG(){const P=[[[51.5,-0.1],[40.7,-74]],[[51.5,-0.1],[36,-6],[31.3,32.3],[18.9,72.8]],[[35.7,139.7],[37.8,-122.4+360]],[[52.5,13.4],[55.8,37.6]],[[48.9,2.4],[36.8,3.1]],[[31.2,121.5],[1.3,103.8]],[[38.9,-77],[51.5,-0.1]]];
+function routesSVG(){const P=[[[51.5,-0.1],[40.7,-74]],[[51.5,-0.1],[36,-6],[31.3,32.3],[18.9,72.8]],[[35.7,139.7],[37.8,237.6]],[[52.5,13.4],[55.8,37.6]],[[48.9,2.4],[36.8,3.1]],[[31.2,121.5],[1.3,103.8]],[[38.9,-77],[51.5,-0.1]]];
  return`<svg class="rts" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice">${P.map((L,i)=>{const pts=L.map(p=>LL(p[0],p[1]));const d=curve(pts.length==2?[pts[0],[(pts[0][0]+pts[1][0])/2,(pts[0][1]+pts[1][1])/2-Math.abs(pts[1][0]-pts[0][0])*.15],pts[1]]:pts);return`<path id="rt${i}" d="${d}"><animate attributeName="stroke-dashoffset" from="0" to="-110" dur="${6+i}s" repeatCount="indefinite"/></path><circle r="2.2"><animateMotion dur="${9+i*2}s" repeatCount="indefinite"><mpath href="#rt${i}"/></animateMotion></circle>`}).join('')}</svg>`}
 const bgHTML=(dk)=>`<div class="scr-bg">${menuBg()?`<img src="${menuBg()}" alt="">`:''}${dk?'':routesSVG()}</div><div class="scr-veil${dk?' dk':''}"></div>`;
 const INKSTROKE=`<svg class="ttl-ink" viewBox="0 0 560 22" preserveAspectRatio="none"><path d="M6 14C80 6 170 18 260 11S430 4 554 12"/></svg>`;
-function home(){app.className='';if(MS=='title'){app.innerHTML=`<div class="scr">${bgHTML()}<div class="scr-c"><div class="ttl"><div class="ttl-k">A GRAND STRATEGY OF NATIONS · 1910 — 1945</div><h1 class="logo">Borders <i>in</i> Ink</h1>${INKSTROKE}<div class="ttl-ko">잉크로 그은 국경 · 세계대전 국가경영</div>
-  ${DBERR?`<div class="warn" style="max-width:420px">공유 저장소를 쓸 수 없어 방을 만들 수 없습니다. claude.ai에 로그인한 상태로 이 페이지를 열어 주세요.</div>`:`<div class="ttl-menu"><button class="mb pri" data-m="new">새 게임<span>›</span></button><button class="mb" data-m="join">방 참가 · 이어하기<span>›</span></button></div>`}
-  <div class="ttl-foot">분기마다 동시에 명령 · 최대 여러 명이 한 판 · 실제 시대의 국경 위에서</div></div></div></div>`}
- else if(MS=='new'){if(!$('#c1v'))window.__rc=window.__rc||('INK'+Math.floor(100+Math.random()*900));app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button data-m="title">← 처음으로</button><div class="logo">Borders <i>in</i> Ink</div></header><div class="mw">
-  <h2 class="mt">새 게임</h2><p class="ms">시대를 고르고 방을 엽니다. 함께할 사람에게는 방 코드를 알려 주세요.</p><div class="lab2">시나리오</div>
-  <div class="scn">${Object.entries(SCN).map(([k,[y,t,d,n,fs]])=>`<button class="sc${EM==k?' on':''}" data-e="${k}"><span class="ck">✓ 선택됨</span><span class="yr">${y}</span><h3>${t}</h3><p>${d}</p><span class="fls">${fs.map(f=>flag(f,27,18)).join('')}</span><span class="tn">${n}</span></button>`).join('')}</div>
-  <div class="mfrm"><div style="display:flex;gap:28px;flex-wrap:wrap"><div class="fld"><label>방 코드</label><div class="row"><input id="c1" value="${esc(window.__rc)}" maxlength="10" aria-label="방 코드"><button class="chip" data-m="rc">다시 만들기</button></div></div>
+const HDR=(back,lbl)=>`<header class="scr-h"><button ${back}>${lbl}</button><div class="logo">Borders <i>in</i> Ink</div>${S&&code?`<div class="rc">방 코드 <b>${esc(code)}</b></div>`:''}</header>`;
+function home(){app.className='';if(MS=='title'){app.innerHTML=`<div class="scr">${bgHTML()}<div class="scr-c"><div class="ttl"><div class="ttl-box orn">${ornCorners()}<div class="ttl-k">AN ATLAS OF WAR AND STATECRAFT</div><h1 class="logo">Borders <i>in</i> Ink</h1>${INKSTROKE}<div class="ttl-ko">잉크로 그은 국경 · 1910 — 1945</div></div>
+  ${DBERR?`<div class="warn" style="max-width:420px;margin-top:30px">공유 저장소를 쓸 수 없어 방을 만들 수 없습니다. claude.ai에 로그인한 상태로 이 페이지를 열어 주세요.</div>`:`<div class="ttl-menu"><button class="mb pri" data-m="new">새 게임 <span>❧</span></button><button class="mb" data-m="join">방 참가 · 이어하기 <span>❧</span></button></div>`}
+  <div class="ttl-foot">MULTIPLAYER · SIMULTANEOUS TURNS · HISTORICAL BORDERS OF 1910 &amp; 1936</div></div></div></div>`}
+ else if(MS=='new'){window.__rc=window.__rc||('INK'+Math.floor(100+Math.random()*900));app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('data-m="title"','← 처음으로')}<div class="mw">
+  <h2 class="mt">새 게임</h2><p class="ms">시대를 고르고 방을 엽니다. 함께할 사람에게는 방 코드를 알려 주세요.</p><div class="lab2">작전 시나리오</div>
+  <div class="scn">${Object.entries(SCN).map(([k,[y,t,d,n,fs,no]])=>`<button class="sc ppr${EM==k?' on':''}" data-e="${k}"><span class="tabx">시나리오 ${no}</span><span class="yr">${y}</span><h3>${t}</h3><p>${d}</p><span class="fls">${fs.map(f=>flag(f,27,18)).join('')}</span><span class="tn">${n}</span><span class="stp">채택</span></button>`).join('')}</div>
+  <div class="mfrm ppr"><div style="display:flex;gap:30px;flex-wrap:wrap"><div class="fld"><label>방 코드</label><div class="row"><input id="c1" value="${esc(window.__rc)}" maxlength="10" aria-label="방 코드"><button class="chip" data-m="rc">다시 만들기</button></div></div>
    <div class="fld"><label>분기당 제한 시간</label><div class="row">${[60,90,180,300].map(s=>`<button class="chip${SECS==s?' on':''}" data-s="${s}">${s<120?s+'초':s/60+'분'}</button>`).join('')}</div></div></div><button class="pri big" id="mk">방 열기 →</button></div>
   <p class="note2">방장 기기가 켜져 있어야 분기가 넘어갑니다. 모든 플레이어가 준비를 누르거나 제한 시간이 지나면 다음 분기로 진행합니다.</p></div></div></div>`}
- else{app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button data-m="title">← 처음으로</button><div class="logo">Borders <i>in</i> Ink</div></header><div class="mw" style="max-width:640px">
+ else{app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('data-m="title"','← 처음으로')}<div class="mw" style="max-width:660px">
   <h2 class="mt">방 참가 · 이어하기</h2><p class="ms">초대받은 방 코드를 입력하세요. 같은 코드로 다시 들어오면 저장된 분기부터 이어집니다.</p>
-  <div class="mfrm"><div class="fld"><label>방 코드</label><div class="row"><input id="c2" placeholder="INK123" maxlength="10" aria-label="방 코드" style="width:260px"></div></div><button class="pri big" id="jn">입장 →</button></div></div></div></div>`}
+  <div class="mfrm ppr"><div class="fld"><label>방 코드</label><div class="row"><input id="c2" placeholder="INK123" maxlength="10" aria-label="방 코드" style="width:270px"></div></div><button class="pri big" id="jn">입장 →</button></div></div></div></div>`}
  app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const m=b.dataset.m;if(m=='rc'){window.__rc='INK'+Math.floor(100+Math.random()*900);$('#c1').value=window.__rc;return}MS=m;home()});
  app.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{EM=b.dataset.e;app.querySelectorAll('[data-e]').forEach(x=>x.classList.toggle('on',x==b))});
  app.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{SECS=+b.dataset.s;app.querySelectorAll('[data-s]').forEach(x=>x.classList.toggle('on',x==b))});
  const c1=$('#c1');if(c1)c1.oninput=()=>window.__rc=c1.value;
  const mk=$('#mk');if(mk)mk.onclick=()=>join($('#c1').value,1,EM,SECS);const jn=$('#jn');if(jn){jn.onclick=()=>join($('#c2').value,0);$('#c2').onkeydown=e=>{if(e.key=='Enter')jn.click()}}}
-function miniMap(n){if(!CT)return'';const c=presetCam(n),h=c.w*.42,hs=new Set(held(S,n));
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${(c.x-c.w*.6).toFixed(1)} ${(c.y-h*.6).toFixed(1)} ${(c.w*1.2).toFixed(1)} ${(h*1.2).toFixed(1)}" preserveAspectRatio="xMidYMid slice"><rect x="-500" y="-300" width="2000" height="1200" fill="#a7b9be"/>${CT.map(t=>{const R=S.R[t.k],o=R&&(R.occ||R.o);return`<path d="${t.d}" fill="${hs.has(t.k)?paperize(NM[n][1]):'#e3d8bd'}" stroke="${hs.has(t.k)?'#2a1d14':'#6e3f35'}" stroke-width="${(c.w/700).toFixed(3)}" stroke-opacity="${hs.has(t.k)?1:.45}"/>`}).join('')}</svg>`;
+function miniMap(n){if(!CT)return'';const c=presetCam(n),h=c.w*.5,hs=new Set(held(S,n));
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${(c.x-c.w*.6).toFixed(1)} ${(c.y-h*.6).toFixed(1)} ${(c.w*1.2).toFixed(1)} ${(h*1.2).toFixed(1)}" preserveAspectRatio="xMidYMid slice"><rect x="-500" y="-300" width="2000" height="1200" fill="#9aa595"/>${CT.map(t=>`<path d="${t.d}" fill="${hs.has(t.k)?paperize(NM[n][1]):'#e3d3a9'}" stroke="${hs.has(t.k)?'#2a1d14':'#6e3f35'}" stroke-width="${(c.w/600).toFixed(3)}" stroke-opacity="${hs.has(t.k)?1:.45}"/>`).join('')}</svg>`;
  return'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
 function leaveRoom(){unsub.forEach(u=>u());unsub=[];S=null;code='';O={};V.init=0;LSEL=null;MS='title';const pl=$('#play');if(pl)pl.remove();home()}
+const miniCtr=(col,sz)=>`<svg width="30" height="20" viewBox="-17 -11 34 22">${ctr(col,'',sz).replace(/<text x="8.5"[^<]*<\/text>/,'')}</svg>`;
 function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL||!S.N[LSEL])LSEL=me||'UK';if(!S.N[LSEL])LSEL=Object.keys(S.N)[0];
- const all=Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length),major=all.filter(n=>PID(n)||held(S,n).length>=4),rest=all.filter(n=>!major.includes(n)&&(!LQ||nm(n,y).includes(LQ)));
- const row=n=>{const N=S.N[n],tk=taken.includes(n),mineN=me==n;return`<button class="nt${LSEL==n?' on':''}" data-n="${n}">${flag(n,36,24)}<span><b>${esc(nm(n,y))}</b><small>${N.lord?'속령 · '+esc(nm(N.lord,y))+' 지배':'독립국'} · 지역 ${held(S,n).length}</small></span>${mineN?'<span class="who">내 국가</span>':tk?'<span class="who">플레이어</span>':''}</button>`};
- const n=LSEL,N=S.N[n],pid=PID(n),tk=taken.includes(n)&&me!=n,mil=N.mil>60?'강':N.mil>30?'중':'약';
+ const all=Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length),major=all.filter(n=>NAT[PID(n)]),rest=all.filter(n=>!major.includes(n)&&(!LQ||nm(n,y).includes(LQ)));
+ const row=n=>{const N=S.N[n],tk=taken.includes(n),mineN=me==n;return`<button class="nt${LSEL==n?' on':''}" data-n="${n}">${flag(n,36,24)}<span><b>${esc(nm(n,y))}</b><small>${esc(leaderOf(n,y)||(N.lord?'속령 · '+nm(N.lord,y)+' 지배':'독립국'))}</small></span>${mineN?'<span class="who">내 국가</span>':tk?'<span class="who">플레이어</span>':''}</button>`};
+ const n=LSEL,N=S.N[n],pid=PID(n),A=NAT[pid],tk=taken.includes(n)&&me!=n,mil=N.mil>60?'강':N.mil>30?'중':'약',sp=spiritsOf(S,n),ds=decsFor(n).filter(d=>d.n!='*').slice(0,4);
  const plist=Object.entries(ps).map(([u,x])=>`<span>${flag(x,21,14)}${esc(nm(x,y))}${u==uid?' (나)':''}</span>`).join('')||'<span>아직 아무도 국가를 고르지 않았습니다</span>';
- const prev=$('.lob-ls'),st=prev?prev.scrollTop:0;
- app.className='';app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button id="lv">← 방 나가기</button><div class="logo">Borders <i>in</i> Ink</div><div class="rc">방 코드 <b>${esc(code)}</b></div></header><div class="mw">
- <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 국가를 고르세요. 분기당 ${S.secs}초 · 고르지 않은 국가는 AI가 맡습니다.</p>
- <div class="lob"><aside class="lob-l"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">주요 국가</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">그 밖의 국가</div>${rest.map(row).join('')}</div></aside>
- <section class="lob-r"><div class="lob-map"><img src="${miniMap(n)}" alt=""></div><div class="lob-d"><div class="lob-n">${flag(n,96,64)}<h2>${esc(nm(n,y))}</h2></div>
-  <div class="st2">${N.lord?'속령 · '+esc(nm(N.lord,y))+'의 지배를 받고 있습니다':'독립국'}${tk?' · 다른 플레이어가 지휘 중':''}</div>
+ const prev=$('.lob-ls'),st=prev?prev.scrollTop:0,no=String(Math.abs(hs(n))%9000+1000);
+ app.className='';app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('id="lv"','← 방 나가기')}<div class="mw">
+ <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 국가의 브리핑 문서를 검토하세요. 분기당 ${S.secs}초 · 고르지 않은 국가는 AI가 역사대로 움직입니다.</p>
+ <div class="lob"><aside class="lob-l ppr"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">열강 · 고유 전략 보유</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">그 밖의 국가</div>${rest.map(row).join('')}</div></aside>
+ <section class="brief ppr"><div class="brief-hd"><span>국가 브리핑 문서 제 ${y}-${no}호</span><b>기밀</b></div>${tk?'<div class="stamp">지휘 중</div>':''}
+  <div class="brief-top">${flag(n,84,56)}<div><h2>${esc(nm(n,y))}</h2><div class="gv">${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</div></div><figure class="photo" style="margin:0"><img src="${miniMap(n)}" alt=""><figcaption>영토 · ${held(S,n).length}개 지역</figcaption></figure></div>
+  <table><tr><td>지도자</td><td>${esc(leaderOf(n,y)||'—')}</td></tr><tr><td>수도</td><td>${esc(A?A.cap:'—')}</td></tr><tr><td>군사 교리</td><td>${esc(A?A.doc+' — '+A.docD:'일반 교리')}</td></tr></table>
   <p class="bl">${esc(BLURB[pid]||`${held(S,n).length}개 지역을 다스리는 ${N.lord?'속령':'독립국'}입니다. 주요 산출과 이웃 나라를 살펴 첫 분기 계획을 세우세요.`)}</p>
   <div class="sg"><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>국고</small><b>${N.g|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div><div><small>군사력</small><b>${mil}</b></div></div>
-  <div class="st2">이 방의 플레이어</div><div class="pl">${plist}</div>
-  <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0;align-self:center">방장이 시작하길 기다리는 중…</span>'}</div></div></section></div></div></div></div>`;
+  ${sp.length?`<div class="bsec">국가 정신</div><div class="bgrid">${sp.map(p=>`<div class="bsp${p.doc?' d':''}"><b>${esc(p.t)}</b><small>${esc(p.d)}</small></div>`).join('')}</div>`:''}
+  ${ds.length?`<div class="bsec">역사적 결정</div>${ds.map(d=>`<div class="bdec"><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span>${esc(d.t)}</div>`).join('')}`:''}
+  <div class="bsec">고유 부대</div><div class="uts">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}${esc(u[0])}</span>`).join('')}</div>
+  <div class="bsec">이 방의 플레이어</div><div class="pl">${plist}</div>
+  <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0">방장이 시작하길 기다리는 중…</span>'}</div></section></div></div></div></div>`;
  const ls=$('.lob-ls');if(ls)ls.scrollTop=st;
  app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{LSEL=b.dataset.n;lobby()});const q=$('#lq');q.oninput=()=>{LQ=q.value.trim();lobby();const q2=$('#lq');q2.focus();q2.setSelectionRange(q2.value.length,q2.value.length)};
  $('#lv').onclick=leaveRoom;const cl=$('#cl');if(cl)cl.onclick=()=>claim(n);if(host&&$('#go'))$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}

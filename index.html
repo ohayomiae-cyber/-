@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>세계대전 국가경영</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0e1a24;--fg:#e8e2d0;--card:#1b2d3b;--ln:#37566b;--ac:#e0875f;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1a24;--fg:#e8e2d0;--card:#1b2d3b;--ln:#37566b;--ac:#e0875f;color-scheme:dark}}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,sans-serif}
+main{max-width:560px;margin:auto;padding:10px}
+h2,h3{margin:6px 0}button,select,input{font:inherit;color:inherit;background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:6px 10px}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac)}button.on{outline:2px solid var(--ac)}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:8px;margin:8px 0}
+#map{display:grid;grid-template-columns:repeat(10,1fr);gap:2px}
+.t{aspect-ratio:1;border-radius:5px;font-size:10px;line-height:1.1;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;text-shadow:0 0 2px #000;cursor:pointer;border:3px solid transparent;padding:0}
+.t.sel{outline:3px solid var(--ac)}.row{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}.sm{font-size:12px;opacity:.8}
+.log{max-height:140px;overflow:auto;font-size:12px}
+body{background:radial-gradient(900px 500px at 50% -5%,#254a63,#0b141c 70%) fixed;min-height:100vh}
+.card{background:rgba(20,34,46,.8);backdrop-filter:blur(6px);border-color:#2e4658;box-shadow:0 4px 18px #0007}
+button{background:#1b2d3b;border-color:#37566b;transition:.15s}button:active{transform:scale(.97)}
+button.p{background:linear-gradient(#c8603f,#8f3a22);border-color:#f0a07a;font-weight:700;letter-spacing:1px}
+button.big,#rd{width:100%;padding:13px;font-size:15px}#rd{margin-top:6px}
+.hero{text-align:center;padding:56px 8px 18px}.hero .sub{letter-spacing:8px;color:#c9923a;font-size:12px}
+.hero h1{font:900 56px/.95 Georgia,serif;letter-spacing:6px;margin:10px 0;background:linear-gradient(#f6e7b8,#c9923a 60%,#8a5a1e);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 10px #000a)}
+.hero p{opacity:.75;margin:0}.lab{font-size:11px;letter-spacing:3px;color:#c9923a;margin-bottom:6px}
+.eras{display:grid;gap:8px;margin-bottom:8px}.era{display:grid;text-align:left;padding:10px 14px;border-left:4px solid #c9923a}.era b{font:700 20px Georgia,serif;color:#f1dca0}.era i{font-size:12px;opacity:.65}.era.on{background:#2b4559;outline:1px solid #e0b060}
+#map{position:relative;display:grid;grid-template-columns:repeat(10,1fr);gap:3px;padding:6px;border-radius:14px;border:2px solid #3c6177;background:radial-gradient(circle at 50% 40%,#1c4560,#0a1c2a);box-shadow:inset 0 0 40px #000a,0 6px 20px #0008}
+.cont{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);fill:#3a4a3a;stroke:#6b8a6b;stroke-width:.4;opacity:.55;filter:blur(.3px)}
+.t{position:relative;z-index:1;border-radius:7px;font:600 10px/1.1 system-ui;opacity:.92;box-shadow:inset 0 0 8px #0006,0 1px 3px #0008;border-width:3px}.t:active{opacity:1}.t.sel{outline:2px solid #fff;transform:scale(1.08);z-index:2}
+.top{display:flex;align-items:center;gap:10px;margin:2px 0 8px}.chip{width:34px;height:34px;border-radius:50%;border:2px solid #f1dca0;box-shadow:0 0 10px #000a;flex:none}
+.top>div:nth-child(2){flex:1}.dt{font:700 20px Georgia,serif;color:#f1dca0}.bar{height:5px;background:#0006;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#c9923a,#e0875f)}
+#tm{font:700 18px Georgia,serif;color:#e0875f}.room{font:900 34px Georgia,serif;letter-spacing:8px;text-align:center;color:#f1dca0;margin:14px 0 2px}
+.ng{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ng button{text-align:left;border-left-width:8px;padding:9px}.ng button:disabled{opacity:.35}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,#000b 100%);z-index:0}main{position:relative;z-index:1}
+.hero{position:relative;overflow:hidden}.hero>*{position:relative;z-index:1}.hero::before{content:'';position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-290px 0 0 -280px;border-radius:50%;background:conic-gradient(from 0deg,#c9923a55,transparent 22%),repeating-radial-gradient(circle,transparent 0 46px,#c9923a22 47px 48px);animation:sp 14s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.hud{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px}.hc{flex:none;background:linear-gradient(#24394a,#142330);border:1px solid #4a6a80;border-radius:8px;padding:3px 9px;font:700 13px system-ui;color:#f1dca0;box-shadow:0 2px 6px #0008}
+#map2{position:relative;border-radius:14px;overflow:hidden;border:2px solid #7a6030;box-shadow:inset 0 0 60px #000c,0 0 0 3px #1a1408,0 8px 28px #000a;background:#0a2336;touch-action:none}#map2 svg{display:block;width:100%;height:auto;touch-action:none}
+.rg path{stroke:#0b1218;stroke-width:1.3;stroke-linejoin:round;cursor:pointer;transition:filter .15s}.rg:hover path,.rg.sel path{filter:brightness(1.35)}.rg.sel path{stroke:#fff;stroke-width:2.6}
+.lb{font:700 13px Georgia,serif;fill:#fff;paint-order:stroke;stroke:#000c;stroke-width:3px;pointer-events:none;text-anchor:middle}
+.zm{position:absolute;right:8px;top:8px;display:grid;gap:4px}.zm button{width:34px;height:34px;padding:0;font-size:18px;background:#1b2d3bdd}
+.info{position:absolute;left:8px;bottom:8px;background:#0b141ccc;border:1px solid #7a6030;border-radius:8px;padding:5px 10px;font-size:12px;color:#f1dca0}
+.dock{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;position:sticky;bottom:0;z-index:5;background:#0b141cf0;padding:6px 0;margin-top:8px}.dock button{padding:8px 0;font-size:12px}
+.rg path,.nl{stroke:#0b1218;stroke-width:.6;stroke-linejoin:round}.rg.sel path{stroke:#fff;stroke-width:1.5}
+.cine{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#000a,#000f);color:#f1dca0;pointer-events:none;animation:cf 3.2s ease forwards}.cine.war{background:radial-gradient(circle,#3a0a0aaa,#000f)}
+.cy{font:900 84px Georgia,serif;letter-spacing:6px;text-shadow:0 0 30px #c9923a}.cq{letter-spacing:10px;opacity:.8;margin-bottom:10px}.cl{margin-top:6px;font-size:14px;color:#fff;padding:0 16px;text-align:center;animation:up .8s both}
+@keyframes cf{0%{opacity:0}12%{opacity:1}80%{opacity:1}100%{opacity:0}}@keyframes up{from{opacity:0;transform:translateY(10px)}}
+.fl path{animation:fp 1s ease-in-out 3}@keyframes fp{50%{filter:brightness(2.4);stroke:#fff;stroke-width:2}}
+#scene{position:fixed;inset:0;z-index:60;background:#05080c;overflow:hidden;color:var(--fg)}.sc-bg{position:absolute;inset:0;width:100%;height:100%}
+.sc-top{position:absolute;top:0;left:0;right:0;display:flex;gap:10px;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 10px 14px;background:linear-gradient(#000d,transparent)}.sc-top b{font:700 22px Georgia,serif;color:#f1dca0}
+.sc-hud{position:absolute;top:calc(58px + env(safe-area-inset-top,0px));left:8px;right:8px}
+.bl{position:absolute;left:8px;right:8px;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.bl button{display:grid;justify-items:center;padding:10px 2px;background:#0b141cd9;border:1px solid #7a6030;border-radius:12px;backdrop-filter:blur(4px)}.bl button.on{outline:2px solid #e0875f}.bl i{font-style:normal;font-size:30px}.bl span{font-size:12px}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:64%;overflow:auto;background:#0e1a24f5;border-top:2px solid #c9923a;border-radius:16px 16px 0 0;padding:12px 12px calc(14px + env(safe-area-inset-bottom,0px));z-index:3}
+.po{display:grid;text-align:left;width:100%;margin:5px 0;padding:9px}.po.on{outline:2px solid #e0875f;background:#2b4559}.po small{opacity:.7}
+.ng{max-height:52vh;overflow:auto}.lb{letter-spacing:.14em;fill:#f4ecd2;opacity:.92;stroke:#000b}
+</style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script><script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script></head><body><main id="app">불러오는 중…</main>
+<script>
+const NM0={UK:['영국','#b33'],FRA:['프랑스','#36b'],GER:['독일','#777'],DAN:['오스트리아-헝가리','#a84'],RUS:['러시아','#3a6'],OTT:['오스만','#c90'],ITA:['이탈리아','#6a3'],ESP:['스페인','#d73'],USA:['미국','#29c'],JPN:['일본','#d5a'],CHN:['중국','#c66'],POL:['폴란드','#a3c'],BAL:['발칸(세르비아 등)','#689'],SCA:['스칸디나비아','#5aa'],IND:['인도','#a96'],KOR:['한국','#48a'],LAT:['라틴아메리카','#7a4'],IRL:['아일랜드','#2a8']};
+const NM=new Proxy(NM0,{get:(o,t)=>{if(typeof t!='string')return o[t];const b=o[t];return[b?b[0]:(IDN[t]||t),NC[t]||(b?b[1]:hc(t))]}});
+const nm=(t,y)=>t=='RUS'&&y>=1922?'소련':t=='DAN'&&y>=1919?'헝가리':t=='OTT'&&y>=1923?'터키':t=='UK'?'영국':NM[t][0];
+// id:[이름,col,row,owner10,owner36,식량철강석유]
+let RG={DOM:['영연방',0,1,'UK','UK','440'],USA:['미국',0,2,'USA','USA','553'],LAT:['중남미',0,3,'LAT','LAT','522'],IRL:['아일랜드',1,1,'IRL','IRL','300'],UKI:['영국',2,1,'UK','UK','152'],FRA:['프랑스',2,2,'FRA','FRA','421'],IBE:['이베리아',1,3,'ESP','ESP','210'],NAF:['북아프리카',2,3,'FRA','FRA','201'],GER:['독일',3,1,'GER','GER','354'],SCA:['북유럽',3,0,'SCA','SCA','221'],DAN:['도나우',3,2,'DAN','DAN','320'],ITA:['이탈리아',3,3,'ITA','ITA','210'],AFR:['아프리카',3,4,'UK','UK','410'],POL:['폴란드',4,1,'POL','POL','310'],BAL:['발칸',4,2,'BAL','BAL','210'],ANA:['아나톨리아',4,3,'OTT','OTT','210'],RUS:['동유럽',5,1,'RUS','RUS','423'],CAU:['카프카스',5,2,'RUS','RUS','115'],ARB:['아라비아',5,3,'OTT','UK','005'],SIB:['러시아',6,1,'RUS','RUS','124'],IND:['인도',6,3,'IND','IND','520'],CHN:['중국',7,2,'CHN','CHN','531'],KOR:['한반도',8,1,'KOR','KOR','210'],PAC:['태평양',8,3,'USA','USA','200'],JPN:['일본',9,2,'JPN','JPN','041']};
+const P10={UK:10,GER:9,RUS:8,FRA:7,USA:8,JPN:6,ITA:5,DAN:5,OTT:3,CHN:3,ESP:3},P36={UK:8,GER:8,RUS:8,FRA:6,USA:9,JPN:7,ITA:5,DAN:2,OTT:3,CHN:3,POL:3};
+const LORD10={IRL:'UK',POL:'RUS',KOR:'JPN',IND:'UK'},LORD36={KOR:'JPN',IND:'UK'};
+const AL10=[['GER','DAN'],['GER','ITA'],['UK','FRA'],['RUS','FRA']],AL36=[['GER','ITA'],['UK','FRA'],['FRA','POL']];
+// 역사 이벤트: 연,분기,주체,유형,대상,그때 선택,배경
+const HG=[
+[1914,3,'DAN','war','SRB','세르비아에 선전포고','황태자 암살 사건 이후 발칸 패권 유지'],
+[1914,4,'OTT','war','RUS','동맹국 편에서 러시아 공격','카프카스·해협 문제와 독일과의 접근'],
+[1918,4,'POL','indep','','폴란드 독립 선언','중부 열강의 붕괴와 민족자결 흐름'],
+[1937,3,'JPN','war','CHN','중국 본격 침공','자원 확보와 대륙 진출'],
+[1939,3,'GER','war','POL','폴란드 침공','영토 수정과 동방 확장'],
+[1941,2,'GER','war','RUS','소련 침공','식량·석유 확보와 이념 대립'],
+[1941,4,'JPN','war','USA','미국과 개전','석유 금수에 따른 자원 압박']];
+const $=s=>document.querySelector(s),app=$('#app');
+let db,uid,S=null,code='',O={},ORD={},sel=null,tab='m',host=false,unsub=[],ver=0;
+const yr=s=>s.Y0+Math.floor(s.t/4),qt=s=>s.t%4+1,dist=(a,b)=>ADJ?(ADJ[a]&&ADJ[a].has(b)?1:9):Math.max(Math.abs(RG[a][1]-RG[b][1]),Math.abs(RG[a][2]-RG[b][2]));
+const held=(s,n)=>Object.keys(s.R).filter(r=>s.R[r].occ?s.R[r].occ==n:s.R[r].o==n);
+const atWar=(s,a,b)=>s.W.includes(a+'|'+b)||s.W.includes(b+'|'+a);
+const wars=(s,n)=>s.W.filter(w=>w.split('|').includes(n)).map(w=>w.split('|').find(x=>x!=n));
+const pact=(s,a,b,ty)=>s.TR.find(t=>t.st=='on'&&(!ty||t.ty==ty)&&((t.a==a&&t.b==b)||(t.a==b&&t.b==a)));
+const alive=(s,n)=>held(s,n).length>0;
+function newGame(mode,secs){const e=mode=='w2',Y0=e?1936:1910,T=mode=='w1'?36:mode=='w2'?40:144,S={mode,Y0,T,t:0,secs,phase:'lobby',N:{},R:{},TR:[],W:[],log:[],P:{},host:uid,ready:{}};
+ const P=e?P36:P10,L=e?LORD36:LORD10,own=new Set();
+ for(const r in RG){S.R[r]={o:RG[r][e?4:3],occ:null};own.add(S.R[r].o)}
+ own.forEach(n=>{const p=P[n]||2;S.N[n]={g:p*30,pop:p*10+20,ind:p*8+10,sup:60,mil:p*6,mil0:p*6,st:{f:20,s:20,o:20},lord:L[n]||null,ind2:0,start:held(S,n).length}});
+ (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));return S}
+function nb(s,n){const h=held(s,n),o=new Set();for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
+function attack(s,a,rid,c,why){const R=s.R[rid],d=R.occ||R.o;if(d==a||!alive(s,a)||!held(s,a).some(x=>dist(x,rid)<=1))return;
+ const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
+ if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));
+  s.TR.filter(t=>t.st=='on'&&t.ty=='ally').forEach(t=>{for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(!P_h(s,y)&&alive(s,y)&&y!=d&&!atWar(s,y,d)&&(x==a)){s.W.push(y+'|'+d);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(d,yr(s))}에 참전`)}
+   for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
+ const A=s.N[a],D=s.N[d],use=A.mil*c/100,att=use*(.8+Math.random()*.4),def=(D.mil*.5*1.2*(.8+Math.random()*.4)+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1);
+ if(att>def){R.occ=a==R.o?null:a;A.mil-=use*.3;D.mil*=.8;s.log.push(`${nm(a,yr(s))}가 ${RG[rid][0]} 점령 성공`)}else{A.mil-=use*.5;s.log.push(`${nm(a,yr(s))}의 ${RG[rid][0]} 공격 실패`)}}
+const P_h=(s,n)=>Object.values(s.P).includes(n);
+function peace(s,t){const{a,b}=t;s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);
+ if(t.ty=='cease')for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o)){R.o=R.occ;R.occ=null}}
+ if(t.ty=='ret')for(const r in s.R){const R=s.R[r];if(R.occ==a&&R.o==b)R.occ=null}}
+function aiAnswer(s,t){const n=t.b,m=t.a,N=s.N[n],M=s.N[m];let ok=false,why='';
+ if(t.ty=='trade'){ok=!atWar(s,n,m);why=ok?'교역 이익이 크다':'교전 중이라 거래할 수 없다'}
+ if(t.ty=='nap'){ok=!atWar(s,n,m)&&M.mil<N.mil*1.5;why=ok?'당장 충돌은 피하고 싶다':'상대 군사력이 위협적이라 믿을 수 없다'}
+ if(t.ty=='ally'){const c=wars(s,n).concat(wars(s,m)).some(x=>x&&(atWar(s,n,x)||atWar(s,m,x)));ok=c;why=ok?'공동의 적이 있다':'공동의 적이 없어 얻을 이익이 적다'}
+ if(t.ty=='cease'){ok=atWar(s,n,m)&&(N.mil<M.mil*.8||N.sup<45);why=ok?'전쟁 피로로 휴전이 필요하다':'아직 유리해 싸울 이유가 있다'}
+ if(t.ty=='ret'){ok=N.mil<M.mil*.5;why=ok?'열세라 요구를 받아들인다':'영토 반환은 받아들일 수 없다'}
+ t.st=ok?'on':'x';if(ok&&(t.ty=='cease'||t.ty=='ret'))peace(s,t);s.log.push(`${nm(n,yr(s))}: ${TY[t.ty]} ${ok?'수락':'거절'} — ${why}`)}
+const TY={trade:'무역',nap:'불가침',ally:'동맹',cease:'휴전',ret:'영토 반환'};
+function ai(s,n){const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=wars(s,n),sh=Object.values(N.st).some(v=>v<3);
+ o.focus=sh?'ind':w.length?'def':Math.random()<.3?'res':'wel';
+ w.forEach(e=>{if(!alive(s,e))return;const E=s.N[e];const tg=Object.keys(s.R).filter(r=>(s.R[r].occ||s.R[r].o)==e&&held(s,n).some(x=>dist(x,r)<=1));
+  if(tg.length&&N.mil>E.mil*.6)o.atk.push({r:tg[0],c:50});else if(N.mil<E.mil*.7||N.sup<45)o.props.push({to:e,ty:'cease'})});
+ const ns=nb(s,n).filter(x=>alive(s,x));
+ if(Math.random()<.3){const x=ns.find(x=>!pact(s,n,x,'trade')&&!atWar(s,n,x));if(x)o.props.push({to:x,ty:'trade'})}
+ if(!w.length&&qt(s)==1&&N.sup>55&&Math.random()<.15){const x=ns.find(x=>!pact(s,n,x)&&s.N[x].mil*1.8<N.mil&&!s.N[x].lord);if(x){const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==x&&held(s,n).some(h=>dist(h,r)<=1));if(r){o.atk.push({r,c:50});s.log.push(`${nm(n,yr(s))}: 자원 부족과 군사 우위로 팽창 결정`)}}}
+ return o}
+function step(s,ords){const y=yr(s),q=qt(s);s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
+ ns.forEach(n=>{const h=P_h(s,n);oo[n]=h?(ords[n]||{focus:'ind',atk:[],props:[]}):ai(s,n)});
+ // 이벤트
+ HG.forEach(e=>{if(e[0]!=y||e[1]!=q||!s.N[e[2]]||P_h(s,e[2]))return;const[,,w,ty,tg,,why]=e;
+  if(ty=='indep'){const N=s.N[w];if(N.lord&&s.N[N.lord].sup<60){N.lord=null;s.log.push(`${nm(w,y)} 독립: ${e[5]}`)}return}
+  if(!alive(s,w)||!alive(s,tg)||pact(s,w,tg,'nap')||atWar(s,w,tg)||(S&&0))return;
+  const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==tg&&held(s,w).some(x=>dist(x,r)<=1));if(r){oo[w].atk.push({r,c:70});s.log.push(`역사 이벤트: ${e[5]} (${why})`)}});
+ // 조약 처리
+ for(const n in ords){(ords[n].sign||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t){t.st='on';if(t.ty=='cease'||t.ty=='ret')peace(s,t);s.log.push(`${nm(n,y)}이(가) ${TY[t.ty]} 서명 — 발효`)}});
+  (ords[n].rej||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t)t.st='x'})}
+ ns.forEach(n=>(oo[n].props||[]).forEach(p=>{if(!alive(s,p.to)||s.TR.some(t=>t.st=='p'&&t.a==n&&t.b==p.to&&t.ty==p.ty))return;const t={id:'t'+s.t+n+p.to+p.ty,ty:p.ty,a:n,b:p.to,st:'p'};s.TR.push(t);if(!P_h(s,p.to))aiAnswer(s,t)}));
+ // 전쟁
+ ns.forEach(n=>(oo[n].atk||[]).forEach(a=>attack(s,n,a.r,a.c)));
+ // 독립 추진
+ ns.forEach(n=>{const N=s.N[n];if(oo[n].indep&&N.lord&&N.g>20){N.g-=N.g*.1;N.ind2+=25;if(N.ind2>=100){s.log.push(`${nm(n,y)}가 ${nm(N.lord,y)}로부터 독립`);N.lord=null}}});
+ // 경제
+ ns.forEach(n=>{const N=s.N[n],h=held(s,n),pr={f:0,s:0,o:0};if(oo[n].pol)N.pol=Object.assign({},N.pol,oo[n].pol);h.forEach(r=>{const v=RG[r][5];pr.f+=+v[0];pr.s+=+v[1];pr.o+=+v[2]});
+  const tr=s.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)).length,need={f:N.pop/10,s:N.ind/25,o:N.ind/25};
+  let pen=0;for(const k in pr){N.st[k]+=pr[k]*2+tr*.5-need[k];if(N.st[k]<0){N.st[k]=0;pen++}}
+  N.sup-=pen*3;N.ind-=pen;const B=N.g*.2,f=oo[n].focus,sp=k=>B*(f==k?.5:.1667);
+  N.g=N.g-B+N.ind*.4+h.length*2+tr*2;N.ind+=sp('ind')*.05+sp('res')*.02;N.sup=Math.min(100,N.sup+sp('wel')*.08-wars(s,n).length);N.mil=N.mil*.97+sp('def')*.15+N.ind*.03;N.pop+=N.pop*.004*N.sup/60;const pl=N.pol||{};
+  if(pl.mil=='conscript'){N.mil+=N.pop*.01;N.sup-=1}if(pl.mil=='mobilize'){N.mil+=N.pop*.025;N.ind-=.4;N.g-=N.pop*.1}if(pl.mil=='garrison')N.mil+=N.pop*.004;
+  if(pl.civ=='welfare'){N.sup+=2;N.g-=N.pop*.05}if(pl.civ=='planned'){N.ind+=.6;N.sup-=.5}if(pl.civ=='ration'){N.st.f+=N.pop/50;N.sup-=1}
+  if(pl.res=='arms')N.mil*=1.015;if(pl.res=='econ')N.g+=N.ind*.06;if(pl.res=='agri')N.st.f+=3;
+  N.sup=Math.max(0,Math.min(100,N.sup));N.g=Math.max(0,N.g);
+  if(N.lord&&s.N[N.lord]){const tax=N.g*.1;N.g-=tax;s.N[N.lord].g+=tax}});
+ s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end'}
+function score(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+held(s,n).length*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
+async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
+async function sendO(p){Object.assign(O,p);O.t=S.t;O.nation=mine();try{await db.doc(`rooms/${code}/orders/${uid}`).set(O)}catch(e){}}
+const mine=()=>S&&Object.entries(S.P).find(([u])=>u==uid)?.[1]||O.want||null;
+async function join(c,create,mode,secs){code=c.toUpperCase().replace(/[^A-Z0-9]/g,'')||'ROOM';
+ const d=db.doc('rooms/'+code),sn=await d.get();
+ if(sn.exists)S=JSON.parse(sn.data().s);else if(create){S=newGame(mode,secs);await save(S)}else{alert('방이 없어요');return}
+ host=S.host==uid;unsub.forEach(u=>u());unsub=[d.onSnapshot(x=>{if(x.exists){const n=JSON.parse(x.data().s);if(!S||n.t!=S.t||n.phase!=S.phase){O={want:O.want}}const prev=S,adv=prev&&n.t>prev.t;S=n;host=S.host==uid;render();if(adv)cine(prev)}}),
+  db.collection(`rooms/${code}/orders`).onSnapshot(q=>{ORD={};q.forEach(x=>ORD[x.id]=x.data());if(host)hostTick()})];render()}
+let busy=false;async function hostTick(){if(!host||!S||S.phase!='play'||busy)return;
+ const hu=Object.entries(S.P),all=hu.length&&hu.every(([u])=>S.ready[u]),late=Date.now()>S.deadline;
+ // 준비 상태 수집
+ let ch=false;hu.forEach(([u])=>{if(ORD[u]&&ORD[u].t==S.t&&ORD[u].ready&&!S.ready[u]){S.ready[u]=1;ch=true}});
+ if(hu.length&&hu.every(([u])=>S.ready[u])||late){busy=true;const ords={};hu.forEach(([u,n])=>{if(ORD[u]&&ORD[u].t==S.t)ords[n]=ORD[u]});step(S,ords);await save(S);busy=false}else if(ch)await save(S)}
+setInterval(()=>{hostTick();const e=$('#tm');if(e&&S&&S.phase=='play')e.textContent=Math.max(0,Math.ceil((S.deadline-Date.now())/1000))+'초'},1000);
+// 로비 합류/선택 처리
+async function claim(n){if(host||S.phase!='lobby'&&!Object.values(S.P).includes(n)){}O.want=n;await sendO({want:n});
+ if(host){S.P[uid]=n;await save(S)}else{S.P[uid]=n;/* 방장이 반영 */}render()}
+function hostSync(){if(!host||!S)return;let ch=false;Object.entries(ORD).forEach(([u,o])=>{if(o.nation&&!S.P[u]&&!Object.values(S.P).includes(o.nation)&&S.N[o.nation]&&alive(S,o.nation)){S.P[u]=o.nation;ch=true}});if(ch)save(S)}
+setInterval(hostSync,1500);
+function render(){if(!S){return home()}if(S.phase=='lobby')return lobby();game()}
+function home(){app.innerHTML=`<h2>🌍 세계대전 국가경영</h2><div class="card"><b>새 방 만들기</b><div class="row"><select id="md"><option value="w1">1차 대전 (1910~1918)</option><option value="w2">2차 대전 (1936~1945)</option><option value="camp">통합 캠페인 (1910~1945)</option></select><input id="sc" type="number" value="90" style="width:70px"> 초</div><div class="row"><input id="c1" placeholder="방 코드"><button class="p" id="mk">만들기</button></div></div><div class="card"><b>방 입장/재개</b><div class="row"><input id="c2" placeholder="방 코드"><button id="jn">입장</button></div></div><p class="sm">방장 기기가 켜져 있어야 턴이 진행됩니다. 같은 코드로 다시 입장하면 저장된 상태에서 재개돼요.</p>`;
+ $('#mk').onclick=()=>join($('#c1').value,1,$('#md').value,+$('#sc').value||90);$('#jn').onclick=()=>join($('#c2').value,0)}
+function lobby(){const ps=Object.values(S.P),y=yr(S);app.innerHTML=`<h2>방 ${code}</h2><div class="sm">${S.mode=='w1'?'1차 대전':S.mode=='w2'?'2차 대전':'통합 캠페인'} · ${y}년 시작 · 제한 ${S.secs}초</div><div class="card"><b>국가 선택</b><div class="row">${Object.keys(S.N).map(n=>{const N=S.N[n],tk=ps.includes(n);return`<button data-n="${n}" ${tk&&mine()!=n?'disabled':''} class="${mine()==n?'on':''}" style="border-left:8px solid ${NM[n][1]}">${nm(n,y)}<br><span class="sm">${N.lord?'식민지·속령('+nm(N.lord,y)+')':'독립국'}</span></button>`}).join('')}</div></div>${host?'<button class="p" id="go">게임 시작 (미선택 국가는 AI)</button>':'<p class="sm">방장이 시작하길 기다리는 중…</p>'}`;
+ app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>claim(b.dataset.n));if(host)$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}
+function guide(n){const y=yr(S);const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*4+e[1]-1<=S.t+S.Y0*4+8);
+ return L.length?L.map(e=>{const t=e[4]&&S.R[e[4]]?'':'';const tg=e[4],diff=e[3]=='war'?(pact(S,n,tg,'nap')?'지금은 불가침 조약이 있어 역사와 다릅니다':!alive(S,tg)?'대상국이 이미 사라졌습니다':'조건이 역사와 비슷합니다'):'';
+  return`<div class="card"><b>${e[0]}년 ${e[1]}분기</b> 당시: ${e[5]}<br>배경: ${e[6]}<br>내 게임: ${diff||'조건 확인 중'}<br>대안: 따르기 / 동맹·불가침으로 우회 / 방어 강화. 어느 쪽이든 진행할 수 있어요.</div>`}).join(''):'<p class="sm">앞으로 2년 안에 이 국가의 주요 역사 결정은 없어요.</p>'}
+function game0(){const y=yr(S),n=mine(),N=n&&S.N[n],h=Object.entries(S.P),end=S.phase=='end';
+ const map=Object.keys(RG).map(r=>{const R=S.R[r],c=NM[R.o][1],oc=R.occ?NM[R.occ][1]:'transparent';return`<button class="t ${sel==r?'sel':''}" data-r="${r}" style="grid-column:${RG[r][1]+1};grid-row:${RG[r][2]+1};background:${c};border-color:${oc}">${RG[r][0]}</button>`}).join('');
+ let panel='';if(tab=='m'&&N){const B=N.g*.2,fo=O.focus||'ind';panel=`<div class="card"><b>${nm(n,y)}</b>${N.lord?` <span class="sm">(${nm(N.lord,y)} 속령 · 독립 ${Math.round(N.ind2)}%)</span>`:''}<div class="sm">국고 ${N.g|0} · 인구 ${N.pop|0} · 산업 ${N.ind|0} · 지지 ${N.sup|0} · 군사 ${N.mil|0}<br>식량 ${N.st.f|0} · 철강 ${N.st.s|0} · 석유 ${N.st.o|0}</div></div><div class="card"><b>예산 중점</b> (이번 턴 ${B|0} 지출)<div class="row">${[['ind','산업'],['wel','복지'],['res','연구'],['def','국방']].map(([k,l])=>`<button data-f="${k}" class="${fo==k?'on':''}">${l}</button>`).join('')}</div><div class="sm">중점 분야에 ${B*.5|0}, 나머지에 각 ${B/6|0} 배분. 효과는 다음 턴 지표에 반영돼요.</div>${N.lord?'<button data-ind="1" class="'+(O.indep?'on':'')+'">독립 추진 (국고 10%)</button>':''}</div>`}
+ if(tab=='d'&&N){const pend=S.TR.filter(t=>t.st=='p'&&t.b==n),act=S.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n));panel=`<div class="card"><b>받은 제안</b>${pend.map(t=>`<div class="row">${nm(t.a,y)}: ${TY[t.ty]} <button data-s="${t.id}">서명</button><button data-x="${t.id}">거절</button></div>`).join('')||'<div class="sm">없음</div>'}<b>체결된 조약</b><div class="sm">${act.map(t=>`${TY[t.ty]}: ${nm(t.a==n?t.b:t.a,y)}`).join('<br>')||'없음'}</div></div><div class="card"><b>회담 제안</b><div class="row"><select id="to">${Object.keys(S.N).filter(x=>x!=n&&alive(S,x)).map(x=>`<option value="${x}">${nm(x,y)}</option>`).join('')}</select><select id="ty">${Object.entries(TY).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select><button id="pp">제안</button></div><div class="sm">AI는 같은 턴에 답하고, 거절하면 이유를 알려줘요. 서명은 즉시 기록되고 턴 처리 시 발효돼요.</div></div>`}
+ if(tab=='w'&&N){const at=(O.atk||[]);panel=`<div class="card"><b>전쟁</b><div class="sm">지도에서 인접 지역을 눌러 투입 규모를 정하세요 (군사 ${N.mil|0}). 교전 중: ${wars(S,n).map(x=>nm(x,y)).join(', ')||'없음'}</div>${at.map((a,i)=>`<div class="row">${RG[a.r][0]} ${a.c}% <button data-u="${i}">취소</button></div>`).join('')}${sel?`<div class="row"><b>${RG[sel][0]}</b>${[25,50,100].map(c=>`<button data-a="${c}">${c}% 투입</button>`).join('')}</div>`:''}</div>`}
+ if(tab=='g'&&N)panel=guide(n);
+ if(tab=='l')panel=`<div class="card log">${S.log.map(l=>`<div>${l}</div>`).join('')}</div>`;
+ if(end)panel=`<div class="card"><b>🏁 종료 — 최종 순위</b>${Object.keys(S.N).filter(x=>alive(S,x)).sort((a,b)=>score(S,b)-score(S,a)).slice(0,10).map((x,i)=>`<div>${i+1}. ${nm(x,y)} ${score(S,x)}점${Object.values(S.P).includes(x)?' 👤':''}</div>`).join('')}</div>`;
+ app.innerHTML=`<div class="top"><div class="chip" style="background:${n?NM[n][1]:'#555'}"></div><div><div class="dt">${y}년 ${qt(S)}분기</div><div class="bar"><i style="width:${S.t/S.T*100}%"></i></div></div><span id="tm"></span></div><div id="map"><svg class="cont" viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M1 10Q8 6 16 10L20 24 15 36 5 36 2 24Z"/><path d="M4 38 16 40 14 56 8 58Z"/><path d="M12 8 38 2 54 10 52 34 24 38 14 30Z"/><path d="M18 32 42 34 48 50 36 58 26 52Z"/><path d="M52 4 96 6 98 32 72 42 52 36Z"/></svg>${map}</div><div class="sm" style="text-align:center;margin:4px">${code} · 테두리 색 = 점령국</div>${n&&!alive(S,n)?'<p>본토를 모두 잃었습니다. 관전 중이에요.</p>':''}<div class="row">${[['m','경영'],['d','외교'],['w','전쟁'],['g','역사 가이드'],['l','기록']].map(([k,l])=>`<button data-tab="${k}" class="${tab==k?'on':''}">${l}</button>`).join('')}</div>${panel}${n&&!end?`<button class="p" id="rd" ${S.ready[uid]||O.ready?'disabled':''}>${S.ready[uid]||O.ready?'대기 중…':'턴 종료 / 준비'}</button><div class="sm">준비 ${Object.keys(S.ready).length}/${h.length}명</div>`:''}`;
+ const q=s=>app.querySelectorAll(s);q('[data-r]').forEach(b=>b.onclick=()=>{sel=b.dataset.r;const R=S.R[sel];if(tab=='m')tab='w';render()});
+ q('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render()});q('[data-f]').forEach(b=>b.onclick=()=>{sendO({focus:b.dataset.f});render()});
+ q('[data-ind]').forEach(b=>b.onclick=()=>{sendO({indep:!O.indep});render()});q('[data-a]').forEach(b=>b.onclick=()=>{sendO({atk:(O.atk||[]).concat({r:sel,c:+b.dataset.a})});render()});
+ q('[data-u]').forEach(b=>b.onclick=()=>{const a=(O.atk||[]).slice();a.splice(+b.dataset.u,1);sendO({atk:a});render()});
+ q('[data-s]').forEach(b=>b.onclick=()=>{sendO({sign:(O.sign||[]).concat(b.dataset.s)});b.disabled=true});q('[data-x]').forEach(b=>b.onclick=()=>{sendO({rej:(O.rej||[]).concat(b.dataset.x)});b.disabled=true});
+ const pp=$('#pp');if(pp)pp.onclick=()=>{sendO({props:(O.props||[]).concat({to:$('#to').value,ty:$('#ty').value})});pp.textContent='제안됨'};
+ const rd=$('#rd');if(rd)rd.onclick=()=>{sendO({ready:true});rd.disabled=true}}
+const SD={DOM:[200,80],USA:[150,170],LAT:[240,400],IRL:[418,128],UKI:[445,118],FRA:[455,172],IBE:[425,217],NAF:[470,272],GER:[500,150],SCA:[510,85],DAN:[545,180],ITA:[512,224],AFR:[540,390],POL:[565,140],BAL:[552,222],ANA:[615,238],RUS:[640,110],CAU:[655,185],ARB:[665,285],SIB:[800,95],IND:[760,305],CHN:[840,225],KOR:[905,185],PAC:[880,322],JPN:[950,215]};
+const LAND=['40,110 120,60 230,70 300,100 290,170 250,230 200,260 150,230 90,190 50,150','205,290 280,310 320,370 290,460 250,520 225,430 195,340','400,150 410,100 470,60 560,45 700,40 860,50 950,100 965,170 940,260 880,300 850,360 790,350 740,320 700,310 660,330 620,290 590,260 560,250 520,240 480,250 440,230 410,200','430,250 520,250 600,285 640,330 610,400 570,470 520,470 490,380 440,320','405,100 440,95 455,140 430,150 405,135','930,170 960,190 955,240 930,235','850,305 910,310 905,340 855,335'];
+let VB=null,CELL=null,moved=0;
+function cells(){if(CELL||!window.d3)return CELL;const ids=Object.keys(SD),v=d3.Delaunay.from(ids.map(r=>SD[r])).voronoi([0,0,1000,560]);CELL={};ids.forEach((r,i)=>CELL[r]=v.renderCell(i));return CELL}
+function mapSVG0(){const c=cells(),L=LAND.map(p=>`<polygon points="${p}"/>`).join(''),y=yr(S);
+ const pat=Object.keys(NM).map(k=>`<pattern id="h${k}" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="10" fill="${NM[k][1]}" opacity=".9"/></pattern>`).join('');
+ const rg=Object.keys(SD).map(r=>{const R=S.R[r];return`<g class="rg ${sel==r?'sel':''}" data-r="${r}"><path d="${c[r]}" fill="${NM[R.o][1]}"/>${R.occ?`<path d="${c[r]}" fill="url(#h${R.occ})"/>`:''}</g>`}).join('');
+ const lb=Object.keys(SD).map(r=>`<text class="lb" x="${SD[r][0]}" y="${SD[r][1]}">${RG[r][0]}</text>`).join('');
+ const mk=((O.atk)||[]).map(a=>`<text x="${SD[a.r][0]}" y="${SD[a.r][1]+16}" font-size="16" text-anchor="middle">⚔️</text>`).join('');
+ const w=Object.keys(S.W).length?'':'' ;
+ return`<svg viewBox="${VB.join(' ')}"><defs>${pat}<radialGradient id="oc" cx=".5" cy=".4" r=".8"><stop offset="0" stop-color="#1f5578"/><stop offset="1" stop-color="#071826"/></radialGradient><clipPath id="lc">${L}</clipPath></defs><rect width="1000" height="560" fill="url(#oc)"/><g stroke="#ffffff14" stroke-width="1">${[1,2,3,4,5,6,7,8,9].map(i=>`<path d="M${i*100} 0V560"/>`).join('')}${[1,2,3,4,5].map(i=>`<path d="M0 ${i*100}H1000"/>`).join('')}</g><g fill="#000a" transform="translate(4,6)" filter="blur(3px)">${L}</g><g fill="#2b3a2b">${L}</g><g clip-path="url(#lc)">${rg}</g><g fill="none" stroke="#f0dca0" stroke-width="1.8" opacity=".75">${L}</g>${lb}${mk}</svg>`}
+function afterGame(){const m=$('#map');if(!m||!window.d3||S.phase=='lobby')return;const n=mine();
+ if(!VB){world();const r=n&&held(S,n)[0],c=r?(LBL[r]||SD[r]):[500,200];VB=[Math.max(0,Math.min(580,c[0]-210)),Math.max(0,Math.min(325,c[1]-118)),420,235]}
+ const w=document.createElement('div');w.id='map2';const sv=()=>w.querySelector('svg'),set=()=>{sv().setAttribute('viewBox',VB.join(' '));lblVis(sv())};
+ w.innerHTML=mapSVG()+'<div class="zm"><button id="zi">＋</button><button id="zo">－</button></div>'+(sel?`<div class="info">${RG[sel][0]} · ${nm(S.R[sel].o,yr(S))}${S.R[sel].occ?' (점령: '+nm(S.R[sel].occ,yr(S))+')':''}</div>`:'');m.replaceWith(w);
+ const N=n&&S.N[n];if(N){const h=document.createElement('div');h.className='hud';h.innerHTML=[['💰',N.g],['👥',N.pop],['🏭',N.ind],['❤️',N.sup],['🪖',N.mil],['🌾',N.st.f],['⚙️',N.st.s],['🛢',N.st.o]].map(([i,v])=>`<span class="hc">${i} ${v|0}</span>`).join('');w.before(h)}
+ const zoom=(f,cx,cy)=>{const nw=Math.min(1000,Math.max(200,VB[2]*f)),nh=nw*.56;VB=[Math.min(1000-nw,Math.max(0,cx-(cx-VB[0])*nw/VB[2])),Math.min(560-nh,Math.max(0,cy-(cy-VB[1])*nh/VB[3])),nw,nh];set()};
+ $('#zi').onclick=()=>zoom(.7,VB[0]+VB[2]/2,VB[1]+VB[3]/2);$('#zo').onclick=()=>zoom(1.4,VB[0]+VB[2]/2,VB[1]+VB[3]/2);
+ const P={},s=sv();s.onpointerdown=e=>{P[e.pointerId]=[e.clientX,e.clientY];moved=0};
+ s.onpointermove=e=>{if(!P[e.pointerId])return;const rc=s.getBoundingClientRect(),ks=Object.keys(P),o=P[e.pointerId];
+  if(ks.length==1){const dx=e.clientX-o[0],dy=e.clientY-o[1],k=VB[2]/rc.width;moved+=Math.abs(dx)+Math.abs(dy);VB[0]=Math.min(1000-VB[2],Math.max(0,VB[0]-dx*k));VB[1]=Math.min(560-VB[3],Math.max(0,VB[1]-dy*k));P[e.pointerId]=[e.clientX,e.clientY];set()}
+  else{const a=P[ks[0]],b=P[ks[1]],d0=Math.hypot(a[0]-b[0],a[1]-b[1]);P[e.pointerId]=[e.clientX,e.clientY];const a2=P[ks[0]],b2=P[ks[1]],d1=Math.hypot(a2[0]-b2[0],a2[1]-b2[1]);moved+=9;if(d1>0)zoom(d0/d1,VB[0]+((a2[0]+b2[0])/2-rc.left)/rc.width*VB[2],VB[1]+((a2[1]+b2[1])/2-rc.top)/rc.height*VB[3])}};
+ s.onpointerup=s.onpointercancel=e=>{delete P[e.pointerId]};
+ s.querySelectorAll('[data-r]').forEach(g=>g.onclick=()=>{if(moved>8)return;const r=g.dataset.r,now=Date.now();if(r==sel&&now-LC<450){enter(S.R[r].o);return}LC=now;sel=r;if(tab=='m')tab='w';render()});
+ regionCard(w);const tb=app.querySelector('[data-tab]');if(tb){tb.parentElement.classList.add('dock');tb.parentElement.querySelectorAll('[data-tab]').forEach(b=>b.textContent={m:'🏛 경영',d:'🤝 외교',w:'⚔ 전쟁',g:'📜 역사',l:'📰 기록'}[b.dataset.tab])}}
+const GR={USA:'United States',DOM:'Canada|Australia|New Zealand',UKI:'United Kingdom',IRL:'Ireland',FRA:'France|Belgium|Netherlands|Luxembourg|Switzerland',IBE:'Spain|Portugal',NAF:'Morocco|Algeria|Tunisia|Libya|W. Sahara|Mauritania|Mali|Niger|Chad|Senegal|Guinea|Burkina Faso|Benin|Togo|Gambia|Guinea-Bissau|Sierra Leone|Liberia|Madagascar|Gabon|Congo|Central African Rep.|Cameroon',GER:'Germany',DAN:'Austria|Hungary|Czech Rep.|Slovakia|Slovenia|Croatia|Bosnia and Herz.',SCA:'Norway|Sweden|Finland|Denmark|Iceland|Greenland',ITA:'Italy|Somalia|Eritrea',POL:'Poland|Lithuania|Latvia|Estonia',BAL:'Serbia|Montenegro|Albania|Macedonia|Kosovo|Bulgaria|Romania|Greece|Moldova',ANA:'Turkey',ARB:'Saudi Arabia|Iraq|Syria|Jordan|Israel|Lebanon|Yemen|Oman|United Arab Emirates|Kuwait|Qatar|Palestine',AFR:'Egypt|Sudan|S. Sudan|Nigeria|Ghana|Kenya|Uganda|Tanzania|Zambia|Zimbabwe|Malawi|Botswana|Ethiopia|Dem. Rep. Congo|Angola|Mozambique|Namibia|Somaliland|Rwanda|Burundi|Lesotho|Swaziland|Djibouti|South Africa|Eq. Guinea',RUS:'Ukraine|Belarus',SIB:'Russia',CAU:'Georgia|Armenia|Azerbaijan|Kazakhstan|Uzbekistan|Turkmenistan|Tajikistan|Kyrgyzstan',IND:'India|Pakistan|Bangladesh|Nepal|Bhutan|Sri Lanka|Myanmar',CHN:'China|Mongolia',KOR:'Korea|Dem. Rep. Korea',JPN:'Japan|Taiwan',PAC:'Philippines'};
+let CT=null,LBL={},FL=new Set(),LC=0,SC=null,SB=null;
+function world(){if(CT)return CT;if(!window.WORLD)return null;try{const W=window.WORLD,sc=W.UTF8Scale||1024,m={};for(const r in GR)GR[r].split('|').forEach(n=>m[n]=r);
+ const dec=(s,o)=>{let px=o[0],py=o[1];const out=[];for(let i=0;i<s.length;i+=2){let x=s.charCodeAt(i)-64,y=s.charCodeAt(i+1)-64;x=(x>>1)^(-(x&1));y=(y>>1)^(-(y&1));px+=x;py+=y;out.push([px/sc,py/sc])}return out};
+ const pj=p=>((p[0]+180)*1000/360).toFixed(1)+','+((80-p[1])*560/138).toFixed(1),acc={},T=[];
+ W.features.forEach(f=>{const n=f.properties.name,g=f.geometry;if(/Antarctic/.test(n))return;
+  const rg=g.type=='Polygon'?[[g.coordinates,g.encodeOffsets]]:g.coordinates.map((c,i)=>[c,g.encodeOffsets[i]]);let d='';const pts=[];
+  rg.forEach(([cs,os])=>cs.forEach((c,j)=>{const P=typeof c=='string'?dec(c,os[j]):c;P.forEach(p=>pts.push(p));d+='M'+P.map(pj).join('L')+'Z'}));
+  if(!pts.length)return;const mx=pts.reduce((a,p)=>a+p[0],0)/pts.length,my=pts.reduce((a,p)=>a+p[1],0)/pts.length;
+  let r=m[n]||(/Ivoire/.test(n)?'NAF':null);if(!r&&mx>-118&&mx<-34&&my>-57&&my<33)r='LAT';
+  if(r){(acc[r]=acc[r]||[]).push(...pts.filter((_,i)=>i%7==0))}T.push({d,r})});
+ if(T.length<100||/NaN/.test(T[0].d.slice(0,40)))throw 0;
+ for(const r in acc){const xs=acc[r].map(p=>(p[0]+180)*1000/360).sort((a,b)=>a-b),ys=acc[r].map(p=>(80-p[1])*560/138).sort((a,b)=>a-b);LBL[r]=[xs[xs.length>>1],ys[ys.length>>1]]}
+ CT=T}catch(e){CT=null;window.WORLD=null}return CT}
+function mapSVG(){const C=world();if(!C)return mapSVG0();
+ const pat=Object.keys(NM).map(k=>`<pattern id='h${k}' width='10' height='10' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'><rect width='5' height='10' fill='${NM[k][1]}' opacity='.9'/></pattern>`).join('');
+ const body=C.map(c=>{const R=c.r&&S.R[c.r];if(!R)return`<path class='nl' d='${c.d}' fill='#3a464c'/>`;return`<g class='rg ${sel==c.r?'sel':''} ${FL.has(c.r)?'fl':''}' data-r='${c.r}'><path d='${c.d}' fill='${NM[R.o][1]}'/>${R.occ?`<path d='${c.d}' fill='url(#h${R.occ})'/>`:''}</g>`}).join('');
+ const lb=Object.keys(LBL).filter(r=>S.R[r]).map(r=>`<text class='lb' x='${LBL[r][0]}' y='${LBL[r][1]}'>${RG[r][0]}</text>`).join('');
+ const mk=(O.atk||[]).filter(a=>LBL[a.r]).map(a=>`<text x='${LBL[a.r][0]}' y='${LBL[a.r][1]+16}' font-size='16' text-anchor='middle'>⚔️</text>`).join('');
+ return`<svg viewBox='${VB.join(' ')}'><defs>${pat}<radialGradient id='oc' cx='.5' cy='.4' r='.8'><stop offset='0' stop-color='#1f5578'/><stop offset='1' stop-color='#071826'/></radialGradient></defs><rect width='1000' height='560' fill='url(#oc)'/><g stroke='#ffffff12'>${[1,2,3,4,5,6,7,8,9].map(i=>`<path d='M${i*100} 0V560'/>`).join('')}${[1,2,3,4,5].map(i=>`<path d='M0 ${i*100}H1000'/>`).join('')}</g>${body}${lb}${mk}</svg>`}
+function regionCard(w){lblVis(w.querySelector('svg'));if(!sel||!S.R[sel])return;const R=S.R[sel],y=yr(S),v=RG[sel][5],h=document.createElement('div');h.className='card';
+ h.innerHTML=`<b>${RG[sel][0]}</b> · ${nm(R.o,y)}${R.occ?` <span class='sm'>(점령: ${nm(R.occ,y)})</span>`:''}<div class='sm'>🌾${v[0]} ⚙️${v[1]} 🛢${v[2]} · 인접국: ${nb(S,R.o).map(x=>nm(x,y)).join(', ')||'없음'}</div><div class='row'><button data-enter='1'>🏛 ${nm(R.o,y)} 입장</button><span class='sm'>같은 지역을 두 번 탭해도 입장해요</span></div>`;
+ w.after(h);h.querySelector('[data-enter]').onclick=()=>enter(R.o)}
+function cine(p){if(!S||S.phase=='lobby')return;FL=new Set(Object.keys(S.R).filter(r=>p.R[r]&&(p.R[r].o!=S.R[r].o||p.R[r].occ!=S.R[r].occ)));
+ const imp=S.log.filter(l=>/선전포고|점령|독립|참전|서명|수락|파기/.test(l)).slice(0,4),war=imp.some(l=>/선전포고|점령/.test(l)),d=document.createElement('div');d.className='cine'+(war?' war':'');
+ d.innerHTML=`<div class='cy'>${yr(S)}</div><div class='cq'>${qt(S)}분기</div>${imp.map(l=>`<div class='cl'>${l}</div>`).join('')}`;document.body.appendChild(d);
+ setTimeout(()=>{d.remove();FL.clear();document.querySelectorAll('.fl').forEach(e=>e.classList.remove('fl'))},3200);render()}
+const BLD=[['mil','🪖','병영'],['gov','🏛','의사당'],['fac','🏭','공장'],['lab','🔬','연구소'],['bank','🏦','재무부'],['fo','🤝','외무부'],['his','📜','역사관']];
+const PM=[['volunteer','모병제','기본 · 추가 비용 없음'],['conscript','징병제','군사력 +인구 1%/턴 · 지지도 -1/턴'],['mobilize','총동원','군사력 +인구 2.5%/턴 · 산업 -0.4/턴 · 국고 -인구 10%/턴'],['garrison','방어 태세','방어력 +30% · 군사력 소폭 증가']],PC=[['none','현상 유지',''],['welfare','복지 확대','지지도 +2/턴 · 국고 -인구 5%/턴'],['planned','계획경제','산업 +0.6/턴 · 지지도 -0.5/턴'],['ration','배급제','식량 +인구/50 · 지지도 -1/턴']],PR=[['none','연구 없음',''],['arms','무기 개발','군사력 +1.5%/턴'],['econ','산업 기술','국고 +산업×6%/턴'],['agri','농업 개량','식량 +3/턴']];
+function pols(N,k,L,me){const cur=(O.pol&&O.pol[k])||(N.pol&&N.pol[k])||L[0][0];return L.map(([v,t,d])=>`<button class='po ${cur==v?'on':''}' ${me?`data-p='${k}:${v}'`:'disabled'}><b>${t}</b><small>${d||'추가 효과 없음'}</small></button>`).join('')}
+function sheet(n,b,me){const N=S.N[n],y=yr(S),st=`<div class='sm'>국고 ${N.g|0} · 인구 ${N.pop|0} · 산업 ${N.ind|0} · 지지 ${N.sup|0} · 군사 ${N.mil|0}</div>`;
+ if(b=='mil')return`<h3>🪖 병영 — 군사 정책</h3>${st}${pols(N,'mil',PM,me)}<div class='sm'>대기 중인 공격: ${(me&&O.atk||[]).map(a=>RG[a.r][0]+' '+a.c+'%').join(', ')||'없음'} · 교전: ${wars(S,n).map(x=>nm(x,y)).join(', ')||'없음'}</div>${me?`<button data-go='w'>⚔ 지도에서 공격 지정</button>`:''}`;
+ if(b=='gov')return`<h3>🏛 의사당 — 국내 정책</h3>${st}${pols(N,'civ',PC,me)}`;
+ if(b=='lab')return`<h3>🔬 연구소 — 연구 방향</h3>${st}${pols(N,'res',PR,me)}`;
+ if(b=='fac'){const fo=O.focus||'ind';return`<h3>🏭 공장 — 예산 중점</h3>${st}<div class='sm'>식량 ${N.st.f|0} · 철강 ${N.st.s|0} · 석유 ${N.st.o|0} · 지출 ${(N.g*.2)|0}</div><div class='row'>${[['ind','산업'],['wel','복지'],['res','연구'],['def','국방']].map(([k,l])=>`<button ${me?`data-f2='${k}'`:'disabled'} class='${me&&fo==k?'on':''}'>${l}</button>`).join('')}</div>`}
+ if(b=='bank')return`<h3>🏦 재무부</h3>${st}<div class='sm'>예상 수입 약 ${(N.ind*.4+held(S,n).length*2)|0}/턴 · 보유 지역 ${held(S,n).length}곳${N.lord?` · 종주국 ${nm(N.lord,y)}에 세금 10%`:''}</div>`;
+ if(b=='fo'){const act=S.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n));return`<h3>🤝 외무부</h3>${st}<div class='sm'>${act.map(t=>`${TY[t.ty]}: ${nm(t.a==n?t.b:t.a,y)}`).join('<br>')||'체결된 조약 없음'}</div>${me?`<button data-go='d'>회담 열기</button>`:''}`}
+ return me?guide(n):`<div class='sm'>타국의 역사 자료는 열람할 수 없어요.</div>`}
+function enter(n){SC=n;SB=null;drawScene()}
+function drawScene(){let el=$('#scene');if(!SC||!S||!S.N[SC]){if(el)el.remove();SC=null;return}
+ if(!el){el=document.createElement('div');el.id='scene';document.body.appendChild(el)}
+ const n=SC,N=S.N[n],y=yr(S),me=mine()==n,col=NM[n][1],hs=[...n].reduce((a,c)=>a*31+c.charCodeAt(0),7);let sk='';
+ for(let i=0;i<24;i++){const w=16+(hs*(i+3)%22),h=40+(hs*(i+5)%120);sk+=`<rect x='${i*19-8}' y='${290-h}' width='${w}' height='${h}' fill='#0b1520' opacity='${.55+((i*7)%4)/10}'/>`+(i%2?`<rect x='${i*19-4}' y='${290-h+9}' width='3' height='4' fill='#f3d27a'/>`:'')}
+ el.innerHTML=`<svg class='sc-bg' viewBox='0 0 440 300' preserveAspectRatio='xMidYMax slice'><defs><linearGradient id='sk' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#0b1a2e'/><stop offset='.6' stop-color='${col}'/><stop offset='1' stop-color='#e8b86a'/></linearGradient></defs><rect width='440' height='300' fill='url(#sk)'/><circle cx='330' cy='185' r='30' fill='#ffe7a8' opacity='.85'/><path d='M0 235 L70 170 L130 220 L210 150 L290 225 L360 175 L440 235 V300H0Z' fill='#12202c' opacity='.85'/>${sk}<rect y='288' width='440' height='12' fill='#06090d'/></svg><div class='sc-top'><button id='sc-x'>← 지도</button><b>${nm(n,y)}</b><span class='sm'>${me?'내 국가':'타국 (열람)'}</span></div><div class='hud sc-hud'>${[['💰',N.g],['👥',N.pop],['🏭',N.ind],['❤️',N.sup],['🪖',N.mil]].map(([i,v])=>`<span class='hc'>${i} ${v|0}</span>`).join('')}</div><div class='bl'>${BLD.map(b=>`<button data-b='${b[0]}' class='${SB==b[0]?'on':''}'><i>${b[1]}</i><span>${b[2]}</span></button>`).join('')}</div>${SB?`<div class='sheet'>${sheet(n,SB,me)}<button id='sc-c' style='margin-top:8px'>닫기</button></div>`:''}`;
+ el.querySelector('#sc-x').onclick=()=>{SC=null;drawScene()};
+ el.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{SB=SB==b.dataset.b?null:b.dataset.b;drawScene()});
+ const c=el.querySelector('#sc-c');if(c)c.onclick=()=>{SB=null;drawScene()};
+ el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const[k,v]=b.dataset.p.split(':');sendO({pol:Object.assign({},O.pol,{[k]:v})});drawScene()});
+ el.querySelectorAll('[data-f2]').forEach(b=>b.onclick=()=>{sendO({focus:b.dataset.f2});drawScene()});
+ el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{tab=b.dataset.go;SC=null;drawScene();render()})}
+const KR={UK:'영국',DEN:'덴마크',NED:'네덜란드',BEL:'벨기에',POR:'포르투갈',YUG:'유고슬라비아',CZE:'체코슬로바키아',GBR:'영국',DEU:'독일',FRA:'프랑스',ITA:'이탈리아',ESP:'스페인',USA:'미국',RUS:'러시아',JPN:'일본',CHN:'중국',IND:'인도',KOR:'한국',POL:'폴란드',IRL:'아일랜드',AUT:'오스트리아',HUN:'헝가리',BRA:'브라질',ARG:'아르헨티나',MEX:'멕시코',CHL:'칠레',PER:'페루',COL:'콜롬비아',VEN:'베네수엘라',IRN:'페르시아',AFG:'아프가니스탄',THA:'시암',SAU:'나지드',ETH:'에티오피아',LBR:'라이베리아',NOR:'노르웨이',SWE:'스웨덴',CHE:'스위스',GRC:'그리스',ROU:'루마니아',BGR:'불가리아',SRB:'세르비아',MNE:'몬테네그로',FIN:'핀란드',EGY:'이집트',CAN:'캐나다',AUS:'호주',ZAF:'남아프리카',IDN:'인도네시아',TUR:'아나톨리아',PRT:'포르투갈',NLD:'네덜란드',BEL2:'벨기에'};
+const NC={UK:'#c0634d',FRA:'#3c7fb4',GER:'#6e7b80',DAN:'#b2ae2f',RUS:'#2f7852',OTT:'#c27a2d',ITA:'#68a83a',ESP:'#c08a30',USA:'#47adb0',JPN:'#b9cfd3',CHN:'#d0a62b',IND:'#b85a52',KOR:'#8fb0bf',POL:'#9a62b8',IRL:'#3b9a76',POR:'#2f6b4f',NED:'#a86a2e',BEL:'#8fae2c',DEN:'#9a6b42',SWE:'#2aa1c8',NOR:'#7b73c9',BRA:'#2f7a5c',ARG:'#2fa0d6',MEX:'#7a8f2a',CHL:'#6ec2b2',IRN:'#7ccaa5',YUG:'#6a78b8',CZE:'#c4b844',SRB:'#6a5aa6',SAU:'#b8a490',ETH:'#c9b02d',THA:'#a9c6c8'};
+const hc=t=>{let h=0;for(const c of t)h=(h*131+c.charCodeAt(0)*37)%360;return`hsl(${h},34%,42%)`};
+const hs=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
+const IDN=Object.assign({},KR);let ADJ=null;
+const OV={USA:'555',RUS:'444',CHN:'542',SAU:'005',IRQ:'005',IRN:'005',VEN:'005',IDN:'233',ROU:'223',GBR:'153',DEU:'351',FRA:'420',UKR:'532',IND:'522',BRA:'532',CAN:'423',AUS:'330',KAZ:'223',DZA:'204',LBY:'204',NGA:'203',MEX:'313',ARG:'420',EGY:'102'};
+const T10={UK:'United Kingdom|Canada|Australia|New Zealand|South Africa|Egypt|Sudan|S. Sudan|Nigeria|Ghana|Sierra Leone|Gambia|Kenya|Uganda|Zambia|Zimbabwe|Malawi|Botswana|Lesotho|Swaziland|Somaliland|Malaysia|Brunei|Guyana|Belize|Jamaica|Bahamas|Falkland Is.|Cyprus|N. Cyprus|Kuwait|Qatar|United Arab Emirates|Fiji|Solomon Is.|Sri Lanka|Myanmar',IND:'India|Pakistan|Bangladesh',FRA:'France|Morocco|Algeria|Tunisia|Mauritania|Mali|Niger|Chad|Senegal|Guinea|Burkina Faso|Benin|Madagascar|Gabon|Congo|Central African Rep.|Djibouti|Vietnam|Laos|Cambodia|New Caledonia|Fr. Polynesia',GER:'Germany|Cameroon|Togo|Namibia|Tanzania|Rwanda|Burundi',DAN:'Austria|Hungary|Czech Rep.|Slovakia|Slovenia|Croatia|Bosnia and Herz.',RUS:'Russia|Ukraine|Belarus|Kazakhstan|Uzbekistan|Turkmenistan|Tajikistan|Kyrgyzstan|Georgia|Armenia|Azerbaijan|Moldova|Finland|Estonia|Latvia|Lithuania',OTT:'Turkey|Syria|Lebanon|Iraq|Jordan|Israel|Palestine|Yemen|Libya|Albania|Macedonia|Kosovo',ITA:'Italy|Eritrea|Somalia',ESP:'Spain|W. Sahara|Eq. Guinea',POR:'Portugal|Angola|Mozambique|Guinea-Bissau|Timor-Leste',BEL:'Belgium|Dem. Rep. Congo',NED:'Netherlands|Indonesia|Suriname',DEN:'Denmark|Greenland|Iceland',USA:'United States|Philippines|Puerto Rico',JPN:'Japan|Taiwan',KOR:'Dem. Rep. Korea',CHN:'China|Mongolia'};
+const T36={UK:'United Kingdom|Canada|Australia|New Zealand|South Africa|Sudan|S. Sudan|Nigeria|Ghana|Sierra Leone|Gambia|Kenya|Uganda|Zambia|Zimbabwe|Malawi|Botswana|Lesotho|Swaziland|Somaliland|Malaysia|Brunei|Guyana|Belize|Jamaica|Bahamas|Falkland Is.|Cyprus|N. Cyprus|Kuwait|Qatar|United Arab Emirates|Fiji|Solomon Is.|Sri Lanka|Myanmar|Iraq|Jordan|Israel|Palestine|Namibia|Tanzania|Papua New Guinea',IND:'India|Pakistan|Bangladesh',FRA:'France|Morocco|Algeria|Tunisia|Mauritania|Mali|Niger|Chad|Senegal|Guinea|Burkina Faso|Benin|Madagascar|Gabon|Congo|Central African Rep.|Djibouti|Vietnam|Laos|Cambodia|New Caledonia|Fr. Polynesia|Syria|Lebanon|Cameroon|Togo',GER:'Germany',RUS:'Russia|Ukraine|Belarus|Kazakhstan|Uzbekistan|Turkmenistan|Tajikistan|Kyrgyzstan|Georgia|Armenia|Azerbaijan|Moldova',ITA:'Italy|Eritrea|Somalia|Libya|Ethiopia',YUG:'Serbia|Montenegro|Croatia|Slovenia|Bosnia and Herz.|Macedonia|Kosovo',CZE:'Czech Rep.|Slovakia',OTT:'Turkey',ESP:'Spain|W. Sahara|Eq. Guinea',POR:'Portugal|Angola|Mozambique|Guinea-Bissau|Timor-Leste',BEL:'Belgium|Dem. Rep. Congo|Rwanda|Burundi',NED:'Netherlands|Indonesia|Suriname',DEN:'Denmark|Greenland|Iceland',USA:'United States|Philippines|Puerto Rico',JPN:'Japan|Taiwan',KOR:'Dem. Rep. Korea',CHN:'China'};
+function world(){if(CT)return CT;if(!window.WORLD)return null;try{const W=window.WORLD,sc=W.UTF8Scale||1024;
+ const dec=(s,o)=>{let px=o[0],py=o[1];const out=[];for(let i=0;i<s.length;i+=2){let x=s.charCodeAt(i)-64,y=s.charCodeAt(i+1)-64;x=(x>>1)^(-(x&1));y=(y>>1)^(-(y&1));px+=x;py+=y;out.push([(px/sc+180)*1000/360,(80-py/sc)*560/138])}return out};
+ const used={},T=[];
+ W.features.forEach((f,i)=>{const n=f.properties.name,g=f.geometry;if(/Antarctic/.test(n))return;let k=f.id;if(!k||k=='-99'||used[k])k='Z'+i;used[k]=1;
+  const rg=g.type=='Polygon'?[[g.coordinates,g.encodeOffsets]]:g.coordinates.map((c,j)=>[c,g.encodeOffsets[j]]);let d='';const xs=[],ys=[],ks=new Set();
+  rg.forEach(([cs,os])=>cs.forEach((c,j)=>{const P=typeof c=='string'?dec(c,os[j]):c;P.forEach(p=>{xs.push(p[0]);ys.push(p[1]);ks.add(Math.round(p[0])+','+Math.round(p[1]))});d+='M'+P.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join('L')+'Z'}));
+  if(!xs.length)return;const sx=xs.slice().sort((a,b)=>a-b),sy=ys.slice().sort((a,b)=>a-b);
+  T.push({k,n,d,np:xs.length,cx:sx[sx.length>>1],cy:sy[sy.length>>1],x0:sx[0],x1:Math.min(1000,sx[sx.length-1]),y0:sy[0],y1:sy[sy.length-1],keys:[...ks]})});
+ if(T.length<100||/NaN/.test(T[0].d.slice(0,40)))throw 0;
+ const nid={},m10={},m36={};T.forEach(t=>nid[t.n]=t.k);
+ const asg=(tab,out)=>{for(const o in tab)tab[o].split('|').forEach(n=>{if(nid[n])out[nid[n]]=o})};asg(T10,m10);asg(T36,m36);
+ T.forEach(t=>{if(/Ivoire/.test(t.n)){m10[t.k]='FRA';m36[t.k]='FRA'}});
+ const R2={};T.forEach(t=>{const h=hs(t.k),ov=OV[t.k],f=ov?ov[0]:1+h%4,s=ov?ov[1]:(h>>2)%3,o=ov?ov[2]:(h>>4)%2;const nmk=KR[t.k]||t.n;R2[t.k]=[nmk,t.cx,t.cy,m10[t.k]||t.k,m36[t.k]||t.k,''+f+s+o];if(!KR[t.k])IDN[t.k]=t.n;LBL[t.k]=[t.cx,t.cy]});
+ const km=new Map(),A={};T.forEach(t=>{A[t.k]=new Set();t.keys.forEach(q=>{let a=km.get(q);if(!a)km.set(q,a=[]);if(a[a.length-1]!==t.k)a.push(t.k)})});
+ km.forEach(a=>{for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){A[a[i]].add(a[j]);A[a[j]].add(a[i])}});
+ for(let i=0;i<T.length;i++)for(let j=i+1;j<T.length;j++)if(Math.hypot(T[i].cx-T[j].cx,T[i].cy-T[j].cy)<40){A[T[i].k].add(T[j].k);A[T[j].k].add(T[i].k)}
+ T.forEach(t=>delete t.keys);RG=R2;ADJ=A;CT=T}catch(e){CT=null;ADJ=null;window.WORLD=null}return CT}
+function lblVis(sv){if(!sv)return;const k=VB[2]/110;sv.querySelectorAll('.lb').forEach(t=>t.style.display=+t.dataset.fs>=k?'':'none')}
+function mapSVG(){const C=world();if(!C)return mapSVG0();const y=yr(S),oc=new Set();Object.values(S.R).forEach(R=>R&&R.occ&&oc.add(R.occ));
+ const pat=[...oc].map(k=>`<pattern id='h${k}' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'><rect width='4' height='8' fill='${NM[k][1]}' opacity='.9'/></pattern>`).join('');
+ const G={};const body=C.map(c=>{const R=S.R[c.k];if(!R)return'';(G[R.o]=G[R.o]||[]).push(c);return`<g class='rg ${sel==c.k?'sel':''} ${FL.has(c.k)?'fl':''}' data-r='${c.k}'><path d='${c.d}' fill='${NM[R.o][1]}'/>${R.occ?`<path d='${c.d}' fill='url(#h${R.occ})'/>`:''}</g>`}).join('');
+ const lb=Object.keys(G).map(o=>{const L=G[o],a=L.reduce((p,c)=>c.np>p.np?c:p),nr=L.filter(c=>Math.hypot(c.cx-a.cx,c.cy-a.cy)<140);let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;nr.forEach(c=>{x0=Math.min(x0,c.x0);x1=Math.max(x1,c.x1);y0=Math.min(y0,c.y0);y1=Math.max(y1,c.y1)});
+  const t=nm(o,y),asc=[...t].every(ch=>ch.charCodeAt(0)<128),tx=asc?t.toUpperCase():t,fs=Math.min(26,(x1-x0)/(tx.length*(asc?.75:1.1)));if(fs<2)return'';
+  return`<text class='lb' data-fs='${fs.toFixed(1)}' x='${((x0+x1)/2).toFixed(1)}' y='${((y0+y1)/2+fs*.35).toFixed(1)}' style='font-size:${fs.toFixed(1)}px;stroke-width:${(fs*.18).toFixed(1)}px'>${tx}</text>`}).join('');
+ const mk=(O.atk||[]).filter(a=>LBL[a.r]).map(a=>`<text x='${LBL[a.r][0]}' y='${LBL[a.r][1]+10}' font-size='12' text-anchor='middle'>⚔️</text>`).join('');
+ return`<svg viewBox='${VB.join(' ')}'><defs>${pat}<radialGradient id='oc' cx='.5' cy='.4' r='.85'><stop offset='0' stop-color='#1f3f8a'/><stop offset='1' stop-color='#0a1745'/></radialGradient><filter id='nz'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter></defs><rect width='1000' height='560' fill='url(#oc)'/><g stroke='#ffffff10'>${[1,2,3,4,5,6,7,8,9].map(i=>`<path d='M${i*100} 0V560'/>`).join('')}${[1,2,3,4,5].map(i=>`<path d='M0 ${i*100}H1000'/>`).join('')}</g>${body}<rect width='1000' height='560' filter='url(#nz)' opacity='.09' style='mix-blend-mode:overlay;pointer-events:none'/>${lb}${mk}</svg>`}
+world();
+function game(){game0();afterGame();if(SC)drawScene()}
+var EM='w1';
+function home(){app.innerHTML=`<div class="hero"><div class="sub">1910 — 1945</div><h1>WORLD<br>AT WAR</h1><p>국가를 고르고, 역사를 따르거나 바꿔라</p></div><div class="card"><div class="lab">시나리오</div><div class="eras">${[['w1','1914','제1차 세계대전','1910~1918 · 36턴'],['w2','1939','제2차 세계대전','1936~1945 · 40턴'],['camp','1910 → 1945','통합 캠페인','144턴 · 국경과 조약이 이어진다']].map(([k,b,t,d])=>`<button class="era ${EM==k?'on':''}" data-e="${k}"><b>${b}</b><span>${t}</span><i>${d}</i></button>`).join('')}</div><div class="row"><input id="c1" placeholder="새 방 코드" style="flex:1"><input id="sc" type="number" value="90" style="width:64px"><span class="sm">초</span></div><button class="p big" id="mk">새 방 열기</button></div><div class="card"><div class="lab">초대받았나요? / 저장된 방 재개</div><div class="row"><input id="c2" placeholder="방 코드" style="flex:1"><button id="jn">입장</button></div></div>`;
+ app.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{EM=b.dataset.e;app.querySelectorAll('[data-e]').forEach(x=>x.classList.toggle('on',x==b))});
+ $('#mk').onclick=()=>join($('#c1').value,1,EM,+$('#sc').value||90);$('#jn').onclick=()=>join($('#c2').value,0)}
+function lobby(){const ps=Object.values(S.P),y=yr(S);app.innerHTML=`<div class="hero" style="padding:28px 8px 4px"><div class="sub">ROOM CODE</div><div class="room">${code}</div><div class="sm">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년 시작 · 제한 ${S.secs}초 · 참가 ${ps.length}명</div></div><div class="card"><div class="lab">국가 선택</div><div class="ng">${Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length).map(n=>{const N=S.N[n],tk=ps.includes(n);return`<button data-n="${n}" ${tk&&mine()!=n?'disabled':''} class="${mine()==n?'on':''}" style="border-left-color:${NM[n][1]}"><b>${nm(n,y)}</b><br><span class="sm">${N.lord?'속령 · '+nm(N.lord,y)+' 지배':'독립국'}${tk?' · 👤':''}</span></button>`}).join('')}</div></div>${host?'<button class="p big" id="go">⚔ 전쟁 시작 (미선택 국가는 AI)</button>':'<p class="sm" style="text-align:center">방장이 시작하길 기다리는 중…</p>'}`;
+ app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>claim(b.dataset.n));if(host)$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}
+(async()=>{try{const u=await claude.use('user');uid=u?await u.id():null}catch(e){}
+ uid=uid||('g'+Math.random().toString(36).slice(2,9));db=await claude.use('db');if(!db){app.textContent='공유 저장소를 쓸 수 없어요. 로그인 상태를 확인하세요.';return}home()})();
+</script></body></html>

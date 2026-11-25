@@ -453,6 +453,16 @@ body{background:#d9c49a}
 .rp-l{padding:6px 0 6px 14px;border-bottom:1px dotted var(--ink2);font:14px/1.5 var(--serif);position:relative}.rp-l::before{content:'—';position:absolute;left:0;color:var(--ox)}
 .rp .ln{border-bottom-color:#d6c6a0}.rp .ln small{color:var(--ink2)}.rp .sec{color:var(--navy);font-family:var(--serif);font-weight:700;border-bottom:1px solid var(--ink2)}
 @media (max-width:760px){.bar .rs small{display:none}.bar .rs{padding:2px 4px}.bar .rs b{font-size:13px}}
+.hoi{margin:8px 0 4px;border-top:3px double var(--ink2);padding-top:8px;font:13px/1.45 var(--serif)}
+.hoi-t{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.hoi-t span{border:1px solid var(--ink2);padding:1px 7px;background:rgba(255,250,235,.5)}.hoi-t .ter{background:var(--ink);color:var(--pp2);border-color:var(--ink)}
+.hoi-c{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hoi-c>div>b{display:block;font-size:14px}.hoi-c small{color:var(--ink2);display:block}
+.hoi-st{display:grid;grid-template-columns:1fr 1fr;gap:1px 8px;margin-top:3px}.hoi-st span{display:flex;justify-content:space-between;border-bottom:1px dotted rgba(90,70,48,.4)}.hoi-st i{font-style:normal;color:var(--ink2)}
+.hoi-g{margin-top:6px}.hoi-g svg{width:100%;height:76px;display:block}.hoi-g small{color:var(--ink2)}.hoi-g .hl{stroke-dashoffset:0;animation:hoiDraw 1.6s ease-out both .4s}
+@keyframes hoiDraw{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.hoi-lg{display:flex;gap:14px;font-size:12px}.hoi-lg i{display:inline-block;width:14px;height:3px;margin-right:4px;vertical-align:middle}
+.hoi-m{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.hoi-m small{display:block;color:var(--ink2)}.hm{display:inline-block;font-size:11.5px;padding:0 5px;margin:1px 3px 1px 0;border:1px solid rgba(90,70,48,.4)}.hm.up{color:#2f6b25;border-color:#2f6b25}.hm.dn{color:var(--ox);border-color:var(--ox)}
+.hoi-r{margin-top:6px;padding:4px 8px;border-left:4px solid var(--ink2);font-weight:700}.hoi-r.ok{border-color:#2f6b25;color:#2f6b25}.hoi-r.no{border-color:var(--ox);color:var(--ox)}
+.brp{max-height:calc(100vh - 40px);overflow-y:auto}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -494,20 +504,19 @@ function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.
  if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));
   s.TR.filter(t=>t.st=='on'&&t.ty=='ally').forEach(t=>{for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(!P_h(s,y)&&alive(s,y)&&y!=d&&!atWar(s,y,d)&&(x==a)){s.W.push(y+'|'+d);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(d,yr(s))}에 참전`)}
    for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
- const A=s.N[a],D=s.N[d],use=A.mil*c/100;let att=use*(.8+Math.random()*.4),def=(D.mil*FRC(d).a/.65*.6*(.8+Math.random()*.4)+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1);
- att*=docM(s,a,d,rid,'att',c);def*=docM(s,d,a,rid,'def',c); // 국가별 군사 교리 보정
- const m0=A.mil,d0=D.mil,BM=battleMods(s,a,d,rid,o,use);att*=BM.att;def*=BM.def;const un=o.u&&unitOf(a,o.u),bt={rid,a,d,u:(o.units&&o.units.length>1?o.units.map(id=>(unitOf(a,id)||{}).nm).filter(Boolean).join(' + '):un?un.nm:''),nv:o.nv?((NAVY[NID(a)]||[['해군',1]])[+o.nv.slice(1)]||['해군'])[0]:'',af:o.af?((AIR[NID(a)]||[['공군',1]])[+o.af.slice(1)]||['공군'])[0]:'',sea:o.sea,nav:BM.sea,air:BM.air,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};
+ const A=s.N[a],D=s.N[d],use=A.mil*c/100;
+ const m0=A.mil,d0=D.mil,BM=battleMods(s,a,d,rid,o,use);const un=o.u&&unitOf(a,o.u),bt={rid,a,d,u:(o.units&&o.units.length>1?o.units.map(id=>(unitOf(a,id)||{}).nm).filter(Boolean).join(' + '):un?un.nm:''),nv:o.nv?((NAVY[NID(a)]||[['해군',1]])[+o.nv.slice(1)]||['해군'])[0]:'',af:o.af?((AIR[NID(a)]||[['공군',1]])[+o.af.slice(1)]||['공군'])[0]:'',sea:o.sea,nav:BM.sea,air:BM.air,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};
  s.UL=s.UL||{};s.UL[a]=s.UL[a]||{};
  if(BM.sea&&!BM.sea.ok){const ca=use*.18;A.mil-=ca;Object.assign(bt,{g:0,p:(s.FR&&s.FR[rid]&&s.FR[rid].a==a)?s.FR[rid].p:0,ca:+(m0-A.mil).toFixed(1),cd:+(d0-D.mil).toFixed(1),fail:1});(s.BT=s.BT||[]).push(bt);s.log.push(`${RG[rid][0]} 상륙 실패 — ${nm(a,yr(s))} 함대가 해상에서 격퇴됨`);A.sup-=2;return}
  // 전선 진척도: 한 번에 점령하지 않고 여러 분기에 걸쳐 전선을 밀고 밀린다
- const T=T2[rid],lat=T?80-T.cy*138/560:40;if(lat>50&&WIN(s))att*=.85;if(MTNC.includes(ENN[rid]))def*=1.2;
- s.FR=s.FR||{};const OM=opMods(s,a,rid,o,s.FR[rid]&&s.FR[rid].a==a?s.FR[rid]:null);att*=OM.att;let F=s.FR[rid];if(!F||F.a!=a)F=s.FR[rid]={a,d,p:0};
- const r=att/Math.max(.5,def),g=Math.round(Math.max(-25,Math.min(100,r>=1.6?100:(r-.6)*120))*(r>.6&&r<1.6?OM.g:1)),ca=Math.min(use,use*Math.max(.04,Math.min(.35,.1/Math.sqrt(r)))*docM(s,d,a,rid,'loss',c)*OM.ca),cd=D.mil*Math.max(.02,Math.min(.25,.06*Math.sqrt(r)))*(g>0?OM.cd:1);
- A.mil-=ca;D.mil-=cd;const tca=m0-A.mil,tcd=d0-D.mil;s.WC=s.WC||{};const wk=a+'|'+d,wc=s.WC[wk]=s.WC[wk]||{ca:0,cd:0};wc.ca+=tca;wc.cd+=tcd;F.p=Math.max(0,Math.min(100,F.p+g));F.t=s.t;F.d=d;F.sea=o.sea;F.last={r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),g,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};Object.assign(bt,{op:o.op||'full',g,p:F.p,r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1)});(s.BT=s.BT||[]).push(bt);
+ s.FR=s.FR||{};const OM=opMods(s,a,rid,o,s.FR[rid]&&s.FR[rid].a==a?s.FR[rid]:null);let F=s.FR[rid];if(!F||F.a!=a)F=s.FR[rid]={a,d,p:0};
+ // 사단 전투: 지형·전투폭·조직력
+ const HP=hoiSetup(s,a,d,rid,c,o,BM.att/(o.sea?.8:1),BM.def,OM,NFc[d]);HP.OMg=OM.g;const SIM=hoiSim(HP,()=>.85+Math.random()*.3),r=SIM.r,g=SIM.g,ca=Math.min(use,use*SIM.lA*docM(s,d,a,rid,'loss',c)*OM.ca),cd=Math.min(D.mil*.3,HP.nD*SIM.lD*(g>0?OM.cd:1));
+ A.mil-=ca;D.mil-=cd;const tca=m0-A.mil,tcd=d0-D.mil;s.WC=s.WC||{};const wk=a+'|'+d,wc=s.WC[wk]=s.WC[wk]||{ca:0,cd:0};wc.ca+=tca;wc.cd+=tcd;F.p=Math.max(0,Math.min(100,F.p+g));F.t=s.t;F.d=d;F.sea=o.sea;F.last={r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),g,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};Object.assign(bt,{op:o.op||'full',g,p:F.p,r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),hoi:{ter:HP.ter,riv:HP.riv,w:HP.W,dirs:HP.dirs,nA:HP.nA,nD:HP.nD,fA:SIM.fA,fD:SIM.fD,A:divRep(HP.DA),D:divRep(HP.DD),mA:HP.mA,mD:HP.mD,rl:SIM.log,end:SIM.end,rd:SIM.rd,ent:HP.ent}});(s.BT=s.BT||[]).push(bt);
  (o.units&&o.units.length?o.units:[o.u]).filter(Boolean).forEach(id=>s.UL[a][id]=F.p>=100?rid:(o.sea?seaSrc(s,a,rid):landSrc(s,a,rid)));
- if(F.p>=100){R.occ=a==R.o?null:a;delete s.FR[rid];bt.cap=1;s.log.push(`${nm(a,yr(s))}, ${RG[rid][0]} 점령`)}else s.log.push(`${RG[rid][0]} 전투 — ${nm(a,yr(s))} ${g>0?'진격':'저지됨'} (전선 ${F.p}%, 손실 ${tca|0} 대 ${tcd|0})`);
+ if(F.p>=100){R.occ=a==R.o?null:a;delete s.FR[rid];if(s.ENT)delete s.ENT[rid];bt.cap=1;s.log.push(`${nm(a,yr(s))}, ${RG[rid][0]} 점령`)}else s.log.push(`${RG[rid][0]} 전투 — ${nm(a,yr(s))} ${g>0?'진격':'저지됨'} (전선 ${F.p}%, 손실 ${tca|0} 대 ${tcd|0})`);
  // 패전의 대가: 공격이 막히면 지지 하락, 크게 지면 적의 반격으로 출발 지역이 위협받는다
- if(g<=0){A.sup-=1.5;if(r<.5&&!o.sea){const src=landSrc(s,a,rid);if(src&&s.R[src]){let C=s.FR[src];if(!C||C.a!=d)C=s.FR[src]={a:d,d:a,p:0};C.p=Math.min(100,C.p+Math.round((.6/r-1)*45));C.t=s.t;bt.counter={r:src,p:C.p};if(C.p>=100){const SR=s.R[src];SR.occ=d==SR.o?null:d;delete s.FR[src];bt.counter.cap=1;s.log.push(`${nm(d,yr(s))} 반격 — ${RG[src][0]} 탈취`)}}}}else D.sup-=1}
+ if(g<=0){A.sup-=1.5;if(SIM.end=='stall'&&r<.7&&!o.sea){const src=landSrc(s,a,rid);if(src&&s.R[src]){let C=s.FR[src];if(!C||C.a!=d)C=s.FR[src]={a:d,d:a,p:0};C.p=Math.min(100,C.p+Math.round(clamp((.8/r-1)*45,10,70)));C.t=s.t;bt.counter={r:src,p:C.p};if(C.p>=100){const SR=s.R[src];SR.occ=d==SR.o?null:d;delete s.FR[src];bt.counter.cap=1;s.log.push(`${nm(d,yr(s))} 반격 — ${RG[src][0]} 탈취`)}}}}else D.sup-=1}
 const P_h=(s,n)=>Object.values(s.P).includes(n);
 function peace(s,t){const{a,b}=t;s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);
  if(t.ty=='cease')for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o)){R.o=R.occ;R.occ=null}}
@@ -541,8 +550,9 @@ function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.log=[`— ${y}년 ${q}분�
  s.TR.forEach(t=>{if(t.st=='p'&&t.t0!=null&&s.t-t.t0>=2)t.st='x'});const RCV={};s.TR.forEach(t=>{if(t.st=='p'&&t.t0==s.t)RCV[t.b]=(RCV[t.b]||0)+1});
  ns.forEach(n=>(oo[n].props||[]).forEach(p=>{if(!alive(s,p.to)||s.TR.some(t=>t.st=='p'&&t.a==n&&t.b==p.to&&t.ty==p.ty))return;if((RCV[p.to]||0)>=10)return;RCV[p.to]=(RCV[p.to]||0)+1;const t={id:'t'+s.t+n+p.to+p.ty,ty:p.ty,a:n,b:p.to,st:'p',t0:s.t};s.TR.push(t);if(!P_h(s,p.to))aiAnswer(s,t)}));
  // 전쟁
+ NFc={};ns.forEach(n=>new Set((oo[n].atk||[]).map(a=>a.r)).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;NFc[d]=(NFc[d]||0)+1}}));
  ns.forEach(n=>{const G={};(oo[n].atk||[]).forEach(a=>{const g=G[a.r];if(!g)G[a.r]=Object.assign({},a,{units:[a.u].filter(Boolean)});else{g.c+=a.c;if(a.u)g.units.push(a.u);g.nv=g.nv||a.nv;g.af=g.af||a.af;g.sea=g.sea||a.sea;if(a.op&&a.op!='full')g.op=a.op}});Object.values(G).forEach(a=>attack(s,n,a.r,Math.min(100,a.c),null,a))}); // 같은 목표는 합동 공세
- msnStep(s,oo);mixStep(s,oo);
+ msnStep(s,oo);entStep(s);mixStep(s,oo);
  // 독립 추진
  ns.forEach(n=>{const N=s.N[n];if(oo[n].indep&&N.lord&&N.g>20){N.g-=N.g*.1;N.ind2+=25;if(N.ind2>=100){s.log.push(`${nm(n,y)}가 ${nm(N.lord,y)}로부터 독립`);N.lord=null}}});
  // 경제
@@ -747,7 +757,7 @@ const DTAKEN=(s,n,id)=>((s.DC||{})[n]||[]).includes(id);
 const WIN=s=>qt(s)==1||qt(s)==4;
 const NATK=(s,en)=>{const k=regOf(en);return k&&s.R[k]?s.R[k].o:null};
 function annexNat(s,n,en){const o=NATK(s,en);if(!o||o==n)return;for(const r in s.R)if(s.R[r].o==o){s.R[r].o=n;s.R[r].occ=null}s.W=s.W.filter(w=>!w.split('|').includes(o));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==o||t.b==o))t.st='x'})}
-function annexReg(s,n,en){const k=regOf(en);if(k&&s.R[k]){s.R[k].o=n;s.R[k].occ=null}}
+function annexReg(s,n,en){const pk=NK[en],L=pk&&PROV[pk]?PROV[pk].map(p=>p.k):[regOf(en)];L.forEach(k=>{if(k&&s.R[k]){s.R[k].o=n;s.R[k].occ=null}})}
 function pactOn(s,a,b,ty){if(!a||!b||!s.N[a]||!s.N[b]||pact(s,a,b,ty))return;s.TR.push({id:'h'+s.t+a+b+ty,ty,a,b,st:'on'})}
 const UNITS0=[['제1군',25],['제2군',25],['기동 예비군',50]];
 const NAT={
@@ -1028,7 +1038,7 @@ const PROVS={
  China:[['화북',37.5,115],['화중',31,117.5],['화남',23.8,112.5],['쓰촨',30,104],['서북',36,106],['내몽골',42.5,113],['만주',45,126,'JPN'],['신장',41,85],['티베트',31.5,89],['윈난',25,101.5]],
  Canada:[['온타리오·퀘벡',47,-76],['해양 주',46.5,-64],['프레리',52.5,-105],['브리티시컬럼비아',54,-124],['북부 준주',66,-110],['래브라도',54,-62]],
  Australia:[['뉴사우스웨일스',-32.5,148],['퀸즐랜드',-22,145],['빅토리아',-37,144],['남오스트레일리아',-30,135],['서오스트레일리아',-26,121],['노던 준주',-19,133]],
- Brazil:[['상파울루',-22.5,-48.5],['리우데자네이루',-21.5,-43.5],['북동부',-8,-38.5],['아마조니아',-4,-62],['남부',-28,-52],['중서부',-14,-53]],
+ Brazil:[['상파울루',-22.5,-48.5],['리우데자네이루',-21.5,-43.5],['북동부',-8,-38.5],['아마조니아',-4,-62],['브라질 남부',-28,-52],['중서부',-14,-53]],
  India:[['펀자브',30.5,75],['연합주',27,80.5],['봄베이',19,74.5],['마드라스',12.5,78.5],['중앙주',22,79],['라지푸타나',26,72.5],['벵골·아삼',24.5,88.5]],
  Germany:[['브란덴부르크',52.5,13.6],['북독일',53.3,9.8],['라인란트·루르',50.9,7],['바이에른',48.8,11.6],['작센',51,12.8]],
  France:[['일드프랑스',48.9,2.4],['노르망디·브르타뉴',48.3,-2],['알자스·로렌',48.6,6.5],['아키텐',44.6,0],['프로방스·론',44.6,5],['프랑스령 기아나',4,-53],['레위니옹',-21,55.5],['코르시카',42.1,9.1]],
@@ -1038,8 +1048,8 @@ const PROVS={
  Japan:[['간토',36,139.7],['간사이',34.8,135.6],['규슈',32.6,130.8],['도호쿠',39.6,140.8],['홋카이도',43.3,142.5]],
  Poland:[['마조프셰',52.3,21],['실레지아·크라쿠프',50.2,19.6],['포메라니아',53.5,17.5],['갈리치아',49.8,23.5]],
  Turkey:[['트라키아',41.2,28],['서아나톨리아',38.5,29],['중앙아나톨리아',39.5,34],['동아나톨리아',39.5,41]],
- Mexico:[['멕시코 중앙',19.5,-99],['북부',28,-106],['유카탄',20,-89]],
- Argentina:[['부에노스아이레스',-35,-60],['북부',-26,-63],['파타고니아',-44,-68]],
+ Mexico:[['멕시코 중앙',19.5,-99],['멕시코 북부',28,-106],['유카탄',20,-89]],
+ Argentina:[['부에노스아이레스',-35,-60],['아르헨티나 북부',-26,-63],['파타고니아',-44,-68]],
  Iran:[['테헤란',35.7,51.4],['후제스탄',31.5,48.8],['호라산',35,58.5]],
  Sweden:[['스베알란드',59.5,16],['예탈란드',57.5,14],['노를란드',65,18.5]],
  Ukraine:[['키예프',50.4,30.5],['하리코프·돈바스',48.8,37.2],['오데사·크림',46.2,32]],
@@ -1050,14 +1060,119 @@ const PROVS={
  'South Africa':[['케이프',-32,21],['트란스발',-25.5,28.5]],
  Egypt:[['나일 삼각주',30.5,31],['상이집트',25,32]]
 };
+// 나머지 나라들의 역사적 지방 (이름이 없는 나라는 방위로 자동 분할)
+Object.assign(PROVS,{
+ Greenland:[['서그린란드',66,-50],['동그린란드',70,-25],['북그린란드',79,-45]],
+ 'Dem. Rep. Congo':[['레오폴드빌',-4.5,16.5],['적도주',0.5,20],['카사이',-5.5,23],['카탕가',-9.5,27],['동부주',1,28]],
+ Mongolia:[['울란바토르',47.9,106.9],['고비',43.5,104],['서부 몽골',48,92],['동부 몽골',47.5,114]],
+ Sudan:[['하르툼',15.6,32.5],['다르푸르',13.5,24.5],['코르도판',13,30],['홍해주',19,36]],
+ Libya:[['트리폴리타니아',31,13.5],['키레나이카',31,21.5],['페잔',26,14]],
+ Chad:[['차드 호',12.5,15.5],['보르쿠·티베스티',20,18],['와다이',13.5,20.5]],
+ Mali:[['바마코',12.6,-8],['통북투',17,-3],['아드라르',20,0.5]],
+ Peru:[['리마',-12,-77],['북부 해안',-6.5,-79.5],['안데스 남부',-14.5,-71.5],['아마존',-6,-74]],
+ Angola:[['루안다',-9,14.5],['벵겔라',-12.5,14.5],['비에',-12.5,18],['남부 앙골라',-16,17]],
+ Niger:[['니아메',13.5,2.5],['진데르',14,9],['아이르',18.5,8.5]],
+ Ethiopia:[['쇼아',9,38.7],['티그레',13.5,39.5],['오가덴',7,44],['남부 에티오피아',6,37.5]],
+ Colombia:[['보고타',4.6,-74],['안티오키아',6.5,-75.5],['카리브 해안',10,-74.5],['야노스',4,-71]],
+ Bolivia:[['라파스',-16.5,-68.1],['코차밤바',-17.4,-66.2],['산타크루스',-17,-62],['차코',-21,-62.5]],
+ Mauritania:[['누악쇼트',18,-15.5],['모리타니 아드라르',21,-11],['동부 모리타니',17.5,-8]],
+ Norway:[['오슬로',60,10.5],['베르겐',60.6,6],['트론헤임',63.5,10.5],['노를란',67.5,15],['핀마르크',70,25]],
+ Tanzania:[['다르에스살람',-7,39],['탕가니카 호',-6,30.5],['킬리만자로',-3.5,37]],
+ Chile:[['산티아고',-33.5,-70.7],['아타카마',-24,-69.5],['아라우카니아',-38.5,-72.5],['칠레 파타고니아',-48,-73]],
+ Nigeria:[['라고스',6.8,3.6],['북부 나이지리아',11.5,8.5],['동부 나이지리아',6,7.5]],
+ Venezuela:[['카라카스',10.4,-67],['마라카이보',10,-71.6],['오리노코',7,-64.5],['과야나',5,-62]],
+ Pakistan:[['서펀자브',31.5,73],['신드',26,68.5],['북서변경주',34,71.5],['발루치스탄',28.5,65]],
+ Namibia:[['빈트후크',-22.5,17],['오밤보',-18,16],['남부 나미브',-26.5,17]],
+ Mozambique:[['로렌수마르케스',-25,33],['베이라',-19.5,34.5],['니아사',-13,37]],
+ Zambia:[['루사카',-15.4,28.3],['구리 지대',-12.8,28],['바로체',-15.5,23.5]],
+ Afghanistan:[['카불',34.5,69.2],['칸다하르',31.6,65.7],['헤라트',34.3,62.2],['마자르이샤리프',36.7,67]],
+ Finland:[['우시마',60.4,24.9],['투르쿠',60.6,22.3],['카렐리야',61.8,29],['오스트로보스니아',63.5,24],['라플란드',67.5,26]],
+ Myanmar:[['랑군',17,96],['만달레이',22,96],['샨 고원',21,98.5],['아라칸',20,93.5]],
+ Madagascar:[['타나나리브',-18.9,47.5],['디에고수아레스',-13,49.3],['남부 마다가스카르',-23,45.5]],
+ 'S. Sudan':[['주바',4.8,31.6],['나일 상류',9,32],['바르엘가잘',8,27.5]],
+ Botswana:[['가보로네',-24.6,25.9],['칼라하리',-23,22],['오카방고',-19.5,23.5]],
+ 'Central African Rep.':[['방기',4.4,18.6],['우방기 동부',6,23],['샤리 북부',8.5,20.5]],
+ Turkmenistan:[['아시가바트',38,58.4],['카라쿰',39.5,60.5],['크라스노보츠크',40,54]],
+ Uzbekistan:[['타슈켄트',41.3,69.3],['사마르칸트',39.7,66.9],['카라칼팍',43,59]],
+ Kenya:[['나이로비',-1.3,36.8],['몸바사',-3.8,39.5],['북부 변경',2.5,38.5]],
+ Thailand:[['방콕',13.8,100.5],['치앙마이',18.8,99],['이산',15.5,103.5],['남부 시암',8.5,99.5]],
+ Iraq:[['바그다드',33.3,44.4],['모술',36.3,43.1],['바스라',30.5,47.8]],
+ Yemen:[['사나',15.4,44.2],['아덴',13,45.5],['하드라마우트',16,49]],
+ Morocco:[['라바트',34,-6.8],['페스',34,-5],['마라케시',31.6,-8],['남부 모로코',29,-9.5]],
+ Cameroon:[['두알라',4,9.7],['야운데',3.9,11.5],['북부 카메룬',9.5,13.5]],
+ 'Papua New Guinea':[['파푸아',-8.5,147],['뉴기니 북부',-4,143],['비스마르크 제도',-4.5,152]],
+ Paraguay:[['아순시온',-25.3,-57.6],['차코 보레알',-21.5,-60.5],['파라나',-26.5,-55.5]],
+ Zimbabwe:[['솔즈베리',-17.8,31],['불라와요',-20.2,28.6]],
+ 'New Zealand':[['북섬',-38.5,175.8],['남섬',-43.5,171]],
+ Belarus:[['민스크',53.9,27.6],['비텝스크',55.2,30.2],['프리퍄티 습지',52.2,27.5],['고멜',52.4,31]],
+ Congo:[['브라자빌',-4.3,15.3],['중부 콩고',-1,15.5],['북부 콩고',2,16.5]],
+ Vietnam:[['통킹',21.3,105.5],['안남',16,107.5],['코친차이나',10.5,106.5]],
+ Romania:[['왈라키아',44.5,25.5],['몰다비아',47,27],['트란실바니아',46.5,24],['도브루자',44.5,28.5]],
+ Oman:[['무스카트',23.6,58.5],['도파르',17.5,54],['오만 내륙',21.5,57]],
+ Malaysia:[['말라야',3.5,102],['사라왁',2.5,113],['북보르네오',5.5,117]],
+ "Côte d'Ivoire":[['아비장',5.4,-4],['북부 코트디부아르',9.3,-5.5]],
+ 'W. Sahara':[['리오데오로',23.7,-15.9],['사귀아엘함라',26.7,-12]],
+ Philippines:[['루손',16,121],['비사야',10.7,123],['민다나오',7.8,125]],
+ 'Burkina Faso':[['와가두구',12.4,-1.5],['보보디울라소',11.2,-4.3]],
+ Kyrgyzstan:[['프룬제',42.9,74.6],['페르가나 남부',40.5,73]],
+ Gabon:[['리브르빌',0.4,9.5],['오고웨',-1,12]],
+ Ecuador:[['키토',-0.2,-78.5],['과야킬',-2.2,-79.9],['오리엔테',-1.5,-76.5]],
+ Guinea:[['코나크리',9.5,-13.7],['푸타잘론',11,-12],['기니 고지',9,-9.5]],
+ Uganda:[['캄팔라',0.3,32.6],['북부 우간다',2.8,32.5]],
+ 'Lao PDR':[['비엔티안',18,102.6],['루앙프라방',19.9,102.1],['남부 라오스',15.5,106]],
+ Ghana:[['아크라',5.8,-0.3],['아샨티',6.7,-1.6],['골드코스트 북부',9.8,-1]],
+ Iceland:[['레이캬비크',64.1,-21.6],['북동 아이슬란드',65.5,-16]],
+ Syria:[['다마스쿠스',33.5,36.3],['알레포',36.2,37.2],['자지라',36,40.5]],
+ Guyana:[['조지타운',6.8,-58.2],['내륙 기아나',4,-59]],
+ Uruguay:[['몬테비데오',-34.6,-56],['북부 우루과이',-31.5,-56.5]],
+ Senegal:[['다카르',14.7,-17],['카자망스',12.8,-15.5],['세네갈 동부',14,-13]],
+ Tunisia:[['튀니스',36.8,10.2],['남부 튀니지',33.5,9.5]],
+ Cambodia:[['프놈펜',11.6,104.9],['톤레사프',13.3,103.8]],
+ Tajikistan:[['스탈리나바드',38.6,68.8],['파미르',38.3,73]],
+ Nepal:[['카트만두',27.7,85.3],['서부 네팔',29,81.5]],
+ Greece:[['아티카',38,23.7],['마케도니아',40.7,22.5],['펠로폰네소스',37.5,22.2],['에페이로스·테살리아',39.6,21.5],['크레타',35.2,24.9]],
+ 'Dem. Rep. Korea':[['평안도',39.5,125.8],['함경도',41,129.5],['황해도',38.4,125.6]],
+ Bulgaria:[['소피아',42.7,23.3],['플로브디프',42.1,24.8],['바르나',43.2,27.6]],
+ Bangladesh:[['동벵골',24,90.4],['치타공',22.5,91.8]],
+ Hungary:[['부다페스트',47.5,19.1],['알푈드',46.8,20.8],['트란스다누비아',46.9,17.5]],
+ Austria:[['빈',48.2,16.4],['티롤',47.2,11.5],['슈타이어마르크',47.2,15]],
+ Serbia:[['베오그라드',44.8,20.5],['보이보디나',45.5,20],['남부 세르비아',43,21.5]],
+ 'Czech Rep.':[['보헤미아',50,14.4],['주데텐란트',50.6,13.5],['모라비아',49.4,17]],
+ Korea:[['경기도',37.5,127],['충청도',36.5,127.3],['경상도',35.8,128.7],['전라도',35.2,126.9]],
+ Portugal:[['리스본',38.9,-9],['포르투',41.3,-8.3],['알가르브·알렌테주',37.8,-8]],
+ Cuba:[['아바나',23,-82.4],['산티아고데쿠바',20.3,-76]],
+ Latvia:[['리가',56.95,24.1],['라트갈레',56.3,27]],
+ Lithuania:[['카우나스',54.9,23.9],['빌뉴스',54.7,25.3],['클라이페다',55.7,21.2]],
+ Ireland:[['렌스터',53.3,-7],['먼스터',52.2,-8.6],['코노트',53.8,-9]],
+ Estonia:[['탈린',59.4,24.7],['타르투',58.4,26.7]],
+ Croatia:[['자그레브',45.8,16],['달마티아',43.5,16.4]],
+ Denmark:[['셸란',55.5,12],['유틀란트',56.2,9.2]],
+ Slovakia:[['브라티슬라바',48.2,17.5],['동슬로바키아',48.8,21.2]],
+ 'Bosnia and Herz.':[['사라예보',43.9,18.4],['헤르체고비나',43.3,17.8]],
+ Switzerland:[['베른',46.95,7.4],['취리히',47.4,8.6],['티치노·그라우뷘덴',46.5,9.3]],
+ Netherlands:[['홀란트',52.2,4.6],['헬데를란트',52,5.9],['북부 네덜란드',53.1,6.3],['브라반트·림뷔르흐',51.4,5.4]],
+ Belgium:[['플랑드르',51,3.9],['왈롱',50.4,5],['브뤼셀',50.85,4.35]],
+ Azerbaijan:[['바쿠',40.4,49.9],['간자',40.7,46.3]],
+ Georgia:[['트빌리시',41.7,44.8],['쿠타이시',42.3,42.7]],
+ Jordan:[['암만',31.95,35.9],['동부 사막',31.5,37.5]]
+});
+const DIR8=['동부','북동부','북부','북서부','서부','남서부','남부','남동부'];
+function inRings(rs,x,y){let c=false;for(const r of rs)for(let i=0,j=r.length-1;i<r.length;j=i++){const a=r[i],b=r[j];if((a[1]>y)!=(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])c=!c}return c}
+// 이름표가 없는 나라: 넓이에 맞춰 2~6개 지방으로 나누고 방위로 이름 붙임
+function autoProvs(t,name){const area=t.rs.reduce((a,r)=>a+ringArea(r),0);if(area<30)return null;const k=Math.max(2,Math.min(6,Math.round(Math.sqrt(area/18))));
+ const pts=[],w=t.x1-t.x0,h=t.y1-t.y0,st=Math.sqrt(w*h/500)||1;for(let x=t.x0+st/2;x<t.x1;x+=st)for(let y=t.y0+st/2;y<t.y1;y+=st)if(inRings(t.rs,x,y))pts.push([x,y]);if(pts.length<k*4)return null;
+ const cx=pts.reduce((a,p)=>a+p[0],0)/pts.length,cy=pts.reduce((a,p)=>a+p[1],0)/pts.length,C=[];let far=pts.reduce((a,p)=>Math.hypot(p[0]-cx,p[1]-cy)>Math.hypot(a[0]-cx,a[1]-cy)?p:a);C.push(far);
+ while(C.length<k)C.push(pts.reduce((a,p)=>{const d=Math.min(...C.map(c=>Math.hypot(p[0]-c[0],p[1]-c[1])));return d>a[1]?[p,d]:a},[null,-1])[0]);
+ for(let it=0;it<15;it++){const sm=C.map(()=>[0,0,0]);pts.forEach(p=>{let b=0,bd=1e9;C.forEach((c,i)=>{const d=Math.hypot(p[0]-c[0],p[1]-c[1]);if(d<bd){bd=d;b=i}});sm[b][0]+=p[0];sm[b][1]+=p[1];sm[b][2]++});sm.forEach((s,i)=>{if(s[2])C[i]=[s[0]/s[2],s[1]/s[2]]})}
+ const R=Math.max(w,h)/2,used={};return C.map(c=>{const dx=c[0]-cx,dy=cy-c[1];let nmn=Math.hypot(dx,dy)<R*.18?'중부':DIR8[(Math.round(Math.atan2(dy,dx)/(Math.PI/4))+8)%8];if(used[nmn])nmn+=' 2';used[nmn]=1;return{name:name+' '+nmn,xy:c}})}
 let PROV={},PARENT={},PARENTS=[];
 function clipConvex(ring,cell){let out=ring;const n=cell.length,cx=cell.reduce((a,p)=>a+p[0],0)/n,cy=cell.reduce((a,p)=>a+p[1],0)/n;
  for(let i=0;i<n;i++){const a=cell[i],b=cell[(i+1)%n],sg=Math.sign((b[0]-a[0])*(cy-a[1])-(b[1]-a[1])*(cx-a[0]))||1,ins=p=>sg*((b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]))>=0,inp=out;out=[];if(!inp.length)break;
   for(let j=0;j<inp.length;j++){const P=inp[j],Q=inp[(j+1)%inp.length],pi=ins(P),qi=ins(Q);if(pi)out.push(P);if(pi!=qi){const dx=Q[0]-P[0],dy=Q[1]-P[1],ex=b[0]-a[0],ey=b[1]-a[1],den=dx*ey-dy*ex;if(Math.abs(den)>1e-12){const t=((a[0]-P[0])*ey-(a[1]-P[1])*ex)/den;out.push([P[0]+dx*t,P[1]+dy*t])}}}}return out}
 const ringArea=r=>{let a=0;for(let i=0,j=r.length-1;i<r.length;j=i++)a+=(r[j][0]+r[i][0])*(r[j][1]-r[i][1]);return Math.abs(a/2)};
 function subdivide(){if(!CT||!window.d3)return;const out=[];CT.forEach(t=>{if(!t.n&&RG[t.k]){t.n='Kashmir';RG[t.k][0]='카슈미르';RG[t.k][3]=RG[t.k][4]='IND';ENN[t.k]='Kashmir';NK.Kashmir=NK.Kashmir||t.k}});
- CT.forEach(t=>{const S0=PROVS[t.n];if(!S0||!RG[t.k]){out.push(t);return}PARENTS.push(t);
-  const seeds=S0.map(p=>LL(p[1],p[2])),pad=60,bb=[Math.min(t.x0,...seeds.map(p=>p[0]))-pad,Math.min(t.y0,...seeds.map(p=>p[1]))-pad,Math.max(t.x1,...seeds.map(p=>p[0]))+pad,Math.max(t.y1,...seeds.map(p=>p[1]))+pad];
+ CT.forEach(t=>{if(!RG[t.k]){out.push(t);return}let S0=PROVS[t.n],seeds;if(S0)seeds=S0.map(p=>LL(p[1],p[2]));else{const au=t.n=='Kashmir'?null:autoProvs(t,RG[t.k][0]);if(!au){out.push(t);return}S0=au.map(a=>[a.name]);seeds=au.map(a=>a.xy)}PARENTS.push(t);
+  const pad=60,bb=[Math.min(t.x0,...seeds.map(p=>p[0]))-pad,Math.min(t.y0,...seeds.map(p=>p[1]))-pad,Math.max(t.x1,...seeds.map(p=>p[0]))+pad,Math.max(t.y1,...seeds.map(p=>p[1]))+pad];
   const vor=d3.Delaunay.from(seeds).voronoi(bb),base=RG[t.k],res=(base[5]+'000').slice(0,3).split('').map(Number),parts=[];
   S0.forEach((p,i)=>{const cell=vor.cellPolygon(i);if(!cell)return;const C=cell.slice(0,-1),rs=[];t.rs.forEach(r=>{const c=clipConvex(smoothRing(r),C);if(c.length>=3&&ringArea(c)>.02)rs.push(c)});if(!rs.length)return;parts.push({p,i,rs,area:rs.reduce((a,r)=>a+ringArea(r),0)})});
   const tot=parts.reduce((a,q)=>a+q.area,0)||1;PROV[t.k]=[];
@@ -1169,6 +1284,67 @@ const OPS={full:['전면 공세','특별한 보정 없음. 가장 단순한 정�
 const MSN={bomb:['전략 폭격','f','적 공군과 공중전 뒤 목표국 산업력·지지를 깎는다.'],block:['해상 봉쇄','n','적 해군과 해전 뒤 목표국의 식량·석유·국고 수입을 끊는다.'],sub:['잠수함전','n','해전을 피해 적 상선을 노린다. 국고·식량 피해는 작지만 함대 손실도 작다.']};
 function encCount(s,a,rid){return held(s,a).filter(x=>dist(x,rid)<=1).length}
 function paraOK(s,a,rid){const t=T2[rid];if(!t)return false;return held(s,a).some(x=>{const q=T2[x];return q&&wrapD([q.cx,q.cy],[t.cx,t.cy])<150})}
+// ════════ 사단 전투: 지형 · 전투폭 · 조직력 · 장갑 ════════
+// [이름, 공격 보정, 전투폭(전열 사단 수), 기호]
+const TERR={plain:['평원',1,24,'▱'],forest:['삼림',.85,20,'♣'],hill:['구릉',.75,20,'⌒'],mtn:['산악',.5,14,'▲'],marsh:['습지',.6,16,'≈'],desert:['사막',.9,24,'∴'],jungle:['밀림',.7,18,'♠'],urban:['도시',.7,20,'▦'],tundra:['동토',.8,18,'✲']};
+const T_URB=['일드프랑스','잉글랜드 남부','브란덴부르크','모스크바','레닌그라드','간토','간사이','라인란트·루르','중부 대서양','오대호','빈','부다페스트','홀란트','브뤼셀','경기도','북이탈리아','카스티야','상파울루','봄베이','화중'];
+const T_MSH=['프리퍄티 습지','벵골·아삼','동벵골','나일 상류','홀란트 습지'];
+const T_DES=['Libya','Egypt','Saudi Arabia','Iraq','Mauritania','Mali','Niger','Chad','W. Sahara','Oman','Yemen','Kuwait','Qatar','United Arab Emirates','Namibia','Turkmenistan','Jordan'];
+const T_HIL=['Italy','Spain','Greece','Turkey','Korea','Dem. Rep. Korea','Japan','Serbia','Bosnia and Herz.','Montenegro','Macedonia','Bulgaria','Portugal','Czech Rep.','Slovakia','Iran','Mexico','Ethiopia','Croatia','Slovenia','Lebanon','Syria','Morocco','Algeria','Uzbekistan','Iceland','Scotland'];
+const T_FOR=['Russia','Finland','Sweden','Norway','Canada','Belarus','Latvia','Estonia','Lithuania','Poland'];
+const RIVR={'라인란트·루르':'라인강','알자스·로렌':'라인강','볼가':'볼가강','하리코프·돈바스':'돈강','키예프':'드네프르강','마조프셰':'비스와강','화중':'양쯔강','나일 삼각주':'나일강','모스크바':'',
+ '북이탈리아':'포강','왈라키아':'도나우강','부다페스트':'도나우강','베오그라드':'도나우강','빈':'도나우강','바그다드':'티그리스강','오데사·크림':'드네스트르강'};
+const TERC={};
+function terrOf(r){if(TERC[r])return TERC[r];const en=ENN[r]||'',n=(RG[r]||[''])[0],T=T2[r],lat=T?80-T.cy*138/560:40;let t='plain';
+ if(MTNC.includes(en)||/산악|알프|티롤|티베트|캅카스|파미르|안데스|그라우뷘덴|티치노|카슈미르|푸타잘론|아틀라스|산악 지대|쇼아|네팔/.test(n))t='mtn';
+ else if(T_URB.includes(n))t='urban';else if(T_MSH.includes(n))t='marsh';
+ else if(T_DES.includes(en)||/사막|사하라|칼라하리|고비|카라쿰|아타카마|페잔|서오스트레일리아|노던 준주|남오스트레일리아|헤자즈|네지드|키레나이카|아드라르|보르쿠|아이르|통북투|오가덴|상이집트|후제스탄/.test(n))t='desert';
+ else if(Math.abs(lat)<12||/아마존|아마조니아|오리노코|오리엔테|적도주|보르네오|사라왁|뉴기니|파푸아|민다나오|수마트라|코친차이나|라오스|캄보디아/.test(n))t='jungle';
+ else if(lat>62)t='tundra';else if(T_FOR.includes(en)&&lat>50)t='forest';else if(T_HIL.includes(en))t='hill';
+ return TERC[r]=t}
+const terrRiver=r=>RIVR[(RG[r]||[''])[0]]||'';
+// 나라별 사단 편제: 보병 사단과 기갑 사단의 비율, 장비 수준
+const TANK0={GER:.28,USA:.25,UK:.2,FRA:.2,RUS:.22,ITA:.12,JPN:.08,POL:.06,CZE:.12,HUN:.06,SWE:.08,ESP:.05,CHN:.02,NED:.04,KOR:0};
+const DIVI={sa:8,ha:1.5,df:24,bk:5,org:55,hp:25},DIVA={sa:20,ha:14,df:14,bk:36,org:35,hp:18};
+function divT(s,n){const y=yr(s),id=NID(n),N=s.N[n]||{ind:20,sup:50};let t=y<1916?0:y<1930?Math.min(.08,(TANK0[id]||.03)*.4):(TANK0[id]!=null?TANK0[id]:.04);t=clamp(t*(1+((N.ind||0)-60)/400),0,.45);
+ const eq=clamp(.7+(N.ind||0)/250,.7,1.35),D={t,eq};for(const k in DIVI)D[k]=DIVI[k]*(1-t)+DIVA[k]*t;['sa','ha','df','bk'].forEach(k=>D[k]*=eq);
+ if(y<1918)D.df*=1.25; // 참호전 시대: 방어가 강하다
+ D.pr=(5+25*t+(y>=1938?8:0))*eq;D.ar=t>0?(10+60*t)*eq:0;D.hd=t*.8;
+ if(N.sup<30)D.org*=.8;if(N.short&&N.short.o){D.ar*=.5;D.bk*=.8}if(N.short&&N.short.f)D.org*=.9;return D}
+// 전투 전 보정값을 한곳에서 계산 (명령 화면의 예측과 실제 전투가 같은 식을 쓴다)
+function hoiSetup(s,a,d,rid,c,o,BMa,BMd,OM,nf){const A=s.N[a],D=s.N[d],ter=terrOf(rid),TR=TERR[ter],riv=terrRiver(rid),mA=[],mD=[];let attM=1,defM=1;const add=(L,lb,f)=>{if(Math.abs(f-1)>.005)L.push([lb,Math.round((f-1)*100)])};
+ const dA=docM(s,a,d,rid,'att',c),dD=docM(s,d,a,rid,'def',c);attM*=dA;add(mA,'교리·국가 정신',dA);defM*=dD;add(mD,'교리·국가 정신',dD);
+ attM*=TR[1];add(mA,'지형: '+TR[0],TR[1]);
+ if(riv&&!o.sea&&o.op!='para'){attM*=.7;add(mA,riv+' 도하',.7)}
+ const T=T2[rid],lat=T?80-T.cy*138/560:40;if(lat>50&&WIN(s)){attM*=.85;add(mA,'겨울',.85)}
+ if(o.sea){attM*=.8;add(mA,'상륙 (해안 교두보)',.8)}
+ if(A.sup<35){const f=.85;attM*=f;add(mA,'보급 불안 (지지 낮음)',f)}
+ attM*=BMa;add(mA,'공중 지원',BMa);attM*=OM.att;add(mA,'작전 계획',OM.att);
+ const ent=((s.ENT||{})[rid])||0;defM*=1+ent;add(mD,'참호',1+ent);
+ if(D.pol&&D.pol.mil=='garrison'){defM*=1.3;add(mD,'수비대 정책',1.3)}
+ defM*=BMd;add(mD,'적 공군 엄호',BMd);
+ const dirs=Math.max(1,encCount(s,a,rid)),W=Math.round(TR[2]*Math.min(2,1+.5*(dirs-1)));
+ const DA=divT(s,a),DD=divT(s,d),use=A.mil*c/100,nA=Math.max(1,Math.round(use)),nD=Math.max(1,Math.round(D.mil*FRC(d).a*.92/Math.sqrt(Math.max(1,nf||1))+D.ind*.06));
+ return{ter,riv,W,dirs,DA,DD,nA,nD,use,attM,defM,mA,mD,ent}}
+// 전투: 12라운드(약 한 주씩). 전열 사단이 서로 공격하고, 조직력이 바닥나면 후퇴한다
+function hoiSim(P,rnd){const R=12,A=P.DA,D=P.DD,sd=(x,lo)=>({n:x,f:Math.min(x,P.W),r:Math.max(0,x-P.W),ex:0,org:1,hpL:0});const sa=sd(P.nA),sb=sd(P.nD),log=[];let end='time',rd=R;
+ const atk=(X,hdE)=>X.sa*(1-hdE)+X.ha*hdE;
+ for(let i=1;i<=R;i++){const aA=sa.f*atk(A,D.hd)*P.attM*rnd(),dD=sb.f*D.df*P.defM,aD=sb.f*atk(D,A.hd)*1.6*rnd(),bA=sa.f*A.bk*Math.sqrt(P.attM);
+  const hits=(x,y)=>x<=y?x*.1:y*.1+(x-y)*.4;let hD=hits(aA,dD),hA=hits(aD,bA);
+  if(A.ar>D.pr){hD*=1.4;hA*=.6}if(D.ar>A.pr){hA*=1.4;hD*=.6}
+  sb.org-=hD/sb.f*3.5/D.org;sa.org-=hA/sa.f*3.5/A.org;sb.hpL+=hD*.4;sa.hpL+=hA*.4;
+  for(const X of[sa,sb])if(X.org<.3&&X.r>0){const k=Math.min(X.r,X.f);X.org=(X.org*(X.f-k)+k)/X.f;X.r-=k;X.ex+=k}
+  sa.org=Math.max(0,sa.org);sb.org=Math.max(0,sb.org);log.push([Math.round(sa.org*100),Math.round(sb.org*100)]);
+  if(sb.org<=.02){end='brk';rd=i;break}if(sa.org<=.02){end='stall';rd=i;break}}
+ const r0=(()=>{const fa=Math.min(P.nA,P.W),fd=Math.min(P.nD,P.W),h=(x,y)=>x<=y?x*.1:y*.1+(x-y)*.4;let hD=h(fa*atk(A,D.hd)*P.attM,fd*D.df*P.defM),hA=h(fd*atk(D,A.hd)*1.6,fa*A.bk*Math.sqrt(P.attM));if(A.ar>D.pr){hD*=1.4;hA*=.6}if(D.ar>A.pr){hA*=1.4;hD*=.6}return(hD/fd/D.org)/Math.max(.001,hA/fa/A.org)})();
+ let g;if(end=='brk')g=Math.min(100,Math.round(55+45*(1-rd/R)+(A.t>.15?15:0)));else if(end=='stall')g=Math.min(5,Math.round(-25+35*(1-sb.org)));else g=Math.round(clamp((60*(sa.org-sb.org)+10*(1-sb.org))*P.OMg,-15,60));
+ const lA=clamp(sa.hpL/(P.nA*A.hp),.03,.6),lD=clamp(sb.hpL/(P.nD*D.hp),.02,.6);
+ return{end,rd,g,r:r0,lA,lD,log,oA:Math.round(sa.org*100),oD:Math.round(sb.org*100),fA:sa.f,fD:sb.f}}
+const divRep=X=>({t:Math.round(X.t*100),sa:+X.sa.toFixed(1),ha:+X.ha.toFixed(1),df:+X.df.toFixed(1),bk:+X.bk.toFixed(1),org:Math.round(X.org),ar:Math.round(X.ar),pr:Math.round(X.pr)});
+// 참호: 공격받지 않은 전선 지역은 분기마다 참호를 판다(최대 +30%)
+function entStep(s){s.ENT=s.ENT||{};const hit=new Set((s.BT||[]).filter(b=>!b.msn).map(b=>b.rid));
+ for(const r in s.R){const R=s.R[r],o=R.occ||R.o;if(!wars(s,o).length){delete s.ENT[r];continue}if(hit.has(r))s.ENT[r]=Math.max(0,(s.ENT[r]||0)-.1);else s.ENT[r]=Math.min(.3,(s.ENT[r]||.05)+.05);s.ENT[r]=Math.round(s.ENT[r]*100)/100;if(!s.ENT[r])delete s.ENT[r]}}
+let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
  if(op=='raid'&&!F){r.att=1.3;r.ca=1.2}
@@ -1880,7 +2056,7 @@ function indDoc(me){const N=S.N[me],h=held(S,me),pr={f:0,s:0,o:0};h.forEach(r=>{
  ${fs.length?`<div class="sec"><span>공업도시</span><span>눌러서 생산과 기술</span></div>${fs.map(f=>`<div class="ln cl" data-act="f:${f.id}"><div class="g">${esc(f.nm)}${f.occ?' <span class="tag bad">점령</span>':''}</div></div>`).join('')}`:''}
  <div class="sec"><span>연구 방향</span></div>${pols(N,'res',PR,true)}${pj.length?`<div class="sec"><span>사업</span></div>${pj.map(id=>pjRow(id,true)).join('')}`:''}`}}
 function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목표 지역을 누르세요','작전 미리보기','소모 예산 확인'][V.bt.st]||'';
- return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>
+ return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
  ${['a','n','f'].map(b=>{const L=U.filter(u=>u.b==b),f=FRC(me)[b];if(!L.length)return'';return`<div class="sec"><span>${BR[b]} · 군사력의 ${Math.round(f*100)}%</span><span>${b=='a'?(V.bt.u!=null?st:'부대를 고른 뒤 지도에서 목표 지정'):b=='n'?'해상 원정 호위':'공중 지원'}</span></div>${L.map(u=>`<div class="ln cl${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' hot':''}" data-act="unit:${u.i}"><div class="g">${esc(u.nm)}<small>${esc(u.at)} 주둔 · 전력 ${u.str} (전체의 ${u.c}%)</small></div><div class="v">${b=='a'?(u.c>=30?'XXX':'XX'):b=='n'?'⚓':'✈'}</div></div>`).join('')}`}).join('')}
  <div class="sec"><span>내린 작전 명령</span></div>${(O.atk||[]).map((a,i)=>{const u=U.find(x=>x.id==a.u),nv=U.find(x=>x.id==a.nv),af=U.find(x=>x.id==a.af);return`<div class="ln"><div class="g">${a.sea?'⚓ 상륙전 ':''}${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${esc([u&&u.nm,nv&&nv.nm,af&&af.nm].filter(Boolean).join(' + ')||a.c+'% 투입')}</small></div><button data-act="uatk:${i}">취소</button></div>`}).join('')||'<div class="note" style="margin:0">없음</div>'}
  ${(O.msn||[]).length?`<div class="sec"><span>단독 임무</span></div>${O.msn.map((m,i)=>{const u=U.find(x=>x.id==m.u);return`<div class="ln"><div class="g">${MSN[m.t][0]} · ${esc(RG[m.r][0])}<small>${esc(u?u.nm:'')}</small></div><button data-act="umsn:${i}">취소</button></div>`}).join('')}`:''}
@@ -2024,12 +2200,12 @@ function msnHTML(me,u,r){const R=S.R[r],d=R.occ||R.o,D=S.N[d],y=yr(S),types=Obje
  <dl><dt>대상국</dt><dd>${esc(nm(d,y))}</dd><dt>${u.b=='f'?'공중전':'해전'} 승산</dt><dd style="color:${odds>=50?'#2f6b25':'var(--ox)'}">${odds}%</dd><dt>성공 시 피해</dt><dd>${eff.join(' · ')}</dd><dt>예상 손실</dt><dd>${esc(u.nm)} 전력 −${mt=='sub'?4:odds>=50?5:12}%</dd></dl>
  ${(()=>{const land=validTgt(me).includes(r),can=u.b=='n'?(land||seaOK(S,me,r)):(land||paraOK(S,me,r)),ar=myUnits().filter(x=>x.b=='a');return can&&ar.length?`<div class="esc"><small>육군 동원 (선택) — ${u.b=='n'?'함대가 엄호하는 상륙전':'폭격 뒤 지상군 투입'}</small><div>${ar.map(x=>`<button class="${V.bt.ar==x.id?'on':''}" data-act="ar:${x.id}">${esc(x.nm)} <i>${x.str}</i></button>`).join('')}</div></div>`:''})()}
  <div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:msn:${mt}">임무 확정</button></div>`}
-function opEst(me,u,r,nvId,afId){const R=S.R[r],d=R.occ||R.o,A=S.N[me],D=S.N[d],fa=FRC(me),fd=FRC(d),sea=!validTgt(me).includes(r)&&V.bt.op!='para',cc=Math.min(100,u.c+(O.atk||[]).filter(a=>a.r==r).reduce((t,a)=>t+a.c,0)),use=A.mil*cc/100,am=docM(S,me,d,r,'att',u.c),dm=docM(S,d,me,r,'def',u.c);
- let def=(D.mil*fd.a/.65*.6+D.ind*.1)*(D.pol&&D.pol.mil=='garrison'?1.3:1)*dm,att=use*am,sp=null,ap=null;const F0=(S.FR||{})[r],OM=opMods(S,me,r,{op:V.bt.op||'full'},F0&&F0.a==me?F0:null);att*=OM.att;const U=myUnits(),nv=U.find(x=>x.id==nvId),af=U.find(x=>x.id==afId),ea=D.mil*fd.f;
- if(sea){const my=nv?nv.str:0,en=D.mil*fd.n*.7;sp={my,en,odds:Math.round(clamp(my/(my+en+.01)*100,0,100))};att*=.8}
- if(af){const r2=af.str/(af.str+ea+.5);att*=1+.35*r2;ap=Math.round(r2*100)}else def*=1+.15*ea/(ea+.5);
- const T=T2[r],lat=T?80-T.cy*138/560:40;if(lat>50&&WIN(S))att*=.85;if(MTNC.includes(ENN[r]))def*=1.2;const ratio=att/Math.max(.5,def),g=Math.round(Math.max(-25,Math.min(100,ratio>=1.6?100:(ratio-.6)*120))*(ratio>.6&&ratio<1.6?OM.g:1));
- return{d,sea,use,att,def,ratio,g,sp,ap,am,dm,ca:use*Math.max(.04,Math.min(.35,.1/Math.sqrt(ratio)))*OM.ca,cd:D.mil*Math.max(.02,Math.min(.25,.06*Math.sqrt(ratio)))*(g>0?OM.cd:1)}}
+function opEst(me,u,r,nvId,afId){const R=S.R[r],d=R.occ||R.o,A=S.N[me],D=S.N[d],fd=FRC(d),sea=!validTgt(me).includes(r)&&V.bt.op!='para',cc=Math.min(100,u.c+(O.atk||[]).filter(a=>a.r==r).reduce((t,a)=>t+a.c,0)),use=A.mil*cc/100;let sp=null,ap=null,BMa=1,BMd=1;
+ const F0=(S.FR||{})[r],o={op:V.bt.op||'full',sea:sea?1:0},OM=opMods(S,me,r,o,F0&&F0.a==me?F0:null),U=myUnits(),nv=U.find(x=>x.id==nvId),af=U.find(x=>x.id==afId),ea=D.mil*fd.f;
+ if(sea){const my=nv?nv.str:0,en=D.mil*fd.n*.7;sp={my,en,odds:Math.round(clamp(my/(my+en+.01)*100,0,100))}}
+ if(af){const r2=af.str/(af.str+ea+.5);BMa=1+.35*r2;ap=Math.round(r2*100)}else BMd=1+.15*ea/(ea+.5);
+ const nf=new Set((O.atk||[]).map(a=>a.r).concat([r]).filter(x=>S.R[x]&&(S.R[x].occ||S.R[x].o)==d)).size,HP=hoiSetup(S,me,d,r,cc,o,BMa,BMd,OM,nf);HP.OMg=OM.g;const SIM=hoiSim(HP,()=>1);
+ return{d,sea,use,ratio:SIM.r,g:SIM.g,sp,ap,HP,SIM,ca:Math.min(use,use*SIM.lA*docM(S,d,me,r,'loss',cc)*OM.ca),cd:Math.min(D.mil*.3,HP.nD*SIM.lD*(SIM.g>0?OM.cd:1))}}
 const pc=(v,b)=>{const x=b?v/b*100:0;return(x<10?x.toFixed(1):Math.round(x))+'%'};
 function popHTML(){const me=mine();if(V.tab!='mil'||V.bt.u==null||!V.bt.t||!me)return'';const U=myUnits(),u=U[V.bt.u];if(!u)return'';const r=V.bt.t,y=yr(S),A=S.N[me],E=opEst(me,u,r,V.bt.nv,V.bt.af),D=S.N[E.d],p=pact(S,me,E.d,'nap')||pact(S,me,E.d,'ally'),w=atWar(S,me,E.d),F=(S.FR||{})[r];
  if(V.bt.mode=='msn')return msnHTML(me,u,r);const isPara=V.bt.op=='para',navs=U.filter(x=>x.b=='n'),airs=U.filter(x=>x.b=='f'),need=(E.sea&&!isPara&&!V.bt.nv)||(isPara&&!V.bt.af);
@@ -2038,8 +2214,18 @@ function popHTML(){const me=mine();if(V.tab!='mil'||V.bt.u==null||!V.bt.t||!me)r
  <div class="esc"><small>작전 유형</small><div>${Object.entries(OPS).filter(([k])=>k!='para'||paraOK(S,me,r)).map(([k,[l,dsc]])=>`<button class="${(V.bt.op||'full')==k?'on':''}" data-act="op:${k}" title="${esc(dsc)}">${l}${k=='enc'?` <i>${encCount(S,me,r)}면</i>`:''}</button>`).join('')}</div><div class="note" style="margin:4px 0 0">${esc(OPS[V.bt.op||'full'][1])}</div></div>
  <div class="esc"><small>공군 지원 ${isPara?'<b style="color:var(--ox)">필수</b> — 공수 강하':'(선택)'}</small><div>${airs.map(x=>`<button class="${V.bt.af==x.id?'on':''}" data-act="esc:af:${x.id}">✈ ${esc(x.nm)} <i>${x.str}</i></button>`).join('')||'<span class="note">공군 없음</span>'}</div></div>
  <dl><dt>방어 세력</dt><dd>${esc(nm(E.d,y))}</dd><dt>투입 육군</dt><dd>전체 군사력의 ${Math.round(E.use/A.mil*1000)/10}%${(O.atk||[]).some(a=>a.r==r)?' (합동)':''}</dd>${E.sp?`<dt>해상전 승산</dt><dd style="color:${E.sp.odds>=50?'#2f6b25':'var(--ox)'}">${E.sp.odds}% ${E.sp.odds>=50?'우세':'열세'}</dd>`:''}${E.ap!=null?`<dt>제공권</dt><dd>${E.ap}% 확보</dd>`:`<dt>적 공군</dt><dd>방어 +${Math.round(15*D.mil*FRC(E.d).f/(D.mil*FRC(E.d).f+.5))}%</dd>`}
- <dt>전력비</dt><dd>${E.ratio.toFixed(2)} : 1</dd><dt>예상 전선 진척</dt><dd>${F&&F.a==me?F.p+'% → ':''}${E.g>0?'+':''}${E.g}%</dd></dl><div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3" ${need?'disabled':''}>${need?(isPara?'공군 부대를 고르시오':'해군 호위를 고르시오'):'손실 확인 →'}</button></div>`;
+ <dt>지형</dt><dd>${TERR[E.HP.ter][3]} ${TERR[E.HP.ter][0]}${E.HP.riv?' · '+E.HP.riv+' 도하':''}</dd><dt>전투폭</dt><dd>사단 ${E.HP.W}개${E.HP.dirs>1?` (${E.HP.dirs}방향 공격)`:''}</dd><dt>사단 수</dt><dd>${E.HP.nA} 대 ${E.HP.nD}</dd><dt>소모 우세</dt><dd>${E.ratio.toFixed(2)} : 1</dd><dt>예상 전개</dt><dd style="color:${E.SIM.end=='brk'?'#2f6b25':E.SIM.end=='stall'?'var(--ox)':'inherit'}">${E.SIM.end=='brk'?E.SIM.rd+'주 만에 돌파':E.SIM.end=='stall'?E.SIM.rd+'주 만에 공세 좌절':'12주 소모전'}</dd><dt>예상 전선 진척</dt><dd>${F&&F.a==me?F.p+'% → ':''}${E.g>0?'+':''}${E.g}%</dd></dl>${hoiMods(E.HP.mA,E.HP.mD)}<div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3" ${need?'disabled':''}>${need?(isPara?'공군 부대를 고르시오':'해군 호위를 고르시오'):'손실 확인 →'}</button></div>`;
  return`<div class="st">작전 2/2 · <i>예상 손실 확인</i></div><h5>${esc(RG[r][0])} ${E.sea?'상륙전':'공격'}</h5><dl><dt>아군 손실</dt><dd>군사력 −${pc(E.ca,A.mil)}</dd><dt>적군 손실</dt><dd>군사력 −${pc(E.cd,D.mil)}</dd>${E.sea?`<dt>상륙 실패 시</dt><dd>군사력 −${pc(E.use*.18,A.mil)}</dd>`:''}${w?'':`<dt>외교</dt><dd style="color:var(--ox)">${esc(nm(E.d,y))}에 선전포고</dd>`}${p?`<dt>조약</dt><dd style="color:var(--ox)">${TY[p.ty]} 파기 · 지지 −10%p</dd>`:''}</dl><div class="rowf"><button data-act="bt:2">← 편성</button><button class="pri" data-act="bt:ok">명령 확정</button></div>`}
+// ── 사단 전투 화면 ──
+const hoiChip=([l,v])=>`<span class="hm ${v>0?'up':'dn'}">${esc(l)} ${v>0?'+':'−'}${Math.abs(v)}%</span>`;
+function hoiMods(mA,mD){return`<div class="hoi-m"><div><small>공격 보정</small>${mA.map(hoiChip).join('')||'<span class="hm">없음</span>'}</div><div><small>방어 보정</small>${mD.map(hoiChip).join('')||'<span class="hm">없음</span>'}</div></div>`}
+function divStats(X,def){const row=(l,v)=>`<span><i>${l}</i>${v}</span>`;return`<div class="hoi-st">${def?row('방어',X.df)+row('대전차',X.pr):row('연성 공격',X.sa)+row('경성 공격',X.ha)+row('돌파',X.bk)}${row('조직력',X.org)}${X.ar?row('장갑',X.ar):''}${row('기갑',X.t+'%')}</div>`}
+function hoiRep(b){const H=b.hoi;if(!H)return'';const TR=TERR[H.ter],y=yr(S),L=[[100,100]].concat(H.rl),px=i=>(i/12*300).toFixed(1),py=v=>(70-v*.62).toFixed(1),line=k=>L.map((v,i)=>px(i)+','+py(v[k])).join(' '),last=L[L.length-1];
+ const res=H.end=='brk'?`${H.rd}주차 방어선 붕괴 — ${esc(nm(b.d,y))} 군 후퇴`:H.end=='stall'?`${H.rd}주차 공격군 조직력 소진 — 공세 중단`:`12주 소모전 — 남은 조직력 ${last[0]}% 대 ${last[1]}%`;
+ return`<div class="hoi"><div class="hoi-t"><span class="ter">${TR[3]} ${TR[0]}</span><span>전투폭 ${H.w}${H.dirs>1?` · ${H.dirs}방향`:''}</span>${H.riv?`<span>${esc(H.riv)} 도하</span>`:''}${H.ent?`<span>참호 +${Math.round(H.ent*100)}%</span>`:''}</div>
+ <div class="hoi-c"><div><b style="color:#24476b">공격 ${H.nA}개 사단</b><small>전열 ${H.fA} · 예비 ${H.nA-H.fA}</small>${divStats(H.A)}</div><div><b style="color:var(--ox)">방어 ${H.nD}개 사단</b><small>전열 ${H.fD} · 예비 ${H.nD-H.fD}</small>${divStats(H.D,1)}</div></div>
+ <div class="hoi-g"><small>조직력 추이 (주 단위)</small><svg viewBox="-4 0 308 76" preserveAspectRatio="none"><path d="M0 8H300M0 39H300M0 70H300" stroke="#8a7350" stroke-width=".6" stroke-dasharray="3 3" fill="none"/>${Array.from({length:13},(_,i)=>`<path d="M${px(i)} 70v3" stroke="#8a7350"/>`).join('')}<polyline class="hl" points="${line(0)}" fill="none" stroke="#24476b" stroke-width="2.4" vector-effect="non-scaling-stroke"/><polyline class="hl" points="${line(1)}" fill="none" stroke="#8f2a17" stroke-width="2.4" stroke-dasharray="6 3" vector-effect="non-scaling-stroke"/></svg><div class="hoi-lg"><span><i style="background:#24476b"></i>${esc(nm(b.a,y))}</span><span><i style="background:#8f2a17"></i>${esc(nm(b.d,y))}</span></div></div>
+ ${hoiMods(H.mA,H.mD)}<div class="hoi-r ${H.end=='brk'?'ok':H.end=='stall'?'no':''}">${res}</div></div>`}
 // ── 전투 보고 ──
 function brHTML(){const B=V.br,b=B&&B.L[B.i];if(!b)return'';if(b.msn){const y=yr(S),M=MSN[b.msn],D0=b.d0,fx=Object.entries(b.fx||{}).map(([k,v])=>`${FXN[k]||k} ${v<0?'−':'+'}${Math.abs(v).toFixed(1)}`);return`<div class="brp"><div class="br-h"><small>전투 보고 ${B.i+1} / ${B.L.length}</small><b>${M[0]} — ${esc(RG[b.rid][0])}</b><span class="br-st${b.win?'':' f'}">${b.win?'성공':'실패'}</span></div>
  <div class="br-s"><div class="br-side">${flag(b.a,48,32)}<b>${esc(nm(b.a,y))}</b><small>${esc(b.u)}</small></div><div class="br-vs">VS</div><div class="br-side">${flag(b.d,48,32)}<b>${esc(nm(b.d,y))}</b><small>${M[1]=='f'?'방공 전투기':'해군'}</small></div></div>
@@ -2049,13 +2235,13 @@ function brHTML(){const B=V.br,b=B&&B.L[B.i];if(!b)return'';if(b.msn){const y=yr
  <div class="rowf"><button data-act="brskip">모두 건너뛰기</button><button class="pri" data-act="brnext">${B.i+1<B.L.length?'다음 전투 →':'신문 보기 →'}</button></div></div>`}const y=yr(S),me=mine(),cap=b.cap,fail=b.fail,ph=[];
  if(b.sea&&b.nav)ph.push(['해상전',b.nav.ok?'승리 — 상륙 개시':'패배 — 함대 격퇴',b.nav.my/(b.nav.my+b.nav.en+.01)*100,b.nav.ok]);
  if(b.air)ph.push(['공중전',`제공권 ${b.air.r}%`,b.air.r,b.air.r>=50]);
- if(!fail)ph.push(['지상전',cap?'점령':`전력비 ${b.r} : 1 · 전선 ${b.g>0?'+':''}${b.g}%`,b.p,b.g>0]);
+ if(!fail)ph.push(['지상전',cap?'점령':`소모 우세 ${b.r} : 1 · 전선 ${b.g>0?'+':''}${b.g}%`,b.p,b.g>0]);
  const side=(n,L)=>`<div class="br-side">${flag(n,48,32)}<b>${esc(nm(n,y))}</b><small>${L.map(esc).join('<br>')}</small></div>`;
  return`<div class="brp"><div class="br-h"><small>전투 보고 ${B.i+1} / ${B.L.length} · ${y}년 ${qt(S)}분기</small><b>${esc(RG[b.rid][0])} ${b.sea?'상륙전':b.op&&b.op!='full'?OPS[b.op][0]:'전투'}</b>${cap?'<span class="br-st">점령</span>':fail?'<span class="br-st f">격퇴</span>':''}</div>
  <div class="br-s">${side(b.a,[b.u||'육군',b.nv,b.af].filter(Boolean))}<div class="br-vs">VS</div>${side(b.d,['방어군'])}</div>
  <div class="br-ph">${ph.map(([t,d,v,ok],i)=>`<div class="br-r" style="animation-delay:${i*.7}s"><span>${t}</span><div class="br-bar"><i style="width:${clamp(v,2,100)}%;animation-delay:${i*.7+.2}s" class="${ok?'ok':'no'}"></i></div><b class="${ok?'ok':'no'}">${d}</b></div>`).join('')}
  ${b.counter?`<div class="br-r" style="animation-delay:${ph.length*.7}s"><span>반격</span><div class="br-bar"><i style="width:${b.counter.p}%" class="no"></i></div><b class="no">${esc(nm(b.d,yr(S)))} 군, ${esc(RG[b.counter.r][0])} ${b.counter.cap?'탈취':b.counter.p+'% 진격'}</b></div>`:''}
- <div class="br-r" style="animation-delay:${ph.length*.7}s"><span>손실</span><div class="br-loss"><em>${esc(nm(b.a,y))} 군사력 −${pc(b.ca,b.m0)}</em><em>${esc(nm(b.d,y))} 군사력 −${pc(b.cd,b.d0)}</em></div></div></div>
+ <div class="br-r" style="animation-delay:${ph.length*.7}s"><span>손실</span><div class="br-loss"><em>${esc(nm(b.a,y))} 군사력 −${pc(b.ca,b.m0)}</em><em>${esc(nm(b.d,y))} 군사력 −${pc(b.cd,b.d0)}</em></div></div></div>${hoiRep(b)}
  <div class="rowf"><button data-act="brskip">모두 건너뛰기</button><button class="pri" data-act="brnext">${B.i+1<B.L.length?'다음 전투 →':'신문 보기 →'}</button></div></div>`}
 function toast(t){const e=$('#toast');if(!e)return;e.textContent=t;e.className='toast on';clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.className='toast',3200)}
 function brGo(){const b=V.br&&V.br.L[V.br.i];if(!b)return;const t=tgtPt(b.rid);if(t)flyXY(t[0]+(VW>=760?60*CAM.w/VW:0),t[1]+40*CAM.w/VW,Math.min(160,Math.max(70,CAM.w)),700);sfx('boom');setTimeout(()=>sfx('march'),300)}

@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>세계대전 국가경영</title>
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>Borders in Ink</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#151d26;--ink2:#1c2630;--ink3:#27333e;--ln:#3a4855;--tx:#e7e2d4;--mu:#97a1a7;--acc:#c4532d;--acc2:#e07a4f;--ok:#7fa36f;--bad:#e0745a;--paper:#ece2c8;--paper2:#f2ebd8;--pink:#211c16;--sea:#a7b9be;--serif:'Noto Serif KR','Nanum Myeongjo',serif;--sans:'IBM Plex Sans KR','Noto Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;color-scheme:dark}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#151d26;--tx:#e7e2d4;--paper:#ece2c8;color-scheme:dark}}
@@ -9,26 +9,88 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--ink);color:var(--tx);font:13px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
 body{overflow:hidden}
-button{font:600 12px/1 var(--sans);color:var(--tx);background:var(--ink3);border:1px solid #475563;border-radius:2px;padding:0 10px;height:30px;cursor:pointer;touch-action:manipulation}
+button{font:600 13px/1 var(--sans);color:var(--tx);background:var(--ink3);border:1px solid #475563;border-radius:2px;padding:0 12px;height:34px;cursor:pointer;touch-action:manipulation}
 button:hover{border-color:#6a7884}button:disabled{opacity:.4;cursor:default}
 button.pri{background:var(--acc);border-color:var(--acc2);color:#fff}button.on{background:#e9e3d2;color:#151b22;border-color:#fff}
 input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);border:1px solid #475563;border-radius:2px;height:32px;padding:0 8px}
 .num{font-variant-numeric:tabular-nums}
-/* ── 메뉴·로비 ── */
-.page{position:fixed;inset:0;overflow:auto;background:var(--sea)}
-.page .bg{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
-.pbox{position:relative;max-width:520px;margin:6vh auto;background:var(--ink);border:1px solid #000;padding:22px 22px 18px}
-.pbox h1{font:700 26px/1.2 var(--sans);letter-spacing:.04em;margin:0 0 2px}.pbox .k{color:var(--mu);font-size:12px;margin-bottom:16px}
-.pbox .lab{font:600 11px var(--sans);letter-spacing:.12em;color:var(--mu);margin:16px 0 6px}
-.eras{display:grid;gap:4px}.era{height:auto;display:grid;grid-template-columns:96px 1fr;text-align:left;padding:9px 10px;gap:2px 10px;background:var(--ink2)}.era b{font:700 17px var(--sans);grid-row:span 2}.era i{font-style:normal;font-size:11px;color:var(--mu)}
-.era.on{background:#e9e3d2;color:#151b22}.era.on i{color:#555}
-.rowf{display:flex;gap:6px;align-items:center;margin:6px 0}
-.ng{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-height:46vh;overflow:auto}
-.ng button{height:auto;display:flex;gap:8px;align-items:center;text-align:left;padding:7px 8px;background:var(--ink2)}.ng button span{display:grid;gap:2px}.ng button small{font-weight:400;color:var(--mu)}
-.ng button.on{background:#e9e3d2;color:#151b22}.ng button.on small{color:#555}
+/* ── 로딩·타이틀·메뉴 ── */
+.logo{font-family:'IM Fell English SC','IM Fell English',Georgia,serif;font-weight:400;color:#efe6cf;letter-spacing:.02em;line-height:.95;margin:0}
+.logo i{font-family:'IM Fell English',Georgia,serif;font-style:italic;color:#d4693f;font-size:.62em;letter-spacing:0;margin:0 .06em;position:relative;top:-.12em}
+#splash{position:fixed;inset:0;z-index:100;background:#0d1318;display:grid;place-items:center;color:#efe6cf;transition:opacity .6s ease,visibility .6s}
+#splash.out{opacity:0;visibility:hidden}
+.sp-in{text-align:center;width:min(560px,86vw)}
+.sp-rose{width:92px;height:92px;margin:0 auto 22px;display:block}
+.sp-rose path,.sp-rose circle{fill:none;stroke:#b9a57a;stroke-width:1.2;stroke-dasharray:400;stroke-dashoffset:400;animation:ink 2.2s ease forwards}
+.sp-rose .n{fill:#c4532d;stroke:none;opacity:0;animation:fade .6s 1.4s forwards}
+@keyframes ink{to{stroke-dashoffset:0}}@keyframes fade{to{opacity:1}}
+#splash .logo{font-size:clamp(46px,9vw,84px);opacity:0;animation:fade 1s .3s forwards}
+.sp-sub{font:500 13px var(--serif);letter-spacing:.32em;color:#9aa3a8;margin:14px 0 34px;opacity:0;animation:fade 1s .7s forwards}
+.sp-bar{height:2px;background:#26313a;position:relative;overflow:hidden}.sp-bar i{position:absolute;inset:0 auto 0 0;width:8%;background:#c4532d;transition:width .5s ease}
+.sp-st{display:flex;justify-content:space-between;font:500 12px var(--sans);color:#8d979d;margin-top:10px;letter-spacing:.04em}
+.scr{position:fixed;inset:0;overflow:hidden;background:#0d1318;color:var(--tx)}
+.scr-bg{position:absolute;inset:-4%;animation:drift 70s ease-in-out infinite alternate}
+.scr-bg img,.scr-bg svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@keyframes drift{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.1) translate(-2.5%,1.5%)}}
+.scr-veil{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(13,19,24,.35),rgba(13,19,24,.9) 75%,#0d1318);pointer-events:none}
+.scr-veil.dk{background:rgba(13,19,24,.78)}
+.rts path{fill:none;stroke:#d4693f;stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-dasharray:6 5;opacity:.85}
+.rts circle{fill:#efe6cf}
+.scr-c{position:relative;height:100%;overflow:auto}
+.ttl{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.ttl-k{font:600 12px var(--sans);letter-spacing:.42em;color:#b9a57a;margin-bottom:22px}
+.ttl .logo{font-size:clamp(58px,11vw,138px);text-shadow:0 2px 0 #0008}
+.ttl-ink{display:block;width:min(560px,70vw);height:22px;margin:6px auto 0}.ttl-ink path{fill:none;stroke:#c4532d;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:ink 1.6s .4s ease forwards}
+.ttl-ko{font:600 clamp(15px,2vw,19px) var(--serif);letter-spacing:.3em;color:#d9d0bb;margin:18px 0 44px}
+.ttl-menu{display:grid;gap:10px;width:min(320px,80vw)}
+.mb{height:52px;font:600 15px var(--sans);letter-spacing:.08em;background:rgba(21,29,38,.82);border:1px solid #4a5763;color:#efe6cf;border-radius:2px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;transition:background .15s,border-color .15s}
+.mb:hover{background:#efe6cf;color:#151b22;border-color:#efe6cf}.mb span{font-size:18px;opacity:.7}
+.mb.pri{background:#c4532d;border-color:#e07a4f;color:#fff}.mb.pri:hover{background:#d4693f;color:#fff}
+.ttl-foot{position:absolute;bottom:22px;left:0;right:0;font:500 12px var(--sans);color:#7d878d;letter-spacing:.12em}
+.scr-h{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:14px 24px;background:rgba(13,19,24,.88);border-bottom:1px solid #26313a}
+.scr-h .logo{font-size:26px;flex:1}.scr-h button{height:36px;font-size:13px;background:transparent}
+.scr-h .rc{display:flex;align-items:center;gap:10px;font:500 13px var(--sans);color:#9aa3a8}.scr-h .rc b{font:700 20px var(--sans);letter-spacing:.14em;color:#efe6cf}
+.mw{max-width:1180px;margin:0 auto;padding:28px 24px 40px}
+.mt{font:700 30px var(--serif);margin:0 0 4px}.ms{color:#9aa3a8;font-size:14px;margin:0 0 24px}
+.lab2{font:600 12px var(--sans);letter-spacing:.16em;color:#b9a57a;margin:26px 0 10px}
+.scn{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sc{height:auto;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:20px 20px 18px;background:rgba(21,29,38,.86);border:1px solid #3a4855;border-top:3px solid #3a4855;border-radius:2px;min-height:250px;color:var(--tx);transition:border-color .15s,background .15s}
+.sc:hover{border-color:#6a7884}.sc.on{color:var(--tx);border-color:#c4532d;border-top-color:#c4532d;background:rgba(32,42,52,.95)}
+.sc .yr{font-family:'IM Fell English SC',Georgia,serif;font-size:52px;line-height:1;color:#efe6cf}
+.sc h3{font:700 20px var(--serif);margin:10px 0 8px}.sc p{font:400 13.5px/1.65 var(--sans);color:#b4bcc0;margin:0 0 14px;flex:1}
+.sc .fls{display:flex;gap:5px;flex-wrap:wrap}.sc .tn{font:600 12px var(--sans);color:#9aa3a8;margin-top:12px;letter-spacing:.04em}
+.sc .ck{align-self:flex-end;font:700 11px var(--sans);letter-spacing:.12em;color:#e07a4f;margin-top:-8px;visibility:hidden}.sc.on .ck{visibility:visible}
+.mfrm{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;background:rgba(21,29,38,.86);border:1px solid #3a4855;padding:18px 20px;margin-top:14px}
+.fld label{display:block;font:600 12px var(--sans);color:#9aa3a8;margin-bottom:8px;letter-spacing:.06em}
+.fld .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fld input{height:44px;font:700 18px var(--sans);letter-spacing:.16em;text-transform:uppercase;width:200px;background:#0d1318;border-color:#4a5763}
+.chip{height:40px;padding:0 14px;font-size:13px;background:#0d1318}.chip.on{background:#efe6cf;color:#151b22;border-color:#efe6cf}
+.big{height:52px;padding:0 30px;font:700 15px var(--sans);letter-spacing:.06em}
+.note2{color:#8d979d;font-size:13px;line-height:1.6;margin-top:14px}
+.lob{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:18px;align-items:start}
+.lob-l{background:rgba(21,29,38,.9);border:1px solid #3a4855;max-height:calc(100vh - 170px);display:flex;flex-direction:column}
+.lob-l input{margin:12px 12px 4px;height:38px;font-size:14px;background:#0d1318}
+.lob-ls{overflow:auto;padding:0 6px 10px}
+.seg{font:600 11.5px var(--sans);letter-spacing:.16em;color:#b9a57a;padding:14px 8px 6px}
+.nt{width:100%;height:auto;display:flex;align-items:center;gap:12px;text-align:left;padding:9px 10px;margin:1px 0;background:transparent;border:1px solid transparent;border-radius:2px}
+.nt:hover{background:#ffffff0a}.nt.on{background:#efe6cf;color:#151b22}.nt.on small{color:#5d5240}
+.nt b{display:block;font:600 14.5px var(--sans)}.nt small{display:block;font:400 12px var(--sans);color:#8d979d;margin-top:2px}.nt>span{flex:1;min-width:0}
+.nt .who{font:700 10.5px var(--sans);letter-spacing:.08em;padding:3px 6px;border:1px solid currentColor;color:#e07a4f}.nt.on .who{color:#a3361b}
+.lob-r{background:rgba(21,29,38,.9);border:1px solid #3a4855;overflow:hidden}
+.lob-map{height:240px;background:#a7b9be;position:relative;border-bottom:1px solid #000}.lob-map img{width:100%;height:100%;object-fit:cover;display:block}
+.lob-d{padding:22px 24px 24px}
+.lob-n{display:flex;align-items:center;gap:16px;margin-top:-58px;position:relative}
+.lob-n .flg{border:2px solid #efe6cf;box-shadow:0 3px 0 #0006}
+.lob-n h2{font:700 34px var(--serif);margin:26px 0 0;text-shadow:0 2px 0 #000a}
+.st2{font:600 12.5px var(--sans);color:#b9a57a;letter-spacing:.06em;margin:16px 0 6px}
+.bl{font:400 15px/1.7 var(--sans);color:#d9d0bb;margin:0 0 18px}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#3a4855;border:1px solid #3a4855;margin-bottom:18px}.sg div{background:#151d26;padding:10px 12px}.sg small{display:block;font-size:12px;color:#8d979d}.sg b{font:700 22px var(--sans);font-variant-numeric:tabular-nums}
+.pl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}.pl span{font:600 12.5px var(--sans);padding:5px 10px;border:1px solid #4a5763;display:flex;gap:7px;align-items:center}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:860px){.scn{grid-template-columns:1fr}.sc{min-height:0}.mfrm{grid-template-columns:1fr}.lob{grid-template-columns:1fr}.lob-l{max-height:44vh}.sg{grid-template-columns:repeat(2,1fr)}.scr-h{padding:12px 14px}.scr-h .logo{font-size:20px}.mw{padding:20px 14px 30px}}
 .fl svg,.flg{display:block;flex:none;border:1px solid #0009}.bar .flg,.plate .flg{outline:1px solid #ffffff38}
 /* ── 플레이 화면 ── */
-.play{position:fixed;inset:0;display:grid;grid-template-rows:48px 1fr;grid-template-columns:64px 1fr}
+.play{position:fixed;inset:0;display:grid;grid-template-rows:52px 1fr;grid-template-columns:68px 1fr}
 .bar{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:0 10px 0 8px;background:var(--ink);border-bottom:1px solid #000;z-index:5;min-width:0}
 .bar .me{display:flex;align-items:center;gap:9px;min-width:0}.bar .me b{font:700 17px var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .res{flex:1;display:flex;justify-content:center;gap:4px;min-width:0}
@@ -38,7 +100,7 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .date{text-align:right;white-space:nowrap}.date b{display:block;font:700 15px var(--sans)}.date small{color:var(--mu);font-size:11px}
 #rdy{height:34px;min-width:118px;font-size:13px}#rdy.wait{background:#24303a;border-color:#3d4a56;color:#b9c0c4}
 .tabs{background:var(--ink);border-right:1px solid #000;display:flex;flex-direction:column;gap:5px;padding:8px 6px;z-index:4}
-.tb{position:relative;height:52px;width:100%;padding:0;display:grid;place-items:center;background:#2a333b;color:#c3c9cc;border:1px solid #47525b;border-top-color:#6b757d;border-bottom-color:#12171b;border-radius:1px;font:600 13px var(--sans);letter-spacing:.06em}
+.tb{position:relative;height:56px;width:100%;padding:0;display:grid;place-items:center;background:#2a333b;color:#c3c9cc;border:1px solid #47525b;border-top-color:#6b757d;border-bottom-color:#12171b;border-radius:1px;font:600 13px var(--sans);letter-spacing:.06em}
 .tb::before,.tb::after{content:'';position:absolute;top:4px;width:3px;height:3px;border-radius:50%;background:#59646c}.tb::before{left:4px}.tb::after{right:4px}
 .tb.on{background:#ebe5d4;color:#141a20;border-color:#fff #cfc7b2 #a59c86}.tb.on::before,.tb.on::after{background:#a59c86}
 .tb .env{position:absolute;right:-5px;top:-5px;width:16px;height:12px}
@@ -98,33 +160,43 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .pop h5{margin:0 0 4px;font:700 13px var(--sans)}.pop .st{font:600 10px var(--sans);letter-spacing:.1em;color:var(--mu);margin-bottom:6px}.pop .st i{font-style:normal;color:var(--acc2)}
 .pop dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:6px 0 8px;font-size:12px}.pop dt{color:var(--mu)}.pop dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
 .pop .rowf{justify-content:flex-end}
-.sheet{position:absolute;left:12px;bottom:12px;width:min(430px,calc(100% - 24px));max-height:min(62%,560px);display:flex;flex-direction:column;background:var(--ink2);border:1px solid #000;z-index:4;transform:translateY(calc(100% + 24px));transition:transform .2s ease-out;box-shadow:0 3px 0 #0003}
+.sheet{position:absolute;left:12px;bottom:12px;width:min(460px,calc(100% - 24px));max-height:min(62%,560px);display:flex;flex-direction:column;background:var(--ink2);border:1px solid #000;z-index:4;transform:translateY(calc(100% + 24px));transition:transform .2s ease-out;box-shadow:0 3px 0 #0003}
 .sheet.on{transform:none}.sheet.min{transform:translateY(calc(100% - 46px))}
 .sh{display:flex;align-items:center;gap:9px;padding:8px 8px 8px 12px;border-bottom:1px solid #000;background:var(--ink);min-height:46px;cursor:pointer}
-.sh .ic{width:26px;height:26px;flex:none}.sh b{font:700 15px var(--sans);display:block}.sh small{color:var(--mu);font-size:11px}.sh>div{flex:1;min-width:0}
+.sh .ic{width:28px;height:28px;flex:none}.sh b{font:700 17px var(--sans);display:block}.sh small{color:#aab3b8;font-size:12.5px}.sh>div{flex:1;min-width:0}
 .sh button{width:30px;padding:0;font-size:14px;background:transparent;border-color:#3a4855}
-.sb{overflow:auto;padding:10px 12px 12px}
-.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#000;border:1px solid #000;margin-bottom:10px}.kv div{background:var(--ink3);padding:6px 8px}.kv small{display:block;color:var(--mu);font-size:10.5px}.kv b{font:700 15px var(--sans);font-variant-numeric:tabular-nums}
-.sec{font:600 10.5px var(--sans);letter-spacing:.12em;color:var(--mu);margin:12px 0 5px;display:flex;justify-content:space-between}
-.ln{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #2c3944;font-size:12.5px}.ln:last-child{border-bottom:0}.ln .g{flex:1;min-width:0}.ln small{color:var(--mu);display:block;font-size:11px}
-.ln .v{font:700 13px var(--sans);font-variant-numeric:tabular-nums;text-align:right}
+.sb{overflow:auto;padding:12px 16px 16px;font-size:13.5px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#000;border:1px solid #000;margin-bottom:10px}.kv div{background:var(--ink3);padding:8px 10px}.kv small{display:block;color:#aab3b8;font-size:12px}.kv b{font:700 18px var(--sans);font-variant-numeric:tabular-nums}
+.sec{font:700 12px var(--sans);letter-spacing:.1em;color:#c9b88f;margin:16px 0 7px;border-bottom:1px solid #2f3c47;padding-bottom:5px;display:flex;justify-content:space-between}
+.ln{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #2c3944;font-size:14px}.ln:last-child{border-bottom:0}.ln .g{flex:1;min-width:0}.ln small{color:#aab3b8;display:block;font-size:12.5px;margin-top:2px}
+.ln .v{font:700 15px var(--sans);font-variant-numeric:tabular-nums;text-align:right}
 .ln.cl{cursor:pointer}.ln.cl:hover{background:#ffffff08}.ln.hot{background:#c4532d22}
 .bar2{height:6px;background:#0c1116;border:1px solid #000;position:relative}.bar2 i{position:absolute;inset:0 auto 0 0;background:#9fb3a0}.bar2 i.u{background:#c9a33a}
 .cmds{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.cmds button{flex:1 1 auto}
-.tag{display:inline-block;font:600 10px var(--sans);padding:2px 5px;border:1px solid #6a7884;color:#c8cdd0;letter-spacing:.04em;vertical-align:1px}.tag.bad{border-color:var(--bad);color:var(--bad)}.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.acc{border-color:var(--acc2);color:var(--acc2)}
+.tag{display:inline-block;font:700 11px var(--sans);padding:3px 6px;border:1px solid #6a7884;color:#c8cdd0;letter-spacing:.04em;vertical-align:1px}.tag.bad{border-color:var(--bad);color:var(--bad)}.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.acc{border-color:var(--acc2);color:var(--acc2)}
 .warn{background:#3a1d16;border:1px solid #7a2a1a;color:#f0c2b2;padding:7px 9px;font-size:12px;margin-bottom:8px}
-.note{color:var(--mu);font-size:11.5px;margin-top:6px}
-.opt{display:grid;grid-template-columns:1fr auto;gap:0 8px;width:100%;height:auto;text-align:left;padding:7px 9px;margin:3px 0;background:var(--ink3)}.opt small{grid-column:1;font-weight:400;color:var(--mu);margin-top:2px}.opt.on{background:#e9e3d2;color:#151b22}.opt.on small{color:#555}
+.note{color:#aab3b8;font-size:12.5px;line-height:1.55;margin-top:8px}
+.opts{display:grid;gap:6px;margin:4px 0 6px}
+.opt{display:grid;grid-template-columns:20px 1fr auto;gap:6px 10px;align-items:center;width:100%;height:auto;text-align:left;padding:11px 13px;background:#222d37;border:1px solid #3a4855;border-radius:2px;color:var(--tx)}
+.opt:hover:not(:disabled){border-color:#7a8892;background:#27333e}
+.opt .rd{width:16px;height:16px;border-radius:50%;border:2px solid #7a8892;display:block}
+.opt b{font:700 14.5px var(--sans)}.opt em{font:700 11px var(--sans);font-style:normal;letter-spacing:.06em;padding:3px 7px;background:#c4532d;color:#fff}
+.opt .fxs{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:5px}
+.fx{font:500 12px/1.3 var(--sans);padding:3px 7px;background:#ffffff0d;color:#c3cace;border:1px solid #ffffff14}.fx.up{color:#a8d49a;border-color:#7fa36f55;background:#7fa36f1a}.fx.dn{color:#f0a995;border-color:#e0745a55;background:#e0745a1a}
+.opt.on{color:var(--tx);background:#2c2a26;border-color:#e07a4f;box-shadow:inset 3px 0 0 #e07a4f}.opt.on .rd{border-color:#e07a4f;background:radial-gradient(circle,#e07a4f 0 4px,transparent 5px)}
+.db .opt{background:#fbf7ec;color:var(--pink);border-color:#c9bc9c}.db .opt:hover:not(:disabled){background:#fff;border-color:#8c7d5e}.db .opt .rd{border-color:#8c7d5e}
+.db .fx{background:#00000008;color:#4a4030;border-color:#00000014}.db .fx.up{color:#2f6b25;background:#4f7a4514;border-color:#4f7a4540}.db .fx.dn{color:#9a2f18;background:#a3361b12;border-color:#a3361b40}
+.db .opt.on{color:var(--pink);background:#fff;border-color:#a3361b;box-shadow:inset 3px 0 0 #a3361b}.db .opt.on .rd{border-color:#a3361b;background:radial-gradient(circle,#a3361b 0 4px,transparent 5px)}
 /* 문서 패널(종이) */
-.doc{position:absolute;right:12px;top:12px;bottom:96px;width:min(380px,42%);display:none;flex-direction:column;background:var(--paper2);color:var(--pink);border:1px solid #4a4030;z-index:3;box-shadow:0 3px 0 #0002}
+.doc{position:absolute;right:12px;top:12px;bottom:96px;width:min(420px,42%);display:none;flex-direction:column;background:var(--paper2);color:var(--pink);border:1px solid #4a4030;z-index:3;box-shadow:0 3px 0 #0002}
 .doc.on{display:flex}
-.dh{display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--tx);padding:0 6px 0 12px;height:38px;flex:none}.dh b{flex:1;font:700 13px var(--sans);letter-spacing:.04em}.dh button{width:28px;padding:0;height:26px;background:transparent}
-.db{overflow:auto;padding:10px 14px 14px;flex:1}
-.db .sec{color:#6d6250}.db .ln{border-bottom-color:#d6cbb0}.db .ln small{color:#6d6250}.db .ln.cl:hover{background:#00000008}.db .ln.hot{background:#c4532d1f}.db .note{color:#6d6250}
+.dh{display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--tx);padding:0 6px 0 14px;height:44px;flex:none}.dh b{flex:1;font:700 15px var(--sans);letter-spacing:.04em}.dh button{width:28px;padding:0;height:26px;background:transparent}
+.db{overflow:auto;padding:12px 16px 16px;flex:1;font-size:13.5px}
+.db .sec{color:#7a5a2c;border-bottom-color:#d6cbb0}.db .ln{border-bottom-color:#d6cbb0}.db .ln small{color:#6d6250}.db .ln.cl:hover{background:#00000008}.db .ln.hot{background:#c4532d1f}.db .note{color:#6d6250}
 .db button{background:#2a333b;color:#eee;border-color:#1b2026}.db button.pri{background:var(--acc);border-color:#8f3a22}.db button.on{background:#151d26;color:#fff;border-color:#000;outline:2px solid var(--acc)}
-.db .opt{background:#e6dcc4;color:var(--pink);border-color:#bcae8e}.db .opt small{color:#6d6250}.db .opt.on{background:#151d26;color:#fff}.db .opt.on small{color:#aab}
+
 .db .kv{background:#bcae8e;border-color:#bcae8e}.db .kv div{background:#e9e0c9}.db .kv small{color:#6d6250}
-.ledger{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}.ledger th{font:600 10.5px var(--sans);color:#6d6250;text-align:left;border-bottom:1.5px solid #4a4030;padding:4px 3px}.ledger td{border-bottom:1px solid #d6cbb0;padding:5px 3px;vertical-align:top}.ledger td.r,.ledger th.r{text-align:right}
+.ledger{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}.ledger th{font:700 12px var(--sans);color:#6d6250;text-align:left;border-bottom:1.5px solid #4a4030;padding:4px 3px}.ledger td{border-bottom:1px solid #d6cbb0;padding:7px 4px;vertical-align:top}.ledger td.r,.ledger th.r{text-align:right}
 .ledger tr.cl{cursor:pointer}.ledger tr.cl:hover td{background:#00000008}.ledger tr.hot td{background:#c4532d24}
 .ledger .stp{display:inline-flex;gap:2px;margin-left:6px}.ledger .stp button{width:22px;height:22px;padding:0;font-size:13px}
 .db button.letter,.sb button.letter{background:#f7f1e0;color:var(--pink);border-color:#bcae8e;border-left-color:#5a2d68}.db button.letter.hot,.sb button.letter.hot{background:#fff;border-left-color:var(--acc)}
@@ -132,10 +204,10 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
 .letter b{font:700 13px var(--sans);display:block}.letter small{color:#6d6250}.letter.hot{border-left-color:var(--acc);background:#fff}.letter.new b::after{content:' · 새 서신';color:var(--acc);font-size:11px}
 .treaty{border:1px solid #8c7d5e;background:#f7f1e0;margin:8px 0}.treaty>button{display:block;width:100%;height:auto;text-align:left;background:transparent;color:var(--pink);border:0;padding:9px 10px}
 .treaty h6{margin:0;font:700 15px var(--serif)}.treaty small{color:#6d6250;font-weight:400}
-.treaty ol{margin:0;padding:4px 12px 4px 30px;font-size:12px;border-top:1px dashed #bcae8e}.treaty li{margin:5px 0}.treaty li.mod{background:#c4532d1a;outline:1px dashed #a3361b;outline-offset:2px}.treaty li.mod::after{content:' — 상대측 수정';color:#a3361b;font-size:11px}
+.treaty ol{margin:0;padding:6px 14px 6px 32px;font-size:13.5px;line-height:1.55;border-top:1px dashed #bcae8e}.treaty li{margin:5px 0}.treaty li.mod{background:#c4532d1a;outline:1px dashed #a3361b;outline-offset:2px}.treaty li.mod::after{content:' — 상대측 수정';color:#a3361b;font-size:11px}
 .treaty .rowf{padding:0 10px 10px;justify-content:flex-end}
 .agenda{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:10px;max-width:min(400px,calc(100% - 24px));background:var(--ink);border:1px solid #000;border-left:3px solid var(--acc);padding:8px 10px 8px 11px;cursor:pointer;z-index:3}
-.agenda small{display:block;font:600 10px var(--sans);letter-spacing:.12em;color:var(--acc2)}.agenda b{font:600 13px var(--sans);display:block}.agenda span{color:var(--mu);font-size:11.5px}
+.agenda small{display:block;font:700 11px var(--sans);letter-spacing:.12em;color:var(--acc2)}.agenda b{font:700 14.5px var(--sans);display:block}.agenda span{color:#aab3b8;font-size:12.5px}
 .agenda .go{font-size:16px;color:var(--mu)}
 /* 신문 */
 .news{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#0b0f1488;padding:16px}
@@ -158,7 +230,8 @@ input,select{font:500 13px var(--sans);color:var(--tx);background:var(--ink3);bo
  .plate{left:8px;top:8px}.plate small{display:none}.plate.w{display:none}.zm{left:8px;top:56px}
  .cols{grid-template-columns:1fr}
 }
-</style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script><script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script></head><body><main id="app">불러오는 중…</main>
+</style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="sp-in"><svg class="sp-rose" viewBox="-50 -50 100 100"><circle r="44"/><circle r="30"/><path d="M0-46L6-6L46 0L6 6L0 46L-6 6L-46 0L-6-6Z"/><path class="n" d="M0-46L6-6L-6-6Z"/></svg><h1 class="logo">Borders <i>in</i> Ink</h1><div class="sp-sub">1910 — 1945 · 잉크로 그은 국경</div><div class="sp-bar"><i id="spb"></i></div><div class="sp-st"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">8%</span></div></div></div><main id="app"></main>
+<script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script>
 const NM0={UK:['영국','#b33'],FRA:['프랑스','#36b'],GER:['독일','#777'],DAN:['오스트리아-헝가리','#a84'],RUS:['러시아','#3a6'],OTT:['오스만','#c90'],ITA:['이탈리아','#6a3'],ESP:['스페인','#d73'],USA:['미국','#29c'],JPN:['일본','#d5a'],CHN:['중국','#c66'],POL:['폴란드','#a3c'],BAL:['발칸(세르비아 등)','#689'],SCA:['스칸디나비아','#5aa'],IND:['인도','#a96'],KOR:['한국','#48a'],LAT:['라틴아메리카','#7a4'],IRL:['아일랜드','#2a8']};
 const NM=new Proxy(NM0,{get:(o,t)=>{if(typeof t!='string')return o[t];const b=o[t];return[b?b[0]:(IDN[t]||t),NC[t]||(b?b[1]:hc(t))]}});
@@ -728,7 +801,8 @@ function pubInfo(n){const y=yr(S),N=S.N[n],me=mine(),T=S.TR.filter(t=>t.st=='on'
  return`<div class="kv"><div><small>산업력 (공개)</small><b>${N.ind|0}</b></div><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>추정 군사력</small><b>${N.mil>60?'강':N.mil>30?'중':'약'}</b></div></div>
  <div class="sec"><span>공개 외교 관계</span></div>${T.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==n?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">체결된 조약 없음</div>'}${wars(S,n).length?`<div class="note">교전 중: ${wars(S,n).map(x=>esc(nm(x,y))).join(', ')}</div>`:''}
  ${me&&me!=n&&alive(S,me)?`<div class="sec"><span>회담 요청 · 무역 제안</span></div><div class="cmds"><button class="pri" data-act="prop:${n}:trade">무역 제안</button><button data-act="prop:${n}:nap">불가침 회담 요청</button><button data-act="prop:${n}:ally">동맹 회담 요청</button></div>`:''}<div class="note">예산 편성과 군정 자료는 비공개입니다.</div>`}
-function pols(N,k,L,me){const cur=(O.pol&&O.pol[k])||(N.pol&&N.pol[k])||L[0][0];return L.map(([v,t,d])=>`<button class="opt${cur==v?' on':''}" ${me?`data-act="pol:${k}:${v}"`:'disabled'}><b>${t}</b><small>${d||'추가 효과 없음'}</small></button>`).join('')}
+function pols(N,k,L,me){const now=(N.pol&&N.pol[k])||L[0][0],cur=(O.pol&&O.pol[k])||now;return`<div class="opts">`+L.map(([v,t,d])=>{const on=cur==v,fx=(d||'추가 효과 없음').split(' · ').map(x=>{const up=/\+/.test(x),dn=/-|−/.test(x);return`<span class="fx${dn?' dn':up?' up':''}">${esc(x)}</span>`}).join('');
+ return`<button class="opt${on?' on':''}" ${me?`data-act="pol:${k}:${v}"`:'disabled'}><i class="rd"></i><b>${t}</b>${on?`<em>${cur!=now?'다음 분기 시행':'시행 중'}</em>`:''}<span class="fxs">${fx}</span></button>`}).join('')+'</div>'}
 function guide(n){const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*4+e[1]-1<=S.t+S.Y0*4+8);
  return L.length?L.map(e=>{const tg=e[4],diff=e[3]=='war'?(pact(S,n,tg,'nap')?'불가침 조약이 있어 역사와 다릅니다':!alive(S,tg)?'대상국이 이미 사라졌습니다':'조건이 역사와 비슷합니다'):'';
   return`<div class="ln"><div class="g">${e[0]}년 ${e[1]}분기 · ${esc(e[5])}<small>${esc(e[6])} — ${diff||'조건 확인 중'}</small></div></div>`}).join(''):'<div class="note" style="margin:0">앞으로 2년 안에 이 국가의 주요 역사 결정은 없습니다.</div>'}
@@ -870,22 +944,67 @@ function newsShow(){const N=V.news;if(!N)return;const h=N.ev[0],o=N.ev.slice(1,4
  d.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b)act(b.dataset.act);else if(e.target==d)newsClose()});document.body.appendChild(d)}
 function newsClose(){const d=$('#news');V.news=null;if(!d)return;$('#paperN').classList.add('fold');setTimeout(()=>d.remove(),430)}
 function newsGo(){const N=V.news,h=N&&N.ev[0];newsClose();if(!h)return;setTimeout(()=>{if(h.at)flyXY(h.at[0],h.at[1],Math.min(CAM.w,h.ty=='build'?90:160),650);if(h.sel){const[t,...r]=h.sel.split(':');if(t=='tab')act(h.sel);else if(t=='f')selFeat(r.join(':'),0);else{V.sel={t,id:r.join(':')};ui()}}},300)}
-// ════════ 메뉴·로비 ════════
-var EM='w2';
-function bgMap(){if(!CT)return'';return`<svg class="bg" viewBox="380 40 560 300" preserveAspectRatio="xMidYMid slice"><rect x="0" y="0" width="1000" height="560" fill="#a7b9be"/>${CT.map(t=>`<path d="${sd(t)}" fill="#e3d8bd" stroke="#6e3f35" stroke-opacity=".4" stroke-width=".25"/>`).join('')}</svg>`}
-function home(){app.className='page';app.innerHTML=`${bgMap()}<div class="pbox"><h1>세계대전 국가경영</h1><div class="k">국가를 고르고, 분기마다 결정을 내려 역사를 따르거나 바꾸세요.</div><div class="lab">시나리오</div><div class="eras">${[['w1','1910','제1차 세계대전','1910~1918 · 36분기'],['w2','1936','제2차 세계대전','1936~1945 · 40분기'],['camp','1910→1945','통합 캠페인','144분기 · 국경과 조약이 이어집니다']].map(([k,b,t,d])=>`<button class="era ${EM==k?'on':''}" data-e="${k}"><b>${b}</b><span>${t}</span><i>${d}</i></button>`).join('')}</div>
- <div class="lab">새 방</div><div class="rowf"><input id="c1" placeholder="방 코드" style="flex:1"><input id="sc" type="number" value="90" style="width:70px" aria-label="턴 제한 초"><span style="color:var(--mu)">초</span><button class="pri" id="mk" style="height:32px">방 열기</button></div>
- <div class="lab">초대받은 방 · 저장된 방 재개</div><div class="rowf"><input id="c2" placeholder="방 코드" style="flex:1"><button id="jn" style="height:32px">입장</button></div><div class="k" style="margin:10px 0 0">방장 기기가 켜져 있어야 턴이 진행됩니다. 같은 코드로 다시 들어오면 저장된 상태에서 이어집니다.</div></div>`;
+// ════════ 로딩·타이틀·메뉴·로비 ════════
+var EM='w2',MS='title',SECS=90,LSEL=null,LQ='',DBERR=0,BGURL=null;
+const T0=performance.now();
+function spl(p,t){const b=document.getElementById('spb'),s=document.getElementById('sps'),n=document.getElementById('spn');if(b)b.style.width=p+'%';if(s)s.textContent=t;if(n)n.textContent=p+'%'}
+function splashDone(){return new Promise(r=>{const w=Math.max(0,2300-(performance.now()-T0));setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('out');setTimeout(()=>s.remove(),700)}r()},w)})}
+const SCN={w1:['1910','제1차 세계대전','열강의 동맹망이 촘촘히 얽힌 시대. 발칸의 총성 한 발이 대륙 전체를 전쟁으로 끌어들이기 직전에서 시작합니다.','1910–1918 · 36분기',['UK','FRA','GER','RUS','DAN','OTT']],
+ w2:['1936','제2차 세계대전','대공황의 상처가 아물기 전, 라인란트에 군대가 들어섰습니다. 항로와 공장, 조약 문서로 다음 10년을 지휘하세요.','1936–1945 · 40분기',['UK','USA','FRA','GER','ITA','JPN','RUS','KOR']],
+ camp:['1910→45','통합 캠페인','두 번의 세계대전을 한 판으로 이어 갑니다. 첫 전쟁에서 그은 국경과 맺은 조약이 다음 시대의 출발선이 됩니다.','1910–1945 · 144분기',['UK','FRA','GER','RUS','USA','JPN']]};
+const BLURB={UK:'해운 제국. 대서양과 수에즈를 잇는 항로로 식량과 원료를 들여오고, 항만 장부로 수송 여력을 운영합니다.',USA:'대륙의 공업국. 공공사업으로 전력망과 철도를 넓히며 대공황에서 회복해 갑니다.',KOR:'망명 정부. 해외 동포 사회의 후원과 외교 서신으로 독립을 준비하고, 독립하면 국내 행정을 맡습니다.',JPN:'섬나라 공업국. 수입한 철광석과 석유를 제철소·공창·항공기 공장에 배분합니다.',FRA:'철도의 공화국. 의회 예산안을 심의하며 어느 지방의 사업을 먼저 착공할지 고릅니다.',FIN:'호수와 숲의 나라. 계절에 따라 달라지는 인력을 민간 산업과 예비 병력 사이에서 저울질합니다.',GER:'중부 유럽의 공업국. 루르 공업지대는 북해 항로로 들어오는 철광석에 기대고 있습니다.',ITA:'지중해 왕국. 아프리카 점령지로 가는 보급 항로를 지켜야 합니다.',RUS:'사회주의 대국. 5개년 계획으로 우랄 너머에 새 공업 도시를 세웁니다.',CHN:'분열된 공화국. 화북의 압력 속에서 난징 정부의 권위를 지켜야 합니다.',ESP:'흔들리는 공화국. 국내 정세가 내전 직전까지 치닫고 있습니다.',POL:'되살아난 공화국. 두 강대국 사이에서 중앙 공업지구를 일으킵니다.'};
+function menuBg(){if(BGURL||!CT)return BGURL;let g='';for(let x=0;x<=1000;x+=27.78)g+=`M${x.toFixed(1)} 0V560`;for(let y=0;y<=560;y+=40.6)g+=`M0 ${y.toFixed(1)}H1000`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice"><rect x="-100" y="-100" width="1200" height="800" fill="#7f9399"/><path d="${g}" stroke="#5f757c" stroke-width=".35" fill="none"/>${CT.map(t=>`<path d="${t.d}" fill="#dccfae" stroke="#5a3a2c" stroke-width=".35" stroke-opacity=".7"/>`).join('')}</svg>`;
+ return BGURL='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
+function routesSVG(){const P=[[[51.5,-0.1],[40.7,-74]],[[51.5,-0.1],[36,-6],[31.3,32.3],[18.9,72.8]],[[35.7,139.7],[37.8,-122.4+360]],[[52.5,13.4],[55.8,37.6]],[[48.9,2.4],[36.8,3.1]],[[31.2,121.5],[1.3,103.8]],[[38.9,-77],[51.5,-0.1]]];
+ return`<svg class="rts" viewBox="40 30 920 430" preserveAspectRatio="xMidYMid slice">${P.map((L,i)=>{const pts=L.map(p=>LL(p[0],p[1]));const d=curve(pts.length==2?[pts[0],[(pts[0][0]+pts[1][0])/2,(pts[0][1]+pts[1][1])/2-Math.abs(pts[1][0]-pts[0][0])*.15],pts[1]]:pts);return`<path id="rt${i}" d="${d}"><animate attributeName="stroke-dashoffset" from="0" to="-110" dur="${6+i}s" repeatCount="indefinite"/></path><circle r="2.2"><animateMotion dur="${9+i*2}s" repeatCount="indefinite"><mpath href="#rt${i}"/></animateMotion></circle>`}).join('')}</svg>`}
+const bgHTML=(dk)=>`<div class="scr-bg">${menuBg()?`<img src="${menuBg()}" alt="">`:''}${dk?'':routesSVG()}</div><div class="scr-veil${dk?' dk':''}"></div>`;
+const INKSTROKE=`<svg class="ttl-ink" viewBox="0 0 560 22" preserveAspectRatio="none"><path d="M6 14C80 6 170 18 260 11S430 4 554 12"/></svg>`;
+function home(){app.className='';if(MS=='title'){app.innerHTML=`<div class="scr">${bgHTML()}<div class="scr-c"><div class="ttl"><div class="ttl-k">A GRAND STRATEGY OF NATIONS · 1910 — 1945</div><h1 class="logo">Borders <i>in</i> Ink</h1>${INKSTROKE}<div class="ttl-ko">잉크로 그은 국경 · 세계대전 국가경영</div>
+  ${DBERR?`<div class="warn" style="max-width:420px">공유 저장소를 쓸 수 없어 방을 만들 수 없습니다. claude.ai에 로그인한 상태로 이 페이지를 열어 주세요.</div>`:`<div class="ttl-menu"><button class="mb pri" data-m="new">새 게임<span>›</span></button><button class="mb" data-m="join">방 참가 · 이어하기<span>›</span></button></div>`}
+  <div class="ttl-foot">분기마다 동시에 명령 · 최대 여러 명이 한 판 · 실제 시대의 국경 위에서</div></div></div></div>`}
+ else if(MS=='new'){if(!$('#c1v'))window.__rc=window.__rc||('INK'+Math.floor(100+Math.random()*900));app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button data-m="title">← 처음으로</button><div class="logo">Borders <i>in</i> Ink</div></header><div class="mw">
+  <h2 class="mt">새 게임</h2><p class="ms">시대를 고르고 방을 엽니다. 함께할 사람에게는 방 코드를 알려 주세요.</p><div class="lab2">시나리오</div>
+  <div class="scn">${Object.entries(SCN).map(([k,[y,t,d,n,fs]])=>`<button class="sc${EM==k?' on':''}" data-e="${k}"><span class="ck">✓ 선택됨</span><span class="yr">${y}</span><h3>${t}</h3><p>${d}</p><span class="fls">${fs.map(f=>flag(f,27,18)).join('')}</span><span class="tn">${n}</span></button>`).join('')}</div>
+  <div class="mfrm"><div style="display:flex;gap:28px;flex-wrap:wrap"><div class="fld"><label>방 코드</label><div class="row"><input id="c1" value="${esc(window.__rc)}" maxlength="10" aria-label="방 코드"><button class="chip" data-m="rc">다시 만들기</button></div></div>
+   <div class="fld"><label>분기당 제한 시간</label><div class="row">${[60,90,180,300].map(s=>`<button class="chip${SECS==s?' on':''}" data-s="${s}">${s<120?s+'초':s/60+'분'}</button>`).join('')}</div></div></div><button class="pri big" id="mk">방 열기 →</button></div>
+  <p class="note2">방장 기기가 켜져 있어야 분기가 넘어갑니다. 모든 플레이어가 준비를 누르거나 제한 시간이 지나면 다음 분기로 진행합니다.</p></div></div></div>`}
+ else{app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button data-m="title">← 처음으로</button><div class="logo">Borders <i>in</i> Ink</div></header><div class="mw" style="max-width:640px">
+  <h2 class="mt">방 참가 · 이어하기</h2><p class="ms">초대받은 방 코드를 입력하세요. 같은 코드로 다시 들어오면 저장된 분기부터 이어집니다.</p>
+  <div class="mfrm"><div class="fld"><label>방 코드</label><div class="row"><input id="c2" placeholder="INK123" maxlength="10" aria-label="방 코드" style="width:260px"></div></div><button class="pri big" id="jn">입장 →</button></div></div></div></div>`}
+ app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const m=b.dataset.m;if(m=='rc'){window.__rc='INK'+Math.floor(100+Math.random()*900);$('#c1').value=window.__rc;return}MS=m;home()});
  app.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{EM=b.dataset.e;app.querySelectorAll('[data-e]').forEach(x=>x.classList.toggle('on',x==b))});
- $('#mk').onclick=()=>join($('#c1').value,1,EM,+$('#sc').value||90);$('#jn').onclick=()=>join($('#c2').value,0)}
-function lobby(){const ps=Object.values(S.P),y=yr(S);app.className='page';app.innerHTML=`${bgMap()}<div class="pbox"><div class="lab" style="margin-top:0">방 코드</div><h1>${esc(code)}</h1><div class="k">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년 시작 · 턴 제한 ${S.secs}초 · 참가 ${ps.length}명</div><div class="lab">국가 선택</div>
- <div class="ng">${Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length).map(n=>{const N=S.N[n],tk=ps.includes(n);return`<button data-n="${n}" ${tk&&mine()!=n?'disabled':''} class="${mine()==n?'on':''}">${flag(n,27,18)}<span><b>${esc(nm(n,y))}</b><small>${N.lord?'속령 · '+esc(nm(N.lord,y))+' 지배':'독립국'}${tk?' · 플레이어':''}</small></span></button>`}).join('')}</div>
- ${host?'<button class="pri" id="go" style="width:100%;height:40px;margin-top:12px;font-size:14px">시작 (미선택 국가는 AI)</button>':'<div class="k" style="margin-top:12px">방장이 시작하길 기다리는 중…</div>'}</div>`;
- app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>claim(b.dataset.n));if(host)$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}
-function render(){if(!S){$('#news')&&$('#news').remove();return home()}if(S.phase=='lobby')return lobby();game()}
+ app.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{SECS=+b.dataset.s;app.querySelectorAll('[data-s]').forEach(x=>x.classList.toggle('on',x==b))});
+ const c1=$('#c1');if(c1)c1.oninput=()=>window.__rc=c1.value;
+ const mk=$('#mk');if(mk)mk.onclick=()=>join($('#c1').value,1,EM,SECS);const jn=$('#jn');if(jn){jn.onclick=()=>join($('#c2').value,0);$('#c2').onkeydown=e=>{if(e.key=='Enter')jn.click()}}}
+function miniMap(n){if(!CT)return'';const c=presetCam(n),h=c.w*.42,hs=new Set(held(S,n));
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${(c.x-c.w*.6).toFixed(1)} ${(c.y-h*.6).toFixed(1)} ${(c.w*1.2).toFixed(1)} ${(h*1.2).toFixed(1)}" preserveAspectRatio="xMidYMid slice"><rect x="-500" y="-300" width="2000" height="1200" fill="#a7b9be"/>${CT.map(t=>{const R=S.R[t.k],o=R&&(R.occ||R.o);return`<path d="${t.d}" fill="${hs.has(t.k)?paperize(NM[n][1]):'#e3d8bd'}" stroke="${hs.has(t.k)?'#2a1d14':'#6e3f35'}" stroke-width="${(c.w/700).toFixed(3)}" stroke-opacity="${hs.has(t.k)?1:.45}"/>`}).join('')}</svg>`;
+ return'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
+function leaveRoom(){unsub.forEach(u=>u());unsub=[];S=null;code='';O={};V.init=0;LSEL=null;MS='title';const pl=$('#play');if(pl)pl.remove();home()}
+function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL||!S.N[LSEL])LSEL=me||'UK';if(!S.N[LSEL])LSEL=Object.keys(S.N)[0];
+ const all=Object.keys(S.N).sort((a,b)=>held(S,b).length-held(S,a).length),major=all.filter(n=>PID(n)||held(S,n).length>=4),rest=all.filter(n=>!major.includes(n)&&(!LQ||nm(n,y).includes(LQ)));
+ const row=n=>{const N=S.N[n],tk=taken.includes(n),mineN=me==n;return`<button class="nt${LSEL==n?' on':''}" data-n="${n}">${flag(n,36,24)}<span><b>${esc(nm(n,y))}</b><small>${N.lord?'속령 · '+esc(nm(N.lord,y))+' 지배':'독립국'} · 지역 ${held(S,n).length}</small></span>${mineN?'<span class="who">내 국가</span>':tk?'<span class="who">플레이어</span>':''}</button>`};
+ const n=LSEL,N=S.N[n],pid=PID(n),tk=taken.includes(n)&&me!=n,mil=N.mil>60?'강':N.mil>30?'중':'약';
+ const plist=Object.entries(ps).map(([u,x])=>`<span>${flag(x,21,14)}${esc(nm(x,y))}${u==uid?' (나)':''}</span>`).join('')||'<span>아직 아무도 국가를 고르지 않았습니다</span>';
+ const prev=$('.lob-ls'),st=prev?prev.scrollTop:0;
+ app.className='';app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c"><header class="scr-h"><button id="lv">← 방 나가기</button><div class="logo">Borders <i>in</i> Ink</div><div class="rc">방 코드 <b>${esc(code)}</b></div></header><div class="mw">
+ <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 국가를 고르세요. 분기당 ${S.secs}초 · 고르지 않은 국가는 AI가 맡습니다.</p>
+ <div class="lob"><aside class="lob-l"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">주요 국가</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">그 밖의 국가</div>${rest.map(row).join('')}</div></aside>
+ <section class="lob-r"><div class="lob-map"><img src="${miniMap(n)}" alt=""></div><div class="lob-d"><div class="lob-n">${flag(n,96,64)}<h2>${esc(nm(n,y))}</h2></div>
+  <div class="st2">${N.lord?'속령 · '+esc(nm(N.lord,y))+'의 지배를 받고 있습니다':'독립국'}${tk?' · 다른 플레이어가 지휘 중':''}</div>
+  <p class="bl">${esc(BLURB[pid]||`${held(S,n).length}개 지역을 다스리는 ${N.lord?'속령':'독립국'}입니다. 주요 산출과 이웃 나라를 살펴 첫 분기 계획을 세우세요.`)}</p>
+  <div class="sg"><div><small>보유 지역</small><b>${held(S,n).length}</b></div><div><small>국고</small><b>${N.g|0}</b></div><div><small>산업력</small><b>${N.ind|0}</b></div><div><small>군사력</small><b>${mil}</b></div></div>
+  <div class="st2">이 방의 플레이어</div><div class="pl">${plist}</div>
+  <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0;align-self:center">방장이 시작하길 기다리는 중…</span>'}</div></div></section></div></div></div></div>`;
+ const ls=$('.lob-ls');if(ls)ls.scrollTop=st;
+ app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{LSEL=b.dataset.n;lobby()});const q=$('#lq');q.oninput=()=>{LQ=q.value.trim();lobby();const q2=$('#lq');q2.focus();q2.setSelectionRange(q2.value.length,q2.value.length)};
+ $('#lv').onclick=leaveRoom;const cl=$('#cl');if(cl)cl.onclick=()=>claim(n);if(host&&$('#go'))$('#go').onclick=async()=>{S.phase='play';S.deadline=Date.now()+S.secs*1000;await save(S)}}
+function render(){if(!S){$('#news')&&$('#news').remove();return home()}if(S.phase=='lobby'){const pl=$('#play');if(pl)pl.remove();return lobby()}game()}
+spl(40,'국경선을 긋는 중…');
 world();if(CT)CT.forEach(t=>{T2[t.k]=t;SD2[t.k]=t.np;const R=(t.rs||[]).reduce((a,r)=>!a||r.length>a.length?r:a,null);if(R){const xs=R.map(p=>p[0]),ys=R.map(p=>p[1]);t.bx0=Math.min(...xs);t.bx1=Math.max(...xs);t.by0=Math.min(...ys);t.by1=Math.max(...ys);t.bcx=(t.bx0+t.bx1)/2;t.bcy=(t.by0+t.by1)/2}else{t.bx0=t.x0;t.bx1=t.x1;t.by0=t.y0;t.by1=t.y1;t.bcx=t.cx;t.bcy=t.cy}});
 
+spl(70,'항로와 철도를 잇는 중…');menuBg();
 (async()=>{try{const u=await claude.use('user');uid=u?await u.id():null}catch(e){}
- uid=uid||('g'+Math.random().toString(36).slice(2,9));db=await claude.use('db');if(!db){app.textContent='공유 저장소를 쓸 수 없어요. 로그인 상태를 확인하세요.';return}home()})();
+ uid=uid||('g'+Math.random().toString(36).slice(2,9));spl(88,'지휘실을 정리하는 중…');db=await claude.use('db');spl(100,db?'지휘실 준비 완료':'저장소 연결 실패');if(!db)DBERR=1;home();await splashDone()})();
 
 </script></body></html>

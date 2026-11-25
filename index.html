@@ -730,42 +730,42 @@ const leaderOf=(n,y)=>{const N=natFor(n);if(!N||!N.lead)return null;let l=N.lead
 const SPS=[
  {id:'uk_emp',n:'UK',t:'해가 지지 않는 제국',d:'식민지 지역 수 × 0.15 만큼 국고 · 식량 +1 / 분기',tick:(s,n,N)=>{N.g+=held(s,n).length*.15;N.st.f+=1}},
  {id:'uk_app',n:'UK',t:'유화 정책 여론',d:'지지 +1, 군사력 −0.5 / 분기 · 재무장 결정이나 개전 시 해제',on:(s,n)=>!wars(s,n).length&&!DTAKEN(s,n,'uk_rearm'),tick:(s,n,N)=>{N.sup+=1;N.mil-=.5}},
- {id:'uk_navy',n:'UK',doc:1,t:'왕립 해군',d:'본토 방어 ×1.4 · 교전국 석유 비축 매 분기 −1 (해상 봉쇄)',tick:(s,n)=>wars(s,n).forEach(e=>{if(s.N[e])s.N[e].st.o=Math.max(0,s.N[e].st.o-1)}),m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.4:1},
- {id:'uk_radar',n:'UK',add:1,t:'체인 홈 레이더망',d:'본토 방어 ×1.2 추가',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.2:1},
+ {id:'uk_navy',n:'UK',doc:1,t:'왕립 해군',d:'본토 방어 +40% · 교전국 석유 비축 매 분기 −1 (해상 봉쇄)',tick:(s,n)=>wars(s,n).forEach(e=>{if(s.N[e])s.N[e].st.o=Math.max(0,s.N[e].st.o-1)}),m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.4:1},
+ {id:'uk_radar',n:'UK',add:1,t:'체인 홈 레이더망',d:'본토 방어 +20% 추가',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.2:1},
  {id:'uk_chu',n:'UK',add:1,t:'전시 연립 내각',d:'지지 +1 · 군사력 +산업×2% / 분기',tick:(s,n,N)=>{N.sup+=1;N.mil+=N.ind*.02}},
  {id:'ger_4yp',n:'GER',t:'4개년 계획',d:'산업 +0.6 · 식량 −1 / 분기 (1936~1940, 자급자족 추진)',on:s=>yr(s)<=1940,tick:(s,n,N)=>{N.ind+=.6;N.st.f-=1}},
  {id:'ger_res',n:'GER',t:'원자재 부족',d:'석유 −1 · 철강 −1 / 분기 · 합성 연료 결정 시 해제',on:(s,n)=>!DTAKEN(s,n,'ger_leuna'),tick:(s,n,N)=>{N.st.o-=1;N.st.s-=1}},
- {id:'ger_blitz',n:'GER',doc:1,t:'전격전',d:'군사력 50% 이상 투입한 공격 ×1.3',m:(s,me,f,r,k,c)=>k=='att'&&c>=50?1.3:1},
+ {id:'ger_blitz',n:'GER',doc:1,t:'전격전',d:'군사력 50% 이상 투입한 공격 +30%',m:(s,me,f,r,k,c)=>k=='att'&&c>=50?1.3:1},
  {id:'sov_5yp',n:'RUS',t:'5개년 계획',d:'산업 +0.8 · 지지 −0.4 / 분기',tick:(s,n,N)=>{N.ind+=.8;N.sup-=.4}},
  {id:'sov_purge',n:'RUS',t:'대숙청',d:'군사력 매 분기 −3% · 지지 −0.5 (1937~1938, 장교 복권 결정 시 해제)',on:(s,n)=>yr(s)>=1937&&yr(s)<=1938&&!DTAKEN(s,n,'sov_rehab'),tick:(s,n,N)=>{N.mil*=.97;N.sup-=.5}},
- {id:'sov_deep',n:'RUS',doc:1,t:'종심 방어 · 동장군',d:'겨울(1·4분기) 방어 ×1.35 · 영토를 잃으면 방어 ×1.2',m:(s,me,f,r,k)=>k!='def'?1:(WIN(s)?1.35:1)*(held(s,me).length<s.N[me].start?1.2:1)},
- {id:'fra_mag',n:'FRA',doc:1,t:'마지노선',d:'본토 방어 ×1.5 · 공격 ×0.85',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.5:k=='att'?.85:1},
+ {id:'sov_deep',n:'RUS',doc:1,t:'종심 방어 · 동장군',d:'겨울(1·4분기) 방어 +35% · 영토를 잃으면 방어 +20%',m:(s,me,f,r,k)=>k!='def'?1:(WIN(s)?1.35:1)*(held(s,me).length<s.N[me].start?1.2:1)},
+ {id:'fra_mag',n:'FRA',doc:1,t:'마지노선',d:'본토 방어 +50% · 공격 −15%',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.5:k=='att'?.85:1},
  {id:'fra_pf',n:'FRA',t:'인민전선 정부',d:'지지 +1 · 산업 −0.3 / 분기 (1936~1938, 레노 개혁 시 해제)',on:(s,n)=>yr(s)<=1938&&!DTAKEN(s,n,'fra_reyn'),tick:(s,n,N)=>{N.sup+=1;N.ind-=.3}},
  {id:'us_nd',n:'USA',t:'뉴딜',d:'산업 +0.5 · 지지 +0.5 · 국고 −2 / 분기 (1936~1941)',on:s=>yr(s)<=1941,tick:(s,n,N)=>{N.ind+=.5;N.sup+=.5;N.g-=2}},
  {id:'us_iso',n:'USA',t:'고립주의',d:'지지 +0.5 · 군사력 −0.6 / 분기 · 무기대여법이나 개전 시 해제',on:(s,n)=>!wars(s,n).length&&!DTAKEN(s,n,'us_lend'),tick:(s,n,N)=>{N.sup+=.5;N.mil-=.6}},
- {id:'us_mat',n:'USA',doc:1,t:'물량전',d:'군사력 +산업×1% / 분기 · 공격·방어 ×1.1',tick:(s,n,N)=>{N.mil+=N.ind*.01},m:(s,me,f,r,k)=>k=='loss'?1:1.1},
+ {id:'us_mat',n:'USA',doc:1,t:'물량전',d:'군사력 +산업×1% / 분기 · 공격·방어 +10%',tick:(s,n,N)=>{N.mil+=N.ind*.01},m:(s,me,f,r,k)=>k=='loss'?1:1.1},
  {id:'us_arsenal',n:'USA',add:1,t:'민주주의의 병기창',d:'군사력 +산업×3% / 분기',tick:(s,n,N)=>{N.mil+=N.ind*.03}},
  {id:'jp_mil',n:'JPN',t:'군부의 정치 개입',d:'군사력 +0.5 · 지지 −0.3 / 분기',tick:(s,n,N)=>{N.mil+=.5;N.sup-=.3}},
  {id:'jp_imp',n:'JPN',t:'원료 수입 의존',d:'무역 협정이 없으면 산업 −0.5 / 분기',tick:(s,n,N)=>{if(!s.TR.some(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)))N.ind-=.5}},
- {id:'jp_nav',n:'JPN',doc:1,t:'해군 항공 · 상륙전',d:'공격 ×1.15 · 본토 방어 ×1.2',m:(s,me,f,r,k)=>k=='att'?1.15:k=='def'&&isHome(s,me,r)?1.2:1},
+ {id:'jp_nav',n:'JPN',doc:1,t:'해군 항공 · 상륙전',d:'공격 +15% · 본토 방어 +20%',m:(s,me,f,r,k)=>k=='att'?1.15:k=='def'&&isHome(s,me,r)?1.2:1},
  {id:'it_eth',n:'ITA',t:'에티오피아 점령 부담',d:'국고 −2 · 지지 +1 / 분기 (1936~1938)',on:s=>yr(s)<=1938,tick:(s,n,N)=>{N.g-=2;N.sup+=1}},
  {id:'it_aut',n:'ITA',t:'자급자족 정책',d:'식량 +1 · 산업 −0.2 / 분기',tick:(s,n,N)=>{N.st.f+=1;N.ind-=.2}},
- {id:'it_mare',n:'ITA',doc:1,t:'지중해 해군 · 산악전',d:'본토 방어 ×1.25 · 공격 ×0.9',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.25:k=='att'?.9:1},
+ {id:'it_mare',n:'ITA',doc:1,t:'지중해 해군 · 산악전',d:'본토 방어 +25% · 공격 −10%',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.25:k=='att'?.9:1},
  {id:'cn_war',n:'CHN',t:'군벌 분열',d:'산업 −0.3 · 군사력 −0.3 / 분기 · 국공합작 시 해제',on:(s,n)=>!DTAKEN(s,n,'cn_xian'),tick:(s,n,N)=>{N.ind-=.3;N.mil-=.3}},
- {id:'cn_space',n:'CHN',doc:1,t:'공간과 시간의 교환',d:'방어 ×1.1 · 영토를 잃으면 방어 ×1.3',m:(s,me,f,r,k)=>k=='def'?(held(s,me).length<s.N[me].start?1.3:1.1):1},
- {id:'cn_flood',n:'CHN',add:1,t:'황허 범람',d:'방어 ×1.5 (4분기 동안)',m:(s,me,f,r,k)=>k=='def'?1.5:1},
+ {id:'cn_space',n:'CHN',doc:1,t:'공간과 시간의 교환',d:'방어 +10% · 영토를 잃으면 방어 +30%',m:(s,me,f,r,k)=>k=='def'?(held(s,me).length<s.N[me].start?1.3:1.1):1},
+ {id:'cn_flood',n:'CHN',add:1,t:'황허 범람',d:'방어 +50% (4분기 동안)',m:(s,me,f,r,k)=>k=='def'?1.5:1},
  {id:'kr_exile',n:'KOR',t:'해외 동포의 의연금',d:'국고 +2 / 분기 (망명 중)',on:(s,n)=>!!s.N[n].lord,tick:(s,n,N)=>{N.g+=2}},
- {id:'kr_guer',n:'KOR',doc:1,t:'독립군 유격전',d:'독립 추진 시 진행도 +10 추가 · 종주국 상대 공격 ×1.3',tick:(s,n,N,y,o)=>{if(o&&o.indep&&N.lord)N.ind2+=10},m:(s,me,f,r,k)=>k=='att'&&f==s.N[me].lord?1.3:1},
- {id:'fi_sisu',n:'FIN',doc:1,t:'시수 · 모티 전술',d:'방어 ×1.3, 겨울에는 ×1.6 · 공격에 실패한 적의 손실 ×1.4',m:(s,me,f,r,k)=>k=='def'?(WIN(s)?1.6:1.3):k=='loss'?1.4:1},
- {id:'fi_line',n:'FIN',add:1,t:'만네르헤임선',d:'방어 ×1.2 추가',m:(s,me,f,r,k)=>k=='def'?1.2:1},
- {id:'pl_btw',n:'POL',doc:1,t:'두 강대국 사이',d:'지지 +0.5 / 분기 · 방어 ×1.1',tick:(s,n,N)=>{N.sup+=.5},m:(s,me,f,r,k)=>k=='def'?1.1:1},
+ {id:'kr_guer',n:'KOR',doc:1,t:'독립군 유격전',d:'독립 추진 시 진행도 +10 추가 · 종주국 상대 공격 +30%',tick:(s,n,N,y,o)=>{if(o&&o.indep&&N.lord)N.ind2+=10},m:(s,me,f,r,k)=>k=='att'&&f==s.N[me].lord?1.3:1},
+ {id:'fi_sisu',n:'FIN',doc:1,t:'시수 · 모티 전술',d:'방어 +30%, 겨울에는 +60% · 공격에 실패한 적의 손실 +40%',m:(s,me,f,r,k)=>k=='def'?(WIN(s)?1.6:1.3):k=='loss'?1.4:1},
+ {id:'fi_line',n:'FIN',add:1,t:'만네르헤임선',d:'방어 +20% 추가',m:(s,me,f,r,k)=>k=='def'?1.2:1},
+ {id:'pl_btw',n:'POL',doc:1,t:'두 강대국 사이',d:'지지 +0.5 / 분기 · 방어 +10%',tick:(s,n,N)=>{N.sup+=.5},m:(s,me,f,r,k)=>k=='def'?1.1:1},
  {id:'es_civ',n:'ESP',t:'내전의 그림자',d:'지지 −1 · 군사력 +0.5 / 분기 (1936~1939)',on:s=>yr(s)<=1939,tick:(s,n,N)=>{N.sup-=1;N.mil+=.5}},
- {id:'es_mil',n:'ESP',doc:1,t:'민병과 시가전',d:'본토 방어 ×1.25',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.25:1}
+ {id:'es_mil',n:'ESP',doc:1,t:'민병과 시가전',d:'본토 방어 +25%',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.25:1}
 ];
 // 역사적 결정: y0~y1 기간 · 비용 · 조건 · 효과 · hy=AI가 역사대로 내리는 시점
 const DECS=[
  {id:'uk_shadow',n:'UK',t:'그림자 공장 계획',y0:1936,y1:1938,cost:30,hy:[1936,2],d:'산업력 +4',h:'1936년 공군 확장을 위해 정부 지원으로 자동차 회사들이 항공기 공장을 세웠다.',eff:(s,n,N)=>{N.ind+=4}},
- {id:'uk_radar',n:'UK',t:'체인 홈 레이더망 구축',y0:1937,y1:1941,cost:25,hy:[1937,3],add:'uk_radar',d:'본토 방어 ×1.2 (영구)',h:'동해안을 따라 레이더 기지를 세워 1940년 영국 본토 항공전을 대비했다.'},
+ {id:'uk_radar',n:'UK',t:'체인 홈 레이더망 구축',y0:1937,y1:1941,cost:25,hy:[1937,3],add:'uk_radar',d:'본토 방어 +20% (영구)',h:'동해안을 따라 레이더 기지를 세워 1940년 영국 본토 항공전을 대비했다.'},
  {id:'uk_rearm',n:'UK',t:'재무장 가속 (국방 백서)',y0:1937,y1:1940,cost:20,hy:[1938,4],d:'군사력 +6 · 지지 −3 · 유화 여론 해제',h:'뮌헨 협정 이후 영국은 재무장 속도를 크게 높였다.',eff:(s,n,N)=>{N.mil+=6;N.sup-=3}},
  {id:'uk_chu',n:'UK',t:'처칠 전시 연립 내각',y0:1939,y1:1945,cost:0,hy:[1940,2],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',add:'uk_chu',d:'지지 +6 · 전시 연립 내각 정신',h:'1940년 5월 처칠이 거국 내각을 꾸리고 끝까지 싸우겠다고 선언했다.',eff:(s,n,N)=>{N.sup+=6}},
  {id:'ger_rhine',n:'GER',t:'라인란트 재무장',y0:1936,y1:1936,cost:5,hy:[1936,1],d:'군사력 +4 · 지지 +5',h:'1936년 3월 7일 독일군이 베르사유 조약을 어기고 라인란트 비무장지대에 진주했다.',eff:(s,n,N)=>{N.mil+=4;N.sup+=5}},
@@ -791,13 +791,13 @@ const DECS=[
  {id:'it_axis',n:'ITA',t:'로마–베를린 추축',y0:1936,y1:1939,cost:0,hy:[1936,4],req:(s,n)=>alive(s,'GER')&&!atWar(s,n,'GER'),rq:'독일과 교전 중이 아닐 때',d:'독일과 동맹 즉시 발효',h:'1936년 10월 이탈리아와 독일이 협력 의정서를 맺었다.',eff:(s,n)=>pactOn(s,n,'GER','ally')},
  {id:'it_alb',n:'ITA',t:'알바니아 병합',y0:1939,y1:1940,cost:10,hy:[1939,2],req:(s,n)=>{const o=NATK(s,'Albania');return o&&o!=n&&alive(s,o)},rq:'알바니아가 독립국일 때',d:'알바니아 영토 편입',h:'1939년 4월 이탈리아군이 알바니아에 상륙해 왕국을 병합했다.',eff:(s,n)=>annexNat(s,n,'Albania')},
  {id:'cn_xian',n:'CHN',t:'시안 사변 · 제2차 국공합작',y0:1936,y1:1937,cost:0,hy:[1936,4],d:'군벌 분열 해제 · 지지 +8 · 군사력 +6',h:'1936년 12월 장쉐량이 장제스를 감금해 내전 중지와 항일 연합을 요구했다.',eff:(s,n,N)=>{N.sup+=8;N.mil+=6}},
- {id:'cn_yellow',n:'CHN',t:'황허 제방 파괴',y0:1937,y1:1945,cost:0,hy:[1938,2],req:(s,n)=>wars(s,n).includes('JPN'),rq:'일본과 교전 중일 때',add:'cn_flood',dur:4,d:'4분기 동안 방어 ×1.5 · 식량 −10 · 지지 −6',h:'1938년 6월 일본군 진격을 막으려 화위안커우 제방을 무너뜨려 수많은 피난민이 생겼다.',eff:(s,n,N)=>{N.st.f-=10;N.sup-=6}},
+ {id:'cn_yellow',n:'CHN',t:'황허 제방 파괴',y0:1937,y1:1945,cost:0,hy:[1938,2],req:(s,n)=>wars(s,n).includes('JPN'),rq:'일본과 교전 중일 때',add:'cn_flood',dur:4,d:'4분기 동안 방어 +50% · 식량 −10 · 지지 −6',h:'1938년 6월 일본군 진격을 막으려 화위안커우 제방을 무너뜨려 수많은 피난민이 생겼다.',eff:(s,n,N)=>{N.st.f-=10;N.sup-=6}},
  {id:'cn_cq',n:'CHN',t:'충칭 천도',y0:1937,y1:1945,cost:10,hy:[1938,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'산업력 +2 · 지지 +3',h:'국민정부는 내륙 깊숙한 충칭을 전시 수도로 삼아 저항을 이어갔다.',eff:(s,n,N)=>{N.ind+=2;N.sup+=3}},
  {id:'kr_party',n:'KOR',t:'한국국민당 결성',y0:1936,y1:1937,cost:0,hy:[1936,1],d:'지지 +5',h:'1935년 11월 김구 등이 임시정부를 떠받칠 여당으로 한국국민당을 만들었다.',eff:(s,n,N)=>{N.sup+=5}},
  {id:'kr_op',n:'KOR',t:'한인애국단 특무 공작',y0:1936,y1:1945,cost:10,d:'독립 진행도 +15 · 종주국 지지 −2',h:'이봉창·윤봉길 의거(1932)를 이은 한인애국단의 특무 활동.',req:(s,n)=>!!s.N[n].lord,rq:'망명 중일 때',eff:(s,n,N)=>{N.ind2+=15;const L=s.N[N.lord];if(L)L.sup-=2}},
  {id:'kr_army',n:'KOR',t:'한국광복군 창설',y0:1940,y1:1945,cost:20,hy:[1940,3],d:'군사력 +8',h:'1940년 9월 충칭에서 임시정부의 정규군인 한국광복군이 창설됐다.',eff:(s,n,N)=>{N.mil+=8}},
  {id:'kr_war',n:'KOR',t:'대일 선전포고',y0:1941,y1:1945,cost:0,hy:[1941,4],req:(s,n)=>s.N[n].lord=='JPN'&&wars(s,'JPN').length>0,rq:'일본이 다른 나라와 교전 중일 때',d:'일본과 전쟁 · 지지 +5 · 중국과 동맹',h:'1941년 12월 10일 임시정부는 일본에 정식으로 선전포고했다.',eff:(s,n,N)=>{if(!atWar(s,n,'JPN'))s.W.push(n+'|JPN');N.sup+=5;pactOn(s,n,'CHN','ally')}},
- {id:'fi_line',n:'FIN',t:'만네르헤임선 구축',y0:1936,y1:1939,cost:20,hy:[1937,1],add:'fi_line',d:'방어 ×1.2 (영구)',h:'카렐리야 지협에 콘크리트 토치카와 참호선을 쌓았다.'},
+ {id:'fi_line',n:'FIN',t:'만네르헤임선 구축',y0:1936,y1:1939,cost:20,hy:[1937,1],add:'fi_line',d:'방어 +20% (영구)',h:'카렐리야 지협에 콘크리트 토치카와 참호선을 쌓았다.'},
  {id:'fi_ski',n:'FIN',t:'스키 부대 편성',y0:1936,y1:1945,cost:10,hy:[1938,1],d:'군사력 +3',h:'흰 위장복을 입은 스키 부대가 숲길로 적의 보급선을 끊었다.',eff:(s,n,N)=>{N.mil+=3}},
  {id:'fi_lotta',n:'FIN',t:'로타 스바르드 · 민방위 동원',y0:1939,y1:1945,cost:0,hy:[1939,4],req:(s,n)=>wars(s,n).length>0,rq:'교전 중일 때',d:'군사력 +인구×3% · 지지 +3',h:'여성 자원봉사 조직 로타 스바르드가 후방 보급과 경계를 맡았다.',eff:(s,n,N)=>{N.mil+=N.pop*.03;N.sup+=3}},
  {id:'pl_cop',n:'POL',t:'중앙 공업지구 (COP)',y0:1936,y1:1939,cost:30,hy:[1937,1],d:'산업력 +4',h:'1936년부터 국경에서 먼 중부에 제철소와 군수 공장을 세웠다.',eff:(s,n,N)=>{N.ind+=4}},
@@ -1642,7 +1642,7 @@ function docBlock(n){const A=natFor(n),sp=spiritsOf(S,n).filter(p=>p.doc||p.m);r
 function natHTML(n){const A=natFor(n),y=yr(S),me=mine()==n,sp=spiritsOf(S,n).filter(p=>!p.doc),ds=decsFor(n),N=S.N[n];
  return`<div class="nat"><div class="nat-h">${flag(n,48,32)}<div><b>${esc(leaderOf(n,y)||nm(n,y)+' 정부')}</b><small>${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</small></div></div>
  ${me?govPolBlock(n):''}${docBlock(n)}
- <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b>${p.q?`<span class="q" style="display:block;margin:-2px 0 5px">${esc(p.q)}</span>`:''}<span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+|×1\.[1-9]/.test(x)?' up':''}">${esc(pctText(x))}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">해당 없음.</div>'}
+ <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b>${p.q?`<span class="q" style="display:block;margin:-2px 0 5px">${esc(p.q)}</span>`:''}<span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+/.test(x)?' up':''}">${esc(pctText(x))}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">해당 없음.</div>'}
  ${me?`<div class="sec"><span>역사적 결정</span><span>국고 ${N.g|0}</span></div>${ds.map(d=>{const ok=decOK(S,n,d),or=(O.dec||[]).includes(d.id),tk=DTAKEN(S,n,d.id);return`<div class="dec${tk?' tk':''}${or?' or':''}${!ok.ok&&!tk&&!or?' lk':''}"><div class="dt"><b>${esc(d.t)}</b><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span></div><div class="dd"><span class="fx up">${esc(pctText(d.d))}</span>${d.cost?`<span class="fx">비용 ${d.cost}</span>`:''}${d.rq?`<span class="fx">조건: ${esc(d.rq)}</span>`:''}</div><div class="dh2">${esc(d.h)}</div><div class="da">${tk?'<span class="tag ok">결정됨</span>':or?`<span class="tag acc">다음 분기 시행</span><button data-act="undec:${d.id}">취소</button>`:ok.ok?`<button class="pri" data-act="dec:${d.id}">결정</button>`:`<span class="tag">${esc(ok.why)}</span>`}</div></div>`}).join('')}`:''}
  <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
 // ════════ 정책 서고 · 전황 · 사회 양상 ════════

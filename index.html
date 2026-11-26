@@ -2000,7 +2000,14 @@ function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R);if(sig==BASESIG
   L.forEach(a=>{if(used.has(a.k))return;L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25)).forEach(c=>used.add(c.k));const P=innerPt(a);if(!P)return;const fs=Math.min(24,P.w*.92/(t.length*1.4),P.h*.8);if(fs<.6)return;LB.push({t,x:P.x,y:P.y,fs})})});
  LB.sort((a,b)=>b.fs-a.fs);const plc=[];LABS=[];LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);LABS.push(l)});requestDraw()}
 function flash(){FLT=Date.now();clearInterval(window.__fli);window.__fli=setInterval(()=>{FLON=!FLON;requestDraw();if(Date.now()-FLT>5600){clearInterval(window.__fli);FLON=0;requestDraw()}},380)}
-function drawMap(){drawMap0();if(PARCH_C&&CX&&CT&&S){CX.setTransform(1,0,0,1,0,0);CX.globalCompositeOperation='multiply';CX.globalAlpha=.92;CX.drawImage(PARCH_C,0,0,CV.width,CV.height);CX.globalAlpha=1;CX.globalCompositeOperation='source-over'}}
+let MCACHE=null,MCV=null;
+// 움직이는 동안에는 멈췄을 때 그린 완성본을 밀고 키워서 보여 준다 (선 굵기가 바뀌지 않도록)
+function drawMap(){if(!CX||!CT||!S)return;const W=CV.width,H=CV.height;let used=0;
+ if(MOVING&&MCACHE&&MCV&&MCACHE.width==W&&MCACHE.height==H){const v=camVB(),k=W/v[2],s=MCV[2]/v[2];let dx=(MCV[0]-v[0])*k;const wr=1000*k;while(dx>W)dx-=wr;while(dx<-W*s)dx+=wr;const dy=(MCV[1]-v[1])*k;
+  if(s>.4&&s<2.5){const ex=[];if(dx>0)ex.push([0,0,Math.ceil(dx)+2,H]);if(dx+W*s<W)ex.push([Math.floor(dx+W*s)-2,0,W,H]);if(dy>0)ex.push([0,0,W,Math.ceil(dy)+2]);if(dy+H*s<H)ex.push([0,Math.floor(dy+H*s)-2,W,H]);if(ex.length){CX.save();CX.setTransform(1,0,0,1,0,0);CX.beginPath();ex.forEach(([x0,y0,x1,y1])=>CX.rect(x0,y0,x1-x0,y1-y0));CX.clip();drawMap0();CX.restore()}CX.setTransform(1,0,0,1,0,0);CX.drawImage(MCACHE,dx,dy,W*s,H*s);used=1}}
+ if(!used)drawMap0();
+ if(!MOVING){if(!MCACHE)MCACHE=document.createElement('canvas');if(MCACHE.width!=W||MCACHE.height!=H){MCACHE.width=W;MCACHE.height=H}const m=MCACHE.getContext('2d');m.clearRect(0,0,W,H);m.drawImage(CV,0,0);MCV=camVB().slice()}
+ if(PARCH_C&&CX&&CT&&S){CX.setTransform(1,0,0,1,0,0);CX.globalCompositeOperation='multiply';CX.globalAlpha=.92;CX.drawImage(PARCH_C,0,0,CV.width,CV.height);CX.globalAlpha=1;CX.globalCompositeOperation='source-over'}}
 function drawMap0(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H=CV.height,v=camVB(),sc=W/v[2],U=dpr/sc,mv=MOVING,world=!V.nat&&V.tab!='mil';
  CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);
  const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);

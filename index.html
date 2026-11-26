@@ -2952,7 +2952,7 @@ function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL
  const prev=$('.lob-ls'),st=prev?prev.scrollTop:0,no=String(Math.abs(hs(n))%9000+1000);
  app.className='';app.innerHTML=`<div class="scr">${bgHTML(1)}<div class="scr-c">${HDR('id="lv"','← 방 나가기')}<div class="mw">
  <h2 class="mt">${S.mode=='w1'?'제1차 세계대전':S.mode=='w2'?'제2차 세계대전':'통합 캠페인'} · ${y}년</h2><p class="ms">지휘할 나라를 고르시오. 분기당 ${S.secs}초. 고르지 않은 나라는 역사대로 움직인다.</p>
- <div class="lob"><aside class="lob-l ppr"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">주요국</div>${major.filter(n=>!LQ||nm(n,y).includes(LQ)).map(row).join('')}<div class="seg">중소국 · 속령</div>${rest.map(row).join('')}</div></aside>
+ <div class="lob"><aside class="lob-l ppr"><input id="lq" placeholder="국가 이름 검색" value="${esc(LQ)}" aria-label="국가 검색"><div class="lob-ls"><div class="seg">주요국</div>${major.map(row).join('')}<div class="seg">중소국 · 속령</div>${rest.map(row).join('')}<div class="note" id="lqn" style="display:none;margin:10px 4px">찾는 나라가 없다.</div></div></aside>
  <section class="brief ppr"><div class="brief-hd"><span>국가 브리핑 문서 제 ${y}-${no}호</span><b>기밀</b></div>${tk?'<div class="stamp">지휘 중</div>':''}
   <div class="brief-top">${flag(n,84,56)}<div><h2>${esc(nm(n,y))}</h2><div class="gv">${esc(A?A.gov:(N.lord?'속령 · '+nm(N.lord,y)+'의 지배':'독립국'))}</div></div><figure class="photo" style="margin:0"><img src="${miniMap(n)}" alt=""><figcaption>영토 · ${held(S,n).length}개 지역</figcaption></figure></div>
   <table><tr><td>지도자</td><td>${esc(leaderOf(n,y)||'—')}</td></tr><tr><td>수도</td><td>${esc(A?A.cap:'—')}</td></tr><tr><td>군사 교리</td><td>${esc(A?A.doc+' — '+A.docD:'일반 교리')}</td></tr></table>
@@ -2965,8 +2965,13 @@ function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL
   <div class="bsec">이 방의 플레이어</div><div class="pl">${plist}</div>
   <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0">방장의 개전 명령을 기다리는 중…</span>'}</div></section></div></div></div></div>`;
  const ls=$('.lob-ls');if(ls)ls.scrollTop=st;
- app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{LSEL=b.dataset.n;lobby()});const q=$('#lq');q.oninput=()=>{LQ=q.value.trim();lobby();const q2=$('#lq');q2.focus();q2.setSelectionRange(q2.value.length,q2.value.length)};
+ app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{LSEL=b.dataset.n;lobby()});const q=$('#lq');q.oninput=()=>{LQ=q.value;lqApply()};q.addEventListener('compositionend',()=>{LQ=q.value;lqApply()});lqApply();if(window.__lqf){q.focus();q.setSelectionRange(q.value.length,q.value.length)}q.onfocus=()=>window.__lqf=1;q.onblur=()=>window.__lqf=0;
  $('#lv').onclick=leaveRoom;const cl=$('#cl');if(cl)cl.onclick=()=>claim(n);if(host&&$('#go'))$('#go').onclick=async()=>{S.phase='play';try{evStep(S,{});goalStep(S)}catch(e){console.error(e)}S.deadline=Date.now()+S.secs*1000;await save(S)}}
+// 로비 국가 검색: 다시 그리지 않고 목록만 거른다 (한글 입력이 끊기지 않도록)
+function lqApply(){const ls=$('.lob-ls');if(!ls||!S)return;const y=yr(S),k=s=>String(s||'').toLowerCase().replace(/\s+/g,''),q=k(LQ);let shown=0;
+ const rows=[...ls.querySelectorAll('[data-n]')];rows.forEach(b=>{const n=b.dataset.n,hit=!q||[nm(n,y),NM[n]&&NM[n][0],NID(n),ENN[n],b.textContent].some(t=>k(t).includes(q));b.style.display=hit?'':'none';if(hit)shown++});
+ ls.querySelectorAll('.seg').forEach(sg=>{let e=sg.nextElementSibling,any=false;while(e&&!e.classList.contains('seg')&&e.id!='lqn'){if(e.dataset&&e.dataset.n&&e.style.display!='none')any=true;e=e.nextElementSibling}sg.style.display=any?'':'none'});
+ const nn=$('#lqn');if(nn)nn.style.display=shown?'none':''}
 function render(){if(!S){$('#news')&&$('#news').remove();return home()}if(S.phase=='lobby'){const pl=$('#play');if(pl)pl.remove();return lobby()}game()}
 spl(40,'국경선을 긋는 중…');
 world();subdivide();if(CT)CT.concat(PARENTS).forEach(t=>{if(!t.parent&&PROV[t.k]){}else T2[t.k]=t;SD2[t.k]=t.np;const R=(t.rs||[]).reduce((a,r)=>!a||r.length>a.length?r:a,null);if(R){const xs=R.map(p=>p[0]),ys=R.map(p=>p[1]);t.bx0=Math.min(...xs);t.bx1=Math.max(...xs);t.by0=Math.min(...ys);t.by1=Math.max(...ys);t.bcx=(t.bx0+t.bx1)/2;t.bcy=(t.by0+t.by1)/2}else{t.bx0=t.x0;t.bx1=t.x1;t.by0=t.y0;t.by1=t.y1;t.bcx=t.cx;t.bcy=t.cy}});

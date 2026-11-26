@@ -761,6 +761,10 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .uf-h{color:#4a3a1c!important}.uf-d{color:#5a3e0c!important}.uf-d b{color:#8a2a10!important}.uf-x{color:#2f6b25!important}
 .uf-s{color:#8a2a10!important;border-color:#8a2a10!important;background:rgba(255,244,210,.6)}
 .uf-c .uf-art{box-shadow:none!important;margin:6px auto 2px!important;background:none}
+.gens{display:flex;flex-direction:column;gap:6px}.gn{display:flex;gap:10px;padding:8px;background:rgba(255,250,235,.45);border:1px solid rgba(90,66,36,.3);border-radius:3px}.gn.on{border-color:var(--br);background:rgba(201,164,92,.14)}
+.gn-p{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--serif);color:var(--brt);background:var(--hud);box-shadow:0 0 0 2px var(--br2),0 2px 5px rgba(0,0,0,.3)}.gn.on .gn-p{box-shadow:0 0 0 2px var(--br),0 0 10px rgba(201,164,92,.5)}
+.gn-b{flex:1;min-width:0}.gn-t{display:flex;justify-content:space-between;gap:6px;align-items:baseline}.gn-t b{font:700 14px var(--serif);color:#1d140b}.gn-s{color:#b8862a;font-size:12px;letter-spacing:1px;flex:none}.gn small{display:block;font:12px/1.4 var(--serif);color:#5a4630}
+.gn-u{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.gn-u button{height:24px;padding:0 8px;font:600 11.5px var(--serif);background:rgba(255,250,235,.7)!important;color:#3a2414!important;border:1px solid rgba(90,66,36,.45)!important;border-radius:12px}.gn-u button.on{background:var(--hud)!important;color:#ffd58a!important;border-color:#000!important}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -809,8 +813,8 @@ function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.
  // 전선 진척도: 한 번에 점령하지 않고 여러 분기에 걸쳐 전선을 밀고 밀린다
  s.FR=s.FR||{};const OM=opMods(s,a,rid,o,s.FR[rid]&&s.FR[rid].a==a?s.FR[rid]:null);let F=s.FR[rid];if(!F||F.a!=a)F=s.FR[rid]={a,d,p:0};
  // 사단 전투: 지형·전투폭·조직력
- const HP=hoiSetup(s,a,d,rid,c,o,BM.att/(o.sea?.8:1),BM.def,OM,NFc[d]);HP.OMg=OM.g;const SIM=hoiSim(HP,()=>.85+Math.random()*.3),r=SIM.r,g=SIM.g,ca=Math.min(use,use*SIM.lA*docM(s,d,a,rid,'loss',c)*OM.ca),cd=Math.min(D.mil*.3,HP.nD*SIM.lD*(g>0?OM.cd:1));
- A.mil-=ca;D.mil-=cd;const tca=m0-A.mil,tcd=d0-D.mil;s.WC=s.WC||{};const wk=a+'|'+d,wc=s.WC[wk]=s.WC[wk]||{ca:0,cd:0};wc.ca+=tca;wc.cd+=tcd;F.p=Math.max(0,Math.min(100,F.p+g));F.t=s.t;F.d=d;F.sea=o.sea;F.last={r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),g,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};Object.assign(bt,{op:o.op||'full',g,p:F.p,r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),hoi:{ter:HP.ter,riv:HP.riv,w:HP.W,dirs:HP.dirs,nA:HP.nA,nD:HP.nD,fA:SIM.fA,fD:SIM.fD,A:divRep(HP.DA),D:divRep(HP.DD),mA:HP.mA,mD:HP.mD,rl:SIM.log,end:SIM.end,rd:SIM.rd,ent:HP.ent}});(s.BT=s.BT||[]).push(bt);
+ const HP=hoiSetup(s,a,d,rid,c,o,BM.att/(o.sea?.8:1),BM.def,OM,NFc[d]);HP.OMg=OM.g;const SIM=hoiSim(HP,()=>.85+Math.random()*.3),r=SIM.r,g=SIM.g;genXP(s,HP.GM&&HP.GM.ga,g>0);genXP(s,HP.GM&&HP.GM.gd,g<=0);const ca=Math.min(use,use*SIM.lA*docM(s,d,a,rid,'loss',c)*OM.ca),cd=Math.min(D.mil*.3,HP.nD*SIM.lD*(g>0?OM.cd:1));
+ A.mil-=ca;D.mil-=cd;const tca=m0-A.mil,tcd=d0-D.mil;s.WC=s.WC||{};const wk=a+'|'+d,wc=s.WC[wk]=s.WC[wk]||{ca:0,cd:0};wc.ca+=tca;wc.cd+=tcd;F.p=Math.max(0,Math.min(100,F.p+g));F.t=s.t;F.d=d;F.sea=o.sea;F.last={r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),g,m0:+m0.toFixed(1),d0:+d0.toFixed(1)};Object.assign(bt,{gA:HP.GM&&HP.GM.ga?HP.GM.ga.nm:'',gD:HP.GM&&HP.GM.gd?HP.GM.gd.nm:'',op:o.op||'full',g,p:F.p,r:+r.toFixed(2),ca:+tca.toFixed(1),cd:+tcd.toFixed(1),hoi:{ter:HP.ter,riv:HP.riv,w:HP.W,dirs:HP.dirs,nA:HP.nA,nD:HP.nD,fA:SIM.fA,fD:SIM.fD,A:divRep(HP.DA),D:divRep(HP.DD),mA:HP.mA,mD:HP.mD,rl:SIM.log,end:SIM.end,rd:SIM.rd,ent:HP.ent}});(s.BT=s.BT||[]).push(bt);
  (o.units&&o.units.length?o.units:[o.u]).filter(Boolean).forEach(id=>s.UL[a][id]=F.p>=100?rid:(o.sea?seaSrc(s,a,rid):landSrc(s,a,rid)));
  if(F.p>=100){R.occ=a==R.o?null:a;SUPV++;SUPM={};delete s.FR[rid];if(s.ENT)delete s.ENT[rid];bt.cap=1;s.log.push(`${nm(a,yr(s))}, ${RG[rid][0]} 점령`)}else s.log.push(`${RG[rid][0]} 전투 — ${nm(a,yr(s))} ${g>0?'진격':'저지됨'} (전선 ${F.p}%, 손실 ${tca|0} 대 ${tcd|0})`);
  // 패전의 대가: 공격이 막히면 지지 하락, 크게 지면 적의 반격으로 출발 지역이 위협받는다
@@ -869,7 +873,7 @@ function step(s,ords){SUPM={};SUPV++;const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log
   if(ty=='indep'){const N=s.N[w];if(N.lord&&s.N[N.lord].sup<60){N.lord=null;s.log.push(`${nm(w,y)} 독립: ${e[5]}`)}return}
   if(!tg||!alive(s,w)||!alive(s,tg)||atWar(s,w,tg))return;
   if(facSame(s,w,tg))facLeave(s,tg);const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==tg&&held(s,w).some(x=>dist(x,r)<=1));if(r){s.log.push(`역사 이벤트: ${e[5]} (${why})`);declareWar(s,w,tg,e[5],1);oo[w].atk=oo[w].atk||[];if(!oo[w].atk.length)oo[w].atk.push({r,c:Math.round(FRC(w).a*70)})}else{s.log.push(`역사 이벤트: ${e[5]} (${why})`);declareWar(s,w,tg,e[5],1)}});
- facStep(s,oo);
+ facStep(s,oo);genStep(s,oo);
  // 조약 처리
  for(const n in ords){(ords[n].sign||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t){if(t.ty=='peace'&&!atWar(s,t.a,t.b)){t.st='x';return}t.st='on';if(t.ty=='cease'||t.ty=='ret')peace(s,t);else if(t.ty=='peace')applyPeace(s,t);s.log.push(`${nm(n,y)}이(가) ${TY[t.ty]} 서명 — 발효`)}});
   (ords[n].rej||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t)t.st='x'})}
@@ -1671,9 +1675,10 @@ function hoiSetup(s,a,d,rid,c,o,BMa,BMd,OM,nf){const A=s.N[a],D=s.N[d],ter=terrO
   const DD_=supD(s,d);if(DD_[rid]==null&&ctrl(s,rid)==d){defM*=.6;add(mD,'포위됨 (보급 끊김)',.6)}else{const svD=supV(DD_[rid]);if(svD<.98){const f=.6+.4*svD;defM*=f;add(mD,'보급 '+Math.round(svD*100)+'%',f)}}
   const LM=locMods(s,a,d,rid,o);if(Math.abs(LM.fa-1)>.01){attM*=LM.fa;add(mA,'부대 위치',LM.fa)}if(Math.abs(LM.fd-1)>.01){defM*=LM.fd;add(mD,'방어 부대 배치',LM.fd)}}
  const dirs=Math.max(1,encCount(s,a,rid)),W=Math.round(TR[2]*Math.min(2,1+.5*(dirs-1)));
- const DA=divT(s,a),DD=divT(s,d),use=A.mil*c/100,nA=Math.max(1,Math.round(use)),fc=frontCnt(s,d),nD=Math.max(1,Math.round(D.mil*FRC(d).a*.92/Math.sqrt(Math.max(1,fc,nf||1))+D.ind*.06));
+ const DA=divT(s,a),DD=divT(s,d),GM=genMods(s,a,d,rid,o,DA,ter);if(GM.ga){attM*=GM.a;mA.push(['장군 '+GM.ga.nm,Math.round((GM.a-1)*100)])}if(GM.gd){defM*=GM.d;mD.push(['장군 '+GM.gd.nm,Math.round((GM.d-1)*100)])}
+ const use=A.mil*c/100,nA=Math.max(1,Math.round(use)),fc=frontCnt(s,d),nD=Math.max(1,Math.round(D.mil*FRC(d).a*.92/Math.sqrt(Math.max(1,fc,nf||1))+D.ind*.06));
  const eo=(n,f)=>{const X=ultAct(s,n);return X&&X.D[3].eo?Math.max(.35,1-X.D[3].eo*X.k):1},pw=n=>{const X=ultAct(s,n);return X&&X.D[3].eo?1+X.D[3].eo*X.k:1},oA0=eo(d),oD0=eo(a),pA=pw(a),pD=pw(d),atA=pA>1.3,atD=pD>1.3;if(atA&&divT(s,d).ar>divT(s,a).pr)mA.push(['결전: 적 장갑 우위 무효',0]);if(atD&&divT(s,a).ar>divT(s,d).pr)mD.push(['결전: 적 장갑 우위 무효',0]);if(pA>1)mA.push(['결전: 화력·생존',Math.round((pA-1)*100)]);if(pD>1)mD.push(['결전: 화력·생존',Math.round((pD-1)*100)]);if(oD0<1)mA.push(['결전: 적 조직력',-Math.round((1-oD0)*100)]);if(oA0<1)mD.push(['결전: 적 조직력',-Math.round((1-oA0)*100)]);
- return{ter,riv,W,dirs,DA,DD,nA,nD,use,attM,defM,mA,mD,ent,oA0,oD0,pA,pD,atA,atD}}
+ return{ter,riv,W,dirs,DA,DD,nA,nD,use,attM,defM,mA,mD,ent,oA0,oD0,pA,pD,atA,atD,GM}}
 // 전투: 12라운드(약 한 주씩). 전열 사단이 서로 공격하고, 조직력이 바닥나면 후퇴한다
 function hoiSim(P,rnd){const R=12,A=P.DA,D=P.DD,sd=(x,lo)=>({n:x,f:Math.min(x,P.W),r:Math.max(0,x-P.W),ex:0,org:1,hpL:0});const sa=sd(P.nA),sb=sd(P.nD);sa.org=sa.o0=P.oA0||1;sb.org=sb.o0=P.oD0||1;const log=[];let end='time',rd=R;
  const atk=(X,hdE)=>X.sa*(1-hdE)+X.ha*hdE;
@@ -1923,6 +1928,36 @@ function resStep(s){s.RS=s.RS||{};s.RSQ=s.RSQ||{};const y=yr(s);let ups=0;
    else{C.sup=Math.max(0,C.sup-4);C.mil*=.97;s.log.push(`${nmR} 봉기 — ${nm(c,y)} 점령군이 큰 피해를 입었다`)}
    (s.UPR=s.UPR||[]).push({r,c,core,t:s.t,back:coreAlive})}}}
 const resOf=(s,r)=>Math.round(((s.RS||{})[r])||0);
+// ════════ 장군 ════════
+// [이름, 특기, 능력(1~5), 등장 연도]
+const GTR={arm:['기갑','기갑 사단이 있으면 공격 +10%'],off:['공세','공격 +8%'],def:['방어','방어 +12%'],amph:['상륙','상륙전 공격 +18%'],mtn:['산악','산악·구릉 전투 +15%'],win:['동계','겨울 감점 무시, 동토·삼림 +10%'],log:['보급','보급이 나쁠 때 공격 +12%'],inf:['보병','조직력 손실 −10% (공격·방어 +5%)']};
+const GENS={
+ GER:[['하인츠 구데리안','arm',5,1936],['에리히 폰 만슈타인','off',5,1936],['게르트 폰 룬트슈테트','def',4,1936],['에르빈 롬멜','arm',4,1939],['발터 모델','def',4,1941],['파울 폰 힌덴부르크','def',4,1910],['에리히 루덴도르프','off',5,1910],['아우구스트 폰 마켄젠','off',4,1910]],
+ UK:[['버나드 몽고메리','inf',4,1939],['아치볼드 웨이벌','log',3,1936],['해럴드 알렉산더','amph',3,1940],['윌리엄 슬림','def',4,1941],['더글러스 헤이그','off',2,1910],['에드먼드 앨런비','off',4,1914],['허버트 키치너','log',3,1910]],
+ USA:[['더글러스 맥아더','amph',4,1936],['조지 패튼','arm',5,1940],['드와이트 아이젠하워','log',4,1941],['오마 브래들리','off',3,1942],['존 퍼싱','log',4,1910]],
+ RUS:[['게오르기 주코프','off',5,1936],['콘스탄틴 로코솝스키','arm',4,1940],['이반 코네프','off',4,1941],['니콜라이 바투틴','win',3,1941],['알렉세이 브루실로프','off',5,1910],['알렉산드르 삼소노프','off',2,1910]],
+ FRA:[['모리스 가믈랭','def',2,1936],['샤를 드골','arm',3,1939],['알퐁스 쥐앵','mtn',4,1940],['페르디낭 포슈','off',5,1910],['조제프 조프르','def',4,1910],['필리프 페탱','def',5,1914]],
+ JPN:[['야마시타 도모유키','off',4,1936],['혼마 마사하루','amph',3,1936],['이마무라 히토시','log',3,1937],['노기 마레스케','off',3,1910]],
+ ITA:[['조반니 메세','def',4,1936],['로돌포 그라치아니','off',2,1936],['이탈로 발보','log',2,1936],['루이지 카도르나','off',2,1910],['아르만도 디아츠','def',4,1917]],
+ CHN:[['쉐웨','def',4,1936],['리쭝런','def',4,1936],['쑨리런','mtn',3,1937],['위안스카이','inf',3,1910]],
+ KOR:[['지청천','off',3,1936],['김원봉','mtn',3,1936],['이범석','off',3,1936],['홍범도','mtn',4,1910],['김좌진','off',4,1915]],
+ FIN:[['칼 구스타프 만네르헤임','def',5,1936],['얄마르 실라스부오','win',4,1939]],
+ POL:[['브와디스와프 시코르스키','def',3,1936],['브와디스와프 안데르스','off',3,1936],['유제프 피우수트스키','off',4,1910]],
+ GRC:[['알렉산드로스 파파고스','mtn',4,1936]],OTT:[['무스타파 케말','def',5,1910],['엔베르 파샤','off',2,1910],['페브지 차크마크','def',4,1936]],
+ DAN:[['프란츠 콘라트 폰 회첸도르프','off',2,1910],['스베토자르 보로에비치','def',5,1910]],ESP:[['비센테 로호','def',3,1936]],YUG:[['요시프 브로즈 티토','mtn',4,1941]],
+ NED:[['헨리 빙켈만','def',2,1936]],SWE:[['올로프 툰베리','def',3,1936]],CZE:[['루드비크 크레이치','def',3,1936]],ROU:[['이온 안토네스쿠','off',3,1936],['알렉산드루 아베레스쿠','def',4,1910]],
+ Serbia:[['라도미르 푸트니크','def',5,1910]],BEL:[['알베르 1세','def',3,1910]]};
+const gensOf=(s,n)=>{const L=GENS[NID(n)]||GENS[n]||[];return L.map((g,i)=>({id:(NID(n)||n)+':'+i,nm:g[0],tr:g[1],sk:Math.min(5,(s.GS||{})[(NID(n)||n)+':'+i]||g[2]),xp:(s.GX||{})[(NID(n)||n)+':'+i]||0,yr:g[3]})).filter(g=>g.yr<=yr(s)&&yr(s)<g.yr+(g.yr<1930?14:16))};
+function genAssign(s,n){const A=(s.GA||{})[n]||{};const G=gensOf(s,n);const out={};Object.entries(A).forEach(([gid,u])=>{const g=G.find(x=>x.id==gid);if(g)out[u]=g});return out}
+function genStep(s,oo){s.GA=s.GA||{};Object.keys(oo).forEach(n=>{const o=oo[n]||{};if(o.gen&&P_h(s,n)){const A={};Object.entries(o.gen).forEach(([gid,u])=>{if(u&&!Object.values(A).includes(u))A[gid]=u});s.GA[n]=A}
+ else if(!P_h(s,n)&&s.N[n]&&!s.N[n].dead){const G=gensOf(s,n).sort((a,b)=>b.sk-a.sk),U=forces(n).filter(u=>u.b=='a').sort((a,b)=>b.w-a.w),A={};G.slice(0,U.length).forEach((g,i)=>A[g.id]=U[i].id);s.GA[n]=A}})}
+// 전투 보정: 공격 장군(공격 부대 중 최고), 방어 장군(그 지역에 붙어 있는 부대)
+function genMods(s,a,d,rid,o,DA,ter){const r={a:1,d:1,ga:null,gd:null,lab:[]};const AA=genAssign(s,a),ids=(o.units&&o.units.length?o.units:[o.u]).filter(Boolean);
+ const ga=ids.map(id=>AA[id]).filter(Boolean).sort((x,y)=>y.sk-x.sk)[0];const T2r=T2[rid],lat=T2r?80-T2r.cy*138/560:40,winter=lat>50&&WIN(s);
+ if(ga){let f=1+.035*ga.sk;if(ga.tr=='off')f*=1.08;if(ga.tr=='arm'&&DA.t>.1)f*=1.1;if(ga.tr=='amph'&&o.sea)f*=1.18;if(ga.tr=='mtn'&&(ter=='mtn'||ter=='hill'))f*=1.15;if(ga.tr=='win'&&(winter||ter=='tundra'||ter=='forest'))f*=winter?1.27:1.1;if(ga.tr=='inf')f*=1.05;if(ga.tr=='log'&&!o.sea&&supV(supAtk(s,a,rid))<.9)f*=1.12;r.a=f;r.ga=ga}
+ const AD=genAssign(s,d),gd=Object.entries(AD).filter(([u])=>{const L=locOf(s,d,u);return L&&(L==rid||(ADJ&&ADJ[L]&&ADJ[L].has(rid)))}).map(([,g])=>g).sort((x,y)=>y.sk-x.sk)[0];
+ if(gd){let f=1+.03*gd.sk;if(gd.tr=='def')f*=1.12;if(gd.tr=='mtn'&&(ter=='mtn'||ter=='hill'))f*=1.15;if(gd.tr=='win'&&(winter||ter=='tundra'||ter=='forest'))f*=1.1;if(gd.tr=='inf')f*=1.05;r.d=f;r.gd=gd}return r}
+function genXP(s,g,win){if(!g)return;s.GX=s.GX||{};s.GS=s.GS||{};s.GX[g.id]=(s.GX[g.id]||0)+(win?2:1);if(g.sk<5&&s.GX[g.id]>=g.sk*4){s.GX[g.id]=0;s.GS[g.id]=g.sk+1;s.log.push(`${g.nm}, 전공으로 능력 ${g.sk+1}로 진급`)}}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2728,6 +2763,10 @@ function ultFoes(me){const y=yr(S),L=Object.keys(S.N).filter(n=>n!=me&&ultAct(S,
  return`<div class="ult-foes"><small>지금 발동 중인 다른 나라의 결전 카드</small>${L.map(n=>{const D=ultOf(n),l=ultLeft(S,n),ally=!atWar(S,me,n);return`<div class="uf-r${ally?' al':''}">${flag(n,22,15)}<div><b>${esc(D[0])}</b><span>${esc(nm(n,y))} · ${ally?'아군 진영':'교전국'} · 남은 ${l}분기</span></div>${ultDurBar(D[2],l)}</div>`}).join('')}</div>`}
 function resBlock(me){const L=held(S,me).filter(r=>coreOf(S,r)&&coreOf(S,r)!=me&&resOf(S,r)>=30).sort((a,b)=>resOf(S,b)-resOf(S,a));if(!L.length)return'';
  return`<div class="sec"><span>점령지 저항</span><span>${L.length}곳</span></div>${L.slice(0,5).map(r=>{const v=resOf(S,r);return`<div class="ln cl" data-act="r:${r}"><div class="g">${esc(RG[r][0])}<small>원래 ${esc(nm(coreOf(S,r),yr(S)))} · ${garrisoned(S,me,r)?'주둔 중':'주둔군 없음'}</small></div><div class="v" style="color:${v>=80?'#8f2a17':v>=50?'#b5541f':'#8a6a33'}">${v}</div></div>`}).join('')}`}
+function genBlock(me){const G=gensOf(S,me);if(!G.length)return'';const U=myUnits().filter(u=>u.b=='a'),cur=O.gen||((S.GA||{})[me])||{},y=yr(S);
+ return`<div class="sec"><span>장군</span><span>${G.length}명 · 육군 부대에 배치</span></div><div class="gens">${G.map(g=>{const at=cur[g.id],un=U.find(u=>u.id==at);return`<div class="gn${un?' on':''}"><div class="gn-p">${g.nm.split(' ').pop().slice(0,2)}</div><div class="gn-b"><div class="gn-t"><b>${esc(g.nm)}</b><span class="gn-s">${'★'.repeat(g.sk)}${'☆'.repeat(5-g.sk)}</span></div><small>${GTR[g.tr][0]} · ${GTR[g.tr][1]} · 경험 ${g.xp}/${g.sk*4}</small>
+  <div class="gn-u">${U.map(u=>`<button class="${at==u.id?'on':''}" data-act="gen:${g.id}:${at==u.id?'':u.id}">${esc(u.nm)}</button>`).join('')}</div></div></div>`}).join('')}</div>
+ <div class="note" style="margin:4px 0 8px">배치한 부대가 공격에 나서면 공격 +3.5%×능력과 특기 보정, 그 부대 곁 지역이 공격받으면 방어 보정. 전투를 치를수록 경험이 쌓여 진급한다.</div>`}
 function wwBlock(me){const w=wwOf(S,me),W=wars(S,me).length;if(!W&&w<1)return'';const lv=w<15?['평온','#2f6b25']:w<40?['피로 누적','#8a6a33']:w<65?['염전 여론','#b5541f']:['반전 시위','#8f2a17'];
  return`<div class="sec"><span>전쟁 피로도</span><span style="color:${lv[1]}">${lv[0]} · ${w}</span></div><div class="ww"><i style="width:${w}%;background:${lv[1]}"></i><b style="left:15%"></b><b style="left:40%"></b><b style="left:65%"></b></div>
  <div class="note" style="margin:4px 0 8px">전쟁이 길어지고 손실이 쌓일수록 오른다. 침략한 쪽이 더 빨리 지친다. 15 이상이면 매 분기 지지·산업력이 깎이고, 65 이상이면 반전 시위가 일어난다. 평화가 오면 분기마다 4씩 내려간다. 높을수록 상대 AI도 강화에 응하기 쉽다.${W?'':' (지금은 평시)'}</div>`}
@@ -2738,7 +2777,7 @@ function supBlock(me){const D=supD(S,me),h=held(S,me),cut=h.filter(r=>D[r]==null
  ${cut.length?`<div class="ln"><div class="g" style="color:var(--ox)">포위된 지역 ${cut.length}곳<small>${cut.slice(0,4).map(r=>esc(RG[r][0])).join(' · ')}</small></div></div>`:''}${low.length?`<div class="ln"><div class="g">보급 부족 ${low.length}곳<small>${low.slice(0,4).map(r=>esc(RG[r][0])).join(' · ')}</small></div></div>`:''}
  ${(O.mv||[]).length?(O.mv||[]).map(m=>{const u=myUnits().find(x=>x.id==m.u);return u?`<div class="ln"><div class="g">${esc(u.nm)} → ${esc(RG[m.r][0])}<small>분기 마감 때 이동</small></div><button data-act="umv:${m.u}" style="height:26px">취소</button></div>`:''}).join(''):''}`}
 function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목표 지역을 누르세요','작전 미리보기','소모 예산 확인'][V.bt.st]||'';
- return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${wwBlock(me)}${resBlock(me)}${ultBlock(me)}${supBlock(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
+ return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${wwBlock(me)}${resBlock(me)}${genBlock(me)}${ultBlock(me)}${supBlock(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
  ${['a','n','f'].map(b=>{const L=U.filter(u=>u.b==b),f=FRC(me)[b];if(!L.length)return'';return`<div class="sec"><span>${BR[b]} · 군사력의 ${Math.round(f*100)}%</span><span>${b=='a'?(V.bt.u!=null?st:'부대를 고른 뒤 지도에서 목표 지정'):b=='n'?'해상 원정 호위':'공중 지원'}</span></div>${L.map(u=>`<div class="ln cl${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' hot':''}" data-act="unit:${u.i}"><div class="g">${esc(u.nm)}<small>${esc(u.at)} 주둔 · 전력 ${u.str} (전체의 ${u.c}%)</small></div><div class="v">${b=='a'?TANKI:b=='n'?'⚓':'✈'}</div></div>`).join('')}`}).join('')}
  <div class="sec"><span>내린 작전 명령</span></div>${(O.atk||[]).map((a,i)=>{const u=U.find(x=>x.id==a.u),nv=U.find(x=>x.id==a.nv),af=U.find(x=>x.id==a.af);return`<div class="ln"><div class="g">${a.sea?'⚓ 상륙전 ':''}${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${esc([u&&u.nm,nv&&nv.nm,af&&af.nm].filter(Boolean).join(' + ')||a.c+'% 투입')}</small></div><button data-act="uatk:${i}">취소</button></div>`}).join('')||'<div class="note" style="margin:0">없음</div>'}
  ${(O.msn||[]).length?`<div class="sec"><span>단독 임무</span></div>${O.msn.map((m,i)=>{const u=U.find(x=>x.id==m.u);return`<div class="ln"><div class="g">${MSN[m.t][0]} · ${esc(RG[m.r][0])}<small>${esc(u?u.nm:'')}</small></div><button data-act="umsn:${i}">취소</button></div>`}).join('')}`:''}
@@ -2933,7 +2972,7 @@ function brHTML(){const B=V.br,b=B&&B.L[B.i];if(!b)return'';if(b.msn){const y=yr
  if(!fail)ph.push(['지상전',cap?'점령':`소모 우세 ${b.r} : 1 · 전선 ${b.g>0?'+':''}${b.g}%`,b.p,b.g>0]);
  const side=(n,L)=>`<div class="br-side">${flag(n,48,32)}<b>${esc(nm(n,y))}</b><small>${L.map(esc).join('<br>')}</small></div>`;
  return`<div class="brp"><div class="br-h"><small>전투 보고 ${B.i+1} / ${B.L.length} · ${y}년 ${qt(S)}분기</small><b>${esc(RG[b.rid][0])} ${b.sea?'상륙전':b.op&&b.op!='full'?OPS[b.op][0]:'전투'}</b>${cap?'<span class="br-st">점령</span>':fail?'<span class="br-st f">격퇴</span>':''}</div>
- <div class="br-s">${side(b.a,[b.u||'육군',b.nv,b.af].filter(Boolean))}<div class="br-vs">VS</div>${side(b.d,['방어군'])}</div>
+ <div class="br-s">${side(b.a,[b.u||'육군',b.nv,b.af,b.gA?'지휘 '+b.gA:''].filter(Boolean))}<div class="br-vs">VS</div>${side(b.d,['방어군',b.gD?'지휘 '+b.gD:''].filter(Boolean))}</div>
  <div class="br-ph">${ph.map(([t,d,v,ok],i)=>`<div class="br-r" style="animation-delay:${i*.7}s"><span>${t}</span><div class="br-bar"><i style="width:${clamp(v,2,100)}%;animation-delay:${i*.7+.2}s" class="${ok?'ok':'no'}"></i></div><b class="${ok?'ok':'no'}">${d}</b></div>`).join('')}
  ${b.counter?`<div class="br-r" style="animation-delay:${ph.length*.7}s"><span>반격</span><div class="br-bar"><i style="width:${b.counter.p}%" class="no"></i></div><b class="no">${esc(nm(b.d,yr(S)))} 군, ${esc(RG[b.counter.r][0])} ${b.counter.cap?'탈취':b.counter.p+'% 진격'}</b></div>`:''}
  <div class="br-r" style="animation-delay:${ph.length*.7}s"><span>손실</span><div class="br-loss"><em>${esc(nm(b.a,y))} 군사력 −${pc(b.ca,b.m0)}</em><em>${esc(nm(b.d,y))} 군사력 −${pc(b.cd,b.d0)}</em></div></div></div>${hoiRep(b)}
@@ -3016,6 +3055,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'mvok':{const uu=myUnits()[V.bt.u];if(!uu)return;sfx('march');sendO({mv:(O.mv||[]).filter(m=>m.u!=uu.id).concat({u:uu.id,r:v})});toast(`${uu.nm} → ${RG[v][0]} 이동 명령`);V.bt={u:null,t:null,st:0};ui();return}
  case'umv':{sendO({mv:(O.mv||[]).filter(m=>m.u!=v)});ui();return}
  case'chat':V.chat=!V.chat;CHSEEN=CHAT.length;chatRender();$('#bar').innerHTML=barHTML();if(V.chat)setTimeout(()=>{const i=$('#chi');i&&i.focus()},50);return;
+ case'gen':{const[gn,gi,u]=v.split(':'),gid=gn+':'+gi,cur=Object.assign({},O.gen||((S.GA||{})[me])||{});if(u){for(const k in cur)if(cur[k]==u)delete cur[k];cur[gid]=u}else delete cur[gid];sendO({gen:cur});sfx('page');ui();return}
  case'tbr':V.tbr=v;sfx('page');ui();return;
  case'tech':{if(!tOK(S,me,v))return;sfx('page');sendO({tech:v});toast(TI_[v][3]+' 연구 지시');ui();return}
  case'supmap':V.supOn=!V.supOn;ui();requestDraw();return;

@@ -880,7 +880,7 @@ function step(s,ords){SUPM={};SUPV++;const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log
  ns.forEach(n=>{if(oo[n].ult)ultFire(s,n)}); // 결전 카드는 전투보다 먼저
  NFc={};ns.forEach(n=>new Set((oo[n].atk||[]).map(a=>a.r)).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;NFc[d]=(NFc[d]||0)+1}}));
  ns.forEach(n=>{const G={};(oo[n].atk||[]).forEach(a=>{const g=G[a.r];if(!g)G[a.r]=Object.assign({},a,{units:[a.u].filter(Boolean)});else{g.c+=a.c;if(a.u)g.units.push(a.u);g.nv=g.nv||a.nv;g.af=g.af||a.af;g.sea=g.sea||a.sea;if(a.op&&a.op!='full')g.op=a.op}});Object.values(G).forEach(a=>attack(s,n,a.r,Math.min(100,a.c),null,a))}); // 같은 목표는 합동 공세
- msnStep(s,oo);entStep(s);wwStep(s);mixStep(s,oo);
+ msnStep(s,oo);entStep(s);wwStep(s);s.UPR=[];resStep(s);mixStep(s,oo);
  // 독립 추진
  ns.forEach(n=>{const N=s.N[n];if(oo[n].indep&&N.lord&&N.g>20){N.g-=N.g*.1;N.ind2+=25;if(N.ind2>=100){s.log.push(`${nm(n,y)}가 ${nm(N.lord,y)}로부터 독립`);N.lord=null}}});
  // 경제
@@ -1664,7 +1664,7 @@ function hoiSetup(s,a,d,rid,c,o,BMa,BMd,OM,nf){const A=s.N[a],D=s.N[d],ter=terrO
  if(o.sea){attM*=.8;add(mA,'상륙 (해안 교두보)',.8);if(tHas(s,a,'nav4')){attM*=1.15;add(mA,'상륙정',1.15)}}
  if(A.sup<35){const f=.85;attM*=f;add(mA,'보급 불안 (지지 낮음)',f)}
  attM*=BMa;add(mA,'공중 지원',BMa);attM*=OM.att;add(mA,'작전 계획',OM.att);const ua=ultM(s,a,'a',rid,o),ud=ultM(s,d,'d',rid,o);attM*=ua;add(mA,'결전: '+ultOf(a)[0],ua);defM*=ud;add(mD,'결전: '+ultOf(d)[0],ud);
- const ent=((s.ENT||{})[rid])||0;defM*=1+ent;add(mD,'참호',1+ent);
+ const ent=((s.ENT||{})[rid])||0;defM*=1+ent;add(mD,'참호',1+ent);{const rv=resOf(s,rid);if(rv>=50&&coreOf(s,rid)!=d){const f=rv>=70?.75:.85;defM*=f;add(mD,'점령지 저항 '+rv,f)}}
  if(D.pol&&D.pol.mil=='garrison'){defM*=1.3;add(mD,'수비대 정책',1.3)}
  defM*=BMd;add(mD,'적 공군 엄호',BMd);
  {const DA_=supD(s,a),svA=o.sea?.75:supV(supAtk(s,a,rid,DA_));if(svA<.98){const f=.55+.45*svA;attM*=f;add(mA,'보급 '+Math.round(svA*100)+'%',f)}
@@ -1910,6 +1910,19 @@ function wwStep(s){const loss={};(s.BT||[]).forEach(b=>{if(b.msn)return;loss[b.a
   if(N.ww>15){N.sup=Math.max(0,N.sup-N.ww*.035);N.ind=Math.max(5,N.ind-N.ww*.004)}
   if(N.ww>=65&&Math.random()<.25){N.sup-=3;if(PF[PID(n)]||P_h(s,n))s.log.push(`${nm(n,y)}: 전쟁 피로가 쌓여 반전 시위가 번진다`)}}}
 const wwOf=(s,n)=>Math.round((s.N[n]&&s.N[n].ww)||0);
+// ════════ 점령지 저항 ════════
+const coreOf=(s,r)=>{const o=RG[r]&&RG[r][s.Y0>=1936?4:3];return o&&s.N[o]?o:null};
+function garrisoned(s,n,r){const UL=(s.UL||{})[n]||{};return Object.values(UL).some(L=>L==r||(ADJ&&ADJ[r]&&ADJ[r].has(L)))}
+function resStep(s){s.RS=s.RS||{};s.RSQ=s.RSQ||{};const y=yr(s);let ups=0;
+ for(const r in s.R){const R=s.R[r],c=ctrl(s,r),core=coreOf(s,r);if(!core||c==core){delete s.RS[r];delete s.RSQ[r];continue}
+  const C=s.N[c];if(!C)continue;const q=s.RSQ[r]=(s.RSQ[r]||0)+1,coreAlive=alive(s,core)&&!s.N[core].dead;
+  let d=R.occ?3.5:2;if(coreAlive&&atWar(s,c,core))d+=2;if((C.ww||0)>40)d+=1;if(C.pol&&C.pol.mil=='garrison')d-=1.5;if(garrisoned(s,c,r))d-=2.5;if(!R.occ&&q>12)d-=1.2;if(!coreAlive)d-=.4;
+  const v=clamp((s.RS[r]||0)+d,0,100);s.RS[r]=Math.round(v*10)/10;
+  if(v>=70&&ups<2&&Math.random()<.15){ups++;s.RS[r]=35;const nmR=RG[r][0];
+   if(coreAlive){if(R.occ)R.occ=null;else{R.o=core;R.occ=null}if(s.FR)delete s.FR[r];SUPV++;SUPM={};s.log.push(`${nmR} 봉기 — 주민들이 ${nm(c,y)} 점령군을 몰아내고 ${nm(core,y)}에 복귀했다`)}
+   else{C.sup=Math.max(0,C.sup-4);C.mil*=.97;s.log.push(`${nmR} 봉기 — ${nm(c,y)} 점령군이 큰 피해를 입었다`)}
+   (s.UPR=s.UPR||[]).push({r,c,core,t:s.t,back:coreAlive})}}}
+const resOf=(s,r)=>Math.round(((s.RS||{})[r])||0);
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2576,11 +2589,14 @@ function agendaFor(me){if(!me||!S.N[me])return null;const y=yr(S),N=S.N[me];{con
  return{t:'금 분기 결재 완료',s:'남은 서류 없음. 분기를 마감하시오.',go:'ready',done:1}}
 function agendaHTML(){const me=mine(),a=agendaFor(me);if(!a)return'';return`<div style="flex:1;min-width:0"><small>금 분기 안건</small><b>${esc(a.t)}</b><span>${esc(a.s)}</span></div><span class="go">›</span>`}
 // ════════ 정보창 ════════
+function resHTML(k){const c=ctrl(S,k),core=coreOf(S,k);if(!core||c==core)return'';const v=resOf(S,k),y=yr(S),g=garrisoned(S,c,k),lv=v<30?['잠잠','#2f6b25']:v<50?['불온','#8a6a33']:v<70?['저항 운동','#b5541f']:['봉기 직전','#8f2a17'];
+ return`<div class="sec"><span>점령지 저항</span><span style="color:${lv[1]}">${lv[0]} · ${v}</span></div><div class="ww"><i style="width:${v}%;background:${lv[1]}"></i><b style="left:50%"></b><b style="left:70%"></b></div>
+ <div class="note" style="margin:4px 0 8px">원래 주인 ${esc(nm(core,y))}. ${g?'주둔군이 있어 저항이 줄어든다.':'곁에 부대를 두면 저항이 분기마다 3씩 줄어든다.'} 50 이상이면 이곳 방어 −15%, 70 이상이면 −25%이고 드물게 봉기가 일어나 원래 주인에게 돌아갈 수 있다.</div>`}
 function sheetHTML(){const s=V.sel;if(!s)return null;const me=mine(),y=yr(S);
  if(s.t=='f'){const f=FTI[s.id];if(!f)return null;return featPanel(f)}
  if(s.t=='r'){const k=s.id,R=S.R[k];if(!R)return null;const o=R.o,v=RG[k][5],nb2=Object.keys(S.R).filter(r=>r!=k&&dist(k,r)<=1&&(S.R[r].occ||S.R[r].o)!=o).map(r=>S.R[r].occ||S.R[r].o).filter((x,i,a)=>a.indexOf(x)==i).slice(0,6);
   return{ic:flag(o,26,18),t:RG[k][0],s:`${nm(o,y)}${R.occ?' · 점령: '+nm(R.occ,y):''}`,b:`<div class="kv"><div><small>식량</small><b>${v[0]}</b></div><div><small>철강</small><b>${v[1]}</b></div><div><small>석유</small><b>${v[2]}</b></div></div>
-   ${R.occ?`<div class="warn">${esc(nm(R.occ,y))} 군 점령 중. 이 지역의 산출은 점령국으로 넘어간다.</div>`:''}${frontHTML(k)}<div class="sec"><span>인접 세력</span></div><div class="note" style="margin:0">${nb2.map(x=>esc(nm(x,y))).join(' · ')||'없음'}</div>
+   ${R.occ?`<div class="warn">${esc(nm(R.occ,y))} 군 점령 중. 이 지역의 산출은 점령국으로 넘어간다.</div>`:''}${resHTML(k)}${frontHTML(k)}<div class="sec"><span>인접 세력</span></div><div class="note" style="margin:0">${nb2.map(x=>esc(nm(x,y))).join(' · ')||'없음'}</div>
    <div class="cmds"><button class="pri" data-act="enter:${R.occ||o}">${esc(nm(R.occ||o,y))} 내부 지도 열기</button>${me&&o!=me?`<button data-act="dipto:${o}">회담 준비</button>`:''}${V.tab=='mil'&&me&&validTgt(me).includes(k)?`<button data-act="tab:mil">부대 배정</button>`:''}</div>`}}
  if(s.t=='z')return zonePanel(s.id);
  if(s.t=='rt'){const[pid,id]=s.id.split('.'),R=profFeats(pid).routes[id],ps=FT.filter(f=>f.pid==pid&&(f.o.r||[]).includes(id));if(!R)return null;const cs=ps.length?cargoOf(ps[0]).filter(c=>c.rid==id):[];
@@ -2710,6 +2726,8 @@ function ultBlock(me){const D=ultOf(me),U=(S.ULT||{})[me],A=ultAct(S,me),u=U?U.u
  ${U?'':`<button class="${O.ult?'on':'pri'}" data-act="ult">${O.ult?'발동 취소':W?'결전 카드 발동':'결전 카드 발동 (지금은 평시)'}</button>`}</div>${ultFoes(me)}`}
 function ultFoes(me){const y=yr(S),L=Object.keys(S.N).filter(n=>n!=me&&ultAct(S,n)&&(atWar(S,me,n)||facSame(S,me,n)));if(!L.length)return'';
  return`<div class="ult-foes"><small>지금 발동 중인 다른 나라의 결전 카드</small>${L.map(n=>{const D=ultOf(n),l=ultLeft(S,n),ally=!atWar(S,me,n);return`<div class="uf-r${ally?' al':''}">${flag(n,22,15)}<div><b>${esc(D[0])}</b><span>${esc(nm(n,y))} · ${ally?'아군 진영':'교전국'} · 남은 ${l}분기</span></div>${ultDurBar(D[2],l)}</div>`}).join('')}</div>`}
+function resBlock(me){const L=held(S,me).filter(r=>coreOf(S,r)&&coreOf(S,r)!=me&&resOf(S,r)>=30).sort((a,b)=>resOf(S,b)-resOf(S,a));if(!L.length)return'';
+ return`<div class="sec"><span>점령지 저항</span><span>${L.length}곳</span></div>${L.slice(0,5).map(r=>{const v=resOf(S,r);return`<div class="ln cl" data-act="r:${r}"><div class="g">${esc(RG[r][0])}<small>원래 ${esc(nm(coreOf(S,r),yr(S)))} · ${garrisoned(S,me,r)?'주둔 중':'주둔군 없음'}</small></div><div class="v" style="color:${v>=80?'#8f2a17':v>=50?'#b5541f':'#8a6a33'}">${v}</div></div>`}).join('')}`}
 function wwBlock(me){const w=wwOf(S,me),W=wars(S,me).length;if(!W&&w<1)return'';const lv=w<15?['평온','#2f6b25']:w<40?['피로 누적','#8a6a33']:w<65?['염전 여론','#b5541f']:['반전 시위','#8f2a17'];
  return`<div class="sec"><span>전쟁 피로도</span><span style="color:${lv[1]}">${lv[0]} · ${w}</span></div><div class="ww"><i style="width:${w}%;background:${lv[1]}"></i><b style="left:15%"></b><b style="left:40%"></b><b style="left:65%"></b></div>
  <div class="note" style="margin:4px 0 8px">전쟁이 길어지고 손실이 쌓일수록 오른다. 침략한 쪽이 더 빨리 지친다. 15 이상이면 매 분기 지지·산업력이 깎이고, 65 이상이면 반전 시위가 일어난다. 평화가 오면 분기마다 4씩 내려간다. 높을수록 상대 AI도 강화에 응하기 쉽다.${W?'':' (지금은 평시)'}</div>`}
@@ -2720,7 +2738,7 @@ function supBlock(me){const D=supD(S,me),h=held(S,me),cut=h.filter(r=>D[r]==null
  ${cut.length?`<div class="ln"><div class="g" style="color:var(--ox)">포위된 지역 ${cut.length}곳<small>${cut.slice(0,4).map(r=>esc(RG[r][0])).join(' · ')}</small></div></div>`:''}${low.length?`<div class="ln"><div class="g">보급 부족 ${low.length}곳<small>${low.slice(0,4).map(r=>esc(RG[r][0])).join(' · ')}</small></div></div>`:''}
  ${(O.mv||[]).length?(O.mv||[]).map(m=>{const u=myUnits().find(x=>x.id==m.u);return u?`<div class="ln"><div class="g">${esc(u.nm)} → ${esc(RG[m.r][0])}<small>분기 마감 때 이동</small></div><button data-act="umv:${m.u}" style="height:26px">취소</button></div>`:''}).join(''):''}`}
 function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목표 지역을 누르세요','작전 미리보기','소모 예산 확인'][V.bt.st]||'';
- return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${wwBlock(me)}${ultBlock(me)}${supBlock(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
+ return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${wwBlock(me)}${resBlock(me)}${ultBlock(me)}${supBlock(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
  ${['a','n','f'].map(b=>{const L=U.filter(u=>u.b==b),f=FRC(me)[b];if(!L.length)return'';return`<div class="sec"><span>${BR[b]} · 군사력의 ${Math.round(f*100)}%</span><span>${b=='a'?(V.bt.u!=null?st:'부대를 고른 뒤 지도에서 목표 지정'):b=='n'?'해상 원정 호위':'공중 지원'}</span></div>${L.map(u=>`<div class="ln cl${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' hot':''}" data-act="unit:${u.i}"><div class="g">${esc(u.nm)}<small>${esc(u.at)} 주둔 · 전력 ${u.str} (전체의 ${u.c}%)</small></div><div class="v">${b=='a'?TANKI:b=='n'?'⚓':'✈'}</div></div>`).join('')}`}).join('')}
  <div class="sec"><span>내린 작전 명령</span></div>${(O.atk||[]).map((a,i)=>{const u=U.find(x=>x.id==a.u),nv=U.find(x=>x.id==a.nv),af=U.find(x=>x.id==a.af);return`<div class="ln"><div class="g">${a.sea?'⚓ 상륙전 ':''}${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${esc([u&&u.nm,nv&&nv.nm,af&&af.nm].filter(Boolean).join(' + ')||a.c+'% 투입')}</small></div><button data-act="uatk:${i}">취소</button></div>`}).join('')||'<div class="note" style="margin:0">없음</div>'}
  ${(O.msn||[]).length?`<div class="sec"><span>단독 임무</span></div>${O.msn.map((m,i)=>{const u=U.find(x=>x.id==m.u);return`<div class="ln"><div class="g">${MSN[m.t][0]} · ${esc(RG[m.r][0])}<small>${esc(u?u.nm:'')}</small></div><button data-act="umsn:${i}">취소</button></div>`}).join('')}`:''}
@@ -3023,6 +3041,7 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
  if(me&&p.N[me]&&S.N[me]&&p.N[me].lord&&!S.N[me].lord)ev.push({pri:99,h:`${nm(me,y)}, 독립 선포`,s:'국내 영토와 과세권을 확보했다.',at:capOf(me),ty:'border'});
  if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국 정부는 다음 분기 예산을 짜는 중이다.',at:me?capOf(me):[500,280],ty:'none'})}
  {const UL=(S.UE||[]).filter(e=>e.n==me||wars(S,me).includes(e.n)||PF[PID(e.n)]);if(UL.length)setTimeout(()=>ultFxShow(UL),300)}
+ (S.UPR||[]).forEach(u=>{ev.push({pri:u.c==me||u.core==me?93:55,h:`${RG[u.r][0]} 봉기`,s:u.back?`주민들이 ${nm(u.c,y)} 점령군을 몰아냈다. 이 지역은 ${nm(u.core,y)}로 돌아갔다.`:`${nm(u.c,y)} 점령군이 습격을 받아 큰 피해를 입었다.`,at:LBL[u.r],sel:'r:'+u.r,ty:'border'})});
  (S.DEAD||[]).forEach(d=>{ev.push({pri:d.n==me?100:d.by==me?98:90,h:`${nm(d.n,y)} 멸망`,s:`마지막 영토를 잃었다. ${d.c}개 지역이 ${nm(d.by,y)}에 병합되고, 지도에서 그 이름이 지워졌다.`,at:capOf(d.by),ty:'border'})});
  (S.UE||[]).forEach(e=>{const D=ultOf(e.n);ev.push({pri:e.n==me?97:wars(S,me).includes(e.n)?95:72,h:`결전 — ${nm(e.n,y)}, ${D[0]}`,s:`${D[1]} ${e.x?e.x+'.':''} (열세 ${e.u}배)`,at:capOf(e.n),ty:'border'})});
  (S.BT||[]).forEach(b=>{const inv=b.a==me||b.d==me;if(!inv&&Math.abs(b.g)<40)return;ev.push({pri:inv?(b.d==me?92:86):45,h:`${RG[b.rid][0]} ${b.sea?'상륙전':'전투'} — ${nm(b.a,y)} ${b.fail?'상륙 실패':b.cap?'점령':b.g>0?b.g+'% 진격':'공세 저지'}`,s:`${nm(b.a,y)} 군이 ${nm(b.d,y)} 방어선을 공격했다. 공격 측 군사력 −${pc(b.ca,b.m0||1)}, 방어 측 −${pc(b.cd,b.d0||1)}. 전선 진척 ${b.p}%.`,at:LBL[b.rid],sel:'r:'+b.rid,ty:'border'})});

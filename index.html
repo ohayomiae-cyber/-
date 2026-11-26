@@ -795,6 +795,13 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .ws-t{margin:12px 14px 8px;font:13px var(--serif);color:#4a3a26;text-align:center}.ws-t b{color:#8f2a17}.ws .rowf{padding:0 14px;justify-content:flex-end}
 .ban-old{fill:none;stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.4;stroke-dasharray:8 5}
 .front.lite{fill:none;stroke:#8f2a17;stroke-width:1.6;stroke-dasharray:5 3;vector-effect:non-scaling-stroke;opacity:.65;pointer-events:none}
+.wr{margin:10px 14px 0;padding:8px 10px;background:rgba(255,250,235,.6);border:1px solid rgba(90,66,36,.4);border-radius:3px}.wr-h{font:700 12px var(--serif);letter-spacing:.14em;color:#7a2a18;margin-bottom:4px}
+.wr-r{display:flex;align-items:center;gap:8px;padding:5px 4px;border-bottom:1px dotted rgba(90,66,36,.35)}.wr-r:last-child{border-bottom:0}.wr-r svg{flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.wr-r.against{background:rgba(143,42,23,.08)}.wr-r.for{background:rgba(36,71,107,.08)}
+.wr-i{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.wr-r b{display:block;font:700 13px var(--serif);color:#1d140b}.wr-r small{font:12px/1.4 var(--serif);color:#4a3a26}
+.agg{display:flex;align-items:center;gap:10px;padding:6px 8px;margin:-4px 0 8px;background:rgba(255,250,235,.5);border:1px solid rgba(90,66,36,.35);border-radius:3px}.agg small{display:block;font:11px var(--serif);color:#7a2a18;letter-spacing:.08em}.agg b{font:700 13px var(--serif)}
+.ultw{display:flex;align-items:center;gap:8px}.ultw span{flex:1}.ultw button{flex:none;height:28px;font-size:12px}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -833,7 +840,7 @@ function newGame(mode,secs){const e=mode=='w2',Y0=e?1936:1910,T=mode=='w1'?36:mo
 function nb(s,n){const h=held(s,n),o=new Set();if(ADJ){h.forEach(x=>(ADJ[x]||[]).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;if(d!=n)o.add(d)}}));return[...o]}for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
 function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.o;if(d==a||!alive(s,a))return;if(!atWar(s,a,d)&&truce(s,a,d)){if(P_h(s,a))s.log.push(`${nm(a,yr(s))}: ${nm(d,yr(s))}와 휴전 중이라 공격을 취소했다`);return}o=o||{};const adj=held(s,a).some(x=>dist(x,rid)<=1);if(!adj){if(o.op=='para'&&o.af&&paraOK(s,a,rid))o.sea=0;else{if(!o.nv||!seaOK(s,a,rid))return;o.sea=1}}else o.sea=0;
  if(facSame(s,a,d))return;const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
- if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));facCall(s,a,d);
+ if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));facCall(s,a,d);warStarted(s,a,d,why);
   s.TR.filter(t=>t.st=='on'&&t.ty=='ally').forEach(t=>{for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(!P_h(s,y)&&alive(s,y)&&y!=d&&!atWar(s,y,d)&&(x==a)){s.W.push(y+'|'+d);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(d,yr(s))}에 참전`)}
    for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
  const A=s.N[a],D=s.N[d],uIds=(o.units&&o.units.length?o.units:[o.u]).filter(x=>x&&x[0]=='a');if(uIds.length)c=c*uIds.reduce((t,id)=>t+uHealth(s,a,id),0)/uIds.length;const use=A.mil*c/100;
@@ -879,7 +886,7 @@ const terrInc=h=>3*Math.pow(h.reduce((a,r)=>a+RW(r),0),.7);
 const heldW=(s,n)=>held(s,n).reduce((a,r)=>a+RW(r),0);
 function natKey(s,id){if(s.N[id])return id;for(const n in s.N)if(NID(n)==id&&!s.N[n].dead)return n;return null}
 // 선전포고만 (공격은 AI 판단으로)
-function declareWar(s,a,d,why,force){if(!s.N[a]||!s.N[d]||a==d||atWar(s,a,d)||facSame(s,a,d)||(!force&&truce(s,a,d)))return false;const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=6}s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고${why?' ('+why+')':''}`);facCall(s,a,d);return true}
+function declareWar(s,a,d,why,force){if(!s.N[a]||!s.N[d]||a==d||atWar(s,a,d)||facSame(s,a,d)||(!force&&truce(s,a,d)))return false;const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=6}s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고${why?' ('+why+')':''}`);facCall(s,a,d);warStarted(s,a,d,why);return true}
 // AI 팽창: 강대국은 역사적 시기 이후, 그 밖의 나라도 압도적이면 약소한 이웃을 노린다
 const EXPY={GER:[1938,.35],ITA:[1936,.3],JPN:[1937,.3],RUS:[1939,.25],DAN:[1914,.25],OTT:[1914,.15],HUN:[1939,.1],ROU:[1940,.08],BGR:[1941,.08],USA:[1942,.05],UK:[1940,.04],FRA:[1940,.04]};
 const DF=s=>({easy:{p:.3,r:1.5,g:18,ult:0},hist:{p:.65,r:1.15,g:10,ult:.25},aggr:{p:1.15,r:.9,g:6,ult:.5}})[s.diff||'hist'];
@@ -897,14 +904,14 @@ function histPush(s,next){const H=s.HIST=s.HIST||{k:Object.keys(s.R).sort(),n:[]
 function repR(i){const H=S.HIST;if(!H||!H.f[i])return null;const f=H.f[i],R={};H.k.forEach((k,j)=>{R[k]={o:H.n[parseInt(f.substr(j*2,2),36)],occ:null}});return R}
 function repStart(){const H=S.HIST;if(!H||H.f.length<2){toast('아직 기록된 분기가 부족하다');return}V.rep={i:0,R:repR(0)};V.docOn=0;V.tab=null;V.cd.open=0;clearInterval(window.__rep);window.__rep=setInterval(()=>{if(!V.rep){clearInterval(window.__rep);return}if(V.rep.i>=S.HIST.f.length-1){clearInterval(window.__rep);V.rep.end=1;ui();return}V.rep.i++;V.rep.R=repR(V.rep.i);sfx('page');requestDraw();ui()},520);ui();requestDraw()}
 function repHTML(){const R=V.rep;if(!R)return'';const t=R.i,y=S.Y0+Math.floor(t/4),q=t%4+1,n=S.HIST.f.length;return`<div class="repb"><small>타임랩스</small><b>${y}년 ${q}분기</b><div class="rp-bar"><i style="width:${(t/(n-1)*100).toFixed(1)}%"></i></div><button data-act="repx">${R.end?'닫기':'그만 보기'}</button></div>`}
-function step(s,ords){SUPM={};SUPV++;s.CQ={};s.GAINQ={};const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
+function step(s,ords){SUPM={};SUPV++;s.CQ={};s.GAINQ={};s.WR=[];const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
  ns.forEach(n=>{const h=P_h(s,n);oo[n]=h?(ords[n]||{focus:'ind',atk:[],props:[]}):ai(s,n)});
  // 이벤트
  HG.forEach(e=>{const w=natKey(s,e[2]),tg=e[4]?natKey(s,e[4]):'';if(e[0]!=y||e[1]!=q||!w||P_h(s,w))return;const ty=e[3],why=e[6];
   if(ty=='indep'){const N=s.N[w];if(N.lord&&s.N[N.lord].sup<60){N.lord=null;s.log.push(`${nm(w,y)} 독립: ${e[5]}`)}return}
   if(!tg||!alive(s,w)||!alive(s,tg)||atWar(s,w,tg))return;
   if(facSame(s,w,tg))facLeave(s,tg);const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==tg&&held(s,w).some(x=>dist(x,r)<=1));if(r){s.log.push(`역사 이벤트: ${e[5]} (${why})`);declareWar(s,w,tg,e[5],1);oo[w].atk=oo[w].atk||[];if(!oo[w].atk.length)oo[w].atk.push({r,c:Math.round(FRC(w).a*70)})}else{s.log.push(`역사 이벤트: ${e[5]} (${why})`);declareWar(s,w,tg,e[5],1)}});
- facStep(s,oo);genStep(s,oo);spyStep(s,oo);
+ facStep(s,oo);genStep(s,oo);spyStep(s,oo);Object.keys(oo).forEach(n=>(oo[n].aid||[]).slice(0,2).forEach(t=>{const N=s.N[n],T=s.N[t];if(!N||!T||N.g<30||!wars(s,t).length||atWar(s,n,t))return;N.g-=30;T.g+=30;T.mil+=1;wars(s,t).forEach(e=>{const tr=pact(s,n,e,'trade');if(tr)tr.st='x'});wr(s,n,'aid',wars(s,t)[0],t,`${nm(t,yr(s))}에 무기 대여 (국고 30, 의용군 1)`)}));
  // 조약 처리
  for(const n in ords){(ords[n].sign||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t){if(t.ty=='peace'&&!atWar(s,t.a,t.b)){t.st='x';return}t.st='on';if(t.ty=='cease'||t.ty=='ret')peace(s,t);else if(t.ty=='peace')applyPeace(s,t);s.log.push(`${nm(n,y)}이(가) ${TY[t.ty]} 서명 — 발효`)}});
   (ords[n].rej||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t)t.st='x'})}
@@ -937,7 +944,7 @@ function step(s,ords){SUPM={};SUPV++;s.CQ={};s.GAINQ={};const y=yr(s),q=qt(s);s.
  s.PJ.forEach(p=>{const d=PJC[p.id],N=s.N[p.n];if(p.ok&&d&&d.gpt&&N)N.g+=d.gpt});
  ns.forEach(n=>{const o=oo[n]||{},N=s.N[n];(o.proj||[]).forEach(id=>{const d=PJC[id];if(!d||s.PJ.some(p=>p.id==id&&p.n==n)||N.g<d.cost)return;N.g-=d.cost;s.PJ.push({id,n,t0:s.t,left:d.q});s.log.push(`${nm(n,y)}: ${d.name} 착공`)});
   if(o.cargo&&N.st[o.cargo]!=null)for(const k in N.st)N.st[k]=Math.max(0,N.st[k]+(k==o.cargo?2:-1))});
- techStep(s,oo);annexDead(s);histPush(s,1);s.TR=s.TR.filter(t=>t.st!='x'||(t.t0!=null&&s.t-t.t0<3));s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';else{const V_=vicCalc(s);if(V_.conq){s.phase='end';s.log.push(`${nm(V_.conq,yr(s))}, 세계의 40%를 장악 — 전쟁이 끝났다`)}}goalStep(s);if(s.phase=='end')vicEnd(s)}
+ techStep(s,oo);reactStep(s);annexDead(s);histPush(s,1);s.TR=s.TR.filter(t=>t.st!='x'||(t.t0!=null&&s.t-t.t0<3));s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';else{const V_=vicCalc(s);if(V_.conq){s.phase='end';s.log.push(`${nm(V_.conq,yr(s))}, 세계의 40%를 장악 — 전쟁이 끝났다`)}}goalStep(s);if(s.phase=='end')vicEnd(s)}
 // ════════ 승리 조건 ════════
 let TOTW=0;const totW=()=>TOTW||(TOTW=Object.keys(RG).reduce((a,r)=>a+RW(r),0));
 function vicCalc(s){const L=Object.keys(s.N).filter(n=>!s.N[n].dead&&alive(s,n)),y=yr(s),share=n=>heldW(s,n)/totW();
@@ -1135,7 +1142,7 @@ const HOMEK=n=>{const P=PF[PID(n)];return P&&regOf(P.home)};
 const DTAKEN=(s,n,id)=>((s.DC||{})[n]||[]).includes(id);
 const WIN=s=>qt(s)==1||qt(s)==4;
 const NATK=(s,en)=>{const k=regOf(en);return k&&s.R[k]?s.R[k].o:null};
-function annexNat(s,n,en){const o=NATK(s,en);if(!o||o==n)return;for(const r in s.R)if(s.R[r].o==o){s.R[r].o=n;s.R[r].occ=null}s.W=s.W.filter(w=>!w.split('|').includes(o));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==o||t.b==o))t.st='x'})}
+function annexNat(s,n,en){const o=NATK(s,en);if(!o||o==n)return;aggrAnnex(s,n,o);for(const r in s.R)if(s.R[r].o==o){s.R[r].o=n;s.R[r].occ=null}s.W=s.W.filter(w=>!w.split('|').includes(o));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==o||t.b==o))t.st='x'})}
 function annexReg(s,n,en){const pk=NK[en],L=pk&&PROV[pk]?PROV[pk].map(p=>p.k):[regOf(en)];L.forEach(k=>{if(k&&s.R[k]){s.R[k].o=n;s.R[k].occ=null}})}
 function pactOn(s,a,b,ty){if(!a||!b||!s.N[a]||!s.N[b]||pact(s,a,b,ty))return;s.TR.push({id:'h'+s.t+a+b+ty,ty,a,b,st:'on'})}
 const UNITS0=[['제1군',25],['제2군',25],['기동 예비군',50]];
@@ -1911,7 +1918,7 @@ function applyPeace(s,t){const{a,b}=t,y=yr(s);(t.take||[]).forEach(r=>{const R=s
  for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o))R.occ=null;if(s.FR&&s.FR[r]&&[a,b].includes(s.FR[r].a)&&[a,b].includes(s.FR[r].d))delete s.FR[r]}
  if(t.pay){const payer=t.pay>0?b:a,rec=payer==a?b:a,amt=Math.min(Math.abs(t.pay),Math.max(0,s.N[payer].g));s.N[payer].g-=amt;s.N[rec].g+=amt}
  if(t.pup&&s.N[b]){s.N[b].lord=a;facLeave(s,b)}
- s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);setTruce(s,a,b);s.log.push(`${nm(a,y)}–${nm(b,y)} 강화 조약 체결${(t.take||[]).length?` · ${t.take.length}개 지역 할양`:''}${t.pay?` · 배상금 ${Math.abs(t.pay)}`:''}${t.pup?` · ${nm(b,y)} 괴뢰국화`:''}`)}
+ s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);setTruce(s,a,b);if(s.AGG){if(s.AGG[a])s.AGG[a]=Math.max(0,s.AGG[a]-4);if(s.AGG[b])s.AGG[b]=Math.max(0,s.AGG[b]-4)}s.log.push(`${t.med?'중재로 ':''}${nm(a,y)}–${nm(b,y)} 강화 조약 체결${(t.take||[]).length?` · ${t.take.length}개 지역 할양`:''}${t.pay?` · 배상금 ${Math.abs(t.pay)}`:''}${t.pup?` · ${nm(b,y)} 괴뢰국화`:''}`)}
 function peaceClauses(t,y){const L=[`${nm(t.a,y)}와 ${nm(t.b,y)}는 이 조약의 서명과 함께 모든 적대 행위를 멈춘다.`];
  if((t.take||[]).length)L.push(`${nm(t.b,y)}는 다음 지역을 ${nm(t.a,y)}에 영구히 할양한다: ${t.take.map(r=>RG[r]?RG[r][0]:r).join(', ')}.`);else L.push('양국이 점령한 지역은 모두 원래 주인에게 돌아간다.');
  if(t.pay)L.push(`${nm(t.pay>0?t.b:t.a,y)}는 배상금 ${Math.abs(t.pay)}을 지급한다.`);if(t.pup)L.push(`${nm(t.b,y)} 정부는 ${nm(t.a,y)}의 보호를 받으며 외교와 군사를 그에 따른다.`);L.push('그 밖의 점령지는 이 조약 발효와 함께 반환한다.');return L}
@@ -2021,6 +2028,39 @@ function casAdd(s,n,div){s.CAS=s.CAS||{};s.CQ=s.CQ||{};const m=Math.round(div*ME
 const menTxt=m=>m>=10000?`약 ${(m/10000).toFixed(m>=100000?0:1)}만 명`:`약 ${Math.round(m/1000)*1000||m}명`;
 function healStep(s){const fought=new Set();(s.BT||[]).forEach(b=>{if(b.msn)return;(b.uA||[]).forEach(id=>fought.add(b.a+'|'+id));(b.uD||[]).forEach(id=>fought.add(b.d+'|'+id))});
  for(const n in s.UH||{}){const N=s.N[n];if(!N||N.dead){delete s.UH[n];continue}const D=supD(s,n),war=wars(s,n).length>0;for(const id in s.UH[n]){if(fought.has(n+'|'+id))continue;const L=locOf(s,n,id),sv=supV(L?D[L]:2),v=s.UH[n][id]+(war?.09:.2)*sv;if(v>=.995)delete s.UH[n][id];else s.UH[n][id]=Math.round(v*1000)/1000}}}
+// ════════ 세계의 반응 ════════
+const IDEO_={dem:['UK','FRA','USA','NED','BEL','CHE','SWE','NOR','DEN','CZE','FIN','IRL','AUS','CAN'],fas:['GER','ITA','JPN','HUN','ESP','POR','ROU','BGR'],com:['RUS','MNG']};
+const ideo=(s,n)=>{const id=NID(n)||n,y=yr(s);if(y<1918)return({UK:'ent',FRA:'ent',RUS:'ent',GER:'cen',DAN:'cen',OTT:'cen'})[id]||'';for(const k in IDEO_)if(IDEO_[k].includes(id)){if(k=='fas'&&(id=='ESP'||id=='ROU'||id=='BGR')&&y<1939)return'';return k}return''};
+const GUAR=[[1939,'UK','POL'],[1939,'FRA','POL'],[1939,'UK','GRC'],[1939,'UK','ROU'],[1914,'UK','BEL'],[1914,'RUS','Serbia']];
+const guards=(s,x,d)=>GUAR.some(([y,g,t])=>yr(s)>=y&&(NID(x)||x)==g&&((NID(d)||d)==t||ENN[HOMEK2(s,d)]==t));
+const borders=(s,a,b)=>held(s,a).some(r=>[...(ADJ&&ADJ[r]||[])].some(x=>ctrl(s,x)==b));
+const bigP=(s,x)=>!!PF[PID(x)]||(s.N[x]&&s.N[x].mil>=25);
+function warStarted(s,a,d,why){if(!s.N[a]||!s.N[d])return;s.AGG=s.AGG||{};const def=wars(s,d).length>1&&wars(s,d).some(x=>x!=a&&atWar(s,x,a));s.AGG[a]=Math.min(100,(s.AGG[a]||0)+(def?4:12));s.WSTART=s.WSTART||{};s.WSTART[truceK(a,d)]=s.t;(s.WQ=s.WQ||[]).push({a,d,k:'war'})}
+function aggrAnnex(s,a,d){s.AGG=s.AGG||{};s.AGG[a]=Math.min(100,(s.AGG[a]||0)+8);(s.WQ=s.WQ||[]).push({a,d,k:'annex'})}
+function wr(s,x,ty,a,d,txt){(s.WR=s.WR||[]).push({x,ty,a,d,txt})}
+function reactStep(s){const y=yr(s),Q=s.WQ||[];s.WQ=[];s.AGG=s.AGG||{};
+ Q.forEach(({a,d,k})=>{if(!s.N[a]||!s.N[d]||!alive(s,a))return;const A=s.N[a],D=s.N[d],inf=s.AGG[a]||0;
+  const C=new Set(Object.keys(s.N).filter(x=>x!=a&&x!=d&&alive(s,x)&&!s.N[x].dead&&(PF[PID(x)]||borders(s,x,a)||borders(s,x,d))));
+  let nAl=0;const base=(s.WR||[]).length;[...C].sort((p,q)=>(bigP(s,q)-bigP(s,p))||(s.N[q].mil-s.N[p].mil)).forEach(x=>{const X=s.N[x];if((s.WR||[]).length-base>=7||atWar(s,x,a)||atWar(s,x,d)||P_h(s,x)||X.lord)return;
+   const sameA=facSame(s,x,a)||!!pact(s,x,a,'ally'),sameD=facSame(s,x,d)||!!pact(s,x,d,'ally');if(sameA||sameD)return;
+   const iA=ideo(s,a),iD=ideo(s,d),iX=ideo(s,x),nbA=borders(s,x,a),nbD=borders(s,x,d),g=guards(s,x,d);
+   const toD=(g?3.2:0)+(iX&&iX==iD?1.1:0)-(iX&&iX==iA?1.6:0)+(nbA?1.2:0)+inf/22+(k=='annex'?.6:0),toA=(iX&&iX==iA?1.6:0)+(nbD&&EXPY[NID(x)]?.8:0)-(nbA?.8:0);
+   if(toD>=3.2&&bigP(s,x)&&X.mil>A.mil*.35&&!(s.ULTM||[]).some(u=>u.x==x&&u.a==a)){(s.ULTM=s.ULTM||[]).push({x,a,d,until:s.t+2});wr(s,x,'ult',a,d,`${nm(a,y)}에 최후통첩 — 2분기 안에 ${nm(d,y)}와 강화하지 않으면 참전`);return}
+   if(toD>=1.6&&bigP(s,x)&&X.g>=40){const g2=Math.round(Math.min(X.g*.08,35)),v=+(X.mil*.03).toFixed(1);if(g2>3){X.g-=g2;D.g+=g2}if(v>.3){X.mil-=v*.5;D.mil+=v}const tr=pact(s,x,a,'trade');if(tr)tr.st='x';wr(s,x,'aid',a,d,`${nm(d,y)}에 무기 대여 (국고 ${g2}${v>.3?', 의용군 '+v:''})${tr?' · '+nm(a,y)+'와 무역 단절':''}`);return}
+   if(toA>=1.6&&k=='war'&&bigP(s,x)){const g2=Math.round(Math.min(X.g*.06,25));if(g2>3){X.g-=g2;A.g+=g2;wr(s,x,'aidA',a,d,`${nm(a,y)}에 물자 지원 (국고 ${g2})`)}return}
+   if(nbA&&X.mil<A.mil*.7&&nAl<4){nAl++;X.mil*=1.06;s.ENT=s.ENT||{};held(s,x).forEach(r=>{if([...(ADJ&&ADJ[r]||[])].some(q=>ctrl(s,q)==a))s.ENT[r]=Math.min(.3,(s.ENT[r]||0)+.12)});wr(s,x,'alert',a,d,`${nm(a,y)} 국경에 동원령 · 방어 진지 강화`);return}
+   if(k=='war'&&nbD&&!sameD&&(EXPY[NID(x)]||iX!=iD)&&X.mil>D.mil*1.1&&D.mil<A.mil*.75&&!truce(s,x,d)&&Math.random()<.3){s.W.push(x+'|'+d);setTruce(s,x,a);wr(s,x,'vult',a,d,`기회를 틈타 ${nm(d,y)}에 선전포고`);s.log.push(`${nm(x,y)}, 기회를 틈타 ${nm(d,y)}에 선전포고`)}});});
+ // 최후통첩 시한
+ s.ULTM=(s.ULTM||[]).filter(u=>{if(!s.N[u.x]||!s.N[u.a]||!alive(s,u.x)||!alive(s,u.a))return false;if(!atWar(s,u.a,u.d)){wr(s,u.x,'ok',u.a,u.d,`${nm(u.a,y)}와 ${nm(u.d,y)}의 강화로 최후통첩 철회`);return false}if(s.t>=u.until){if(!atWar(s,u.x,u.a)&&!facSame(s,u.x,u.a)){s.W.push(u.x+'|'+u.a);facCall(s,u.x,u.a);s.log.push(`${nm(u.x,y)}, 최후통첩 시한 만료 — ${nm(u.a,y)}에 선전포고`);wr(s,u.x,'war',u.a,u.d,`최후통첩 시한 만료 — ${nm(u.a,y)}에 선전포고`)}return false}return true});
+ // 중재: 3분기 넘게 이어진 전쟁
+ s.WSTART=s.WSTART||{};const seen=new Set();s.W.forEach(w=>{const[a,d]=w.split('|'),k2=truceK(a,d);if(seen.has(k2))return;seen.add(k2);if(s.WSTART[k2]==null)s.WSTART[k2]=s.t;const age=s.t-s.WSTART[k2];if(age<3||Math.random()>.18)return;
+  const M=Object.keys(s.N).filter(x=>x!=a&&x!=d&&alive(s,x)&&bigP(s,x)&&!wars(s,x).length&&!facSame(s,x,a)&&!facSame(s,x,d)&&!P_h(s,x));if(!M.length)return;const m=M[Math.random()*M.length|0];
+  if(P_h(s,a)||P_h(s,d)){[a,d].forEach(p=>{const q=p==a?d:a;if(P_h(s,p)&&!s.TR.some(t=>t.st=='p'&&t.b==p&&t.ty=='peace'&&t.a==q))s.TR.push({id:'m'+s.t+a+d+p,ty:'peace',a:q,b:p,st:'p',t0:s.t,take:[],pay:0,pup:0,med:m})});wr(s,m,'med',a,d,`${nm(a,y)}–${nm(d,y)} 전쟁에 중재 — 백지 강화를 제안`)}
+  else{const t={a,b:d,ty:'peace',take:[],pay:0,pup:0},ok=(wwOf(s,a)+wwOf(s,d))/2>30||Math.abs(warScore(s,a,d))<2;if(ok){applyPeace(s,t);wr(s,m,'med',a,d,`${nm(a,y)}–${nm(d,y)} 전쟁 중재 성공 — 백지 강화`)}}});
+ for(const n in s.AGG){s.AGG[n]=Math.max(0,s.AGG[n]-1.5);if(!s.AGG[n])delete s.AGG[n]}}
+const WRI={ult:['⚠','최후통첩','#8f2a17'],aid:['⛑','지원','#24476b'],aidA:['⛑','지원','#6b4a10'],alert:['🛡','경계','#8a6a33'],vult:['⚔','편승 공격','#8f2a17'],med:['🕊','중재','#2f6b25'],war:['⚔','참전','#8f2a17'],ok:['✓','철회','#2f6b25']};
+const aggLv=v=>v<10?['평온','#2f6b25']:v<25?['주목','#8a6a33']:v<45?['경계','#b5541f']:['국제적 고립','#8f2a17'];
+function wrHTML(list,me){if(!list||!list.length)return'';const y=yr(S);return`<div class="wr"><div class="wr-h">세계의 반응</div>${list.slice(0,10).map(r=>{const I=WRI[r.ty]||['•','',''],rel=r.a==me?'against':r.d==me?'for':'';return`<div class="wr-r ${rel}"><span class="wr-i" style="background:${I[2]}">${I[0]}</span>${flag(r.x,24,16)}<div><b>${esc(nm(r.x,y))} · ${I[1]}</b><small>${esc(r.txt)}</small></div></div>`}).join('')}</div>`}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2042,7 +2082,7 @@ function mixStep(s,oo){s.MIX=s.MIX||{};Object.keys(oo).forEach(n=>{const T=oo[n]
 const GFv=(s,k)=>(s.GF||{})[k];const GFs=(s,k,v=1)=>{(s.GF=s.GF||{})[k]=v};
 const NT=(s,pid)=>{if(PF[pid]&&PF[pid].key&&s.N[PF[pid].key])return PF[pid].key;return Object.keys(s.N).find(n=>NID(n)==pid)||null};
 const ENm=(s,en)=>{const k=regOf(en);return k&&s.R[k]?(s.R[k].occ||s.R[k].o):null};
-function warOn(s,a,b,why){if(!a||!b||a==b||!s.N[a]||!s.N[b]||!alive(s,a)||!alive(s,b)||atWar(s,a,b))return;s.TR.forEach(t=>{if(t.st=='on'&&(t.ty=='nap'||t.ty=='ally'||t.ty=='trade')&&((t.a==a&&t.b==b)||(t.a==b&&t.b==a)))t.st='x'});s.W.push(a+'|'+b);s.log.push(`${nm(a,yr(s))}, ${nm(b,yr(s))}에 선전포고${why?' — '+why:''}`)}
+function warOn(s,a,b,why){if(!a||!b||a==b||!s.N[a]||!s.N[b]||!alive(s,a)||!alive(s,b)||atWar(s,a,b))return;s.TR.forEach(t=>{if(t.st=='on'&&(t.ty=='nap'||t.ty=='ally'||t.ty=='trade')&&((t.a==a&&t.b==b)||(t.a==b&&t.b==a)))t.st='x'});warStarted(s,a,b,why);s.W.push(a+'|'+b);s.log.push(`${nm(a,yr(s))}, ${nm(b,yr(s))}에 선전포고${why?' — '+why:''}`)}
 function peaceOn(s,a,b){if(!a||!b)return;peace(s,{a,b,ty:'cease'})}
 function runDec(s,n,id){const d=DECS.find(x=>x.id==id);if(!d||DTAKEN(s,n,id))return;(s.DC[n]=s.DC[n]||[]).push(id);if(d.add)(s.SPX[n]=s.SPX[n]||{})[d.add]=d.dur?s.t+d.dur:1e9;if(d.eff)d.eff(s,n,s.N[n],yr(s))}
 const EVDEC=new Set(['ger_rhine','ger_anschluss','ger_sudet','ger_molotov','cn_xian','kr_war','kr_army','us_lend','uk_chu','fra_matig','it_alb']);
@@ -2878,7 +2918,7 @@ function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목
  return{t:'군정 — 편제표',b:T.html+`<div class="stab-b">${P[T.cur]}</div>`}}
 const CL={trade:['양국 상선은 상대국 항구에 자유로이 입항한다.','관세는 현행 세율의 절반으로 낮춘다.','전략 물자는 별도 목록으로 정한다.'],nap:['양국은 상대국을 무력으로 공격하지 않는다.','제3국이 공격할 때 그 국가를 돕지 않는다.','유효 기간은 10년으로 한다.'],ally:['한쪽이 공격받으면 다른 쪽은 즉시 참전한다.','양국 참모 본부는 정기 협의를 연다.','단독 강화를 맺지 않는다.'],cease:['조약 발효와 함께 모든 전선에서 사격을 멈춘다.','현재 점령선을 경계로 인정한다.','포로는 석 달 안에 교환한다.'],ret:['점령 지역을 원 소유국에 반환한다.','반환은 다음 분기 안에 마친다.','주민 재산은 보전한다.']};
 function treatyDoc(t,y,mode){const k=t.id,open=V.open[k]||mode=='draft',cl=t.ty=='peace'?peaceClauses(t,y):(CL[t.ty]||[]),mod=(k.length+(t.a||'').length)%cl.length;
- return`<div class="treaty"><button data-act="open:${k}"><h6>${esc(nm(t.a,y))}${nickN(t.a)?` (${esc(nickN(t.a))})`:''}–${esc(nm(t.b,y))} ${TY[t.ty]} 조약${mode=='draft'?' (초안)':' (안)'}</h6><small>${mode=='in'?`${esc(nm(t.a,y))} 외무부 송부 · 수정 조항 1건 · ${open?'접기':'눌러서 펼치기'}`:mode=='draft'?'발송 전 검토':'체결됨'}</small></button>
+ return`<div class="treaty"><button data-act="open:${k}"><h6>${esc(nm(t.a,y))}${nickN(t.a)?` (${esc(nickN(t.a))})`:''}–${esc(nm(t.b,y))} ${TY[t.ty]} 조약${t.med?` · 중재 ${esc(nm(t.med,y))}`:''}${mode=='draft'?' (초안)':' (안)'}</h6><small>${mode=='in'?`${esc(nm(t.a,y))} 외무부 송부 · 수정 조항 1건 · ${open?'접기':'눌러서 펼치기'}`:mode=='draft'?'발송 전 검토':'체결됨'}</small></button>
  ${open?`<ol>${cl.map((c,i)=>`<li class="${mode=='in'&&i==mod?'mod':''}">${esc(c)}</li>`).join('')}</ol>${mode=='in'?`<div class="rowf">${(O.sign||[]).includes(k)?'<span class="tag ok">서명함 · 턴 처리 시 발효</span>':(O.rej||[]).includes(k)?'<span class="tag bad">거절함</span>':`<button data-act="rej:${k}">거절</button><button class="pri" data-act="sign:${k}">서명</button>`}</div>`:''}`:''}</div>`}
 function facBlock(me){const y=yr(S),F=S.FAC||{},my=facOf(S,me);
  return`<div class="sec"><span>진영</span><span>${my?esc(F[my].n)+' 소속':'무소속'}</span></div>${Object.entries(F).map(([k,f])=>`<div class="fac${my==k?' mine':''}"><i style="background:${f.c}"></i><div class="g"><b>${esc(f.n)}</b><small>지도국 ${esc(nm(f.lead,y))} · ${f.mem.length}개국</small><div class="fac-m">${f.mem.map(x=>flag(x,22,15)).join('')}</div></div>
@@ -2898,9 +2938,11 @@ function dipDoc(me){const y=yr(S),pend=S.TR.filter(t=>t.st=='p'&&t.b==me),act=S.
   ${sent.length?`<div class="sec"><span>회신 대기</span></div>${sent.map(t=>`<div class="ln"><div class="g">${esc(nm(t.b,y))} · ${TY[t.ty]}</div></div>`).join('')}`:''}
   <div class="sec"><span>체결된 조약</span><span>${act.length}건</span></div>${act.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==me?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}`,
   new:`${pick}<div class="cmds">${Object.entries(TY).map(([k,v])=>`<button class="${V.dty==k?'on':''}" data-act="dty:${k}">${v}</button>`).join('')}</div>${to&&V.dty=='peace'?peaceDraft(me,to):''}${to?treatyDoc(Object.assign({id:'draft',ty:V.dty,a:me,b:to},V.dty=='peace'?{take:(V.pk||[]).filter(r=>S.R[r]&&S.R[r].o==to&&S.R[r].occ==me),pay:V.ppay||0,pup:V.ppup?1:0}:{}),y,'draft')+`<div class="rowf" style="justify-content:flex-end"><button class="pri" data-act="prop:${to}:${V.dty}">초안 발송</button></div>`:'<div class="note">상대국을 고르면 조약 초안이 나온다.</div>'}
-  ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>분기 마감 때 전달</small></div></div>`).join('')}`:''}<div class="cmds" style="margin-top:10px"><button data-act="book:dip">외교 정책</button></div>`,
+  ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>분기 마감 때 전달</small></div></div>`).join('')}`:''}${to&&wars(S,to).length&&!atWar(S,me,to)?`<div class="sec"><span>개입</span><span>${esc(nm(to,y))}는 ${wars(S,to).map(x=>esc(nm(x,y))).join('·')}와 교전 중</span></div><div class="cmds"><button class="${(O.aid||[]).includes(to)?'on':''}" data-act="aid:${to}" ${S.N[me].g<30&&!(O.aid||[]).includes(to)?'disabled':''}>${(O.aid||[]).includes(to)?'무기 대여 지시함 (취소)':'무기 대여 (국고 30 → 상대 국고 30·군사력 +1)'}</button></div>`:''}<div class="cmds" style="margin-top:10px"><button data-act="book:dip">외교 정책</button></div>`,
   fac:facBlock(me),spy:pick+spyBlock(me)};
- return{t:'외교 — 조약 문서',b:T.html+`<div class="stab-b">${P[T.cur]}</div>`}}
+ const ag=Math.round((S.AGG||{})[me]||0),lv=aggLv(ag),um=(S.ULTM||[]).filter(u=>u.a==me);
+ const strip=`<div class="agg"><div><small>국제 긴장도</small><b style="color:${lv[1]}">${lv[0]} · ${ag}</b></div><div class="ww" style="flex:1"><i style="width:${ag}%;background:${lv[1]}"></i><b style="left:10%"></b><b style="left:25%"></b><b style="left:45%"></b></div></div>${um.map(u=>{const l=Math.max(0,u.until-S.t);return`<div class="warn ultw"><span>⚠ ${esc(nm(u.x,y))}의 최후통첩: ${l?l+'분기 안에':'이번 분기 마감 때까지'} ${esc(nm(u.d,y))}와 강화하지 않으면 참전한다.</span><button data-act="peaceto:${u.d}">강화 제안</button></div>`}).join('')}`;
+ return{t:'외교 — 조약 문서',b:strip+T.html+`<div class="stab-b">${P[T.cur]}</div>`}}
 // ════════ 전선 ════════
 function frontHTML(k){const F=(S.FR||{})[k];if(!F||!S.N[F.a])return'';const y=yr(S),L=F.last||{};return`<div class="front-c"><div class="sec"><span>전선 상황</span><span>${esc(nm(F.a,y))} → ${esc(nm(F.d,y))}</span></div>
  <div class="bar2 fr"><i style="width:${F.p}%"></i></div><div class="ln"><div class="g">점령까지 남은 진척<small>100%에 이르면 점령. 공세가 끊기면 분기마다 20%씩 후퇴.</small></div><div class="v">${F.p}%</div></div>
@@ -2955,7 +2997,7 @@ function warBoard(me){const y=yr(S),W=wars(S,me);if(!W.length)return'<div class=
   const C=(S.WC||{})[me+'|'+e]||{ca:0,cd:0},D=(S.WC||{})[e+'|'+me]||{ca:0,cd:0},myL=C.ca+D.cd,thL=C.cd+D.ca,sc=(mo+mp/100)-(to+tp/100)+(thL-myL)/Math.max(10,S.N[me].mil),pct=Math.round(50+Math.max(-45,Math.min(45,sc*18))),v=pct>60?'우세':pct<40?'열세':'균형';
   return`<div class="wb"><div class="wb-h">${flag(me,24,16)}<b>${esc(nm(me,y))}</b><span class="wb-v ${v=='우세'?'up':v=='열세'?'dn':''}">${v}</span><b>${esc(nm(e,y))}</b>${flag(e,24,16)}</div><div class="wb-bar"><i style="width:${pct}%"></i></div>
   <div class="wb-g"><div><small>점령한 적 영토</small><b>${mo}</b></div><div><small>잃은 영토</small><b>${to}</b></div><div><small>누적 손실 (군사력 대비)</small><b>${myL>.05?'−'+pc(myL,S.N[me].mil+myL):'0%'} / ${thL>.05?'−'+pc(thL,(S.N[e]?S.N[e].mil:0)+thL):'0%'}</b></div><div><small>군사력 (아군/적)</small><b>${S.N[me].mil|0} / ${S.N[e]?S.N[e].mil|0:0}</b></div></div></div>`}).join('')}
-function ultChip(me){if(!me||!S.N[me])return'';const y=yr(S),out=[];const l=ultLeft(S,me);if(l)out.push(`<span class="ultchip" data-act="go:mil:ult" title="${esc(ultOf(me)[0])}">★ 결전 ${l}분기</span>`);else if(O.ult)out.push(`<span class="ultchip arm" data-act="go:mil:ult">★ 결전 발동 예정</span>`);
+function ultChip(me){if(!me||!S.N[me])return'';const y=yr(S),out=[];(S.ULTM||[]).filter(u=>u.a==me).forEach(u=>out.push(`<span class="ultchip foe" data-act="go:dip:inbox" title="${esc(nm(u.x,y))}: ${esc(nm(u.d,y))}와 강화하지 않으면 참전">⚠ 최후통첩 ${esc(nm(u.x,y))} ${Math.max(0,u.until-S.t)?Math.max(0,u.until-S.t)+'분기':'이번 분기'}</span>`));const l=ultLeft(S,me);if(l)out.push(`<span class="ultchip" data-act="go:mil:ult" title="${esc(ultOf(me)[0])}">★ 결전 ${l}분기</span>`);else if(O.ult)out.push(`<span class="ultchip arm" data-act="go:mil:ult">★ 결전 발동 예정</span>`);
  const foe=Object.keys(S.N).filter(n=>atWar(S,me,n)&&ultAct(S,n));if(foe.length)out.push(`<span class="ultchip foe" data-act="go:mil:ult" title="${esc(foe.map(n=>nm(n,y)+': '+ultOf(n)[0]).join(' / '))}">⚠ 적 결전 ${foe.length>1?foe.length+'개':esc(nm(foe[0],y))} ${ultLeft(S,foe[0])}분기</span>`);return out.join('')}
 function warChip(me){if(!me||!S.N[me])return'';const W=wars(S,me);if(!W.length)return'';return`<span class="warchip" data-act="go:mil:war">⚔ ${esc(W.map(x=>nm(x,yr(S))).slice(0,2).join('·'))}${W.length>2?' 외':''}</span>`}
 // ── 사회 양상 ──
@@ -3155,6 +3197,8 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'spy':{const[op,to]=v.split(':'),Q=(O.spy||[]).slice(),i=Q.findIndex(x=>x.op==op&&(op=='net'||x.to==to));if(i>=0)Q.splice(i,1);else{if(Q.length>=2)return;Q.push(op=='net'?{op}:{op,to})}sendO({spy:Q});sfx('page');ui();return}
  case'spd':{if(!host||!S.spec)return;if(v=='p')S.pause=!S.pause;else{S.spd=+v;S.pause=false;S.nextT=Math.min(S.nextT||0,Date.now()+(+v)*1000)}save(S);ui();return}
  case'follow':V.follow=V.follow===false?true:false;ui();return;
+ case'peaceto':{V.tab='dip';V.docOn=1;V.sub=V.sub||{};V.sub.dip='new';V.dto=v;V.dty='peace';ui();return}
+ case'aid':{const L=(O.aid||[]).slice(),i=L.indexOf(v);if(i>=0)L.splice(i,1);else L.push(v);sendO({aid:L});ui();return}
  case'wsx':V.wsum=null;ui();return;case'wsbr':{const L=(S.BT||[]).filter(b=>b.a==mine()||b.d==mine());V.wsum=null;if(L.length){V.br={L,i:0};brGo()}ui();return}
  case'go':{const[t2,k2]=v.split(':');V.tab=t2;V.docOn=1;V.sub=V.sub||{};V.sub[t2]=k2;sfx('page');ui();return}
  case'sub':{const[t2,k2]=v.split(':');V.sub=V.sub||{};V.sub[t2]=k2;sfx('page');const db=$('#doc .db');if(db)db.scrollTop=0;ui();return}
@@ -3184,12 +3228,13 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
  if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국 정부는 다음 분기 예산을 짜는 중이다.',at:me?capOf(me):[500,280],ty:'none'})}
  {const UL=(S.UE||[]).filter(e=>e.n==me||wars(S,me).includes(e.n)||PF[PID(e.n)]);if(UL.length)setTimeout(()=>ultFxShow(UL),300)}
  (S.SPYLOG||[]).forEach(x=>{if(x.op=='net')return;if(x.d==me&&(x.caught||x.ok)&&x.a!=me)ev.push({pri:x.caught?80:60,h:x.caught?`${nm(x.a,y)} 첩자 체포`:`${SPY[x.op][0]} 피해 의심`,s:x.caught?`방첩대가 ${nm(x.a,y)}의 ${SPY[x.op][0]} 공작을 적발했다.`:`정체를 알 수 없는 공작이 있었다.`,at:capOf(me),ty:'mail'});if(x.a==me)ev.push({pri:70,h:`${SPY[x.op][0]} ${x.ok?'성공':'실패'}`,s:`${nm(x.d,y)} 상대 공작${x.x?' — '+x.x:''}${x.caught?'. 첩자가 붙잡혔다.':'.'}`,at:capOf(x.d),ty:'mail'})});
+ (S.WR||[]).forEach(r=>{if(!(r.a==me||r.d==me||(PF[PID(r.x)]&&['ult','war','vult','med'].includes(r.ty))))return;ev.push({pri:r.a==me?(r.ty=='ult'||r.ty=='war'||r.ty=='vult'?96:84):r.d==me?82:52,h:`${nm(r.x,y)}, ${(WRI[r.ty]||['',''])[1]}`,s:r.txt,at:capOf(r.x),ty:'mail'})});
  (S.UPR||[]).forEach(u=>{ev.push({pri:u.c==me||u.core==me?93:55,h:`${RG[u.r][0]} 봉기`,s:u.back?`주민들이 ${nm(u.c,y)} 점령군을 몰아냈다. 이 지역은 ${nm(u.core,y)}로 돌아갔다.`:`${nm(u.c,y)} 점령군이 습격을 받아 큰 피해를 입었다.`,at:LBL[u.r],sel:'r:'+u.r,ty:'border'})});
  (S.DEAD||[]).forEach(d=>{ev.push({pri:d.n==me?100:d.by==me?98:90,h:`${nm(d.n,y)} 멸망`,s:`마지막 영토를 잃었다. ${d.c}개 지역이 ${nm(d.by,y)}에 병합되고, 지도에서 그 이름이 지워졌다.`,at:capOf(d.by),ty:'border'})});
  (S.UE||[]).forEach(e=>{const D=ultOf(e.n);ev.push({pri:e.n==me?97:wars(S,me).includes(e.n)?95:72,h:`결전 — ${nm(e.n,y)}, ${D[0]}`,s:`${D[1]} ${e.x?e.x+'.':''} (열세 ${e.u}배)`,at:capOf(e.n),ty:'border'})});
  (S.BT||[]).forEach(b=>{const inv=b.a==me||b.d==me;if(!inv&&Math.abs(b.g)<40)return;ev.push({pri:inv?(b.d==me?92:86):45,h:`${RG[b.rid][0]} ${b.sea?'상륙전':'전투'} — ${nm(b.a,y)} ${b.fail?'상륙 실패':b.cap?'점령':b.g>0?b.g+'% 진격':'공세 저지'}`,s:`${nm(b.a,y)} 군이 ${nm(b.d,y)} 방어선을 공격했다. 공격 측 군사력 −${pc(b.ca,b.m0||1)}, 방어 측 −${pc(b.cd,b.d0||1)}. 전선 진척 ${b.p}%.`,at:LBL[b.rid],sel:'r:'+b.rid,ty:'border'})});
  (S.EH||[]).forEach(h=>{const e=EVI[h.id];if(!e)return;const mj=PF[PID(h.n)]||held(S,h.n).length>=6;if(e.n=='*'&&h.n!=me)return;if(!mj&&h.n!=me)return;ev.push({pri:h.n==me?(e.n=='*'?50:91):(e.n=='*'?10:68),h:`${nm(h.n,y)}, ${e.t}`,s:`“${e.o[h.i].t}” — ${e.x.split('. ')[0]}.`,at:capOf(h.n),ty:'mail'})});
- ev.sort((a,b)=>b.pri-a.pri);V.news={y,q:qt(S),ev};V.wsum=wsumBuild(p,me);V.lastArr=null;V.pulse=ev.filter(e=>e.at&&e.ty!='none').slice(0,6).map(e=>({x:e.at[0],y:e.at[1]}));
+ ev.sort((a,b)=>b.pri-a.pri);V.news={y,q:qt(S),ev};V.wsum=wsumBuild(p,me);V.lastArr=null;{const R=(S.WR||[]).filter(r=>me&&(r.a==me||r.d==me||r.x==me))||[];const R2=(S.WR||[]).filter(r=>!R.includes(r)&&PF[PID(r.x)]&&(r.ty=='ult'||r.ty=='war'||r.ty=='vult'||r.ty=='med')).slice(0,3);const all=R.concat(R2);if(all.length){if(!V.wsum)V.wsum={y,q:qt(S),W:[],cas:(S.CAS||{})[me]||0,n:0};V.wsum.R=all}}V.pulse=ev.filter(e=>e.at&&e.ty!='none').slice(0,6).map(e=>({x:e.at[0],y:e.at[1]}));
  setTimeout(()=>{V.pulse=[];FL.clear();FLsig='';if($('#play'))ui()},7000);if($('#play'))ui()}
 // ════════ 결전 카드 일러스트 (금색 선화, 200×110) ════════
 const UA={
@@ -3224,13 +3269,13 @@ function wsumBuild(p,me){if(!me||!S.N[me])return null;const y=yr(S),BT=(S.BT||[]
   return{e,n:B.length,win:B.filter(b=>(b.a==me&&(b.cap||b.g>0))||(b.d==me&&b.g<=0)).length,myDiv,enDiv,myMen,enMen,gain,lost,fr,myMil:S.N[me].mil,enMil:S.N[e].mil,myMil0:p.N[me]?p.N[me].mil:S.N[me].mil,enMil0:p.N[e]?p.N[e].mil:S.N[e].mil}}).filter(w=>w.n||w.fr.length||w.gain.length||w.lost.length);
  if(!W.length)return null;return{y,q:qt(S),W,cas:(S.CAS||{})[me]||0,n:BT.length}}
 function wsumHTML(){const X=V.wsum;if(!X)return'';const me=mine(),y=X.y,pctD=(a,b)=>b>0?Math.round((a-b)/b*100):0;
- return`<div class="ws"><div class="ws-h"><small>전황 보고서 · ${y}년 ${X.q}분기</small><b>이번 분기의 전쟁</b></div>${X.W.map(w=>{const tot=w.myMil+w.enMil||1,adv=w.gain.length-w.lost.length;
+ return`<div class="ws"><div class="ws-h"><small>전황 보고서 · ${y}년 ${X.q}분기</small><b>${X.W.length?'이번 분기의 전쟁':'세계의 반응'}</b></div>${wrHTML(X.R,me)}${X.W.map(w=>{const tot=w.myMil+w.enMil||1,adv=w.gain.length-w.lost.length;
   return`<div class="ws-w"><div class="ws-vs">${flag(me,34,23)}<b>${esc(nm(me,y))}</b><span class="ws-res ${adv>0?'ok':adv<0?'no':''}">${adv>0?'우세':adv<0?'열세':w.win*2>=w.n&&w.n?'선전':'교착'}</span><b>${esc(nm(w.e,y))}</b>${flag(w.e,34,23)}</div>
   <div class="ws-bal"><i style="width:${(w.myMil/tot*100).toFixed(1)}%"></i></div><div class="ws-bl"><span>군사력 ${w.myMil|0} <em class="${w.myMil<w.myMil0?'dn':''}">${w.myMil0?(pctD(w.myMil,w.myMil0)>0?'+':'')+pctD(w.myMil,w.myMil0)+'%':''}</em></span><span><em class="${w.enMil<w.enMil0?'dn':''}">${w.enMil0?(pctD(w.enMil,w.enMil0)>0?'+':'')+pctD(w.enMil,w.enMil0)+'%':''}</em> 군사력 ${w.enMil|0}</span></div>
   <div class="ws-g"><div><small>전투</small><b>${w.n}회</b><span>${w.win}승 ${w.n-w.win}패</span></div><div><small>얻은 땅</small><b class="ok">${w.gain.length}</b><span>${w.gain.slice(0,2).map(r=>esc(RG[r][0])).join('·')||'-'}</span></div><div><small>잃은 땅</small><b class="no">${w.lost.length}</b><span>${w.lost.slice(0,2).map(r=>esc(RG[r][0])).join('·')||'-'}</span></div></div>
   <div class="ws-c"><div><small>아군 손실</small><b>${w.myDiv.toFixed(1)}개 사단</b><span>사상자 ${menTxt(w.myMen)}</span></div><div><small>적군 손실</small><b>${w.enDiv.toFixed(1)}개 사단</b><span>사상자 ${menTxt(w.enMen)}</span></div></div>
   ${w.fr.length?`<div class="ws-f"><small>전선 진척</small>${w.fr.map(f=>`<div class="ws-fr" data-act="r:${f.r}"><span>${f.mine?'▶':'◀'} ${esc(RG[f.r][0])}</span><div class="bar2"><i style="width:${f.p}%;background:${f.mine?'#24476b':'#8f2a17'}"></i></div><b>${f.p}%</b></div>`).join('')}</div>`:''}</div>`}).join('')}
- <div class="ws-t">개전 이래 누적 사상자 <b>${menTxt(X.cas)}</b></div><div class="rowf">${X.n?`<button data-act="wsbr">전투별 보고 ${X.n}건</button>`:''}<button class="pri" data-act="wsx">닫기</button></div></div>`}
+ ${X.W.length?`<div class="ws-t">개전 이래 누적 사상자 <b>${menTxt(X.cas)}</b></div>`:'<div style="height:10px"></div>'}<div class="rowf">${X.n?`<button data-act="wsbr">전투별 보고 ${X.n}건</button>`:''}<button class="pri" data-act="wsx">닫기</button></div></div>`}
 function newsShow(){const N=V.news;if(!N)return;if(!mine()){clearTimeout(window.__nsT);window.__nsT=setTimeout(()=>{try{newsClose()}catch(e){}},S&&S.spec?Math.max(1500,(S.spd||8)*350):4000)}const h=N.ev[0],o=N.ev.slice(1,4),d=document.createElement('div');d.className='news';d.id='news';
  d.innerHTML=`<div class="paperN" id="paperN"><div class="mast"><b>세계 통신</b><small>${N.y}년 ${N.q}분기 · 호외</small></div><button class="hl" data-act="news"><h2>${esc(h.h)}</h2><p>${esc(h.s)}</p><span class="go">제목을 누르면 현장 지도로 ›</span></button>${o.length?`<div class="cols">${o.map(e=>`<div><b>${esc(e.h)}</b>${esc(e.s)}</div>`).join('')}</div>`:''}<div class="rowf"><button data-act="newsx" style="background:#18140f;color:#efe7d2">신문 접기</button></div></div>`;
  d.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b)act(b.dataset.act);else if(e.target==d)newsClose()});document.body.appendChild(d)}

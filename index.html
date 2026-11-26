@@ -801,6 +801,9 @@ function ai(s,n){aiExpand(s,n);const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=
 const truceK=(a,b)=>a<b?a+'|'+b:b+'|'+a;
 const truce=(s,a,b)=>((s.TRUCE||{})[truceK(a,b)]||-1)>s.t;
 function setTruce(s,a,b){s.TRUCE=s.TRUCE||{};s.TRUCE[truceK(a,b)]=s.t+4}
+const RW=r=>{const P=PARENT[r];return P&&PROV[P]?Math.max(.34,1/PROV[P].length):1};
+const terrInc=h=>3*Math.pow(h.reduce((a,r)=>a+RW(r),0),.7);
+const heldW=(s,n)=>held(s,n).reduce((a,r)=>a+RW(r),0);
 function natKey(s,id){if(s.N[id])return id;for(const n in s.N)if(NID(n)==id&&!s.N[n].dead)return n;return null}
 // 선전포고만 (공격은 AI 판단으로)
 function declareWar(s,a,d,why,force){if(!s.N[a]||!s.N[d]||a==d||atWar(s,a,d)||facSame(s,a,d)||(!force&&truce(s,a,d)))return false;const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=6}s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고${why?' ('+why+')':''}`);facCall(s,a,d);return true}
@@ -847,7 +850,7 @@ function step(s,ords){SUPM={};SUPV++;const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log
   const tr=s.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==n||t.b==n)).length,need={f:N.pop/10,s:N.ind/25,o:N.ind/25};
   let pen=0;for(const k in pr){N.st[k]+=pr[k]*2+tr*.5-need[k];if(N.st[k]<0){N.st[k]=0;pen++}}
   N.sup-=pen*3;N.ind-=pen;const B=N.g*.2,f=oo[n].focus,sp=k=>B*(f==k?.5:.1667);
-  N.g=N.g-B+N.ind*.4+h.length*2+tr*2;N.ind+=sp('ind')*.05+sp('res')*.02;N.sup=Math.min(100,N.sup+sp('wel')*.08-wars(s,n).length);N.mil=N.mil*.97+sp('def')*.15+N.ind*.03;N.pop+=N.pop*.004*N.sup/60;const pl=N.pol||{};
+  N.g=N.g-B+N.ind*.4+terrInc(h)+tr*2;N.ind+=(sp('ind')*.05+sp('res')*.02)*70/(70+N.ind);N.g-=Math.max(0,N.g-300)*.04;N.sup=Math.min(100,N.sup+sp('wel')*.08-wars(s,n).length);N.mil=N.mil*.97+sp('def')*.15+N.ind*.03;N.pop+=N.pop*.004*N.sup/60;const pl=N.pol||{};
   if(pl.mil=='conscript'){N.mil+=N.pop*.01;N.sup-=1}if(pl.mil=='mobilize'){N.mil+=N.pop*.025;N.ind-=.4;N.g-=N.pop*.1}if(pl.mil=='garrison')N.mil+=N.pop*.004;
   if(pl.civ=='welfare'){N.sup+=2;N.g-=N.pop*.05}if(pl.civ=='planned'){N.ind+=.6;N.sup-=.5}if(pl.civ=='ration'){N.st.f+=N.pop/50;N.sup-=1}
   if(pl.res=='arms')N.mil*=1.015;if(pl.res=='econ')N.g+=N.ind*.06;if(pl.res=='agri')N.st.f+=3;
@@ -863,7 +866,7 @@ function step(s,ords){SUPM={};SUPV++;const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log
   if(o.cargo&&N.st[o.cargo]!=null)for(const k in N.st)N.st[k]=Math.max(0,N.st[k]+(k==o.cargo?2:-1))});
  techStep(s,oo);annexDead(s);histPush(s,1);s.TR=s.TR.filter(t=>t.st!='x'||(t.t0!=null&&s.t-t.t0<3));s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
 function score(s,n){return score0(s,n)+Object.values(((s.GO||{})[n])||{}).filter(g=>g.st=='ok').length*25}
-function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+held(s,n).length*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
+function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+heldW(s,n)*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
 async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
 async function sendO(p){Object.assign(O,p);O.t=S.t;O.nation=mine();if(NICK)O.nick=NICK;try{await db.doc(`rooms/${code}/orders/${uid}`).set(O)}catch(e){}}
 const mine=()=>S&&Object.entries(S.P).find(([u])=>u==uid)?.[1]||O.want||null;
@@ -1064,7 +1067,7 @@ const NAT={
 const leaderOf=(n,y)=>{const N=natFor(n);if(!N||!N.lead)return null;let l=N.lead[0][1];N.lead.forEach(([a,b])=>{if(y>=a)l=b});return l};
 // 국가 정신: on(조건)·tick(매 분기 효과)·m(전투 보정: kind=att|def|loss)
 const SPS=[
- {id:'uk_emp',n:'UK',t:'해가 지지 않는 제국',d:'식민지 지역 수 × 0.15 만큼 국고 · 식량 +1 / 분기',tick:(s,n,N)=>{N.g+=held(s,n).length*.15;N.st.f+=1}},
+ {id:'uk_emp',n:'UK',t:'해가 지지 않는 제국',d:'식민지 지역 수 × 0.15 만큼 국고 · 식량 +1 / 분기',tick:(s,n,N)=>{N.g+=heldW(s,n)*.15;N.st.f+=1}},
  {id:'uk_app',n:'UK',t:'유화 정책 여론',d:'지지 +1, 군사력 −0.5 / 분기 · 재무장 결정이나 개전 시 해제',on:(s,n)=>!wars(s,n).length&&!DTAKEN(s,n,'uk_rearm'),tick:(s,n,N)=>{N.sup+=1;N.mil-=.5}},
  {id:'uk_navy',n:'UK',doc:1,t:'왕립 해군',d:'본토 방어 +40% · 교전국 석유 비축 매 분기 −1 (해상 봉쇄)',tick:(s,n)=>wars(s,n).forEach(e=>{if(s.N[e])s.N[e].st.o=Math.max(0,s.N[e].st.o-1)}),m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.4:1},
  {id:'uk_radar',n:'UK',add:1,t:'체인 홈 레이더망',d:'본토 방어 +20% 추가',m:(s,me,f,r,k)=>k=='def'&&isHome(s,me,r)?1.2:1},
@@ -2623,7 +2626,7 @@ function visitDoc(n){const pid=PID(n),P=pid&&PF[pid],y=yr(S);let x='';
  else if(pid=='KOR')x=`<div class="sec"><span>공개 외교 활동</span></div><div class="note" style="margin:0">해외 동포 사회와 연락망 · 서신 내용과 후원 장부는 비공개</div>`;
  else if(P&&P.routes)x=`<div class="sec"><span>공개 항로</span></div>${Object.values(P.routes).map(r=>`<div class="ln"><div class="g">${esc(r.n)}<small>${esc(r.d)}</small></div></div>`).join('')}`;
  return pubInfo(n)+x}
-function finDoc(me){const N=S.N[me],h=held(S,me),tr=S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==me||t.b==me)).length,B=N.g*.2,fo=O.focus||'ind',inc=[['산업 수입',N.ind*.4],['영토 수입',h.length*2],['무역 수입',tr*2]];
+function finDoc(me){const N=S.N[me],h=held(S,me),tr=S.TR.filter(t=>t.st=='on'&&t.ty=='trade'&&(t.a==me||t.b==me)).length,B=N.g*.2,fo=O.focus||'ind',inc=[['산업 수입',N.ind*.4],['영토 수입',terrInc(h)],['무역 수입',tr*2]].concat(N.g>300?[['국고 관리비 (300 초과분의 4%)',-(N.g-300)*.04]]:[]);
  const rows=[['ind','산업 투자'],['wel','복지'],['res','연구'],['def','국방']].map(([k,l])=>{const a=B*(fo==k?.5:.1667);return`<tr class="${fo==k?'hot':''}"><td>${l}${fo==k?' <small style="color:#a3361b">중점</small>':''}</td><td class="r">${a.toFixed(0)}<span class="stp"><button data-act="focus:${k==fo?'ind':k}" ${k==fo&&k=='ind'?'disabled':''} aria-label="감액">−</button><button data-act="focus:${k}" ${k==fo?'disabled':''} aria-label="증액">+</button></span></td></tr>`}).join('');
  return{t:`재정 장부 — ${yr(S)}년 ${qt(S)}분기`,b:`<div class="cmds" style="margin:0 0 8px"><button data-act="book:fin">재정·조세 정책</button><button data-act="book:mon">금융·통화 정책</button></div><div class="kv"><div><small>국고</small><b>${N.g|0}</b></div><div><small>분기 지출</small><b>${B|0}</b></div><div><small>예상 수입</small><b>${inc.reduce((a,b)=>a+b[1],0)|0}</b></div></div>
  <div class="sec"><span>세입</span></div><table class="ledger">${inc.map(([l,v])=>`<tr><td>${l}</td><td class="r">${v.toFixed(0)}</td></tr>`).join('')}${N.lord?`<tr><td>종주국 상납 (10%)</td><td class="r">−${(N.g*.1).toFixed(0)}</td></tr>`:''}</table>

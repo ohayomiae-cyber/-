@@ -2516,41 +2516,64 @@ function mapSig(){return [S.t,BASESIG.length,BASESIG.slice(-60),JSON.stringify(S
 function drawSel(){if(!(V.sel&&V.sel.t=='r'&&T2[V.sel.id]))return;const v=camVB(),sc=CV.width/v[2],U=CV.__dpr/sc,offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);const P=p2(T2[V.sel.id]);CX.lineJoin='round';for(const off of offs){CX.setTransform(sc,0,0,sc,(off-v[0])*sc,-v[1]*sc);CX.strokeStyle='rgba(255,246,222,.85)';CX.lineWidth=5*U;CX.stroke(P);CX.strokeStyle='#8f2a17';CX.lineWidth=2.4*U;CX.stroke(P)}CX.setTransform(1,0,0,1,0,0)}
 function drawFL(){if(!(FLON&&FL.size))return;const v=camVB(),sc=CV.width/v[2],offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);CX.fillStyle='rgba(163,54,27,.28)';for(const off of offs){CX.setTransform(sc,0,0,sc,(off-v[0])*sc,-v[1]*sc);FL.forEach(k=>{const t=T2[k];if(t)CX.fill(p2(t))})}CX.setTransform(1,0,0,1,0,0)}
 // 움직이는 동안에는 멈췄을 때 그린 완성본을 밀고 키워서 보여 준다 (선 굵기가 바뀌지 않도록)
+// ════════ 타일 지도: 여러 배율의 세계 조각을 그려 두고 합성한다 ════════
+const TS=512,TPPU=[.75,1.5,3,6,12,24,48,96,192,384],TY0=-40,TY1=600;let TILES=new Map(),TSIG='',TQ=[],TQS=new Set(),TBUSY=0,TPOOL=[];
+const tileSig=()=>mapSig()+'|'+(V.nat||'')+'|'+(V.tab=='mil'?1:0)+'|'+(V.supOn?1:0);
+function tileKey(L,tx,ty){return L+':'+tx+':'+ty}
+// 세계의 한 구역 v=[x,y,w,h]를 X에 배율 sc(장치 픽셀/단위)로 그린다
+// 영역 테두리를 짧은 조각으로 나눠 둔다: 화면 조각에 걸친 부분만 긋기 위해
+const CHK={};function ringPts(t){if(t.parent)return t.rs.map(r=>r.concat([r[0]]));return t.rs.map(r0=>{const r=[r0[0]];for(const p of r0){const q=r[r.length-1];if(Math.abs(p[0]-q[0])+Math.abs(p[1]-q[1])>.18)r.push(p)}const n=r.length;if(n<4)return r.concat([r[0]]);const o=[];for(let i=0;i<n;i++){const a=r[i],b=r[(i+1)%n];o.push([a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75])}o.push(o[0]);return o})}
+function chunks(t){if(CHK[t.k])return CHK[t.k];if(!t.rs)return CHK[t.k]=[{p:p2(t),x0:t.x0,y0:t.y0,x1:t.x1,y1:t.y1}];const out=[];
+ for(const r of ringPts(t)){for(let i=0;i<r.length-1;i+=60){const p=new Path2D();let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const e=Math.min(r.length-1,i+60);for(let j=i;j<=e;j++){const q=r[j];j==i?p.moveTo(q[0],q[1]):p.lineTo(q[0],q[1]);if(q[0]<x0)x0=q[0];if(q[0]>x1)x1=q[0];if(q[1]<y0)y0=q[1];if(q[1]>y1)y1=q[1]}out.push({p,x0,y0,x1,y1})}}return CHK[t.k]=out}
+function drawWorld(X,v,sc,U,LW,full){const world=!V.nat&&V.tab!='mil';const keep=V.nat?new Set(V.nat=='KOR'&&S.N.KOR&&S.N.KOR.lord?['Korea','Dem. Rep. Korea','China'].map(e=>NK[e]):held(S,V.nat)):null;
+ X.setTransform(1,0,0,1,0,0);X.fillStyle=MAPC.sea;X.fillRect(0,0,X.canvas.width,X.canvas.height);X.lineJoin='round';
+ X.setTransform(sc,0,0,sc,-v[0]*sc,-v[1]*sc);const mg=32*U,vx0=v[0]-mg,vx1=v[0]+v[2]+mg,vy0=v[1]-mg,vy1=v[1]+v[3]+mg,inV=t=>!(t.x1<vx0||t.x0>vx1||t.y1<vy0||t.y0>vy1),VIS=CT.filter(inV),SK=t=>{for(const c of chunks(t))if(inV(c))X.stroke(c.p)};
+ X.strokeStyle=MAPC.grat;X.lineWidth=.7*U;X.stroke(STP.g);
+ if(LW>=230){const R=ripC();if(R)X.drawImage(R,RIPB[0],RIPB[1],RIPB[2]-RIPB[0],RIPB[3]-RIPB[1])}else{const cs=VIS.filter(t=>t.sea);(LW>=150?[[26,'rgba(52,96,118,.1)'],[17,MAPC.sea],[9,'rgba(52,96,118,.18)'],[4,'#d9e8e6']]:[[30,'rgba(52,96,118,.09)'],[24,MAPC.sea],[18,'rgba(52,96,118,.13)'],[13,MAPC.sea],[9,'rgba(52,96,118,.2)'],[5,'#d9e8e6']]).forEach(([w,c])=>{X.strokeStyle=c;X.lineWidth=w*U;for(const t of cs)X.stroke(p2(t))})}
+ for(const t of VIS){const R=V.rep?V.rep.R[t.k]:S.R[t.k],P=p2(t);X.fillStyle=R?paperize(NM[R.o][1]):'#ddd0ae';X.fill(P);if(R&&R.occ){X.fillStyle=hatch(R.occ,U);X.fill(P)}}
+ for(const r in V.rep?{}:S.FR||{}){const F=S.FR[r],t=T2[r];if(!t||!S.N[F.a]||!inV(t))continue;X.globalAlpha=.25+F.p/100*.55;X.fillStyle=hatch(F.a,U);X.fill(p2(t));X.globalAlpha=1}
+ if(V.supOn&&!V.rep){const me=mine();if(me&&S.N[me]){if(!V.supC||V.supC.t!=S.t||V.supC.n!=me)V.supC={t:S.t,n:me,D:supD(S,me)};const D=V.supC.D;for(const t of VIS){if(ctrl(S,t.k)!=me)continue;const d=D[t.k],sv=supV(d);X.fillStyle=d==null?'rgba(25,12,5,.5)':sv>.8?'rgba(70,140,60,.32)':sv>.6?'rgba(190,160,50,.34)':sv>.45?'rgba(200,110,40,.38)':'rgba(170,40,25,.45)';X.fill(p2(t))}}}
+ if(keep){X.fillStyle=MAPC.dim;for(const t of VIS)if(!keep.has(t.k))X.fill(p2(t))}
+ if(!window.__lh){const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.strokeStyle='rgba(60,40,20,.13)';x.lineWidth=1;x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.stroke();window.__lh=CX.createPattern(c,'repeat')}
+ const LC=LW>=380&&landC();if(!LC){window.__lh.setTransform(new DOMMatrix([U*.8,0,0,U*.8,0,0]));X.fillStyle=window.__lh;X.fill(LANDP)}
+ if(LW<700)for(const t of VIS){const R=S.R[t.k];if(!R)continue;X.strokeStyle=darker(NM[R.o][1],.85).replace('rgb','rgba').replace(')',',.35)');X.lineWidth=4*U;SK(t)}
+ X.strokeStyle=MAPC.sh;X.lineWidth=7*U;if(LC)X.drawImage(LC,RIPB[0],RIPB[1],RIPB[2]-RIPB[0],RIPB[3]-RIPB[1]);else for(const t of VIS){if(!t.sea)continue;X.save();X.clip(p2(t));SK(t);X.restore()}
+ if(LW<600)for(const P of PARENTS){if(!inV(P))continue;X.strokeStyle='rgba(104,58,36,.42)';X.lineWidth=.7*U;X.setLineDash([2*U,2*U]);X.stroke(innerP(P));X.setLineDash([])}
+ if(!LC){X.strokeStyle=MAPC.bord;X.lineWidth=1.1*U;X.setLineDash([4*U,1.6*U,1*U,1.6*U]);for(const t of VIS)if(!t.parent)SK(t);for(const t of PARENTS)if(inV(t))SK(t);X.setLineDash([])}
+ X.strokeStyle=MAPC.coast;X.lineWidth=.95*U;for(const t of VIS)if(!t.parent)SK(t);for(const t of PARENTS)if(inV(t))SK(t);
+ if(!world&&LW<430){X.strokeStyle='rgba(109,86,57,.8)';X.lineWidth=.9*U;X.stroke(STP.mt);X.strokeStyle='rgba(84,110,118,.9)';X.lineWidth=1.1*U;X.stroke(STP.riv)}
+ if(!world&&LW<250){X.fillStyle=MAPC.sea;X.fill(STP.lake);X.strokeStyle=MAPC.coast;X.lineWidth=.7*U;X.stroke(STP.lake);if(STP.us){X.save();X.clip(STP.us);X.strokeStyle='rgba(110,63,53,.55)';X.lineWidth=.8*U;X.setLineDash([2*U,2*U]);X.stroke(STP.usl);X.setLineDash([]);X.restore()}}
+ X.setTransform(1,0,0,1,0,0)}
+function renderTile(L,tx,ty){const ppu=TPPU[L],tw=TS/ppu,dpr=CV.__dpr||1;let c=TPOOL.pop();if(!c){c=document.createElement('canvas');c.width=c.height=TS}const X=c.getContext('2d');drawWorld(X,[tx*tw,ty*tw,tw,tw],ppu,dpr/ppu,VW*dpr/ppu);
+ TILES.set(tileKey(L,tx,ty),{c,u:performance.now()});if(TILES.size>44){const old=[...TILES.entries()].filter(([k])=>!k.startsWith('0:')).sort((a,b)=>a[1].u-b[1].u).slice(0,TILES.size-44);old.forEach(([k,o])=>{TILES.delete(k);TPOOL.push(o.c)})}}
+function tileFlush(){if(TBUSY)return;TBUSY=1;const step=()=>{const t0=performance.now();let n=0;while(TQ.length&&(n==0||(!MOVING&&performance.now()-t0<10))){const k=TQ.shift();TQS.delete(k);if(TILES.has(k))continue;const[L,tx,ty]=k.split(':').map(Number);renderTile(L,tx,ty);n++}if(n)requestDraw();if(TQ.length)requestAnimationFrame(step);else TBUSY=0};requestAnimationFrame(step)}
+function tilesClear(){TILES.forEach(o=>TPOOL.push(o.c));TILES.clear();TQ=[];TQS.clear()}
+function tilesBase(){const ppu=TPPU[0],tw=TS/ppu;for(let tx=0;tx*tw<1000;tx++)for(let ty=Math.floor(TY0/tw);ty*tw<TY1;ty++){const k=tileKey(0,tx,ty);if(!TILES.has(k))renderTile(0,tx,ty)}}
+// 매 프레임: 고른 배율의 조각을 붙이고, 없는 조각은 더 거친 조각으로 메운다
+function drawTiles(){const W=CV.width,H=CV.height,v=camVB(),sp=W/v[2];const sg=tileSig(),fresh=sg!=TSIG;if(fresh){TSIG=sg;tilesClear()}tilesBase();
+ let Lt=0;for(let L=0;L<TPPU.length;L++){Lt=L;if(TPPU[L]>=sp*.8)break}
+ CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);CX.imageSmoothingEnabled=true;CX.imageSmoothingQuality='high';
+ const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);const want=[];
+ const rng=(L,off)=>{const tw=TS/TPPU[L],nx=Math.ceil(1000/tw);return[Math.max(0,Math.floor((v[0]-off)/tw)),Math.min(nx-1,Math.floor((v[0]+v[2]-off)/tw)),Math.max(Math.floor(TY0/tw),Math.floor(v[1]/tw)),Math.min(Math.floor(TY1/tw),Math.floor((v[1]+v[3])/tw))]};
+ const full=L=>offs.every(off=>{const[a,b,c,d]=rng(L,off);for(let x=a;x<=b;x++)for(let y=c;y<=d;y++)if(!TILES.has(tileKey(L,x,y)))return false;return true});
+ let Lb=0;for(let L=Lt;L>0;L--)if(full(L)){Lb=L;break}
+ for(let L=Lb;L<=Lt;L++){const ppu=TPPU[L],tw=TS/ppu,nx=Math.ceil(1000/tw);
+  for(const off of offs){const x0=Math.max(0,Math.floor((v[0]-off)/tw)),x1=Math.min(nx-1,Math.floor((v[0]+v[2]-off)/tw)),y0=Math.max(Math.floor(TY0/tw),Math.floor(v[1]/tw)),y1=Math.min(Math.floor(TY1/tw),Math.floor((v[1]+v[3])/tw));
+   for(let tx=x0;tx<=x1;tx++)for(let ty=y0;ty<=y1;ty++){const k=tileKey(L,tx,ty),o=TILES.get(k);const dx=(tx*tw+off-v[0])*sp,dy=(ty*tw-v[1])*sp,ds=tw*sp;
+    if(o){o.u=performance.now();const cw=Math.min(tw,1000-tx*tw);if(cw>=tw)CX.drawImage(o.c,dx,dy,ds+.6,ds+.6);else CX.drawImage(o.c,0,0,cw*ppu,TS,dx,dy,cw*sp,ds+.6)}else if(fresh&&L==Lt&&!MOVING){renderTile(L,tx,ty);const o2=TILES.get(k);const cw=Math.min(tw,1000-tx*tw);CX.drawImage(o2.c,0,0,Math.min(cw,tw)*ppu,TS,dx,dy,Math.min(cw,tw)*sp,ds+.6)}else if(L==Lt||L==Lt-1){const cxm=v[0]+v[2]/2-off,cym=v[1]+v[3]/2;want.push([Math.hypot((tx+.5)*tw-cxm,(ty+.5)*tw-cym)+(L==Lt?0:-1e5),k])}}}}
+ want.sort((a,b)=>a[0]-b[0]).forEach(([,k])=>{if(!TQS.has(k)){TQS.add(k);TQ.push(k)}});if(TQ.length>60){TQ.splice(60).forEach(k=>TQS.delete(k))}if(TQ.length)tileFlush()}
+// 국가명은 몇 단계 크기로 미리 써 둔 그림을 늘려 붙인다 (확대 중 글꼴을 매번 새로 그리는 끊김 방지)
+const LSPR=new Map();try{document.fonts.addEventListener('loadingdone',()=>{LSPR.clear();requestDraw()})}catch(e){}function labSpr(t,f,dpr){const b=Math.pow(2,Math.ceil(Math.log2(f)*3)/3),key=t+'|'+b.toFixed(2)+'|'+dpr;let o=LSPR.get(key);if(o)return o;
+ const c=document.createElement('canvas'),x=c.getContext('2d'),font=`700 ${b.toFixed(1)}px "Noto Serif KR",serif`;x.font=font;if('letterSpacing' in x)x.letterSpacing=(b*.3).toFixed(1)+'px';const w=Math.ceil(x.measureText(t).width+b*.6),hh=Math.ceil(b*1.5);
+ c.width=Math.ceil(w*dpr);c.height=Math.ceil(hh*dpr);x.scale(dpr,dpr);x.font=font;if('letterSpacing' in x)x.letterSpacing=(b*.3).toFixed(1)+'px';x.textAlign='center';x.textBaseline='middle';x.fillStyle=MAPC.lab;x.fillText(t,w/2+b*.15,hh/2);
+ o={c,w,h:hh,f:b};if(LSPR.size>400)LSPR.clear();LSPR.set(key,o);return o}
+function drawLabels(){const v=camVB(),dpr=CV.__dpr||1,k=VW/v[2],offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);
+ CX.setTransform(dpr,0,0,dpr,0,0);CX.textAlign='center';CX.textBaseline='middle';CX.fillStyle=MAPC.lab;
+ for(const l of V.rep?[]:LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46),sp=labSpr(l.t,f,dpr),s=f/sp.f;for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.drawImage(sp.c,sx-sp.w*s/2,sy-sp.h*s/2,sp.w*s,sp.h*s)}}
+ if(CAM.w<260){CX.fillStyle='rgba(60,40,22,.72)';const f=Math.max(10,Math.min(14,1000/CAM.w*1.6));CX.font=`italic 600 ${f}px "Noto Serif KR",serif`;for(const t of CT){if(!t.parent)continue;const P=innerPt(t)||{x:t.cx,y:t.cy};for(const off of offs){const sx=(P.x+off-v[0])*k,sy=(P.y-v[1])*k+(CAM.w<120?16:12);if(sx<-80||sx>VW+80||sy<-20||sy>VH+20)continue;CX.fillText(t.pn,sx,sy)}}}
+ CX.setTransform(1,0,0,1,0,0)}
 function parchMul(){if(!PARCH_C)return;CX.setTransform(1,0,0,1,0,0);CX.globalCompositeOperation='multiply';CX.globalAlpha=.92;CX.drawImage(PARCH_C,0,0,CV.width,CV.height);CX.globalAlpha=1;CX.globalCompositeOperation='source-over'}
-function saveCache(sig,cv){const W=CV.width,H=CV.height;if(!MCACHE)MCACHE=document.createElement('canvas');if(MCACHE.width!=W||MCACHE.height!=H){MCACHE.width=W;MCACHE.height=H}const m=MCACHE.getContext('2d');m.clearRect(0,0,W,H);m.drawImage(CV,0,0);MCV=cv.slice();MSIG=sig}
-// 저장본(양피지까지 합친 완성 그림)을 움직일 때는 밀고 키우기만 한다
-function drawMap(){if(!CX||!CT||!S)return;const W=CV.width,H=CV.height,cv=camVB(),sig=cv.map(n=>n.toFixed(3)).join(',')+W+'x'+H+'|'+mapSig()+'|'+(PARCH_C?1:0);
- const ok=MCACHE&&MCV&&MCACHE.width==W&&MCACHE.height==H;
- if(MOVING&&ok){const k=W/cv[2],s=MCV[2]/cv[2];let dx=(MCV[0]-cv[0])*k;const wr=1000*k;while(dx>W)dx-=wr;while(dx<-W*s)dx+=wr;const dy=(MCV[1]-cv[1])*k;
-  if(s>.15&&s<6){CX.setTransform(1,0,0,1,0,0);CX.fillStyle='#a9c2cc';CX.fillRect(0,0,W,H);CX.drawImage(MCACHE,dx,dy,W*s,H*s);drawFL();drawSel();return}}
- if(ok&&MSIG==sig){CX.setTransform(1,0,0,1,0,0);CX.drawImage(MCACHE,0,0)}
- else{drawMap0();parchMul();saveCache(sig,cv)}
- drawFL();drawSel()}
-function drawMap0(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H=CV.height,v=camVB(),sc=W/v[2],U=dpr/sc,mv=MOVING,world=!V.nat&&V.tab!='mil';
- CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);
- const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);
- const keep=V.nat?new Set(V.nat=='KOR'&&S.N.KOR&&S.N.KOR.lord?['Korea','Dem. Rep. Korea','China'].map(e=>NK[e]):held(S,V.nat)):null;
- CX.lineJoin='round';
- for(const off of offs){CX.setTransform(sc,0,0,sc,(off-v[0])*sc,-v[1]*sc);const mg=32*U,vx0=v[0]-off-mg,vx1=v[0]+v[2]-off+mg,vy0=v[1]-mg,vy1=v[1]+v[3]+mg,inV=t=>!(t.x1<vx0||t.x0>vx1||t.y1<vy0||t.y0>vy1),VIS=CT.filter(inV);
-  CX.strokeStyle=MAPC.grat;CX.lineWidth=.7*U;CX.stroke(STP.g);
-  if(!mv){if(CAM.w>=230){const R=ripC();if(R)CX.drawImage(R,RIPB[0],RIPB[1],RIPB[2]-RIPB[0],RIPB[3]-RIPB[1])}else{const cs=VIS.filter(t=>t.sea);(CAM.w>=150?[[26,'rgba(52,96,118,.1)'],[17,MAPC.sea],[9,'rgba(52,96,118,.18)'],[4,'#d9e8e6']]:[[30,'rgba(52,96,118,.09)'],[24,MAPC.sea],[18,'rgba(52,96,118,.13)'],[13,MAPC.sea],[9,'rgba(52,96,118,.2)'],[5,'#d9e8e6']]).forEach(([w,c])=>{CX.strokeStyle=c;CX.lineWidth=w*U;for(const t of cs)CX.stroke(p2(t))})}}
-  for(const t of VIS){const R=V.rep?V.rep.R[t.k]:S.R[t.k],P=p2(t);CX.fillStyle=R?paperize(NM[R.o][1]):'#ddd0ae';CX.fill(P);if(R&&R.occ){CX.fillStyle=hatch(R.occ,U);CX.fill(P)}}
-  for(const r in V.rep?{}:S.FR||{}){const F=S.FR[r],t=T2[r];if(!t||!S.N[F.a])continue;CX.globalAlpha=.25+F.p/100*.55;CX.fillStyle=hatch(F.a,U);CX.fill(p2(t));CX.globalAlpha=1}
-  if(V.supOn&&!V.rep){const me=mine();if(me&&S.N[me]){if(!V.supC||V.supC.t!=S.t||V.supC.n!=me)V.supC={t:S.t,n:me,D:supD(S,me)};const D=V.supC.D;for(const t of VIS){if(ctrl(S,t.k)!=me)continue;const d=D[t.k],sv=supV(d);CX.fillStyle=d==null?'rgba(25,12,5,.5)':sv>.8?'rgba(70,140,60,.32)':sv>.6?'rgba(190,160,50,.34)':sv>.45?'rgba(200,110,40,.38)':'rgba(170,40,25,.45)';CX.fill(p2(t))}}}
-  if(keep){CX.fillStyle=MAPC.dim;for(const t of VIS)if(!keep.has(t.k))CX.fill(p2(t))}
-  if(!mv){if(!window.__lh){const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.strokeStyle='rgba(60,40,20,.13)';x.lineWidth=1;x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.stroke();window.__lh=CX.createPattern(c,'repeat')}const LC=CAM.w>=380&&landC();if(!LC){window.__lh.setTransform(new DOMMatrix([U*.8,0,0,U*.8,0,0]));CX.fillStyle=window.__lh;CX.fill(LANDP)}
-   if(CAM.w<700)for(const t of VIS){const R=S.R[t.k];if(!R)continue;CX.strokeStyle=darker(NM[R.o][1],.85).replace('rgb','rgba').replace(')',',.35)');CX.lineWidth=4*U;CX.stroke(p2(t))}}
-  if(!mv){CX.strokeStyle=MAPC.sh;CX.lineWidth=7*U;if(CAM.w>=380){const LC=landC();if(LC)CX.drawImage(LC,RIPB[0],RIPB[1],RIPB[2]-RIPB[0],RIPB[3]-RIPB[1]);else{CX.save();CX.clip(LANDP);CX.stroke(LANDP);CX.restore()}}else for(const t of VIS){if(!t.sea)continue;const P=p2(t);CX.save();CX.clip(P);CX.stroke(P);CX.restore()}}
-  if(CAM.w<600)for(const P of PARENTS){if(P.x1<v[0]-off||P.x0>v[0]+v[2]-off||P.y1<v[1]||P.y0>v[1]+v[3])continue;CX.strokeStyle='rgba(104,58,36,.42)';CX.lineWidth=.7*U;CX.setLineDash([2*U,2*U]);CX.stroke(innerP(P));CX.setLineDash([])}
-  if(!(CAM.w>=380&&LANDCV&&!mv)){CX.strokeStyle=MAPC.bord;CX.lineWidth=1.1*U;if(!mv)CX.setLineDash([4*U,1.6*U,1*U,1.6*U]);for(const t of VIS)if(!t.parent)CX.stroke(p2(t));for(const t of PARENTS)if(inV(t))CX.stroke(p2(t));CX.setLineDash([])}
-  CX.strokeStyle=MAPC.coast;CX.lineWidth=.95*U;CX.stroke(LANDP);
-  if(!world&&CAM.w<430){CX.strokeStyle='rgba(109,86,57,.8)';CX.lineWidth=.9*U;CX.stroke(STP.mt);CX.strokeStyle='rgba(84,110,118,.9)';CX.lineWidth=1.1*U;CX.stroke(STP.riv)}
-  if(!world&&CAM.w<250){CX.fillStyle=MAPC.sea;CX.fill(STP.lake);CX.strokeStyle=MAPC.coast;CX.lineWidth=.7*U;CX.stroke(STP.lake);if(STP.us&&!mv){CX.save();CX.clip(STP.us);CX.strokeStyle='rgba(110,63,53,.55)';CX.lineWidth=.8*U;CX.setLineDash([2*U,2*U]);CX.stroke(STP.usl);CX.setLineDash([]);CX.restore()}}
-  }
- CX.setTransform(dpr,0,0,dpr,0,0);const k=VW/v[2];CX.textAlign='center';CX.textBaseline='middle';CX.fillStyle=MAPC.lab;
- for(const l of V.rep?[]:LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46);for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.font=`700 ${f.toFixed(1)}px "Noto Serif KR",serif`;if('letterSpacing' in CX)CX.letterSpacing=(f*.3).toFixed(1)+'px';CX.fillText(l.t,sx,sy)}}
- if('letterSpacing' in CX)CX.letterSpacing='0px';
- if(CAM.w<260){CX.fillStyle='rgba(60,40,22,.72)';const f=Math.max(10,Math.min(14,1000/CAM.w*1.6));CX.font=`italic 600 ${f}px "Noto Serif KR",serif`;for(const t of CT){if(!t.parent)continue;const P=innerPt(t)||{x:t.cx,y:t.cy};for(const off of offs){const sx=(P.x+off-v[0])*k,sy=(P.y-v[1])*k+(CAM.w<120?16:12);if(sx<-80||sx>VW+80||sy<-20||sy>VH+20)continue;CX.fillText(t.pn,sx,sy)}}}}
+function drawMap(){if(!CX||!CT||!S||!STP)return;drawTiles();drawLabels();parchMul();drawFL();drawSel()}
 function regionAt(cx,cy){if(!HITX||!CT)return null;const r=$('#map').getBoundingClientRect(),v=camVB();let mx=v[0]+(cx-r.left)/VW*v[2];const my=v[1]+(cy-r.top)/VH*v[3];mx=((mx%1000)+1000)%1000;
  for(let i=CT.length-1;i>=0;i--){const t=CT[i];if(!S.R[t.k])continue;if(mx<t.x0-1||mx>t.x1+1||my<t.y0-1||my>t.y1+1)continue;if(HITX.isPointInPath(p2(t),mx,my))return t.k}return null}
 let FLsig='';

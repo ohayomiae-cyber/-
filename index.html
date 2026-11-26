@@ -688,6 +688,30 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .nk-ok:hover{filter:brightness(1.08)}
 @keyframes nkIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
 .tt-nick{background:#f4e8cc!important;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.tr-head{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--hud);color:var(--brt);border-radius:3px;box-shadow:inset 0 0 0 1px var(--br2),0 4px 12px rgba(0,0,0,.25);margin-bottom:8px}
+.tr-ring{width:84px;height:84px;flex:none}.tr-bg{fill:#120d08;stroke:#3b2e1f;stroke-width:7}.tr-fg{fill:none;stroke:var(--br);stroke-width:7;stroke-linecap:round;transform:rotate(-90deg);transform-origin:42px 42px;transition:stroke-dashoffset .6s}.tr-ring .ci{stroke:var(--brt);fill:none;stroke-width:1.8}
+.tr-cur{display:flex;flex-direction:column;gap:2px;min-width:0}.tr-cur small{font:700 11px var(--serif);letter-spacing:.2em;color:#e08a62}.tr-cur b{font:700 19px var(--serif);color:#fbf0d2}.tr-cur b.none{color:var(--brm)}.tr-cur span{font:13px/1.45 var(--serif);color:#cbb994}.tr-cur i{font:700 12.5px var(--serif);font-style:normal;color:#ffd58a}
+.tr-stats{display:flex;justify-content:space-between;gap:6px;font:12.5px var(--serif);color:#5a4630;padding:0 4px 8px;border-bottom:1px solid rgba(90,66,36,.35)}.tr-stats b{color:#1d140b;font-size:14px}
+.tr-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:10px 0 6px}
+.tr-tab{height:auto!important;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#3a2414!important;cursor:pointer}
+.tr-med{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fbf2da,#d9c79d);box-shadow:0 0 0 1px #000,0 0 0 3px var(--br2),0 3px 6px rgba(0,0,0,.25);transition:transform .15s}.tr-med .ci{stroke:#3a2414;fill:none;stroke-width:1.6}
+.tr-tab b{font:700 12.5px var(--serif)}.tr-tab i{font-style:normal;font-size:8px;letter-spacing:1px;color:#8a6a33}
+.tr-tab:hover .tr-med{transform:translateY(-2px)}.tr-tab.on .tr-med{background:var(--hud);box-shadow:0 0 0 1px #000,0 0 0 3px var(--br),0 0 14px rgba(201,164,92,.55)}.tr-tab.on .tr-med .ci{stroke:var(--brt)}.tr-tab.on b{color:#7a2a18}
+.tr-line{position:relative;padding:6px 0 4px 6px}.tr-line::before{content:'';position:absolute;left:27px;top:24px;bottom:30px;width:0;border-left:2px dashed rgba(90,66,36,.45)}
+.tr-node{position:relative;display:flex;gap:12px;padding:8px 0}
+.tr-dot{position:relative;z-index:1;flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:700 15px var(--serif);background:#efe2c2;color:#8a6a33;box-shadow:0 0 0 2px rgba(90,66,36,.45)}
+.tr-node.done .tr-dot{background:#4b7a3c;color:#f4f0dc;box-shadow:0 0 0 2px #2f5a25,0 0 0 4px rgba(75,122,60,.25);font-size:20px}
+.tr-node.on .tr-dot{background:var(--hud);box-shadow:0 0 0 2px var(--br),0 0 12px rgba(201,164,92,.6);animation:trP 1.8s ease-in-out infinite}.tr-node.on .tr-dot .ci{stroke:var(--brt);fill:none;stroke-width:1.6}
+.tr-node.ok .tr-dot{background:#fbf4e2;color:#7a2a18;box-shadow:0 0 0 2px #8f2a17}
+.tr-node.lock{opacity:.55}
+@keyframes trP{50%{box-shadow:0 0 0 2px var(--br),0 0 20px rgba(201,164,92,.85)}}
+.tr-body{flex:1;min-width:0;padding:6px 10px 8px;background:rgba(255,250,235,.45);border-left:3px solid rgba(90,66,36,.3);border-radius:0 3px 3px 0}
+.tr-node.on .tr-body{border-left-color:var(--br);background:rgba(201,164,92,.14)}.tr-node.done .tr-body{border-left-color:#4b7a3c}.tr-node.ok .tr-body{border-left-color:#8f2a17}
+.tr-t{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.tr-t b{font:700 15px var(--serif);color:#1d140b}.tr-yr{font:700 12px var(--serif);color:#8a6a33;letter-spacing:.06em}
+.tr-body p{margin:2px 0 6px;font:13px/1.5 var(--serif);color:#4a3a26}
+.tr-f{display:flex;align-items:center;justify-content:space-between;gap:6px;font:12px var(--serif);color:#5a4630}.tr-f em{font-style:normal;color:#8f2a17}.tr-f em.g{color:#2f6b25}.tr-f .lk{color:#8a6a33;font-style:italic}
+.tr-f .tg{font:700 11.5px var(--serif);padding:1px 8px;border-radius:10px}.tg.done{background:#4b7a3c;color:#f4f0dc}.tg.on{background:var(--hud);color:#ffd58a}
+.tr-go{height:28px!important;padding:0 12px!important;font:700 12px var(--serif)!important;background:linear-gradient(180deg,#a8371f,#7a2415 60%,#5e1a10)!important;color:#fff1d2!important;border:1px solid #2a0a04!important;border-radius:14px!important;box-shadow:inset 0 0 0 1px rgba(232,190,120,.6)!important;flex:none}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -1739,10 +1763,20 @@ function techStep(s,oo){s.TE=s.TE||{};Object.keys(s.N).forEach(n=>{if(!alive(s,n
 function techDiv(s,n,D){const h=id=>tHas(s,n,id);if(h('inf1'))D.sa+=2;if(h('inf2')){D.sa+=2;D.df+=2}if(h('inf3'))D.pr+=12;if(h('inf4')){D.org+=8;D.bk+=3}
  if(h('ar1')&&D.t>0)D.ar+=8;if(h('ar2')&&D.t>0){D.ar+=8;D.ha+=3}if(h('ar3'))D.bk+=6;if(h('ar4')&&D.t>0){D.ar+=12;D.ha+=4}if(h('ind4')){['sa','ha','df','bk'].forEach(k=>D[k]*=1.05)}return D}
 const tAir=(s,n)=>1+.15*tCnt(s,n,'air'),tNav=(s,n)=>1+.15*TECHS.filter(t=>t[1]=='nav'&&t[2]<4&&tHas(s,n,t[0])).length;
-function techDoc(me){const s=S,T=(s.TE||{})[me]||{d:tSeed(s,me),cur:null,p:0},y=yr(s),pend=O.tech&&tOK(s,me,O.tech)?O.tech:T.cur,cur=pend&&TI_[pend];
- return{t:'연구 — 기술 도면',b:`<div class="kv"><div><small>연구력</small><b>${tRate(s,me)}</b><small>분기마다</small></div><div><small>쌓인 연구</small><b>${T.p}</b></div><div><small>완료</small><b>${Object.keys(T.d).length} / ${TECHS.length}</b></div></div>
- <div class="sec"><span>진행 중</span></div>${cur?`<div class="ln"><div class="g">${esc(cur[3])}<small>${esc(cur[5])} · 비용 ${tCost(s,pend,me)}${y<cur[4]?' (시대를 앞선 연구 +50%)':''}</small><div class="bar2"><i style="width:${Math.min(100,T.p/tCost(s,pend,me)*100).toFixed(0)}%"></i></div></div><div class="v">${Math.max(0,Math.ceil((tCost(s,pend,me)-T.p)/Math.max(1,tRate(s,me))))}분기</div></div>`:'<div class="note" style="margin:0;color:var(--ox)">연구 과제가 없다. 아래 도면에서 하나를 고르시오. (쌓인 연구는 최대 60까지만 보관된다)</div>'}
- <div class="tgrid">${Object.entries(TBR).map(([br,[bn]])=>`<div class="tcol"><div class="tbr">${bn}</div>${TECHS.filter(t=>t[1]==br).map(t=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4];return`<button class="tc${done?' done':on?' on':ok?'':' lock'}" ${done||!ok?'disabled':''} data-act="tech:${t[0]}"><b>${esc(t[3])}</b><small>${esc(t[5])}</small><i>${done?'완료':`${t[4]}년${early&&ok?' · 앞선 연구':''} · ${tCost(s,t[0],me)}${tSpread(s,t[0],me)>0&&!done?' · 확산':''}`}</i></button>`}).join('')}</div>`).join('')}</div>`}}
+const TBRI={inf:'helm',ar:'fac',air:'olive',nav:'coin',ind:'fac'};
+const TICO={inf:'<path d="M5 15h14M7 15V9a5 5 0 0 1 10 0v6M12 4V2M4 19h16"/>',ar:'<path d="M3 15h15a2 2 0 0 0 0-4H6l-1 4M8 11V8h6v3M14 9h7"/><circle cx="6" cy="17" r="1.6"/><circle cx="11" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/>',air:'<path d="M2 13l8-1 3-8h2l-1 8 6 1v2l-6 1 1 4h-2l-3-3-8-1Z"/>',nav:'<path d="M3 16h18l-2 4H5ZM6 16V11h12v5M9 11V7h6v4M12 7V3"/>',ind:'<path d="M3 20V10l5 3V10l5 3V5h3v15ZM16 20h5V8"/>'};
+const ticon=(br,sz)=>`<svg class="ci" width="${sz}" height="${sz}" viewBox="0 0 24 24">${TICO[br]}</svg>`;
+function techDoc(me){const s=S,T=(s.TE||{})[me]||{d:tSeed(s,me),cur:null,p:0},y=yr(s),pend=O.tech&&tOK(s,me,O.tech)?O.tech:T.cur,cur=pend&&TI_[pend],rate=tRate(s,me);
+ const br=V.tbr||(cur?cur[1]:'inf'),pc=cur?Math.min(1,T.p/tCost(s,pend,me)):0,R=34,C=2*Math.PI*R,left=cur?Math.max(0,Math.ceil((tCost(s,pend,me)-T.p)/Math.max(1,rate))):0;
+ const ring=`<svg class="tr-ring" viewBox="0 0 84 84"><circle cx="42" cy="42" r="${R}" class="tr-bg"/><circle cx="42" cy="42" r="${R}" class="tr-fg" style="stroke-dasharray:${C.toFixed(1)};stroke-dashoffset:${(C*(1-pc)).toFixed(1)}"/><g transform="translate(25 25)">${cur?ticon(cur[1],34):''}</g></svg>`;
+ const head=`<div class="tr-head">${ring}<div class="tr-cur">${cur?`<small>진행 중인 연구</small><b>${esc(cur[3])}</b><span>${esc(cur[5])}</span><i>${Math.round(pc*100)}% · ${left}분기 남음</i>`:`<small>진행 중인 연구</small><b class="none">비어 있음</b><span>아래 연표에서 다음 과제를 고르시오.<br>쌓인 연구는 60까지만 보관된다.</span>`}</div></div>
+ <div class="tr-stats"><span>연구력 <b>${rate}</b>/분기</span><span>쌓인 연구 <b>${T.p}</b></span><span>완료 <b>${Object.keys(T.d).length}</b>/${TECHS.length}</span></div>`;
+ const tabs=`<div class="tr-tabs">${Object.entries(TBR).map(([k,[bn]])=>{const n=tCnt(s,me,k);return`<button class="tr-tab${k==br?' on':''}" data-act="tbr:${k}"><span class="tr-med">${ticon(k,22)}</span><b>${bn}</b><i>${'●'.repeat(n)}${'○'.repeat(4-n)}</i></button>`}).join('')}</div>`;
+ const L=TECHS.filter(t=>t[1]==br);
+ const nodes=`<div class="tr-line">${L.map((t,i)=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4],sp=tSpread(s,t[0],me),st=done?'done':on?'on':ok?'ok':'lock';
+  return`<div class="tr-node ${st}"><div class="tr-dot">${done?'✓':on?ticon(br,26):['Ⅰ','Ⅱ','Ⅲ','Ⅳ'][i]}</div><div class="tr-body"><div class="tr-t"><b>${esc(t[3])}</b><span class="tr-yr">${t[4]}</span></div><p>${esc(t[5])}</p>
+   <div class="tr-f">${done?'<span class="tg done">완료</span>':on?`<span class="tg on">연구 중</span>`:ok?`<span>비용 ${tCost(s,t[0],me)}${early?' · <em>시대 앞섬 +50%</em>':''}${sp>0?' · <em class="g">확산 −'+Math.round(sp*40)+'%</em>':''}</span><button class="tr-go" data-act="tech:${t[0]}">연구 시작</button>`:`<span class="lk">앞 단계 필요</span>`}</div></div></div>`}).join('')}</div>`;
+ return{t:'연구 — 기술 도면',b:head+tabs+nodes}}
 // ════════ 진영 ════════
 const FAC36={ax:['추축국','GER',['GER'],'#3b3b3b'],al:['연합국','UK',['UK','FRA'],'#24476b'],co:['코민테른','RUS',['RUS','Z133'],'#8f2a17']};
 const FAC10={en:['협상국','UK',['UK','FRA','RUS'],'#24476b'],cp:['동맹국','GER',['GER','DAN','ITA'],'#3b3b3b']};
@@ -2875,6 +2909,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'cdi':V.cd.i=+v;sfx('page');ui();return;case'cdx':V.cd.open=0;sfx('page');ui();return;case'cards':V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]));sfx('page');ui();return
  case'mvok':{const uu=myUnits()[V.bt.u];if(!uu)return;sfx('march');sendO({mv:(O.mv||[]).filter(m=>m.u!=uu.id).concat({u:uu.id,r:v})});toast(`${uu.nm} → ${RG[v][0]} 이동 명령`);V.bt={u:null,t:null,st:0};ui();return}
  case'umv':{sendO({mv:(O.mv||[]).filter(m=>m.u!=v)});ui();return}
+ case'tbr':V.tbr=v;sfx('page');ui();return;
  case'tech':{if(!tOK(S,me,v))return;sfx('page');sendO({tech:v});toast(TI_[v][3]+' 연구 지시');ui();return}
  case'supmap':V.supOn=!V.supOn;ui();requestDraw();return;
  case'endx':V.endx=1;ui();return;case'rep':repStart();return;case'endrep':V.endx=1;repStart();return;case'repx':V.rep=null;clearInterval(window.__rep);ui();requestDraw();return;case'leave':leaveRoom();return

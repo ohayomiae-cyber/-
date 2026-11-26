@@ -632,6 +632,14 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 @keyframes ufStamp{0%{opacity:0;transform:rotate(-12deg) scale(2.2)}100%{opacity:.9;transform:rotate(-12deg) scale(1)}}
 .mvarr{fill:none;stroke:#24476b;stroke-width:2.4;stroke-dasharray:7 4;vector-effect:non-scaling-stroke;opacity:.9}
 .suplg{display:flex;flex-wrap:wrap;gap:8px;font:12px var(--serif);margin:4px 0 8px}.suplg i{display:inline-block;width:12px;height:12px;margin-right:4px;vertical-align:-2px;border:1px solid rgba(0,0,0,.3)}
+.tgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}.tcol{display:flex;flex-direction:column;gap:5px}
+.tbr{font:700 13px var(--serif);text-align:center;color:var(--brt);background:var(--hud);padding:4px 0;border-radius:2px;box-shadow:inset 0 -1px 0 var(--br2)}
+.tc{height:auto;min-height:86px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;padding:7px 7px 6px;background:rgba(255,250,235,.55)!important;color:var(--ink)!important;border:1px solid rgba(90,66,36,.45)!important;border-radius:2px;white-space:normal}
+.tc b{font:700 12.5px/1.25 var(--serif)}.tc small{font:11px/1.35 var(--serif);color:#5a4630}.tc i{font:600 10.5px var(--serif);font-style:normal;color:#8a6a33;margin-top:auto}
+.tc.done{background:rgba(70,120,60,.16)!important;border-color:#4b7a3c!important}.tc.done i{color:#2f6b25}
+.tc.on{background:var(--hud)!important;color:var(--brt)!important;box-shadow:inset 0 0 0 1px var(--br)}.tc.on small{color:#cbb994}.tc.on i{color:#ffd58a}
+.tc.lock{opacity:.5}
+@media (max-width:760px){.tgrid{grid-template-columns:1fr 1fr}}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -666,7 +674,7 @@ function newGame(mode,secs){const e=mode=='w2',Y0=e?1936:1910,T=mode=='w1'?36:mo
  const P=e?P36:P10,L=e?LORD36:LORD10,own=new Set();
  for(const r in RG){S.R[r]={o:RG[r][e?4:3],occ:null};own.add(S.R[r].o)}
  own.forEach(n=>{const p=P[n]||2;S.N[n]={g:p*30,pop:p*10+20,ind:p*8+10,sup:60,mil:p*6,mil0:p*6,st:{f:20,s:20,o:20},lord:L[n]||null,ind2:0,start:held(S,n).length}});
- (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));return S}
+ (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));S.TE={};for(const n in S.N)S.TE[n]={d:tSeed(S,n),cur:null,p:0};return S}
 function nb(s,n){const h=held(s,n),o=new Set();if(ADJ){h.forEach(x=>(ADJ[x]||[]).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;if(d!=n)o.add(d)}}));return[...o]}for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
 function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.o;if(d==a||!alive(s,a))return;o=o||{};const adj=held(s,a).some(x=>dist(x,rid)<=1);if(!adj){if(o.op=='para'&&o.af&&paraOK(s,a,rid))o.sea=0;else{if(!o.nv||!seaOK(s,a,rid))return;o.sea=1}}else o.sea=0;
  const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
@@ -756,7 +764,7 @@ function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 
  s.PJ.forEach(p=>{const d=PJC[p.id],N=s.N[p.n];if(p.ok&&d&&d.gpt&&N)N.g+=d.gpt});
  ns.forEach(n=>{const o=oo[n]||{},N=s.N[n];(o.proj||[]).forEach(id=>{const d=PJC[id];if(!d||s.PJ.some(p=>p.id==id&&p.n==n)||N.g<d.cost)return;N.g-=d.cost;s.PJ.push({id,n,t0:s.t,left:d.q});s.log.push(`${nm(n,y)}: ${d.name} 착공`)});
   if(o.cargo&&N.st[o.cargo]!=null)for(const k in N.st)N.st[k]=Math.max(0,N.st[k]+(k==o.cargo?2:-1))});
- annexDead(s);histPush(s,1);s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
+ techStep(s,oo);annexDead(s);histPush(s,1);s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
 function score(s,n){return score0(s,n)+Object.values(((s.GO||{})[n])||{}).filter(g=>g.st=='ok').length*25}
 function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+held(s,n).length*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
 async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
@@ -1398,10 +1406,10 @@ function homeLoc(n,u){if(!S)return null;const pid=PID(n),fs=FT.filter(f=>f.pid==
 function unitLoc(n,u){const L=((S.UL||{})[n]||{})[u.id];if(L&&S.R[L]&&(S.R[L].occ||S.R[L].o)==n&&T2[L]){const P=innerPt(T2[L])||{x:T2[L].cx,y:T2[L].cy};return{x:P.x,y:P.y,r:L}}return homeLoc(n,u)}
 // 전투: 해상전 → 공중전 → 지상전
 function battleMods(s,a,d,rid,o,use,R0){const A=s.N[a],D=s.N[d],fa=FRC(a),fd=FRC(d),out={att:1,def:1,sea:null,air:null};
- if(o&&o.sea){const nv=o.nv&&(NAVY[NID(a)]||[['해군',1]])[+o.nv.slice(1)],my=A.mil*fa.n*(nv?nv[1]:0),en=D.mil*fd.n*.7,ok=my*(.8+Math.random()*.4)>en*(.8+Math.random()*.4);
+ if(o&&o.sea){const nv=o.nv&&(NAVY[NID(a)]||[['해군',1]])[+o.nv.slice(1)],my=A.mil*fa.n*(nv?nv[1]:0)*tNav(s,a),en=D.mil*fd.n*.7*tNav(s,d),ok=my*(.8+Math.random()*.4)>en*(.8+Math.random()*.4);
   A.mil-=my*.08;D.mil-=en*.05;out.sea={ok,my:+my.toFixed(1),en:+en.toFixed(1)};if(!ok)return out;out.att*=.8}
- const ea=D.mil*fd.f;if(o&&o.af){const af=(AIR[NID(a)]||[['공군',1]])[+o.af.slice(1)],my=A.mil*fa.f*(af?af[1]:0),r=my/(my+ea+.5);out.att*=1+.35*r;out.air={r:Math.round(r*100),my:+my.toFixed(1),en:+ea.toFixed(1)};A.mil-=my*.04}
- else out.def*=1+.15*ea/(ea+.5);return out}
+ const ea=D.mil*fd.f*tAir(s,d);if(o&&o.af){const af=(AIR[NID(a)]||[['공군',1]])[+o.af.slice(1)],my=A.mil*fa.f*(af?af[1]:0)*tAir(s,a),r=my/(my+ea+.5);out.att*=1+.35*r*(tHas(s,a,'air3')?1.1:1);out.air={r:Math.round(r*100),my:+my.toFixed(1),en:+ea.toFixed(1)};A.mil-=my*.04}
+ else out.def*=1+.15*ea/(ea+.5)*(tHas(s,a,'air4')?.5:1);return out}
 
 // ════════ 자원 기호 · 부족 상황 안내 ════════
 const RES={g:['국고','#b07d12','<circle cx="8" cy="8" r="6.2" fill="#d9a62c" stroke="#7a5408" stroke-width="1.3"/><path d="M8 4.5v7M6 6.2h3.2a1.3 1.3 0 0 1 0 2.6H6.8a1.3 1.3 0 0 0 0 2.6H10" fill="none" stroke="#5a3c04" stroke-width="1.1"/>'],
@@ -1492,14 +1500,14 @@ function divT(s,n){const y=yr(s),id=NID(n),N=s.N[n]||{ind:20,sup:50};let t=y<191
  const eq=clamp(.7+(N.ind||0)/250,.7,1.35),D={t,eq};for(const k in DIVI)D[k]=DIVI[k]*(1-t)+DIVA[k]*t;['sa','ha','df','bk'].forEach(k=>D[k]*=eq);
  if(y<1918)D.df*=1.25; // 참호전 시대: 방어가 강하다
  D.pr=(5+25*t+(y>=1938?8:0))*eq;D.ar=t>0?(10+60*t)*eq:0;D.hd=t*.8;
- if(N.sup<30)D.org*=.8;if(N.short&&N.short.o){D.ar*=.5;D.bk*=.8}if(N.short&&N.short.f)D.org*=.9;return D}
+ if(N.sup<30)D.org*=.8;if(N.short&&N.short.o){D.ar*=.5;D.bk*=.8}if(N.short&&N.short.f)D.org*=.9;return techDiv(s,n,D)}
 // 전투 전 보정값을 한곳에서 계산 (명령 화면의 예측과 실제 전투가 같은 식을 쓴다)
 function hoiSetup(s,a,d,rid,c,o,BMa,BMd,OM,nf){const A=s.N[a],D=s.N[d],ter=terrOf(rid),TR=TERR[ter],riv=terrRiver(rid),mA=[],mD=[];let attM=1,defM=1;const add=(L,lb,f)=>{if(Math.abs(f-1)>.005)L.push([lb,Math.round((f-1)*100)])};
  const dA=docM(s,a,d,rid,'att',c),dD=docM(s,d,a,rid,'def',c);attM*=dA;add(mA,'교리·국가 정신',dA);defM*=dD;add(mD,'교리·국가 정신',dD);
  attM*=TR[1];add(mA,'지형: '+TR[0],TR[1]);
  if(riv&&!o.sea&&o.op!='para'){attM*=.7;add(mA,riv+' 도하',.7)}
  const T=T2[rid],lat=T?80-T.cy*138/560:40;if(lat>50&&WIN(s)){attM*=.85;add(mA,'겨울',.85)}
- if(o.sea){attM*=.8;add(mA,'상륙 (해안 교두보)',.8)}
+ if(o.sea){attM*=.8;add(mA,'상륙 (해안 교두보)',.8);if(tHas(s,a,'nav4')){attM*=1.15;add(mA,'상륙정',1.15)}}
  if(A.sup<35){const f=.85;attM*=f;add(mA,'보급 불안 (지지 낮음)',f)}
  attM*=BMa;add(mA,'공중 지원',BMa);attM*=OM.att;add(mA,'작전 계획',OM.att);const ua=ultM(s,a,'a',rid,o),ud=ultM(s,d,'d',rid,o);attM*=ua;add(mA,'결전: '+ultOf(a)[0],ua);defM*=ud;add(mD,'결전: '+ultOf(d)[0],ud);
  const ent=((s.ENT||{})[rid])||0;defM*=1+ent;add(mD,'참호',1+ent);
@@ -1635,6 +1643,39 @@ function mvHTML(me,u,r){const from=u.r,p=from?pathTo(S,me,from,r):null,y=yr(S),c
  <div class="note" style="margin:4px 0">공격할 지역에 맞닿아 있어야 제 힘을 낸다(2칸 −15%, 3칸 −28%, 그 이상 −40%). 지키는 지역 곁에 부대가 많을수록 방어가 강해진다.</div>
  <div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="mvok:${r}" ${ok?'':'disabled'}>이동 명령</button></div>`}
 function facSame(s,a,b){const F=s.FAC;if(!F||a==b)return false;for(const k in F){const m=F[k].mem||[];if(m.includes(a)&&m.includes(b))return true}return false}
+// ════════ 기술 연구 ════════
+const TBR={inf:['보병','helm'],ar:['기갑','fac'],air:['항공','olive'],nav:['해군','coin'],ind:['산업','fac']};
+// [id, 갈래, 단계, 이름, 연도, 설명]
+const TECHS=[
+ ['inf1','inf',1,'기관총 중대',1910,'보병 연성 공격 +2'],['inf2','inf',2,'박격포·자동화기',1918,'연성 공격 +2, 방어 +2'],['inf3','inf',3,'대전차포',1936,'대전차 +12'],['inf4','inf',4,'돌격 보병 교리',1940,'조직력 +8, 돌파 +3'],
+ ['ar1','ar',1,'전차 개발',1916,'장갑 +8, 기갑 비율 +4%p'],['ar2','ar',2,'중형 전차',1936,'장갑 +8, 경성 공격 +3'],['ar3','ar',3,'기갑 사단 편제',1939,'돌파 +6, 기갑 비율 +5%p'],['ar4','ar',4,'중전차',1942,'장갑 +12, 경성 공격 +4'],
+ ['air1','air',1,'정찰기',1912,'공군 전력 +15%'],['air2','air',2,'단엽 전투기',1935,'공군 전력 +15%'],['air3','air',3,'급강하 폭격기',1937,'공군 전력 +15%, 공중 지원 효과 +10%'],['air4','air',4,'레이더',1940,'공군 전력 +15%, 적 공군 엄호 효과 절반'],
+ ['nav1','nav',1,'드레드노트',1910,'해군 전력 +15%'],['nav2','nav',2,'잠수함 전술',1915,'해군 전력 +15%'],['nav3','nav',3,'항공모함',1934,'해군 전력 +15%'],['nav4','nav',4,'상륙정',1941,'상륙전 공격 +15%'],
+ ['ind1','ind',1,'조립 라인',1913,'산업력 매 분기 +0.25'],['ind2','ind',2,'합성 연료',1936,'석유 매 분기 +2'],['ind3','ind',3,'전시 생산 체제',1938,'군사력 매 분기 +1%'],['ind4','ind',4,'대량 생산',1941,'장비 수준 +5%, 산업력 매 분기 +0.35']];
+const TI_={};TECHS.forEach(t=>TI_[t[0]]=t);
+const TCOST=[0,30,50,75,100];
+const tHas=(s,n,id)=>{const T=(s.TE||{})[n];return !!(T?T.d:(s.N&&s.N[n]?tSeed(s,n):{}))[id]};
+const tCnt=(s,n,br)=>TECHS.filter(t=>t[1]==br&&tHas(s,n,t[0])).length;
+function tCost(s,id){const t=TI_[id];return Math.round(TCOST[t[2]]*(yr(s)<t[4]?1.5:1))}
+function tOK(s,n,id){const t=TI_[id];if(!t||tHas(s,n,id))return false;return t[2]==1||tHas(s,n,t[1]+(t[2]-1))}
+const tRate=(s,n)=>{const N=s.N[n];return N?+(4+N.ind*.12).toFixed(1):0};
+// 시작 시점에 이미 갖춘 기술 (연도와 나라 산업 수준에 따라)
+function tSeed(s,n){const y=s.Y0,N=s.N[n],d={};TECHS.forEach(t=>{if(t[4]<=y-2&&(t[2]<=2||N.ind>40)&&(t[2]==1||d[t[1]+(t[2]-1)]))d[t[0]]=1});return d}
+const TAIP={GER:['ar','air','inf','ind'],UK:['nav','air','ind','inf'],USA:['ind','air','nav','ar'],JPN:['nav','air','inf','ind'],RUS:['ar','inf','ind','air'],FRA:['inf','ar','air','ind'],ITA:['nav','air','inf','ar'],CHN:['inf','ind','air','ar']};
+function techStep(s,oo){s.TE=s.TE||{};Object.keys(s.N).forEach(n=>{if(!alive(s,n))return;const T=s.TE[n]=s.TE[n]||{d:tSeed(s,n),cur:null,p:0},o=oo[n]||{};
+ if(o.tech&&tOK(s,n,o.tech))T.cur=o.tech;
+ if(!T.cur&&!P_h(s,n)){const pr=TAIP[NID(n)]||['inf','ind','ar','air','nav'];for(const br of pr){const c=TECHS.filter(t=>t[1]==br&&tOK(s,n,t[0])).sort((a,b)=>a[2]-b[2])[0];if(c&&yr(s)>=c[4]-1){T.cur=c[0];break}}}
+ T.p=+(T.p+tRate(s,n)).toFixed(1);if(T.cur&&T.p>=tCost(s,T.cur)){T.p=+(T.p-tCost(s,T.cur)).toFixed(1);T.d[T.cur]=1;if(PF[PID(n)]||P_h(s,n))s.log.push(`${nm(n,yr(s))}, ${TI_[T.cur][3]} 연구 완료`);T.cur=null}
+ if(!T.cur)T.p=Math.min(T.p,60);
+ const N=s.N[n];if(T.d.ind1)N.ind+=.25;if(T.d.ind4)N.ind+=.35;if(T.d.ind2)N.st.o+=2;if(T.d.ind3)N.mil*=1.01})}
+// 사단 능력치 보정
+function techDiv(s,n,D){const h=id=>tHas(s,n,id);if(h('inf1'))D.sa+=2;if(h('inf2')){D.sa+=2;D.df+=2}if(h('inf3'))D.pr+=12;if(h('inf4')){D.org+=8;D.bk+=3}
+ if(h('ar1')&&D.t>0)D.ar+=8;if(h('ar2')&&D.t>0){D.ar+=8;D.ha+=3}if(h('ar3'))D.bk+=6;if(h('ar4')&&D.t>0){D.ar+=12;D.ha+=4}if(h('ind4')){['sa','ha','df','bk'].forEach(k=>D[k]*=1.05)}return D}
+const tAir=(s,n)=>1+.15*tCnt(s,n,'air'),tNav=(s,n)=>1+.15*TECHS.filter(t=>t[1]=='nav'&&t[2]<4&&tHas(s,n,t[0])).length;
+function techDoc(me){const s=S,T=(s.TE||{})[me]||{d:tSeed(s,me),cur:null,p:0},y=yr(s),pend=O.tech&&tOK(s,me,O.tech)?O.tech:T.cur,cur=pend&&TI_[pend];
+ return{t:'연구 — 기술 도면',b:`<div class="kv"><div><small>연구력</small><b>${tRate(s,me)}</b><small>분기마다</small></div><div><small>쌓인 연구</small><b>${T.p}</b></div><div><small>완료</small><b>${Object.keys(T.d).length} / ${TECHS.length}</b></div></div>
+ <div class="sec"><span>진행 중</span></div>${cur?`<div class="ln"><div class="g">${esc(cur[3])}<small>${esc(cur[5])} · 비용 ${tCost(s,pend)}${y<cur[4]?' (시대를 앞선 연구 +50%)':''}</small><div class="bar2"><i style="width:${Math.min(100,T.p/tCost(s,pend)*100).toFixed(0)}%"></i></div></div><div class="v">${Math.max(0,Math.ceil((tCost(s,pend)-T.p)/Math.max(1,tRate(s,me))))}분기</div></div>`:'<div class="note" style="margin:0;color:var(--ox)">연구 과제가 없다. 아래 도면에서 하나를 고르시오. (쌓인 연구는 최대 60까지만 보관된다)</div>'}
+ <div class="tgrid">${Object.entries(TBR).map(([br,[bn]])=>`<div class="tcol"><div class="tbr">${bn}</div>${TECHS.filter(t=>t[1]==br).map(t=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4];return`<button class="tc${done?' done':on?' on':ok?'':' lock'}" ${done||!ok?'disabled':''} data-act="tech:${t[0]}"><b>${esc(t[3])}</b><small>${esc(t[5])}</small><i>${done?'완료':`${t[4]}년${early&&ok?' · 앞선 연구':''} · ${tCost(s,t[0])}`}</i></button>`}).join('')}</div>`).join('')}</div>`}}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2274,8 +2315,8 @@ function barHTML(){const me=mine(),N=me&&S.N[me],y=yr(S),q=qt(S),dl=V.dl&&Date.n
 function tickUI(){const b=$('#rdy'),t=$('#tm');if(!S||S.phase!='play')return;const s=Math.max(0,Math.ceil((S.deadline-Date.now())/1000)),ms=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
  if(t)t.textContent=`남은 시간 ${ms} · 준비 ${Object.keys(S.ready).length}/${Object.keys(S.P).length}`;
  if(b&&(S.ready[uid]||O.ready)){const w=Object.entries(S.P).filter(([u])=>u!=uid&&!S.ready[u]).map(([,n])=>nm(n,yr(S)));b.textContent=`${w.length?(w.length>1?w[0]+' 외 '+(w.length-1)+'개국':w[0]):'다른 국가'} 대기 중 · ${ms}`}}
-function tabsHTML(){const me=mine(),pend=me&&S.TR.some(t=>t.st=='p'&&t.b==me),ag=me&&agendaFor(me),T=[['gov','국정',(ag&&ag.pf&&!ag.done)||!!decDue(me)],['pol','정책',me&&situations(me).length>0],['fin','재정'],['ind','산업'],['mil','군정',me&&wars(S,me).length>0],['dip','외교',pend]];
- const TI={gov:'dome',pol:'book',fin:'coin',ind:'fac',mil:'helm',dip:'olive'};return T.map(([k,l,e])=>`<button class="tb${V.tab==k||(k=='pol'&&V.bk.open)?' on':''}" data-act="tab:${k}" ${me?'':'disabled'}>${CI(TI[k],20)}<span>${l}</span>${e?ENV:''}</button>`).join('')+`<div class="sp"></div><button class="tb sm${V.tab=='log'?' on':''}" data-act="tab:log">기록</button>`}
+function tabsHTML(){const me=mine(),pend=me&&S.TR.some(t=>t.st=='p'&&t.b==me),ag=me&&agendaFor(me),T=[['gov','국정',(ag&&ag.pf&&!ag.done)||!!decDue(me)],['pol','정책',me&&situations(me).length>0],['fin','재정'],['ind','산업'],['tech','연구',me&&S.TE&&S.TE[me]&&!S.TE[me].cur&&!O.tech],['mil','군정',me&&wars(S,me).length>0],['dip','외교',pend]];
+ const TI={gov:'dome',pol:'book',fin:'coin',ind:'fac',tech:'flask',mil:'helm',dip:'olive'};return T.map(([k,l,e])=>`<button class="tb${V.tab==k||(k=='pol'&&V.bk.open)?' on':''}" data-act="tab:${k}" ${me?'':'disabled'}>${CI(TI[k],20)}<span>${l}</span>${e?ENV:''}</button>`).join('')+`<div class="sp"></div><button class="tb sm${V.tab=='log'?' on':''}" data-act="tab:log">기록</button>`}
 function plateHTML(){const n=V.nat,y=yr(S);if(!n)return`<span style="color:var(--ink);font:600 13px var(--serif)">세계지도 · ${y}년 ${qt(S)}분기</span>`;const me=mine()==n;
  return`<button data-act="back" style="height:28px">← 세계지도</button>${flag(n,30,20)}<b>${esc(nm(n,y))}</b><small>${y}년 ${qt(S)}분기</small>${me?'':'<span class="vt">방문</span>'}`}
 // ════════ 안건 ════════
@@ -2368,7 +2409,7 @@ function guide(n){const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*
 // ════════ 문서 패널 ════════
 function docHTML(){const me=mine(),y=yr(S),N=me&&S.N[me];if(V.nat&&V.nat!=me&&(!V.tab||V.tab=='gov'))return{t:`공개 자료 — ${nm(V.nat,y)}`,b:visitDoc(V.nat)+natHTML(V.nat)};if(!V.tab)return null;
  if(V.tab=='log')return{t:'분기 기록 · 역사 흐름',b:`<div class="cmds" style="margin:0 0 6px"><button class="pri" data-act="rep">지도 타임랩스 보기 (${(S.HIST&&S.HIST.f.length)||1}개 분기)</button></div><div class="sec"><span>${y}년 ${qt(S)}분기 이전 처리 결과</span></div>${S.log.map(l=>`<div class="ln"><div class="g">${esc(l)}</div></div>`).join('')}${me?`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(me)}`:''}${S.phase=='end'?endDoc():''}`};
- if(!N)return null;if(V.tab=='gov'){const g=govDoc(me),st=V.gsub=='s';return{t:st?'국가 전략 — '+nm(me,y):g.t,b:`<div class="subt"><button class="${st?'':'on'}" data-act="gsub:d">국가 자료</button><button class="${st?'on':''}" data-act="gsub:s">국가 전략${decDue(me)?' ●':''}</button></div>`+(st?natHTML(me):g.b)}}if(V.tab=='fin')return finDoc(me);if(V.tab=='ind')return indDoc(me);if(V.tab=='mil')return milDoc(me);if(V.tab=='dip')return dipDoc(me);return null}
+ if(!N)return null;if(V.tab=='tech')return techDoc(me);if(V.tab=='gov'){const g=govDoc(me),st=V.gsub=='s';return{t:st?'국가 전략 — '+nm(me,y):g.t,b:`<div class="subt"><button class="${st?'':'on'}" data-act="gsub:d">국가 자료</button><button class="${st?'on':''}" data-act="gsub:s">국가 전략${decDue(me)?' ●':''}</button></div>`+(st?natHTML(me):g.b)}}if(V.tab=='fin')return finDoc(me);if(V.tab=='ind')return indDoc(me);if(V.tab=='mil')return milDoc(me);if(V.tab=='dip')return dipDoc(me);return null}
 function endDoc(){const y=yr(S);return`<div class="sec"><span>최종 순위</span></div>${Object.keys(S.N).filter(x=>alive(S,x)).sort((a,b)=>score(S,b)-score(S,a)).slice(0,10).map((x,i)=>`<div class="ln"><div class="g">${i+1}. ${esc(nm(x,y))}${Object.values(S.P).includes(x)?' · 플레이어':''}</div><div class="v">${score(S,x)}</div></div>`).join('')}`}
 function govDoc(me){const pid=PID(me),P=pid&&PF[pid],N=S.N[me],y=yr(S),q=qt(S);if(!P)return{t:'국가 개요',b:genericGov(me)};
  if(pid=='UK'){const ports=FT.filter(f=>f.pid=='UK'&&f.ty=='port'),R=P.routes;let rows='';for(const id in R){const ps=ports.filter(f=>(f.o.r||[]).includes(id)),cs=ps.length?cargoOf(ps[0]).filter(c=>c.rid==id):[];const tot=cs.reduce((a,c)=>a+(c.cut?0:c.a),0),hot=V.hl=='UK.'+id;
@@ -2458,7 +2499,7 @@ function natHTML(n){const A=natFor(n),y=yr(S),me=mine()==n,sp=spiritsOf(S,n).fil
  ${me?`<div class="sec"><span>역사적 결정</span><span>국고 ${N.g|0}</span></div>${ds.map(d=>{const ok=decOK(S,n,d),or=(O.dec||[]).includes(d.id),tk=DTAKEN(S,n,d.id);return`<div class="dec${tk?' tk':''}${or?' or':''}${!ok.ok&&!tk&&!or?' lk':''}"><div class="dt"><b>${esc(d.t)}</b><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span></div><div class="dd"><span class="fx up">${icoT(esc(pctText(d.d)))}</span>${d.cost?`<span class="fx">비용 ${d.cost}</span>`:''}${d.rq?`<span class="fx">조건: ${esc(d.rq)}</span>`:''}</div><div class="dh2">${esc(d.h)}</div><div class="da">${tk?'<span class="tag ok">결정됨</span>':or?`<span class="tag acc">다음 분기 시행</span><button data-act="undec:${d.id}">취소</button>`:ok.ok?`<button class="pri" data-act="dec:${d.id}">결정</button>`:`<span class="tag">${esc(ok.why)}</span>`}</div></div>`}).join('')}`:''}
  <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],'LAND')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
 // ════════ 정책 서고 · 전황 · 사회 양상 ════════
-const CIC={coin:'<ellipse cx="12" cy="17" rx="7" ry="2.6"/><ellipse cx="12" cy="13.5" rx="7" ry="2.6"/><ellipse cx="12" cy="10" rx="7" ry="2.6"/><path d="M5 10v7M19 10v7"/>',bank:'<path d="M3 9L12 4L21 9Z M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3 18.5H21"/>',fac:'<path d="M3 19V10L8 13V10L13 13V5H16V19Z M16 19H21V8"/><circle cx="18.5" cy="5" r="1.4"/>',grain:'<path d="M12 21V6M12 9l-3-3M12 9l3-3M12 13l-3.5-3M12 13l3.5-3M12 17l-3.5-3M12 17l3.5-3"/>',ham:'<path d="M5 19L14 10M12 6l6 6l2-2l-6-6Z"/>',scale:'<path d="M12 4V20M6 20H18M5 7H19M5 7L2.5 13H7.5ZM19 7L16.5 13H21.5Z"/>',loco:'<path d="M3 16V9H11V6H14V9H18L21 13V16Z M3 16h18"/><circle cx="7" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/>',book:'<path d="M3 6Q8 4 12 7Q16 4 21 6V19Q16 17 12 20Q8 17 3 19Z M12 7V20"/>',dome:'<path d="M5 12a7 7 0 0 1 14 0Z M12 5V3M4 12H20M6 12v7M10 12v7M14 12v7M18 12v7M3 19.5H21"/>',olive:'<path d="M5 19Q9 9 19 5M9 14q-3 0-4-2q3-1 4 2ZM12 11q-1-3 1-5q2 2-1 5ZM14 9q2 2 5 1q-1-3-5-1Z"/>',helm:'<path d="M4 15a8 8 0 0 1 16 0Z M2.5 15.5H21.5M12 7V15"/>',brick:'<path d="M3 8H21V20H3Z M3 12H21M3 16H21M8 8V12M14 8V12M11 12V16M17 12V16M8 16V20M14 16V20"/>'};
+const CIC={flask:'<path d="M9 3h6M10 3v6L5 19a1.5 1.5 0 0 0 1.3 2h11.4a1.5 1.5 0 0 0 1.3-2L14 9V3M7.5 15h9"/>',coin:'<ellipse cx="12" cy="17" rx="7" ry="2.6"/><ellipse cx="12" cy="13.5" rx="7" ry="2.6"/><ellipse cx="12" cy="10" rx="7" ry="2.6"/><path d="M5 10v7M19 10v7"/>',bank:'<path d="M3 9L12 4L21 9Z M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3 18.5H21"/>',fac:'<path d="M3 19V10L8 13V10L13 13V5H16V19Z M16 19H21V8"/><circle cx="18.5" cy="5" r="1.4"/>',grain:'<path d="M12 21V6M12 9l-3-3M12 9l3-3M12 13l-3.5-3M12 13l3.5-3M12 17l-3.5-3M12 17l3.5-3"/>',ham:'<path d="M5 19L14 10M12 6l6 6l2-2l-6-6Z"/>',scale:'<path d="M12 4V20M6 20H18M5 7H19M5 7L2.5 13H7.5ZM19 7L16.5 13H21.5Z"/>',loco:'<path d="M3 16V9H11V6H14V9H18L21 13V16Z M3 16h18"/><circle cx="7" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/>',book:'<path d="M3 6Q8 4 12 7Q16 4 21 6V19Q16 17 12 20Q8 17 3 19Z M12 7V20"/>',dome:'<path d="M5 12a7 7 0 0 1 14 0Z M12 5V3M4 12H20M6 12v7M10 12v7M14 12v7M18 12v7M3 19.5H21"/>',olive:'<path d="M5 19Q9 9 19 5M9 14q-3 0-4-2q3-1 4 2ZM12 11q-1-3 1-5q2 2-1 5ZM14 9q2 2 5 1q-1-3-5-1Z"/>',helm:'<path d="M4 15a8 8 0 0 1 16 0Z M2.5 15.5H21.5M12 7V15"/>',brick:'<path d="M3 8H21V20H3Z M3 12H21M3 16H21M8 8V12M14 8V12M11 12V16M17 12V16M8 16V20M14 16V20"/>'};
 const CI=(c,sz=22)=>`<svg class="ci" width="${sz}" height="${sz}" viewBox="0 0 24 24">${CIC[PCAT[c]?PCAT[c][1]:c]||''}</svg>`;
 const SEAL=(t='시행')=>`<svg class="seal" viewBox="0 0 40 40"><path d="M20 2l4 3 5-1 2 4 5 2-1 5 3 4-3 4 1 5-5 2-2 4-5-1-4 3-4-3-5 1-2-4-5-2 1-5-3-4 3-4-1-5 5-2 2-4 5 1Z" fill="#8f2a17"/><circle cx="20" cy="20" r="11" fill="none" stroke="#e9b9a3" stroke-width="1"/><text x="20" y="24" text-anchor="middle">${t}</text></svg>`;
 function fxSplit(p){const up=[],dn=[];const add=(t,pre)=>fxParse(t).forEach(([k,v])=>{const s=`${pre||''}${FXN[k]||k} ${v>0?'+':'−'}${Math.abs(v)}`;(v>0?up:dn).push(s)});add(p.fx,'');if(p.lt)add(p.lt,p.la+'분기 후 ');if(p.on)add(p.on,'공포 즉시 ');
@@ -2686,6 +2727,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'cdi':V.cd.i=+v;sfx('page');ui();return;case'cdx':V.cd.open=0;sfx('page');ui();return;case'cards':V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]));sfx('page');ui();return
  case'mvok':{const uu=myUnits()[V.bt.u];if(!uu)return;sfx('march');sendO({mv:(O.mv||[]).filter(m=>m.u!=uu.id).concat({u:uu.id,r:v})});toast(`${uu.nm} → ${RG[v][0]} 이동 명령`);V.bt={u:null,t:null,st:0};ui();return}
  case'umv':{sendO({mv:(O.mv||[]).filter(m=>m.u!=v)});ui();return}
+ case'tech':{if(!tOK(S,me,v))return;sfx('page');sendO({tech:v});toast(TI_[v][3]+' 연구 지시');ui();return}
  case'supmap':V.supOn=!V.supOn;ui();requestDraw();return;
  case'endx':V.endx=1;ui();return;case'rep':repStart();return;case'endrep':V.endx=1;repStart();return;case'repx':V.rep=null;clearInterval(window.__rep);ui();requestDraw();return;case'leave':leaveRoom();return
  case'res':V.res=V.res==v?null:v;ui();return;case'resx':V.res=null;ui();return

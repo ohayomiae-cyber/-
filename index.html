@@ -640,6 +640,9 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .tc.on{background:var(--hud)!important;color:var(--brt)!important;box-shadow:inset 0 0 0 1px var(--br)}.tc.on small{color:#cbb994}.tc.on i{color:#ffd58a}
 .tc.lock{opacity:.5}
 @media (max-width:760px){.tgrid{grid-template-columns:1fr 1fr}}
+.fac{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(90,66,36,.3)}.fac>i{width:6px;align-self:stretch;border-radius:2px}.fac .g{flex:1}.fac b{font:700 14px var(--serif)}.fac small{display:block;color:#5a4630}.fac-m{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}.fac-m svg{box-shadow:0 0 0 1px rgba(0,0,0,.35)}.fac.mine{background:rgba(201,164,92,.12)}
+.pd{border:1px solid rgba(90,66,36,.45);background:rgba(255,250,235,.45);padding:8px 10px;margin:6px 0}.pd-s{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font:13px var(--serif)}.pd-s b{font:700 16px var(--serif)}
+.pd-l{font:700 12px var(--serif);color:#7a2a18;margin:8px 0 4px;letter-spacing:.06em}.pd-l small{font-weight:400;color:#5a4630}.pd-r{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.pd-r button{height:28px;font-size:12px}.pd-r button.on{background:var(--hud)!important;color:var(--brt)!important;box-shadow:inset 0 0 0 1px var(--br)}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -674,11 +677,11 @@ function newGame(mode,secs){const e=mode=='w2',Y0=e?1936:1910,T=mode=='w1'?36:mo
  const P=e?P36:P10,L=e?LORD36:LORD10,own=new Set();
  for(const r in RG){S.R[r]={o:RG[r][e?4:3],occ:null};own.add(S.R[r].o)}
  own.forEach(n=>{const p=P[n]||2;S.N[n]={g:p*30,pop:p*10+20,ind:p*8+10,sup:60,mil:p*6,mil0:p*6,st:{f:20,s:20,o:20},lord:L[n]||null,ind2:0,start:held(S,n).length}});
- (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));S.TE={};for(const n in S.N)S.TE[n]={d:tSeed(S,n),cur:null,p:0};return S}
+ (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));S.TE={};for(const n in S.N)S.TE[n]={d:tSeed(S,n),cur:null,p:0};facInit(S);return S}
 function nb(s,n){const h=held(s,n),o=new Set();if(ADJ){h.forEach(x=>(ADJ[x]||[]).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;if(d!=n)o.add(d)}}));return[...o]}for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
 function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.o;if(d==a||!alive(s,a))return;o=o||{};const adj=held(s,a).some(x=>dist(x,rid)<=1);if(!adj){if(o.op=='para'&&o.af&&paraOK(s,a,rid))o.sea=0;else{if(!o.nv||!seaOK(s,a,rid))return;o.sea=1}}else o.sea=0;
- const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
- if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));
+ if(facSame(s,a,d))return;const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
+ if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));facCall(s,a,d);
   s.TR.filter(t=>t.st=='on'&&t.ty=='ally').forEach(t=>{for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(!P_h(s,y)&&alive(s,y)&&y!=d&&!atWar(s,y,d)&&(x==a)){s.W.push(y+'|'+d);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(d,yr(s))}에 참전`)}
    for(const[x,y]of[[t.a,t.b],[t.b,t.a]])if(x==d&&!P_h(s,y)&&alive(s,y)&&y!=a&&!atWar(s,y,a)){s.W.push(y+'|'+a);s.log.push(`동맹에 따라 ${nm(y,yr(s))}도 ${nm(a,yr(s))}에 참전`)}})}
  const A=s.N[a],D=s.N[d],use=A.mil*c/100;
@@ -704,8 +707,9 @@ function aiAnswer(s,t){const n=t.b,m=t.a,N=s.N[n],M=s.N[m];let ok=false,why='';
  if(t.ty=='ally'){const c=wars(s,n).concat(wars(s,m)).some(x=>x&&(atWar(s,n,x)||atWar(s,m,x)));ok=c;why=ok?'공동의 적이 있다':'공동의 적이 없어 얻을 이익이 적다'}
  if(t.ty=='cease'){ok=atWar(s,n,m)&&(N.mil<M.mil*.8||N.sup<45);why=ok?'전쟁 피로로 휴전이 필요하다':'아직 유리해 싸울 이유가 있다'}
  if(t.ty=='ret'){ok=N.mil<M.mil*.5;why=ok?'열세라 요구를 받아들인다':'영토 반환은 받아들일 수 없다'}
- t.st=ok?'on':'x';if(ok&&(t.ty=='cease'||t.ty=='ret'))peace(s,t);s.log.push(`${nm(n,yr(s))}: ${TY[t.ty]} ${ok?'수락':'거절'} — ${why}`)}
-const TY={trade:'무역',nap:'불가침',ally:'동맹',cease:'휴전',ret:'영토 반환'};
+ if(t.ty=='peace'){const sc=warScore(s,m,n),dem=peaceDem(t);ok=atWar(s,n,m)&&(dem==0?sc>=-1.5:sc>=dem-.5);why=ok?(dem==0?'더 싸울 이유가 없다':'패전을 인정한다'):(dem==0?'아직 이기고 있다':'요구가 지나치다')}
+ t.st=ok?'on':'x';if(ok&&(t.ty=='cease'||t.ty=='ret'))peace(s,t);if(ok&&t.ty=='peace')applyPeace(s,t);s.log.push(`${nm(n,yr(s))}: ${TY[t.ty]} ${ok?'수락':'거절'} — ${why}`)}
+const TY={trade:'무역',nap:'불가침',ally:'동맹',cease:'휴전',ret:'영토 반환',peace:'강화'};
 function ai(s,n){const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=wars(s,n),sh=Object.values(N.st).some(v=>v<3);
  o.focus=sh?'ind':w.length?'def':Math.random()<.3?'res':'wel';
  w.forEach(e=>{if(!alive(s,e))return;const E=s.N[e];const tg=Object.keys(s.R).filter(r=>(s.R[r].occ||s.R[r].o)==e&&held(s,n).some(x=>dist(x,r)<=1));
@@ -732,11 +736,12 @@ function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 
   if(ty=='indep'){const N=s.N[w];if(N.lord&&s.N[N.lord].sup<60){N.lord=null;s.log.push(`${nm(w,y)} 독립: ${e[5]}`)}return}
   if(!alive(s,w)||!alive(s,tg)||pact(s,w,tg,'nap')||atWar(s,w,tg)||(S&&0))return;
   const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==tg&&held(s,w).some(x=>dist(x,r)<=1));if(r){oo[w].atk.push({r,c:70});s.log.push(`역사 이벤트: ${e[5]} (${why})`)}});
+ facStep(s,oo);
  // 조약 처리
- for(const n in ords){(ords[n].sign||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t){t.st='on';if(t.ty=='cease'||t.ty=='ret')peace(s,t);s.log.push(`${nm(n,y)}이(가) ${TY[t.ty]} 서명 — 발효`)}});
+ for(const n in ords){(ords[n].sign||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t){if(t.ty=='peace'&&!atWar(s,t.a,t.b)){t.st='x';return}t.st='on';if(t.ty=='cease'||t.ty=='ret')peace(s,t);else if(t.ty=='peace')applyPeace(s,t);s.log.push(`${nm(n,y)}이(가) ${TY[t.ty]} 서명 — 발효`)}});
   (ords[n].rej||[]).forEach(id=>{const t=s.TR.find(t=>t.id==id&&t.st=='p'&&t.b==n);if(t)t.st='x'})}
  s.TR.forEach(t=>{if(t.st=='p'&&t.t0!=null&&s.t-t.t0>=2)t.st='x'});const RCV={};s.TR.forEach(t=>{if(t.st=='p'&&t.t0==s.t)RCV[t.b]=(RCV[t.b]||0)+1});
- ns.forEach(n=>(oo[n].props||[]).forEach(p=>{if(!alive(s,p.to)||s.TR.some(t=>t.st=='p'&&t.a==n&&t.b==p.to&&t.ty==p.ty))return;if((RCV[p.to]||0)>=10)return;RCV[p.to]=(RCV[p.to]||0)+1;const t={id:'t'+s.t+n+p.to+p.ty,ty:p.ty,a:n,b:p.to,st:'p',t0:s.t};s.TR.push(t);if(!P_h(s,p.to))aiAnswer(s,t)}));
+ ns.forEach(n=>(oo[n].props||[]).forEach(p=>{if(!alive(s,p.to)||s.TR.some(t=>t.st=='p'&&t.a==n&&t.b==p.to&&t.ty==p.ty))return;if((RCV[p.to]||0)>=10)return;RCV[p.to]=(RCV[p.to]||0)+1;const t={id:'t'+s.t+n+p.to+p.ty,ty:p.ty,a:n,b:p.to,st:'p',t0:s.t};if(p.ty=='peace'){if(!atWar(s,n,p.to))return;t.take=(p.take||[]).filter(r=>s.R[r]&&s.R[r].o==p.to&&s.R[r].occ==n);t.pay=+p.pay||0;t.pup=p.pup?1:0}s.TR.push(t);if(!P_h(s,p.to))aiAnswer(s,t)}));
  // 전쟁
  mvStep(s,oo); // 부대 이동은 전투보다 먼저
  ns.forEach(n=>{if(oo[n].ult)ultFire(s,n)}); // 결전 카드는 전투보다 먼저
@@ -1676,6 +1681,36 @@ function techDoc(me){const s=S,T=(s.TE||{})[me]||{d:tSeed(s,me),cur:null,p:0},y=
  return{t:'연구 — 기술 도면',b:`<div class="kv"><div><small>연구력</small><b>${tRate(s,me)}</b><small>분기마다</small></div><div><small>쌓인 연구</small><b>${T.p}</b></div><div><small>완료</small><b>${Object.keys(T.d).length} / ${TECHS.length}</b></div></div>
  <div class="sec"><span>진행 중</span></div>${cur?`<div class="ln"><div class="g">${esc(cur[3])}<small>${esc(cur[5])} · 비용 ${tCost(s,pend)}${y<cur[4]?' (시대를 앞선 연구 +50%)':''}</small><div class="bar2"><i style="width:${Math.min(100,T.p/tCost(s,pend)*100).toFixed(0)}%"></i></div></div><div class="v">${Math.max(0,Math.ceil((tCost(s,pend)-T.p)/Math.max(1,tRate(s,me))))}분기</div></div>`:'<div class="note" style="margin:0;color:var(--ox)">연구 과제가 없다. 아래 도면에서 하나를 고르시오. (쌓인 연구는 최대 60까지만 보관된다)</div>'}
  <div class="tgrid">${Object.entries(TBR).map(([br,[bn]])=>`<div class="tcol"><div class="tbr">${bn}</div>${TECHS.filter(t=>t[1]==br).map(t=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4];return`<button class="tc${done?' done':on?' on':ok?'':' lock'}" ${done||!ok?'disabled':''} data-act="tech:${t[0]}"><b>${esc(t[3])}</b><small>${esc(t[5])}</small><i>${done?'완료':`${t[4]}년${early&&ok?' · 앞선 연구':''} · ${tCost(s,t[0])}`}</i></button>`}).join('')}</div>`).join('')}</div>`}}
+// ════════ 진영 ════════
+const FAC36={ax:['추축국','GER',['GER'],'#3b3b3b'],al:['연합국','UK',['UK','FRA'],'#24476b'],co:['코민테른','RUS',['RUS','Z133'],'#8f2a17']};
+const FAC10={en:['협상국','UK',['UK','FRA','RUS'],'#24476b'],cp:['동맹국','GER',['GER','DAN','ITA'],'#3b3b3b']};
+const FJOIN36=[[1936,4,'ITA','ax','로마-베를린 추축'],[1939,2,'Z158','al','영국·프랑스의 폴란드 독립 보장'],[1940,3,'JPN','ax','삼국 동맹 조약'],[1940,4,'Z92','ax','헝가리, 삼국 동맹 가입'],[1940,4,'Z166','ax','루마니아, 삼국 동맹 가입'],[1941,1,'Z24','ax','불가리아, 삼국 동맹 가입'],[1941,2,'Z68','ax','핀란드, 계속 전쟁에 나서다'],[1941,4,'USA','al','진주만 이후 미국 참전'],[1941,4,'CHN','al','중국, 연합국 합류']];
+const FJOIN10=[[1914,3,'Z4','en','사라예보 이후 세르비아 보호'],[1914,3,'JPN','en','영일 동맹에 따라 일본 참전'],[1914,4,'OTT','cp','오스만, 동맹국 가담'],[1915,2,'ITA','en','런던 밀약 — 이탈리아, 편을 바꾸다'],[1915,4,'Z24','cp','불가리아, 동맹국 가담'],[1916,3,'Z166','en','루마니아, 협상국 가담'],[1917,2,'USA','en','치머만 전보 이후 미국 참전'],[1917,3,'Z82','en','그리스, 협상국 가담']];
+function facInit(S){const F=S.Y0>=1936?FAC36:FAC10;S.FAC={};for(const k in F){const[n,lead,mem,c]=F[k];S.FAC[k]={n,lead,mem:mem.filter(x=>S.N[x]),c}}}
+const facOf=(s,n)=>{for(const k in s.FAC||{})if((s.FAC[k].mem||[]).includes(n))return k;return null};
+function facLeave(s,n){const k=facOf(s,n);if(!k)return;const F=s.FAC[k];F.mem=F.mem.filter(x=>x!=n);if(F.lead==n)F.lead=F.mem[0]||null;if(!F.mem.length)delete s.FAC[k]}
+function facJoin(s,n,k,why){if(!s.FAC[k]||facOf(s,n)==k)return;if(F_war(s,n,k))return;facLeave(s,n);s.FAC[k].mem.push(n);s.log.push(`${nm(n,yr(s))}, ${s.FAC[k].n} 가입${why?' — '+why:''}`)}
+const F_war=(s,n,k)=>(s.FAC[k].mem||[]).some(x=>atWar(s,n,x));
+// 공격받은 진영의 회원국은 자동 참전, 진영 지도국이 공격하면 회원국도 따라간다
+function facCall(s,a,d){const y=yr(s),add=(x,e)=>{if(x==e||!alive(s,x)||atWar(s,x,e)||facSame(s,x,e))return;s.W.push(x+'|'+e);s.log.push(`진영 의무에 따라 ${nm(x,y)}도 ${nm(e,y)}에 참전`)};
+ const fd=facOf(s,d);if(fd)s.FAC[fd].mem.forEach(x=>{if(x!=d)add(x,a)});const fa=facOf(s,a);if(fa&&s.FAC[fa].lead==a)s.FAC[fa].mem.forEach(x=>{if(x!=a)add(x,d)})}
+function facStep(s,oo){if(!s.FAC)facInit(s);const y=yr(s),q=qt(s);
+ for(const k in s.FAC){const F=s.FAC[k];F.mem=F.mem.filter(x=>alive(s,x));if(!F.mem.includes(F.lead))F.lead=F.mem[0]||null;if(!F.mem.length)delete s.FAC[k]}
+ (s.Y0>=1936?FJOIN36:FJOIN10).forEach(([yy,qq,n,k,why])=>{if(yy==y&&qq==q&&s.N[n]&&alive(s,n)&&!P_h(s,n)&&s.FAC[k])facJoin(s,n,k,why)});
+ Object.keys(oo).forEach(n=>{const o=oo[n];if(o.fleave){facLeave(s,n);s.N[n].sup-=3;s.log.push(`${nm(n,y)}, 진영 탈퇴`)}if(o.fjoin&&s.FAC[o.fjoin]){if(F_war(s,n,o.fjoin))s.log.push(`${s.FAC[o.fjoin].n}: ${nm(n,y)}의 가입 거절 — 회원국과 교전 중`);else facJoin(s,n,o.fjoin,'가입 신청 승인')}
+  if(o.fnew&&!facOf(s,n)){const k='f'+n;s.FAC[k]={n:nm(n,y)+' 블록',lead:n,mem:[n],c:NM[n][1]};s.log.push(`${nm(n,y)}, 새 진영 「${s.FAC[k].n}」 창설`)}})}
+// ════════ 강화 조약 ════════
+function warScore(s,a,b){const oa=Object.keys(s.R).filter(r=>s.R[r].o==b&&s.R[r].occ==a).length,ob=Object.keys(s.R).filter(r=>s.R[r].o==a&&s.R[r].occ==b).length,A=s.N[a],B=s.N[b];
+ return +(oa-ob+clamp((A.mil/Math.max(1,B.mil)-1)*2.5,-4,4)+(B.sup<40?1.5:0)-(A.sup<40?1.5:0)).toFixed(1)}
+const peaceDem=t=>(t.take||[]).length+(t.pay||0)/40+(t.pup?4:0);
+function applyPeace(s,t){const{a,b}=t,y=yr(s);(t.take||[]).forEach(r=>{const R=s.R[r];if(R&&R.o==b&&R.occ==a){R.o=a;R.occ=null}});
+ for(const r in s.R){const R=s.R[r];if(R.occ&&[a,b].includes(R.occ)&&[a,b].includes(R.o))R.occ=null;if(s.FR&&s.FR[r]&&[a,b].includes(s.FR[r].a)&&[a,b].includes(s.FR[r].d))delete s.FR[r]}
+ if(t.pay){const payer=t.pay>0?b:a,rec=payer==a?b:a,amt=Math.min(Math.abs(t.pay),Math.max(0,s.N[payer].g));s.N[payer].g-=amt;s.N[rec].g+=amt}
+ if(t.pup&&s.N[b]){s.N[b].lord=a;facLeave(s,b)}
+ s.W=s.W.filter(w=>w!=a+'|'+b&&w!=b+'|'+a);s.log.push(`${nm(a,y)}–${nm(b,y)} 강화 조약 체결${(t.take||[]).length?` · ${t.take.length}개 지역 할양`:''}${t.pay?` · 배상금 ${Math.abs(t.pay)}`:''}${t.pup?` · ${nm(b,y)} 괴뢰국화`:''}`)}
+function peaceClauses(t,y){const L=[`${nm(t.a,y)}와 ${nm(t.b,y)}는 이 조약의 서명과 함께 모든 적대 행위를 멈춘다.`];
+ if((t.take||[]).length)L.push(`${nm(t.b,y)}는 다음 지역을 ${nm(t.a,y)}에 영구히 할양한다: ${t.take.map(r=>RG[r]?RG[r][0]:r).join(', ')}.`);else L.push('양국이 점령한 지역은 모두 원래 주인에게 돌아간다.');
+ if(t.pay)L.push(`${nm(t.pay>0?t.b:t.a,y)}는 배상금 ${Math.abs(t.pay)}을 지급한다.`);if(t.pup)L.push(`${nm(t.b,y)} 정부는 ${nm(t.a,y)}의 보호를 받으며 외교와 군사를 그에 따른다.`);L.push('그 밖의 점령지는 이 조약 발효와 함께 반환한다.');return L}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2473,13 +2508,24 @@ function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목
  ${(S.BT||[]).some(b=>b.a==me||b.d==me)?'<div class="cmds"><button data-act="brreplay">지난 분기 전투 보고 다시 보기</button></div>':''}
  <div class="sec"><span>전선</span><span>${W.map(x=>esc(nm(x,y))).join(' · ')||'평시'}</span></div>${frontsDoc(me)}<div class="sec"><span>군사 정책</span></div>${pols(N,'mil',PM,true)}`}}
 const CL={trade:['양국 상선은 상대국 항구에 자유로이 입항한다.','관세는 현행 세율의 절반으로 낮춘다.','전략 물자는 별도 목록으로 정한다.'],nap:['양국은 상대국을 무력으로 공격하지 않는다.','제3국이 공격할 때 그 국가를 돕지 않는다.','유효 기간은 10년으로 한다.'],ally:['한쪽이 공격받으면 다른 쪽은 즉시 참전한다.','양국 참모 본부는 정기 협의를 연다.','단독 강화를 맺지 않는다.'],cease:['조약 발효와 함께 모든 전선에서 사격을 멈춘다.','현재 점령선을 경계로 인정한다.','포로는 석 달 안에 교환한다.'],ret:['점령 지역을 원 소유국에 반환한다.','반환은 다음 분기 안에 마친다.','주민 재산은 보전한다.']};
-function treatyDoc(t,y,mode){const k=t.id,open=V.open[k]||mode=='draft',cl=CL[t.ty]||[],mod=(k.length+(t.a||'').length)%cl.length;
+function treatyDoc(t,y,mode){const k=t.id,open=V.open[k]||mode=='draft',cl=t.ty=='peace'?peaceClauses(t,y):(CL[t.ty]||[]),mod=(k.length+(t.a||'').length)%cl.length;
  return`<div class="treaty"><button data-act="open:${k}"><h6>${esc(nm(t.a,y))}–${esc(nm(t.b,y))} ${TY[t.ty]} 조약${mode=='draft'?' (초안)':' (안)'}</h6><small>${mode=='in'?`${esc(nm(t.a,y))} 외무부 송부 · 수정 조항 1건 · ${open?'접기':'눌러서 펼치기'}`:mode=='draft'?'발송 전 검토':'체결됨'}</small></button>
  ${open?`<ol>${cl.map((c,i)=>`<li class="${mode=='in'&&i==mod?'mod':''}">${esc(c)}</li>`).join('')}</ol>${mode=='in'?`<div class="rowf">${(O.sign||[]).includes(k)?'<span class="tag ok">서명함 · 턴 처리 시 발효</span>':(O.rej||[]).includes(k)?'<span class="tag bad">거절함</span>':`<button data-act="rej:${k}">거절</button><button class="pri" data-act="sign:${k}">서명</button>`}</div>`:''}`:''}</div>`}
+function facBlock(me){const y=yr(S),F=S.FAC||{},my=facOf(S,me);
+ return`<div class="sec"><span>진영</span><span>${my?esc(F[my].n)+' 소속':'무소속'}</span></div>${Object.entries(F).map(([k,f])=>`<div class="fac${my==k?' mine':''}"><i style="background:${f.c}"></i><div class="g"><b>${esc(f.n)}</b><small>지도국 ${esc(nm(f.lead,y))} · ${f.mem.length}개국</small><div class="fac-m">${f.mem.map(x=>flag(x,22,15)).join('')}</div></div>
+  ${my==k?(O.fleave?'<span class="tag bad">탈퇴 예정</span>':`<button data-act="fleave">탈퇴</button>`):!my?(O.fjoin==k?'<span class="tag ok">가입 신청함</span>':`<button data-act="fjoin:${k}">가입 신청</button>`):''}</div>`).join('')}
+ ${!my?(O.fnew?'<div class="note">분기 마감 때 새 진영을 만든다.</div>':`<div class="cmds"><button data-act="fnew">새 진영 창설</button></div>`):''}
+ <div class="note" style="margin:4px 0 0">회원국이 공격받으면 모두 참전한다. 지도국이 전쟁을 시작하면 회원국도 따라간다. 회원국끼리는 싸울 수 없고 보급선을 함께 쓴다.</div>`}
+function peaceDraft(me,to){const y=yr(S);if(!atWar(S,me,to))return'<div class="note" style="color:var(--ox)">강화 조약은 교전 중인 상대에게만 보낼 수 있다.</div>';
+ const occ=Object.keys(S.R).filter(r=>S.R[r].o==to&&S.R[r].occ==me),pk=(V.pk||[]).filter(r=>occ.includes(r)),t={a:me,b:to,take:pk,pay:V.ppay||0,pup:V.ppup?1:0},sc=warScore(S,me,to),dem=peaceDem(t),ok=dem==0?sc>=-1.5:sc>=dem-.5;
+ return`<div class="pd"><div class="pd-s"><span>전황 점수</span><b style="color:${sc>=0?'#2f6b25':'var(--ox)'}">${sc>0?'+':''}${sc}</b><span>요구 무게</span><b>${dem.toFixed(1)}</b><span class="tag ${ok?'ok':'bad'}">${P_h(S,to)?'상대가 직접 결정':ok?'수락 가능성 높음':'거절될 가능성 높음'}</span></div>
+ <div class="pd-l">점령지 할양 <small>(내가 점령한 상대 지역)</small></div>${occ.length?`<div class="pd-r">${occ.map(r=>`<button class="${pk.includes(r)?'on':''}" data-act="pk:${r}">${esc(RG[r][0])}</button>`).join('')}</div>`:'<div class="note" style="margin:0">점령한 지역이 없다.</div>'}
+ <div class="pd-l">배상금</div><div class="pd-r">${[[-50,'우리가 50 지급'],[0,'없음'],[50,'50 받기'],[100,'100 받기']].map(([v,l])=>`<button class="${(V.ppay||0)==v?'on':''}" data-act="ppay:${v}">${l}</button>`).join('')}</div>
+ <div class="pd-r"><button class="${V.ppup?'on':''}" data-act="ppup">${esc(nm(to,y))}를 괴뢰국으로 (무게 4)</button></div></div>`}
 function dipDoc(me){const y=yr(S),pend=S.TR.filter(t=>t.st=='p'&&t.b==me),act=S.TR.filter(t=>t.st=='on'&&(t.a==me||t.b==me)),sent=S.TR.filter(t=>t.st=='p'&&t.a==me),to=V.dto&&S.N[V.dto]&&V.dto!=me?V.dto:null;
- return{t:'외교 — 조약 문서',b:`<div class="cmds" style="margin:0 0 8px"><button data-act="book:dip">외교 정책</button></div><div class="sec"><span>도착한 조약안</span><span>${pend.length}건</span></div>${pend.map(t=>treatyDoc(t,y,'in')).join('')||'<div class="note" style="margin:0">도착한 조약안 없음.</div>'}
+ return{t:'외교 — 조약 문서',b:`<div class="cmds" style="margin:0 0 8px"><button data-act="book:dip">외교 정책</button></div>${facBlock(me)}<div class="sec"><span>도착한 조약안</span><span>${pend.length}건</span></div>${pend.map(t=>treatyDoc(t,y,'in')).join('')||'<div class="note" style="margin:0">도착한 조약안 없음.</div>'}
  <div class="sec"><span>새 조약 초안</span></div><div class="note" style="margin:0 0 6px">지도에서 나라를 누르거나 목록에서 고른다.</div><div class="rowf"><select data-in="dto" style="flex:1"><option value="">상대국 선택</option>${Object.keys(S.N).filter(x=>x!=me&&alive(S,x)).sort((a,b)=>nm(a,y).localeCompare(nm(b,y))).map(x=>`<option value="${x}" ${x==to?'selected':''}>${esc(nm(x,y))}</option>`).join('')}</select></div>
- <div class="cmds">${Object.entries(TY).map(([k,v])=>`<button class="${V.dty==k?'on':''}" data-act="dty:${k}">${v}</button>`).join('')}</div>${to?treatyDoc({id:'draft',ty:V.dty,a:me,b:to},y,'draft')+`<div class="rowf" style="justify-content:flex-end"><button class="pri" data-act="prop:${to}:${V.dty}">초안 발송</button></div>`:''}
+ <div class="cmds">${Object.entries(TY).map(([k,v])=>`<button class="${V.dty==k?'on':''}" data-act="dty:${k}">${v}</button>`).join('')}</div>${to&&V.dty=='peace'?peaceDraft(me,to):''}${to?treatyDoc(Object.assign({id:'draft',ty:V.dty,a:me,b:to},V.dty=='peace'?{take:(V.pk||[]).filter(r=>S.R[r]&&S.R[r].o==to&&S.R[r].occ==me),pay:V.ppay||0,pup:V.ppup?1:0}:{}),y,'draft')+`<div class="rowf" style="justify-content:flex-end"><button class="pri" data-act="prop:${to}:${V.dty}">초안 발송</button></div>`:''}
  ${(O.props||[]).length?`<div class="sec"><span>이번 분기 발송</span></div>${O.props.map(p=>`<div class="ln"><div class="g">${esc(nm(p.to,y))} · ${TY[p.ty]}<small>분기 마감 때 전달</small></div></div>`).join('')}`:''}
  ${sent.length?`<div class="sec"><span>회신 대기</span></div>${sent.map(t=>`<div class="ln"><div class="g">${esc(nm(t.b,y))} · ${TY[t.ty]}</div></div>`).join('')}`:''}
  <div class="sec"><span>체결된 조약</span></div>${act.map(t=>`<div class="ln"><div class="g">${TY[t.ty]}<small>${esc(nm(t.a==me?t.b:t.a,y))}</small></div></div>`).join('')||'<div class="note" style="margin:0">없음</div>'}`}}
@@ -2704,7 +2750,9 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'sign':sendO({sign:(O.sign||[]).concat(v)});ui();return;case'rej':sendO({rej:(O.rej||[]).concat(v)});ui();return
  case'open':V.open[v]=!V.open[v];ui();return
  case'dipto':V.tab='dip';V.dto=v;V.docOn=1;ui();return;case'dty':V.dty=v;ui();return
- case'prop':{const[to,ty]=v.split(':');if((O.props||[]).some(p=>p.to==to&&p.ty==ty))return;sendO({props:(O.props||[]).concat({to,ty})});if(el){el.textContent='제안 발송됨';el.disabled=true}setTimeout(ui,500);return}
+ case'pk':{const L=V.pk||[];V.pk=L.includes(v)?L.filter(x=>x!=v):L.concat(v);ui();return}case'ppay':V.ppay=+v;ui();return;case'ppup':V.ppup=!V.ppup;ui();return
+ case'fjoin':sendO({fjoin:O.fjoin==v?null:v});ui();return;case'fleave':sendO({fleave:O.fleave?0:1});ui();return;case'fnew':sendO({fnew:O.fnew?0:1});ui();return
+ case'prop':{const[to,ty]=v.split(':');if((O.props||[]).some(p=>p.to==to&&p.ty==ty))return;if(ty=='peace'&&!atWar(S,me,to)){toast('교전 중인 상대에게만 강화를 제안할 수 있다');return}const pp={to,ty};if(ty=='peace')Object.assign(pp,{take:(V.pk||[]).filter(r=>S.R[r]&&S.R[r].o==to&&S.R[r].occ==me),pay:V.ppay||0,pup:V.ppup?1:0});sendO({props:(O.props||[]).concat(pp)});if(el){el.textContent='제안 발송됨';el.disabled=true}setTimeout(ui,500);return}
  case'unit':{if(V.tab!='mil'){V.tab='mil';V.docOn=1}const uu=myUnits()[+v];if(uu&&uu.b!='a'){if(V.bt.t&&V.bt.mode!='msn'){V.bt[uu.b=='n'?'nv':'af']=V.bt[uu.b=='n'?'nv':'af']==uu.id?null:uu.id;ui();return}if(!wars(S,me).length){toast((uu.b=='n'?'해군':'공군')+' 단독 임무는 교전국을 상대로만 가능하다. 육군 작전에 호위·지원으로 붙일 수는 있다.');return}V.bt={u:V.bt.u==+v?null:+v,t:null,st:V.bt.u==+v?0:1,mode:'msn',mt:null};toast(uu.b=='n'?'봉쇄·잠수함전을 펼칠 적 해안 지역을 고르시오.':'폭격할 적 지역을 고르시오.');ui();return}V.bt={u:V.bt.u==+v?null:+v,t:null,st:V.bt.u==+v?0:1,nv:null,af:null,op:'full'};ui();return}
  case'tgt':{V.bt.t=v;V.bt.st=2;if(V.bt.mode=='mv')V.bt.mode=null;if(V.bt.mode!='msn'){const land=validTgt(me).includes(v);if(!land&&!seaOK(S,me,v)&&paraOK(S,me,v))V.bt.op='para';else if(V.bt.op=='para'&&land)V.bt.op='full'}ui();return}
  case'op':V.bt.op=v;ui();return;case'ar':V.bt.ar=V.bt.ar==v?null:v;ui();return;case'mt':V.bt.mt=v;ui();return

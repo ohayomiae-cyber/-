@@ -1683,16 +1683,19 @@ const TI_={};TECHS.forEach(t=>TI_[t[0]]=t);
 const TCOST=[0,30,50,75,100];
 const tHas=(s,n,id)=>{const T=(s.TE||{})[n];return !!(T?T.d:(s.N&&s.N[n]?tSeed(s,n):{}))[id]};
 const tCnt=(s,n,br)=>TECHS.filter(t=>t[1]==br&&tHas(s,n,t[0])).length;
-function tCost(s,id){const t=TI_[id];return Math.round(TCOST[t[2]]*(yr(s)<t[4]?1.5:1))}
+const TMAJ=['UK','GER','FRA','USA','JPN','ITA','RUS'];
+// 기술 확산: 강대국 다수가 이미 가진 기술은 뒤따르는 나라에 싸진다 (최대 40%)
+function tSpread(s,id,n){const M=TMAJ.filter(m=>s.N[m]&&m!=n&&alive(s,m));if(!M.length)return 0;return M.filter(m=>tHas(s,m,id)).length/M.length}
+function tCost(s,id,n){const t=TI_[id];return Math.round(TCOST[t[2]]*(yr(s)<t[4]?1.5:1)*(n?1-.4*tSpread(s,id,n):1))}
 function tOK(s,n,id){const t=TI_[id];if(!t||tHas(s,n,id))return false;return t[2]==1||tHas(s,n,t[1]+(t[2]-1))}
-const tRate=(s,n)=>{const N=s.N[n];return N?+(4+N.ind*.12).toFixed(1):0};
+const tRate=(s,n)=>{const N=s.N[n];return N?+(3+1.5*Math.sqrt(Math.max(0,N.ind))).toFixed(1):0};
 // 시작 시점에 이미 갖춘 기술 (연도와 나라 산업 수준에 따라)
 function tSeed(s,n){const y=s.Y0,N=s.N[n],d={};TECHS.forEach(t=>{if(t[4]<=y-2&&(t[2]<=2||N.ind>40)&&(t[2]==1||d[t[1]+(t[2]-1)]))d[t[0]]=1});return d}
 const TAIP={GER:['ar','air','inf','ind'],UK:['nav','air','ind','inf'],USA:['ind','air','nav','ar'],JPN:['nav','air','inf','ind'],RUS:['ar','inf','ind','air'],FRA:['inf','ar','air','ind'],ITA:['nav','air','inf','ar'],CHN:['inf','ind','air','ar']};
 function techStep(s,oo){s.TE=s.TE||{};Object.keys(s.N).forEach(n=>{if(!alive(s,n))return;const T=s.TE[n]=s.TE[n]||{d:tSeed(s,n),cur:null,p:0},o=oo[n]||{};
  if(o.tech&&tOK(s,n,o.tech))T.cur=o.tech;
  if(!T.cur&&!P_h(s,n)){const pr=TAIP[NID(n)]||['inf','ind','ar','air','nav'];for(const br of pr){const c=TECHS.filter(t=>t[1]==br&&tOK(s,n,t[0])).sort((a,b)=>a[2]-b[2])[0];if(c&&yr(s)>=c[4]-1){T.cur=c[0];break}}}
- T.p=+(T.p+tRate(s,n)).toFixed(1);if(T.cur&&T.p>=tCost(s,T.cur)){T.p=+(T.p-tCost(s,T.cur)).toFixed(1);T.d[T.cur]=1;if(PF[PID(n)]||P_h(s,n))s.log.push(`${nm(n,yr(s))}, ${TI_[T.cur][3]} 연구 완료`);T.cur=null}
+ T.p=+(T.p+tRate(s,n)).toFixed(1);if(T.cur&&T.p>=tCost(s,T.cur,n)){T.p=+(T.p-tCost(s,T.cur,n)).toFixed(1);T.d[T.cur]=1;if(PF[PID(n)]||P_h(s,n))s.log.push(`${nm(n,yr(s))}, ${TI_[T.cur][3]} 연구 완료`);T.cur=null}
  if(!T.cur)T.p=Math.min(T.p,60);
  const N=s.N[n];if(T.d.ind1)N.ind+=.25;if(T.d.ind4)N.ind+=.35;if(T.d.ind2)N.st.o+=2;if(T.d.ind3)N.mil*=1.01})}
 // 사단 능력치 보정
@@ -1701,8 +1704,8 @@ function techDiv(s,n,D){const h=id=>tHas(s,n,id);if(h('inf1'))D.sa+=2;if(h('inf2
 const tAir=(s,n)=>1+.15*tCnt(s,n,'air'),tNav=(s,n)=>1+.15*TECHS.filter(t=>t[1]=='nav'&&t[2]<4&&tHas(s,n,t[0])).length;
 function techDoc(me){const s=S,T=(s.TE||{})[me]||{d:tSeed(s,me),cur:null,p:0},y=yr(s),pend=O.tech&&tOK(s,me,O.tech)?O.tech:T.cur,cur=pend&&TI_[pend];
  return{t:'연구 — 기술 도면',b:`<div class="kv"><div><small>연구력</small><b>${tRate(s,me)}</b><small>분기마다</small></div><div><small>쌓인 연구</small><b>${T.p}</b></div><div><small>완료</small><b>${Object.keys(T.d).length} / ${TECHS.length}</b></div></div>
- <div class="sec"><span>진행 중</span></div>${cur?`<div class="ln"><div class="g">${esc(cur[3])}<small>${esc(cur[5])} · 비용 ${tCost(s,pend)}${y<cur[4]?' (시대를 앞선 연구 +50%)':''}</small><div class="bar2"><i style="width:${Math.min(100,T.p/tCost(s,pend)*100).toFixed(0)}%"></i></div></div><div class="v">${Math.max(0,Math.ceil((tCost(s,pend)-T.p)/Math.max(1,tRate(s,me))))}분기</div></div>`:'<div class="note" style="margin:0;color:var(--ox)">연구 과제가 없다. 아래 도면에서 하나를 고르시오. (쌓인 연구는 최대 60까지만 보관된다)</div>'}
- <div class="tgrid">${Object.entries(TBR).map(([br,[bn]])=>`<div class="tcol"><div class="tbr">${bn}</div>${TECHS.filter(t=>t[1]==br).map(t=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4];return`<button class="tc${done?' done':on?' on':ok?'':' lock'}" ${done||!ok?'disabled':''} data-act="tech:${t[0]}"><b>${esc(t[3])}</b><small>${esc(t[5])}</small><i>${done?'완료':`${t[4]}년${early&&ok?' · 앞선 연구':''} · ${tCost(s,t[0])}`}</i></button>`}).join('')}</div>`).join('')}</div>`}}
+ <div class="sec"><span>진행 중</span></div>${cur?`<div class="ln"><div class="g">${esc(cur[3])}<small>${esc(cur[5])} · 비용 ${tCost(s,pend,me)}${y<cur[4]?' (시대를 앞선 연구 +50%)':''}</small><div class="bar2"><i style="width:${Math.min(100,T.p/tCost(s,pend,me)*100).toFixed(0)}%"></i></div></div><div class="v">${Math.max(0,Math.ceil((tCost(s,pend,me)-T.p)/Math.max(1,tRate(s,me))))}분기</div></div>`:'<div class="note" style="margin:0;color:var(--ox)">연구 과제가 없다. 아래 도면에서 하나를 고르시오. (쌓인 연구는 최대 60까지만 보관된다)</div>'}
+ <div class="tgrid">${Object.entries(TBR).map(([br,[bn]])=>`<div class="tcol"><div class="tbr">${bn}</div>${TECHS.filter(t=>t[1]==br).map(t=>{const done=tHas(s,me,t[0]),ok=tOK(s,me,t[0]),on=pend==t[0],early=y<t[4];return`<button class="tc${done?' done':on?' on':ok?'':' lock'}" ${done||!ok?'disabled':''} data-act="tech:${t[0]}"><b>${esc(t[3])}</b><small>${esc(t[5])}</small><i>${done?'완료':`${t[4]}년${early&&ok?' · 앞선 연구':''} · ${tCost(s,t[0],me)}${tSpread(s,t[0],me)>0&&!done?' · 확산':''}`}</i></button>`}).join('')}</div>`).join('')}</div>`}}
 // ════════ 진영 ════════
 const FAC36={ax:['추축국','GER',['GER'],'#3b3b3b'],al:['연합국','UK',['UK','FRA'],'#24476b'],co:['코민테른','RUS',['RUS','Z133'],'#8f2a17']};
 const FAC10={en:['협상국','UK',['UK','FRA','RUS'],'#24476b'],cp:['동맹국','GER',['GER','DAN','ITA'],'#3b3b3b']};

@@ -1504,52 +1504,52 @@ function entStep(s){s.ENT=s.ENT||{};const hit=new Set((s.BT||[]).filter(b=>!b.ms
 // 약소국일수록 기본값이 크고, 발동 순간 열세(적 군사력 ÷ 아군)가 클수록 더 세진다.
 const ULTS={
  UK:['그들의 가장 빛나는 시간','1940년 처칠: "우리는 해안에서 싸울 것이며, 결코 항복하지 않을 것이다."',2,{d:1.5,c:'home',ds:1.8,sup:15,mil:.15,eo:.15}],
- GER:['낫질 작전','1940년 5월, 기갑부대가 "통과할 수 없다"던 아르덴 숲을 뚫었다.',1,{a:1.45,eo:.2,mil:.1}],
- FRA:['마른의 기적','1914년 9월, 파리의 택시 600대가 증원군을 전선으로 실어 날랐다.',1,{fr:50,a:1.4,d:1.35,eo:.25,mil:.1}],
+ GER:['다시 독일을 위대하게','1930년대 나치 정권은 베르사유 체제를 뒤엎고 "위대한 독일"을 되찾겠다고 선전했다. 1940년 5월, 기갑부대가 아르덴 숲을 뚫었다.',1,{a:1.45,eo:.2,mil:.1}],
+ FRA:['상황은 훌륭하다, 공격한다','1914년 마른 전투의 포슈: "중앙은 무너지고 오른쪽은 물러서고 있다. 상황은 훌륭하다. 나는 공격한다."',1,{fr:50,a:1.4,d:1.35,eo:.25,mil:.1}],
  USA:['민주주의의 병기창','1940년 루스벨트: "우리는 민주주의의 거대한 병기창이 되어야 한다."',2,{mil:.35,g:100,st:{s:25,o:25},a:1.2}],
- JPN:['진주만 기습','1941년 12월 7일 새벽, 선전포고보다 먼저 폭탄이 떨어졌다.',1,{a:1.45,eMil:.08,eo:.2,ds:1.4}],
- ITA:['피아베 강 방어선','1917년 카포레토에서 무너진 군대가 피아베 강에서 버텨 냈다.',2,{d:1.6,c:'rough',fr:30,a:1.25,eo:.15}],
- RUS:['동장군과 초토화','1812년에도 1941년에도, 물러나며 모든 것을 불태웠고 겨울이 적을 멈췄다.',2,{d:1.6,fr:40,eSup:8,eMil:.06,eo:.25,mil:.15}],
- CHN:['지구전','1938년 타이얼좡. "중국의 땅은 넓고, 시간은 우리 편이다."',2,{mil:.35,d:1.45,fr:35,eo:.25}],
- KOR:['독립군 총궐기','1920년 봉오동과 청산리. 쫓기던 독립군이 매복으로 정규군을 무너뜨렸다.',1,{rec:2,a:1.5,eMil:.08,eSup:10,sup:20,indep:1,eo:.3}],
- FIN:['모티 전술','1939년 겨울전쟁. 스키 부대가 숲길의 적 종대를 토막 내 하나씩 포위했다.',2,{d:1.8,a:1.5,c:'cold',fr:40,eo:.25}],
- POL:['비스와의 기적','1920년 8월, 바르샤바 문턱까지 밀린 폴란드군이 측면 반격으로 전세를 뒤집었다.',1,{fr:60,a:1.6,d:1.5,eo:.35,rec:1}],
+ JPN:['도라 도라 도라','1941년 12월 7일 새벽, 진주만 기습이 성공했다는 암호가 전해졌다.',1,{a:1.45,eMil:.08,eo:.2,ds:1.4}],
+ ITA:['피아베 강이 속삭였다','1917년 카포레토에서 무너진 군대가 피아베 강에서 버텨 냈다. "피아베 강은 속삭였다, 적은 지나가지 못하리라."',2,{d:1.6,c:'rough',fr:30,a:1.25,eo:.15}],
+ RUS:['물러설 곳은 없다, 뒤는 모스크바다','1941년 모스크바 앞 클로치코프 정치지도원: "러시아는 넓지만 물러설 곳은 없다. 뒤는 모스크바다."',2,{d:1.6,fr:40,eSup:8,eMil:.06,eo:.25,mil:.15}],
+ CHN:['땅에 남북이 없고, 사람에 노소가 없다','1937년 루산 담화: 땅이 남이든 북이든, 사람이 늙었든 젊었든 모두가 항전할 책임이 있다.',2,{mil:.35,d:1.45,fr:35,eo:.25}],
+ KOR:['대한 독립 만세','1919년 3월의 함성이 1920년 봉오동과 청산리의 매복으로 이어졌다.',1,{rec:2,a:1.5,eMil:.08,eSup:10,sup:20,indep:1,eo:.3}],
+ FIN:['몰로토프에게 칵테일을','1939년 겨울전쟁. 소련의 폭탄을 "빵 바구니"라 부른 몰로토프에게, 핀란드인은 화염병이라는 "칵테일"로 답했다.',2,{d:1.8,a:1.5,c:'cold',fr:40,eo:.25}],
+ POL:['폴란드는 아직 죽지 않았다','국가 첫 소절. 1920년 바르샤바 문턱까지 밀린 폴란드군이 측면 반격으로 전세를 뒤집었다.',1,{fr:60,a:1.6,d:1.5,eo:.35,rec:1}],
  ESP:['노 파사란','1936년 마드리드. "그들은 지나가지 못한다."',2,{d:1.8,c:'urbhome',sup:10}],
- NED:['홀란트 수상 방어선','1672년부터 내려온 전통: 둑을 터 저지대를 물바다로 만든다.',2,{d:2,c:'home',st:{f:-10}}],
- BEL:['이제르 강 범람','1914년 니우포르트의 수문을 열어 독일군 앞에 호수를 만들었다.',2,{d:1.9,c:'home',fr:30}],
- DEN:['조용한 저항','1943년, 점령당한 나라가 하룻밤에 유대인 7천 명을 바다 건너로 피신시켰다.',1,{eMil:.1,sup:15,rec:1}],
- POR:['가장 오랜 동맹','1373년부터 이어진 영국과의 동맹이 위기 때 금과 함대를 부른다.',2,{g:70,d:1.5,c:'home',ds:1.8}],
- NOR:['드뢰바크 해협의 포성','1940년 4월, 낡은 해안포가 독일 중순양함 블뤼허를 격침했다.',2,{ds:2.2,d:1.4,eMil:.08}],
- SWE:['무장 중립','철광석을 팔고 국경을 굳게 지켜 두 번의 대전을 비켜 갔다.',3,{d:1.7,c:'home',g:50}],
- CZE:['국경 요새선','1938년, 산맥을 따라 늘어선 벙커와 스코다 공장의 대포.',2,{d:2,c:'home',mil:.2}],
- YUG:['파르티잔 봉기','1941~45년, 산악의 파르티잔이 점령군 수십 개 사단을 붙잡아 두었다.',1,{rec:2,eMil:.1,eSup:8,eo:.3}],
- OTT:['갈리폴리','1915년, 연합군의 상륙을 해안 절벽에서 여덟 달 동안 막아 냈다.',2,{ds:2.2,d:1.4,c:'home'}],
- GRC:['"오히(아니오)"의 날','1940년 10월 28일, 최후통첩에 "아니오"로 답하고 이탈리아군을 알바니아까지 밀어냈다.',1,{d:1.7,a:1.45,fr:40,sup:15,eo:.3}],
+ NED:['신은 바다를, 네덜란드인은 땅을 만들었다','둑을 터 저지대를 물바다로 만드는 홀란트 수상 방어선은 1672년부터 이어진 전통이다.',2,{d:2,c:'home',st:{f:-10}}],
+ BEL:['벨기에는 길이 아니라 나라다','1914년 알베르 1세는 독일군의 통과 요구를 거절했고, 니우포르트의 수문을 열어 적 앞에 호수를 만들었다.',2,{d:1.9,c:'home',fr:30}],
+ DEN:['왕도 노란 별을 달 것이다','점령 아래 국왕이 유대인과 함께하겠다고 했다는 전설. 1943년 하룻밤에 유대인 7천 명이 바다 건너로 피신했다.',1,{eMil:.1,sup:15,rec:1}],
+ POR:['영원한 우정과 동맹','1386년 윈저 조약 이후 영국과의 동맹이 위기 때 금과 함대를 부른다.',2,{g:70,d:1.5,c:'home',ds:1.8}],
+ NOR:['모든 것을 노르웨이를 위해','하콘 7세의 표어. 1940년 4월, 낡은 해안포가 독일 중순양함 블뤼허를 격침했다.',2,{ds:2.2,d:1.4,eMil:.08}],
+ SWE:['스웨덴 호랑이는 침묵한다','전시 스웨덴의 포스터 구호. 입을 다물고 철광석을 팔며 국경을 굳게 지켰다.',3,{d:1.7,c:'home',g:50}],
+ CZE:['진실은 승리한다','체코의 국가 표어. 산맥을 따라 늘어선 벙커와 스코다 공장의 대포가 국경을 지킨다.',2,{d:2,c:'home',mil:.2}],
+ YUG:['파시즘에 죽음을, 인민에게 자유를','1941~45년 파르티잔의 구호. 산악의 유격대가 점령군 수십 개 사단을 붙잡아 두었다.',1,{rec:2,eMil:.1,eSup:8,eo:.3}],
+ OTT:['나는 너희에게 죽으라고 명령한다','1915년 갈리폴리의 무스타파 케말: "나는 싸우라고 명령하지 않는다. 죽으라고 명령한다."',2,{ds:2.2,d:1.4,c:'home'}],
+ GRC:['"오히!" — 아니오','1940년 10월 28일, 최후통첩에 "아니오"로 답하고 이탈리아군을 알바니아까지 밀어냈다.',1,{d:1.7,a:1.45,fr:40,sup:15,eo:.3}],
  IND:['인도를 떠나라','1942년, 비폭력 불복종이 제국의 통치를 마비시켰다.',1,{eSup:12,sup:15,mil:.35,indep:1}],
- DAN:['이손초 방어','1915~17년, 알프스 기슭에서 열한 번의 공세를 막아 냈다.',2,{d:1.6,c:'rough'}],
- ROU:['마라셰슈티','1917년 여름, "이곳은 지나갈 수 없다."',1,{d:1.7,fr:30}],
- HUN:['후사르의 돌격','기병의 나라가 남긴 마지막 돌격 정신.',1,{a:1.45,sup:8}],
- BGR:['도이란 방어선','1917~18년, 영국·프랑스군의 공세를 산등성이 참호에서 막았다.',2,{d:1.8,c:'rough'}],
- AFG:['카이바르 고개','세 번의 영국-아프간 전쟁. 제국의 군대는 고개를 넘지 못했다.',2,{d:2.1,c:'rough',eMil:.06}],
- CHE:['국가 보루(레뒤이)','1940년 기장 장군: 평야를 내주고 알프스 요새에서 끝까지 버틴다.',3,{d:2.2,c:'rough'}],
- AUT:['알프스 요새','산길과 고개마다 진지를 쌓는다.',2,{d:1.8,c:'rough'}],
- MNG:['초원의 기병','1939년 할힌골, 몽골 기병이 일본군의 측면을 돌았다.',1,{a:1.5,mil:.2}],
+ DAN:['나의 민족들에게','1914년 프란츠 요제프의 선언문 첫머리. 이손초 강변에서 열한 번의 공세를 막아 냈다.',2,{d:1.6,c:'rough'}],
+ ROU:['이곳은 지나갈 수 없다','1917년 여름 마라셰슈티에서 루마니아군이 독일군의 공세를 멈췄다.',1,{d:1.7,fr:30}],
+ HUN:['아니, 아니, 결코!','트리아농 조약을 받아들이지 않겠다는 전간기 헝가리의 구호.',1,{a:1.45,sup:8}],
+ BGR:['단결이 힘이다','불가리아의 국가 표어. 1917~18년 도이란의 산등성이 참호에서 공세를 막았다.',2,{d:1.8,c:'rough'}],
+ AFG:['제국의 무덤','세 번의 영국-아프간 전쟁. 제국의 군대는 고개를 넘지 못했다.',2,{d:2.1,c:'rough',eMil:.06}],
+ CHE:['하나는 모두를, 모두는 하나를','스위스의 전통 표어. 1940년 기장 장군은 평야를 내주고 알프스 요새에서 버티기로 했다.',3,{d:2.2,c:'rough'}],
+ AUT:['A·E·I·O·U','합스부르크의 표어 "오스트리아는 온 세상을 다스리리라". 산길과 고개마다 진지를 쌓는다.',2,{d:1.8,c:'rough'}],
+ MNG:['영원한 푸른 하늘','몽골 기병의 수호. 1939년 할힌골에서 몽골 기병이 일본군의 측면을 돌았다.',1,{a:1.5,mil:.2}],
  THA:['대나무 외교','바람에 휘어도 꺾이지 않는다. 열강 사이에서 독립을 지킨 시암.',2,{g:60,sup:10,d:1.4,c:'home'}],
- EST:['독립 전쟁의 기억','1918~20년, 작은 나라가 두 열강을 차례로 몰아냈다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LVA:['독립 전쟁의 기억','1919년 리가 앞에서 독일 의용군과 적군을 모두 물리쳤다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LTU:['독립 전쟁의 기억','1919~20년 빌뉴스를 둘러싼 독립 전쟁.',1,{fr:45,a:1.5,d:1.3,eo:.25}],
- IRL:['부활절 봉기','1916년 더블린, 실패한 봉기가 온 나라를 일으켜 세웠다.',1,{eSup:10,sup:15,rec:1,indep:1}],
- MEX:['혁명군','1910년 혁명, 농민군이 순식간에 나라를 뒤덮었다.',1,{mil:.4,sup:-5}],
- PRY:['차코의 전사','1932~35년, 인구 세 배의 볼리비아를 사막에서 이겼다.',2,{d:1.7,a:1.45,eo:.25}],
- BOL:['안데스 고원','희박한 공기가 침략군을 먼저 지치게 한다.',2,{d:1.9,c:'rough'}],
- BRA:['담배 피우는 뱀','"브라질이 참전하느니 뱀이 담배를 피우겠다"던 말을 뒤집은 원정군.',1,{a:1.4,mil:.2}],
+ EST:['나의 조국, 나의 기쁨','국가 첫 소절. 1918~20년, 작은 나라가 두 열강을 차례로 몰아냈다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LVA:['신이여 라트비아를 축복하소서','국가 첫 소절. 1919년 리가 앞에서 독일 의용군과 적군을 모두 물리쳤다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LTU:['리투아니아, 우리의 조국','국가 첫 소절. 1919~20년 빌뉴스를 둘러싼 독립 전쟁.',1,{fr:45,a:1.5,d:1.3,eo:.25}],
+ IRL:['영국의 곤경은 아일랜드의 기회','오래된 아일랜드 공화주의의 격언. 1916년 부활절 봉기가 온 나라를 일으켜 세웠다.',1,{eSup:10,sup:15,rec:1,indep:1}],
+ MEX:['땅과 자유','사파타의 구호. 1910년 혁명, 농민군이 순식간에 나라를 뒤덮었다.',1,{mil:.4,sup:-5}],
+ PRY:['나는 조국과 함께 죽는다','1870년 로페스의 마지막 말. 1932~35년, 인구 세 배의 볼리비아를 차코 사막에서 이겼다.',2,{d:1.7,a:1.45,eo:.25}],
+ BOL:['단결은 힘이다','볼리비아의 표어. 희박한 안데스의 공기가 침략군을 먼저 지치게 한다.',2,{d:1.9,c:'rough'}],
+ BRA:['뱀이 담배를 피운다','"브라질이 참전하느니 뱀이 담배를 피우겠다"던 말을 뒤집은 원정군의 상징.',1,{a:1.4,mil:.2}],
  ARG:['세계의 곡창','곡물과 쇠고기 수출로 금을 모은다.',1,{g:80,st:{f:30}}],
- CHL:['태평양 함대','남미 최강의 해군이 해안을 지킨다.',2,{ds:2.2,d:1.3}],
+ CHL:['이성으로, 아니면 힘으로','칠레의 국가 표어. 남미 최강의 해군이 해안을 지킨다.',2,{ds:2.2,d:1.3}],
  IRN:['페르시아의 석유','아바단 정유소가 쉬지 않고 돌아간다.',1,{st:{o:40},g:40}],
  SAU:['사막의 매','1902년 리야드 기습, 낙타 기병이 사막을 가로질렀다.',1,{a:1.6,d:1.6,c:'desert'}],
  EGY:['수에즈의 열쇠','운하 통행료와 전략적 위치를 무기로 삼는다.',1,{g:60,sup:10}],
- NPL:['구르카','"겁쟁이가 되느니 죽는 게 낫다." 쿠크리 칼을 든 산악 보병.',1,{a:1.6,d:1.6,c:'rough'}],
- ALB:['스칸데르베그의 산','15세기, 25년 동안 오스만 대군을 산에서 막아 낸 영웅.',2,{d:2.1,c:'rough'}],
- Serbia:['콜루바라의 반격','1914년 12월, 탄약이 바닥난 세르비아군이 반격해 오스트리아군을 몰아냈다.',1,{fr:55,a:1.55,d:1.4,eo:.35,rec:1}],
- Ethiopia:['아드와','1896년, 아프리카 군대가 유럽 열강의 침략군을 정면에서 무찔렀다.',1,{a:1.6,d:1.5,sup:15,eo:.3,rec:1}],
+ NPL:['겁쟁이가 되느니 죽는 게 낫다','구르카의 표어. 쿠크리 칼을 든 산악 보병.',1,{a:1.6,d:1.6,c:'rough'}],
+ ALB:['베사 — 맹세는 지킨다','알바니아인의 명예 규범. 15세기 스칸데르베그는 25년 동안 오스만 대군을 산에서 막아 냈다.',2,{d:2.1,c:'rough'}],
+ Serbia:['단결만이 세르비아를 구한다','네 개의 S가 새겨진 문장의 뜻. 1914년 12월, 탄약이 바닥난 세르비아군이 콜루바라에서 반격했다.',1,{fr:55,a:1.55,d:1.4,eo:.35,rec:1}],
+ Ethiopia:['에티오피아는 신께 손을 뻗으리라','에티오피아의 표어. 1896년 아드와에서 유럽 열강의 침략군을 정면에서 무찔렀다.',1,{a:1.6,d:1.5,sup:15,eo:.3,rec:1}],
  Montenegro:['검은 산','작은 산악 공국이 끝까지 오스만에 굴복하지 않았다.',2,{d:2.1,c:'rough'}]};
 const ULT0=['총동원령','남은 모든 장정과 공장을 전쟁에 돌린다.',1,{mil:.35,d:1.4,c:'home',sup:-4}];
 const ultOf=n=>ULTS[NID(n)]||ULTS[n]||ULTS[ENN[n]]||ULT0;
@@ -2102,8 +2102,8 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
   ft+=`<g class="ft ${f.ty}${own?' own':''}${dim?' dim':''}${f.occ?' occ':''}${lod}" data-f="${f.id}" data-sx="${f.x.toFixed(3)}" data-sy="${f.y.toFixed(3)}">${sel?'<circle class="ring2" r="17"/><circle class="ring" r="12.5"/>':''}${ex}${ic}<text x="${f.ty=='city'?6:11}" y="4">${esc(f.nm)}</text></g>`;
   if(f.o.far&&own)TAGS.push({k:f.id,x:f.x,y:f.y,t:f.nm.split(' (')[0]+' →',hot:sel,act:'f:'+f.id,far:1})});
  // 부대 말판
- if(me&&alive(S,me)&&(mil||vn==me)){const U=myUnits(),col=NM[me][1];U.forEach(u=>{ft+=`<g class="ctr ${u.b}${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' sel':''}${mil?'':' l1'}" data-u="${u.i}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(${-34+u.dy*6} ${22+u.dy*25})">${ctr(col,u.str,u.b=='a'?(u.c>=30?'XXX':'XX'):u.b=='n'?'FLT':'AIR',u.b)}${mil?`<text x="21" y="4" style="font:600 10px var(--serif);fill:#1a1a1a;paint-order:stroke;stroke:#efe6cf;stroke-width:3px">${esc(u.nm)}</text>`:''}</g></g>`})}
- Object.keys(S.N).filter(n=>mil&&n!=me&&alive(S,n)&&atWar(S,me,n)).forEach(n=>{myUnits(n).forEach(u=>{ft+=`<g class="ctr en ${u.b}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(${-30+u.dy*6} ${18+u.dy*25})">${ctr(NM[n][1],u.str,u.b=='a'?'XX':u.b=='n'?'FLT':'AIR',u.b)}</g><title>${esc(nm(n,yr(S))+' '+u.nm)}</title></g>`})});
+ if(me&&alive(S,me)&&(mil||vn==me)){const U=myUnits(),col=NM[me][1];U.forEach(u=>{ft+=`<g class="ctr ${u.b}${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' sel':''}${mil?'':' l1'}" data-u="${u.i}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(${-34+u.dy*6} ${22+u.dy*25})">${ctr(col,u.str,u.b=='a'?'LAND':u.b=='n'?'FLT':'AIR',u.b)}${mil?`<text x="21" y="4" style="font:600 10px var(--serif);fill:#1a1a1a;paint-order:stroke;stroke:#efe6cf;stroke-width:3px">${esc(u.nm)}</text>`:''}</g></g>`})}
+ Object.keys(S.N).filter(n=>mil&&n!=me&&alive(S,n)&&atWar(S,me,n)).forEach(n=>{myUnits(n).forEach(u=>{ft+=`<g class="ctr en ${u.b}" data-sx="${u.x.toFixed(3)}" data-sy="${u.y.toFixed(3)}"><g transform="translate(${-30+u.dy*6} ${18+u.dy*25})">${ctr(NM[n][1],u.str,u.b=='a'?'LAND':u.b=='n'?'FLT':'AIR',u.b)}</g><title>${esc(nm(n,yr(S))+' '+u.nm)}</title></g>`})});
  if(V.br&&V.br.L[V.br.i]){const b=V.br.L[V.br.i],t=tgtPt(b.rid),sr=b.sea?seaSrc(S,b.a,b.rid):landSrc(S,b.a,b.rid),sp=sr?tgtPt(sr):capOf(b.a);if(t&&sp){const d=arc(sp,t,b.sea?.28:.15,b.sea);o+=`<path class="arw br${b.sea?' sea':''}" d="${d}" style="stroke:${darker(NM[b.a][1],.5)}"/>`;
   ft+=`<g class="mvt"><animateMotion dur="2.4s" repeatCount="indefinite" path="${d}" ${b.msn&&MSN[b.msn][1]=='f'?'rotate="auto"':''}/><g data-sk="1">${b.msn?(MSN[b.msn][1]=='f'?PLANE:SHIP):b.sea?SHIP:ctrMini(NM[b.a][1])}</g></g>`;if(b.af){const da=arc([sp[0]+8,sp[1]-10],t,.4);ft+=`<g class="mvt"><animateMotion dur="1.8s" repeatCount="indefinite" path="${da}" rotate="auto"/><g data-sk="1">${PLANE}</g></g>`}
   ft+=`<g data-sx="${t[0].toFixed(3)}" data-sy="${t[1].toFixed(3)}"><circle class="bst" r="14"/><circle class="bst b2" r="14"/><circle class="bst" r="9" style="animation-delay:.4s"/><path d="M-9-9L9 9M9-9L-9 9" stroke="#8f2a17" stroke-width="3"/></g>`}}
@@ -2355,7 +2355,7 @@ function ultBlock(me){const D=ultOf(me),U=(S.ULT||{})[me],A=ultAct(S,me),u=U?U.u
  ${U?'':`<button class="${O.ult?'on':'pri'}" data-act="ult">${O.ult?'발동 취소 (분기 마감 때 발동 예정)':W?'결전 카드 발동':'결전 카드 발동 (지금은 평시)'}</button>`}</div>`}
 function milDoc(me){const N=S.N[me],y=yr(S),U=myUnits(),W=wars(S,me),st=['','목표 지역을 누르세요','작전 미리보기','소모 예산 확인'][V.bt.st]||'';
  return{t:'군정 — 편제표',b:`<div class="sec"><span>전황판</span></div>${warBoard(me)}${ultBlock(me)}${docBlock(me)}<div class="cmds" style="margin:6px 0"><button data-act="book:def">국방·군정 정책</button></div><div class="kv"><div><small>군사력</small><b>${N.mil|0}</b></div><div><small>교전국</small><b>${W.length}</b></div><div><small>공격 명령</small><b>${(O.atk||[]).length}</b></div></div>${(()=>{const X=divRep(divT(S,me));return`<div class="sec"><span>사단 편제</span><span>군사력 1 = 사단 1개</span></div><div class="hoi-st" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:4px"><span><i>기갑 비율</i>${X.t}%</span><span><i>연성 공격</i>${X.sa}</span><span><i>경성 공격</i>${X.ha}</span><span><i>방어</i>${X.df}</span><span><i>돌파</i>${X.bk}</span><span><i>조직력</i>${X.org}</span><span><i>장갑</i>${X.ar}</span><span><i>대전차</i>${X.pr}</span></div><div class="note" style="margin:0 0 6px">전열에 설 수 있는 사단 수는 지형의 전투폭이 정한다(평원 24, 산악 14). 여러 방향에서 치면 전투폭이 늘어난다. 장갑이 적의 대전차보다 높으면 공격 +40%, 받는 피해 −40%.</div>`})()}
- ${['a','n','f'].map(b=>{const L=U.filter(u=>u.b==b),f=FRC(me)[b];if(!L.length)return'';return`<div class="sec"><span>${BR[b]} · 군사력의 ${Math.round(f*100)}%</span><span>${b=='a'?(V.bt.u!=null?st:'부대를 고른 뒤 지도에서 목표 지정'):b=='n'?'해상 원정 호위':'공중 지원'}</span></div>${L.map(u=>`<div class="ln cl${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' hot':''}" data-act="unit:${u.i}"><div class="g">${esc(u.nm)}<small>${esc(u.at)} 주둔 · 전력 ${u.str} (전체의 ${u.c}%)</small></div><div class="v">${b=='a'?(u.c>=30?'XXX':'XX'):b=='n'?'⚓':'✈'}</div></div>`).join('')}`}).join('')}
+ ${['a','n','f'].map(b=>{const L=U.filter(u=>u.b==b),f=FRC(me)[b];if(!L.length)return'';return`<div class="sec"><span>${BR[b]} · 군사력의 ${Math.round(f*100)}%</span><span>${b=='a'?(V.bt.u!=null?st:'부대를 고른 뒤 지도에서 목표 지정'):b=='n'?'해상 원정 호위':'공중 지원'}</span></div>${L.map(u=>`<div class="ln cl${V.bt.u==u.i||V.bt.nv==u.id||V.bt.af==u.id?' hot':''}" data-act="unit:${u.i}"><div class="g">${esc(u.nm)}<small>${esc(u.at)} 주둔 · 전력 ${u.str} (전체의 ${u.c}%)</small></div><div class="v">${b=='a'?'LAND':b=='n'?'⚓':'✈'}</div></div>`).join('')}`}).join('')}
  <div class="sec"><span>내린 작전 명령</span></div>${(O.atk||[]).map((a,i)=>{const u=U.find(x=>x.id==a.u),nv=U.find(x=>x.id==a.nv),af=U.find(x=>x.id==a.af);return`<div class="ln"><div class="g">${a.sea?'⚓ 상륙전 ':''}${esc(RG[a.r][0])}<small>${esc(nm(S.R[a.r].occ||S.R[a.r].o,y))} · ${esc([u&&u.nm,nv&&nv.nm,af&&af.nm].filter(Boolean).join(' + ')||a.c+'% 투입')}</small></div><button data-act="uatk:${i}">취소</button></div>`}).join('')||'<div class="note" style="margin:0">없음</div>'}
  ${(O.msn||[]).length?`<div class="sec"><span>단독 임무</span></div>${O.msn.map((m,i)=>{const u=U.find(x=>x.id==m.u);return`<div class="ln"><div class="g">${MSN[m.t][0]} · ${esc(RG[m.r][0])}<small>${esc(u?u.nm:'')}</small></div><button data-act="umsn:${i}">취소</button></div>`}).join('')}`:''}
  ${(()=>{const f=FRC(me),T=O.mix;return`<div class="sec"><span>군비 배분</span><span>분기당 최대 4%p 이동 · 1%p당 국고 0.6</span></div>${['a','n','f'].map(k=>`<div class="ln"><div class="g">${BR[k]}<small>현재 ${Math.round(f[k]*100)}%${T?` → 목표 ${Math.round(T[k]*100)}%`:''}</small><div class="bar2" style="margin-top:4px"><i style="width:${f[k]*100}%"></i></div></div><span class="stp2"><button data-act="mix:${k}:-0.05">−5</button><button data-act="mix:${k}:0.05">+5</button></span></div>`).join('')}<div class="note">조선소와 항공기 공장에 예산을 돌려 군의 구성을 바꾼다. 효과는 분기마다 조금씩 나타난다.</div>`})()}
@@ -2386,7 +2386,7 @@ function natHTML(n){const A=natFor(n),y=yr(S),me=mine()==n,sp=spiritsOf(S,n).fil
  ${me?goalsHTML(n)+govPolBlock(n):''}${docBlock(n)}
  <div class="sec"><span>국가 정신</span><span>${sp.length}개 적용 중</span></div>${sp.map(p=>`<div class="spr"><b>${esc(p.t)}</b>${p.q?`<span class="q" style="display:block;margin:-2px 0 5px">${esc(p.q)}</span>`:''}<span class="fxs">${p.d.split(' · ').map(x=>`<span class="fx${/−|-/.test(x)?' dn':/\+/.test(x)?' up':''}">${icoT(esc(pctText(x)))}</span>`).join('')}</span></div>`).join('')||'<div class="note" style="margin:0">해당 없음.</div>'}
  ${me?`<div class="sec"><span>역사적 결정</span><span>국고 ${N.g|0}</span></div>${ds.map(d=>{const ok=decOK(S,n,d),or=(O.dec||[]).includes(d.id),tk=DTAKEN(S,n,d.id);return`<div class="dec${tk?' tk':''}${or?' or':''}${!ok.ok&&!tk&&!or?' lk':''}"><div class="dt"><b>${esc(d.t)}</b><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span></div><div class="dd"><span class="fx up">${icoT(esc(pctText(d.d)))}</span>${d.cost?`<span class="fx">비용 ${d.cost}</span>`:''}${d.rq?`<span class="fx">조건: ${esc(d.rq)}</span>`:''}</div><div class="dh2">${esc(d.h)}</div><div class="da">${tk?'<span class="tag ok">결정됨</span>':or?`<span class="tag acc">다음 분기 시행</span><button data-act="undec:${d.id}">취소</button>`:ok.ok?`<button class="pri" data-act="dec:${d.id}">결정</button>`:`<span class="tag">${esc(ok.why)}</span>`}</div></div>`}).join('')}`:''}
- <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
+ <div class="sec"><span>고유 부대</span></div><div class="uts2">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],'LAND')}<b>${esc(u[0])}</b><small>군사력의 ${u[1]}%</small></span>`).join('')}</div></div>`}
 // ════════ 정책 서고 · 전황 · 사회 양상 ════════
 const CIC={coin:'<ellipse cx="12" cy="17" rx="7" ry="2.6"/><ellipse cx="12" cy="13.5" rx="7" ry="2.6"/><ellipse cx="12" cy="10" rx="7" ry="2.6"/><path d="M5 10v7M19 10v7"/>',bank:'<path d="M3 9L12 4L21 9Z M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3 18.5H21"/>',fac:'<path d="M3 19V10L8 13V10L13 13V5H16V19Z M16 19H21V8"/><circle cx="18.5" cy="5" r="1.4"/>',grain:'<path d="M12 21V6M12 9l-3-3M12 9l3-3M12 13l-3.5-3M12 13l3.5-3M12 17l-3.5-3M12 17l3.5-3"/>',ham:'<path d="M5 19L14 10M12 6l6 6l2-2l-6-6Z"/>',scale:'<path d="M12 4V20M6 20H18M5 7H19M5 7L2.5 13H7.5ZM19 7L16.5 13H21.5Z"/>',loco:'<path d="M3 16V9H11V6H14V9H18L21 13V16Z M3 16h18"/><circle cx="7" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/>',book:'<path d="M3 6Q8 4 12 7Q16 4 21 6V19Q16 17 12 20Q8 17 3 19Z M12 7V20"/>',dome:'<path d="M5 12a7 7 0 0 1 14 0Z M12 5V3M4 12H20M6 12v7M10 12v7M14 12v7M18 12v7M3 19.5H21"/>',olive:'<path d="M5 19Q9 9 19 5M9 14q-3 0-4-2q3-1 4 2ZM12 11q-1-3 1-5q2 2-1 5ZM14 9q2 2 5 1q-1-3-5-1Z"/>',helm:'<path d="M4 15a8 8 0 0 1 16 0Z M2.5 15.5H21.5M12 7V15"/>',brick:'<path d="M3 8H21V20H3Z M3 12H21M3 16H21M8 8V12M14 8V12M11 12V16M17 12V16M8 16V20M14 16V20"/>'};
 const CI=(c,sz=22)=>`<svg class="ci" width="${sz}" height="${sz}" viewBox="0 0 24 24">${CIC[PCAT[c]?PCAT[c][1]:c]||''}</svg>`;
@@ -2727,7 +2727,7 @@ function lobby(){const ps=S.P,y=yr(S),taken=Object.values(ps),me=mine();if(!LSEL
   ${sp.length?`<div class="bsec">국가 정신</div><div class="bgrid">${sp.map(p=>`<div class="bsp${p.doc?' d':''}"><b>${esc(p.t)}</b><small>${icoT(esc(pctText(p.d,n)))}</small></div>`).join('')}</div>`:''}
   ${ds.length?`<div class="bsec">역사적 결정</div>${ds.map(d=>`<div class="bdec"><span>${d.y0}${d.y1!=d.y0?'–'+d.y1:''}</span>${esc(d.t)}</div>`).join('')}`:''}
   <div class="bsec">국가 목표</div>${goalsOf(S,n).map(([t,d,ty,dl])=>`<div class="bdec"><span>${ty=='by'?dl+'년까지':'종전 시'}</span>${esc(t)} — ${esc(d)}</div>`).join('')}
-  <div class="bsec">고유 부대</div><div class="uts">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],u[1]>=50?'XXX':'XX')}${esc(u[0])}</span>`).join('')}</div>
+  <div class="bsec">고유 부대</div><div class="uts">${(A?A.units:UNITS0).map(u=>`<span>${miniCtr(NM[n][1],'LAND')}${esc(u[0])}</span>`).join('')}</div>
   <div class="bsec">이 방의 플레이어</div><div class="pl">${plist}</div>
   <div class="acts">${me==n?'<button class="big" disabled>지휘 중인 국가</button>':`<button class="big${tk?'':' pri'}" id="cl" ${tk?'disabled':''}>${tk?'선택할 수 없음':'이 국가로 지휘하기'}</button>`}${host?`<button class="big pri" id="go" ${me?'':'disabled'}>전쟁 시작 →</button>`:'<span class="note2" style="margin:0">방장의 개전 명령을 기다리는 중…</span>'}</div></section></div></div></div></div>`;
  const ls=$('.lob-ls');if(ls)ls.scrollTop=st;

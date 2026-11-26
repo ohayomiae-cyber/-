@@ -470,6 +470,99 @@ body{background:#d9c49a}
 .ult p{margin:4px 0;font:13px/1.5 var(--serif);color:var(--ink2);font-style:italic}
 .ult-fx{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.ult-fx span{border:1px solid var(--ox);color:var(--ox);padding:1px 6px;font:700 12.5px var(--serif);background:rgba(255,250,235,.6)}
 .ult-k{font:13px/1.45 var(--serif);margin-bottom:6px}.ult-k small{color:var(--ink2)}.ult button{width:100%}.ult button.pri{background:var(--ox);border-color:var(--ox)}
+/* ════════ 스킨 v3: 호두나무·황동 HUD + 양피지 문서 ════════ */
+:root{--w0:#120d08;--w1:#1c150e;--w2:#2b2117;--w3:#3b2e1f;--br:#c9a45c;--br2:#8a6a33;--brt:#f1e2bb;--brm:#a99266;--blood:#8c2b1b;--blood2:#5e1a10;--hud:linear-gradient(180deg,#2e2318 0%,#1f170f 55%,#181209 100%)}
+/* 상단 바 */
+.bar{background:var(--hud);border-bottom:1px solid #000;box-shadow:inset 0 -2px 0 var(--br2),inset 0 1px 0 rgba(255,230,180,.08),0 3px 10px rgba(0,0,0,.5);color:var(--brt);gap:12px}
+.bar .me{padding-right:14px;border-right:1px solid rgba(201,164,92,.25)}
+.bar .me svg{box-shadow:0 0 0 1px #000,0 0 0 2px var(--br2);outline:none!important}
+.bar .me b{font:700 18px var(--serif);color:var(--brt);letter-spacing:.05em;text-shadow:0 1px 0 #000}
+.bar .res{gap:6px}
+.bar .rs{background:linear-gradient(180deg,#0f0b07,#1d160e);border:1px solid #000;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(201,164,92,.22),inset 0 8px 14px rgba(0,0,0,.35);padding:3px 10px 3px 6px;height:42px;display:flex;align-items:center;gap:7px;color:var(--brt);transition:box-shadow .15s,transform .15s}
+.bar .rs:hover{box-shadow:inset 0 0 0 1px var(--br),inset 0 8px 14px rgba(0,0,0,.35);transform:translateY(-1px)}
+.bar .rs.on{box-shadow:inset 0 0 0 1px var(--br),0 0 0 1px var(--br),0 0 12px rgba(201,164,92,.35)}
+.bar .rs .ri{background:radial-gradient(circle at 40% 35%,#fbf2da,#d9c79d);border-radius:50%;padding:4px;box-shadow:0 0 0 1px #000,0 0 0 2px var(--br2);box-sizing:content-box}
+.bar .rs small{color:var(--brm)!important;font:600 10.5px var(--sans);letter-spacing:.08em;display:block;line-height:1.1}
+.bar .rs b{color:#fbf0d2;font:700 17px/1.1 var(--serif);letter-spacing:.02em}
+.bar .rs.lo b{color:#f0a57f}.bar .rs.zero{box-shadow:inset 0 0 0 1px #c4532d,0 0 10px rgba(196,83,45,.45)}.bar .rs.zero b{color:#ff8a66}
+.bar .rs>small,.bar .rs>i{font-size:11px}
+.date b{color:var(--brt);font:700 17px var(--serif);text-shadow:0 1px 0 #000}.date small{color:var(--brm)}
+.aub button{width:34px;height:34px;border-radius:50%;background:linear-gradient(#2e2318,#17110a);border:1px solid #000;box-shadow:inset 0 0 0 1px var(--br2);color:var(--brt)}
+.aub button:hover{box-shadow:inset 0 0 0 1px var(--br)}
+.warchip{border-radius:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),0 0 0 1px #000}
+/* 턴 종료 */
+#rdy{height:42px;padding:0 24px;font:700 15px var(--serif)!important;letter-spacing:.1em;background:linear-gradient(180deg,#a8371f,#7a2415 60%,#5e1a10)!important;color:#fff1d2!important;border:1px solid #000!important;border-radius:3px;box-shadow:inset 0 0 0 1px var(--br),inset 0 1px 0 rgba(255,220,170,.45),0 2px 0 #000,0 0 14px rgba(168,55,31,.35)!important;text-shadow:0 1px 0 rgba(0,0,0,.5)}
+#rdy:hover{filter:brightness(1.1)}
+#rdy.wait{background:linear-gradient(#2e2318,#1a130b)!important;color:var(--brm)!important;box-shadow:inset 0 0 0 1px var(--br2)!important}
+/* 좌측 레일 */
+.tabs{background:linear-gradient(90deg,#17110a,#231a11);border-right:1px solid #000;box-shadow:inset -2px 0 0 var(--br2),3px 0 10px rgba(0,0,0,.35);padding:10px 6px;gap:4px}
+.tb{background:transparent!important;border:1px solid transparent!important;outline:none!important;box-shadow:none!important;color:#cdb98a!important;border-radius:4px;transition:background .15s}
+.tb span{font:600 12.5px var(--serif);letter-spacing:.08em}
+.tb .ci{stroke:#e2cf9f!important;stroke-width:1.8px}.tb svg{width:24px;height:24px;filter:drop-shadow(0 1px 0 #000)}
+.tb:hover{background:rgba(201,164,92,.1)!important;color:#f5e6c0!important}
+.tb.on{background:linear-gradient(90deg,rgba(201,164,92,.32),rgba(201,164,92,.05))!important;color:#fff4d8!important;box-shadow:inset 3px 0 0 var(--br),inset 0 0 0 1px rgba(201,164,92,.35)!important}
+.tb.on .ci{stroke:#fff4d8!important}
+.tb.sm{border-top:1px solid rgba(201,164,92,.25)!important;border-radius:0}
+/* 지도 */
+.mapw::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;box-shadow:inset 0 0 140px rgba(45,28,10,.5),inset 0 0 26px rgba(20,12,4,.35)}
+.plate,#plate.plate{background:var(--hud)!important;border:1px solid #000!important;border-image:none!important;box-shadow:inset 0 0 0 1px var(--br2),0 6px 16px rgba(0,0,0,.45)!important;color:var(--brt);border-radius:3px}
+.plate b{color:var(--brt)!important;font-family:var(--serif)}.plate small{color:var(--brm)!important}
+.plate button{color:var(--brt)!important;border-color:var(--br2)!important;background:transparent!important}
+.zm button{width:34px;height:34px;border-radius:50%;background:var(--hud)!important;color:var(--brt)!important;border:1px solid #000!important;box-shadow:inset 0 0 0 1px var(--br2),0 3px 8px rgba(0,0,0,.4)!important}
+.zm button:hover{box-shadow:inset 0 0 0 1px var(--br),0 3px 8px rgba(0,0,0,.4)!important}
+.agenda{background:var(--hud)!important;border:1px solid #000!important;border-image:none!important;border-left:3px solid var(--br)!important;box-shadow:inset 0 0 0 1px rgba(201,164,92,.2),0 8px 20px rgba(0,0,0,.45)!important;color:var(--brt);border-radius:3px}
+.agenda small{color:#e08a62!important;letter-spacing:.12em}.agenda b{color:#fbf0d2!important}.agenda span{color:var(--brm)!important}.agenda .go{color:var(--br)!important}
+/* 문서 패널: 양피지 + 어두운 머리띠 + 황동 테 */
+.doc,.sheet{border:1px solid #000!important;border-image:none!important;background:var(--pp2) var(--noise)!important;box-shadow:0 0 0 3px var(--w2),0 0 0 4px var(--br2),0 20px 44px rgba(0,0,0,.5)!important;border-radius:2px}
+.doc{right:16px;top:16px}
+.dh,.sh{background:var(--hud)!important;color:var(--brt)!important;border-bottom:2px solid var(--br2)!important;padding:0 8px 0 16px!important;height:50px}
+.dh b,.sh b{color:var(--brt)!important;font:700 18px var(--serif)!important;letter-spacing:.04em;text-shadow:0 1px 0 #000}
+.dh button,.sh button{color:var(--brt)!important;border:1px solid var(--br2)!important;background:transparent!important;border-radius:50%;width:32px;height:32px;padding:0}
+.dh button:hover,.sh button:hover{border-color:var(--br)!important;background:rgba(201,164,92,.12)!important}
+.db{padding:14px 18px 18px}
+.db .sec,.pop .sec{color:#7a2a18;border-bottom:1px solid rgba(90,66,36,.45);letter-spacing:.12em}
+.pop>div,.pop{border-image:none!important}
+#pop>div{border:1px solid #000!important;border-image:none!important;background:var(--pp2) var(--noise)!important;box-shadow:0 0 0 3px var(--w2),0 0 0 4px var(--br2),0 18px 40px rgba(0,0,0,.5)!important;border-radius:2px}
+.rp,.brp,.cd,.paperN{border:1px solid #000!important;border-image:none!important;box-shadow:0 0 0 4px var(--w2),0 0 0 5px var(--br2),0 26px 56px rgba(0,0,0,.6)!important;border-radius:2px}
+.brp{padding:12px 16px 10px}.cd{padding:16px 24px 18px}.rp{padding:10px 14px 12px}
+.br-h,.rp-h{border-bottom:2px solid var(--br2)!important}
+/* 버튼 */
+.db button,.pop button,.rp button,.brp button,.cd button,.bk button{border-radius:3px;transition:filter .12s,transform .12s}
+.db button:hover,.pop button:hover,.brp button:hover,.cd button:hover{transform:translateY(-1px)}
+button.pri,.db button.pri,.pop button.pri,.sb button.pri,.bk button.pri,.rp button.pri,.brp button.pri,.big.pri,.ppr button.pri,.mb.pri,.cd button.pri{background:linear-gradient(180deg,#a8371f,#7a2415 60%,#5e1a10)!important;color:#fff1d2!important;border:1px solid #2a0a04!important;box-shadow:inset 0 0 0 1px rgba(232,190,120,.65),inset 0 1px 0 rgba(255,220,170,.4),0 2px 0 rgba(0,0,0,.45)!important;text-shadow:0 1px 0 rgba(0,0,0,.45)}
+button.pri:hover{filter:brightness(1.08)}
+button.pri:disabled{filter:grayscale(.7) brightness(.85)}
+/* 결전 카드 */
+.ult{background:linear-gradient(135deg,#2b2117,#1a130b)!important;border:1px solid #000!important;outline:1px solid var(--br2)!important;outline-offset:-4px!important;color:var(--brt);padding:12px 14px!important;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.ult-h small{color:#e08a62!important}.ult-h b{color:#fbf0d2!important;text-shadow:0 1px 0 #000}.ult p{color:#cbb994!important}
+.ult-fx>span{background:rgba(201,164,92,.12)!important;border-color:var(--br2)!important;color:#f3dfae!important}.ult-fx>span span{border:0!important;background:none!important;padding:0!important;color:inherit!important}
+.ult-k{color:var(--brt)}.ult-k small{color:var(--brm)!important}.ult-k b{color:#ffd58a}
+.ult .ri{filter:brightness(1.6)}
+.ult.used{opacity:.7}
+/* 첫 화면 */
+.tt-menu{gap:3%}
+.mb{border-radius:3px!important}
+.mb:not(.pri){background:var(--hud)!important;color:var(--brt)!important;border:1px solid #000!important;box-shadow:inset 0 0 0 1px var(--br2),inset 0 1px 0 rgba(255,230,180,.1),0 3px 0 #000,0 8px 20px rgba(0,0,0,.35)!important}
+.mb:not(.pri):hover{box-shadow:inset 0 0 0 1px var(--br),0 3px 0 #000,0 8px 22px rgba(0,0,0,.4)!important}
+.mb.pri{box-shadow:inset 0 0 0 1px rgba(232,190,120,.7),inset 0 1px 0 rgba(255,220,170,.4),0 3px 0 #000,0 8px 20px rgba(0,0,0,.35)!important}
+.sp-patch{left:5%!important;width:50%!important;top:76%!important;height:22%!important;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 74%,transparent 100%)!important;mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 74%,transparent 100%)!important}
+.scr-bg .sp-img::after{content:'';position:absolute;left:5%;top:76%;width:50%;height:22%;background:#ecdcbb var(--noise);-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 74%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 74%,transparent 100%)}
+.tt-au .aub button{background:rgba(28,21,14,.75);color:var(--brt);border:1px solid var(--br2);border-radius:50%}
+/* 로비 */
+.scr-h{background:var(--hud)!important;border-bottom:2px solid var(--br2)!important;box-shadow:0 3px 12px rgba(0,0,0,.4);color:var(--brt)}
+.scr-h .logo{color:var(--brt)!important;text-shadow:0 1px 0 #000}.scr-h .logo i{color:#e08a62!important}
+.scr-h button{color:var(--brt)!important;border-color:var(--br2)!important;background:transparent!important;border-radius:3px}
+.scr-h button:hover{border-color:var(--br)!important}
+.scr-h .rc{color:var(--brm)!important}.scr-h .rc b{color:#fbf0d2!important}
+.ppr,.sc{border:1px solid #000!important;border-image:none!important;background:var(--pp2) var(--noise)!important;box-shadow:0 0 0 3px var(--w2),0 0 0 4px var(--br2),0 14px 30px rgba(40,24,8,.35)!important;border-radius:2px}
+.sc{transition:transform .15s,box-shadow .15s}
+.sc:hover{transform:translateY(-3px);box-shadow:0 0 0 3px var(--w2),0 0 0 4px var(--br),0 18px 34px rgba(40,24,8,.45)!important}
+.sc.on{outline:none!important;box-shadow:0 0 0 3px var(--w2),0 0 0 5px var(--br),0 0 26px rgba(201,164,92,.55),0 18px 34px rgba(40,24,8,.45)!important}
+.sc .tabx{background:var(--w2)!important;color:var(--brt)!important;box-shadow:inset 0 -1px 0 var(--br2)}
+.mt{letter-spacing:.02em}
+
+.doc.on{animation:docIn .22s ease-out}@keyframes docIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.lob input,.mw input{background:#fbf4e2;border:1px solid var(--br2);box-shadow:inset 0 1px 3px rgba(0,0,0,.15);border-radius:2px;padding:6px 10px}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -1334,14 +1427,14 @@ function hoiSetup(s,a,d,rid,c,o,BMa,BMd,OM,nf){const A=s.N[a],D=s.N[d],ter=terrO
  defM*=BMd;add(mD,'적 공군 엄호',BMd);
  const dirs=Math.max(1,encCount(s,a,rid)),W=Math.round(TR[2]*Math.min(2,1+.5*(dirs-1)));
  const DA=divT(s,a),DD=divT(s,d),use=A.mil*c/100,nA=Math.max(1,Math.round(use)),fc=held(s,d).filter(x=>Object.keys(s.R).some(y=>{const q=s.R[y],w=q.occ||q.o;return w!=d&&atWar(s,d,w)&&dist(x,y)<=1})).length,nD=Math.max(1,Math.round(D.mil*FRC(d).a*.92/Math.sqrt(Math.max(1,fc,nf||1))+D.ind*.06));
- const eo=(n,f)=>{const X=ultAct(s,n);return X&&X.D[3].eo?Math.max(.25,1-X.D[3].eo*X.k):1},pw=n=>{const X=ultAct(s,n);return X&&X.D[3].eo?1+X.D[3].eo*X.k:1},oA0=eo(d),oD0=eo(a),pA=pw(a),pD=pw(d);if(pA>1)mA.push(['결전: 화력·생존',Math.round((pA-1)*100)]);if(pD>1)mD.push(['결전: 화력·생존',Math.round((pD-1)*100)]);if(oD0<1)mA.push(['결전: 적 조직력',-Math.round((1-oD0)*100)]);if(oA0<1)mD.push(['결전: 적 조직력',-Math.round((1-oA0)*100)]);
- return{ter,riv,W,dirs,DA,DD,nA,nD,use,attM,defM,mA,mD,ent,oA0,oD0,pA,pD}}
+ const eo=(n,f)=>{const X=ultAct(s,n);return X&&X.D[3].eo?Math.max(.35,1-X.D[3].eo*X.k):1},pw=n=>{const X=ultAct(s,n);return X&&X.D[3].eo?1+X.D[3].eo*X.k:1},oA0=eo(d),oD0=eo(a),pA=pw(a),pD=pw(d),atA=pA>1.3,atD=pD>1.3;if(atA&&divT(s,d).ar>divT(s,a).pr)mA.push(['결전: 적 장갑 우위 무효',0]);if(atD&&divT(s,a).ar>divT(s,d).pr)mD.push(['결전: 적 장갑 우위 무효',0]);if(pA>1)mA.push(['결전: 화력·생존',Math.round((pA-1)*100)]);if(pD>1)mD.push(['결전: 화력·생존',Math.round((pD-1)*100)]);if(oD0<1)mA.push(['결전: 적 조직력',-Math.round((1-oD0)*100)]);if(oA0<1)mD.push(['결전: 적 조직력',-Math.round((1-oA0)*100)]);
+ return{ter,riv,W,dirs,DA,DD,nA,nD,use,attM,defM,mA,mD,ent,oA0,oD0,pA,pD,atA,atD}}
 // 전투: 12라운드(약 한 주씩). 전열 사단이 서로 공격하고, 조직력이 바닥나면 후퇴한다
 function hoiSim(P,rnd){const R=12,A=P.DA,D=P.DD,sd=(x,lo)=>({n:x,f:Math.min(x,P.W),r:Math.max(0,x-P.W),ex:0,org:1,hpL:0});const sa=sd(P.nA),sb=sd(P.nD);sa.org=sa.o0=P.oA0||1;sb.org=sb.o0=P.oD0||1;const log=[];let end='time',rd=R;
  const atk=(X,hdE)=>X.sa*(1-hdE)+X.ha*hdE;
  for(let i=1;i<=R;i++){const aA=sa.f*atk(A,D.hd)*P.attM*rnd(),dD=sb.f*D.df*P.defM,aD=sb.f*atk(D,A.hd)*1.6*rnd(),bA=sa.f*A.bk*Math.sqrt(P.attM);
   const hits=(x,y)=>x<=y?x*.1:y*.1+(x-y)*.4;let hD=hits(aA,dD),hA=hits(aD,bA);
-  if(A.ar>D.pr){hD*=1.4;hA*=.6}if(D.ar>A.pr){hA*=1.4;hD*=.6}const pa=P.pA||1,pd=P.pD||1;hD*=pa/pd;hA*=pd/pa;
+  if(A.ar>D.pr&&!P.atD){hD*=1.4;hA*=.6}if(D.ar>A.pr&&!P.atA){hA*=1.4;hD*=.6}const pa=P.pA||1,pd=P.pD||1;hD*=pa/pd;hA*=pd/pa;
   sb.org-=hD/sb.f*3.5/D.org;sa.org-=hA/sa.f*3.5/A.org;sb.hpL+=hD*.4;sa.hpL+=hA*.4;
   for(const X of[sa,sb])if(X.org<.3&&X.r>0&&X.o0>X.org+.05){const k=Math.min(X.r,X.f);X.org=(X.org*(X.f-k)+k*X.o0)/X.f;X.r-=k;X.ex+=k}
   sa.org=Math.max(0,sa.org);sb.org=Math.max(0,sb.org);log.push([Math.round(sa.org*100),Math.round(sb.org*100)]);
@@ -1358,42 +1451,42 @@ function entStep(s){s.ENT=s.ENT||{};const hit=new Set((s.BT||[]).filter(b=>!b.ms
 // [이름, 역사, 지속 분기, 효과]  효과: a 공격배율 d 방어배율 c 적용조건 ds 상륙방어 fr 적 전선 되밀기 rec 점령지 탈환 mil 군사력 sup 지지 g 국고 st 자원 eSup 적 지지 eMil 적 군사력
 // 약소국일수록 기본값이 크고, 발동 순간 열세(적 군사력 ÷ 아군)가 클수록 더 세진다.
 const ULTS={
- UK:['그들의 가장 빛나는 시간','1940년 처칠: "우리는 해안에서 싸울 것이며, 결코 항복하지 않을 것이다."',2,{d:1.45,c:'home',ds:1.6,sup:12}],
- GER:['낫질 작전','1940년 5월, 기갑부대가 "통과할 수 없다"던 아르덴 숲을 뚫었다.',1,{a:1.3}],
- FRA:['마른의 기적','1914년 9월, 파리의 택시 600대가 증원군을 전선으로 실어 날랐다.',1,{fr:50,a:1.35,d:1.25,eo:.25}],
- USA:['민주주의의 병기창','1940년 루스벨트: "우리는 민주주의의 거대한 병기창이 되어야 한다."',1,{mil:.3,g:80,st:{s:20,o:20}}],
- JPN:['진주만 기습','1941년 12월 7일 새벽, 선전포고보다 먼저 폭탄이 떨어졌다.',1,{a:1.35,eMil:.06}],
- ITA:['피아베 강 방어선','1917년 카포레토에서 무너진 군대가 피아베 강에서 버텨 냈다.',2,{d:1.6,c:'rough',fr:25}],
- RUS:['동장군과 초토화','1812년에도 1941년에도, 물러나며 모든 것을 불태웠고 겨울이 적을 멈췄다.',2,{d:1.55,fr:35,eSup:6,eMil:.05,eo:.2}],
- CHN:['지구전','1938년 타이얼좡. "중국의 땅은 넓고, 시간은 우리 편이다."',2,{mil:.35,d:1.4,fr:30,eo:.2}],
- KOR:['독립군 총궐기','1920년 봉오동과 청산리. 쫓기던 독립군이 매복으로 정규군을 무너뜨렸다.',1,{rec:2,a:1.7,eMil:.08,eSup:10,sup:20,indep:1,eo:.4}],
- FIN:['모티 전술','1939년 겨울전쟁. 스키 부대가 숲길의 적 종대를 토막 내 하나씩 포위했다.',2,{d:2,a:1.6,c:'cold',fr:40,eo:.3}],
- POL:['비스와의 기적','1920년 8월, 바르샤바 문턱까지 밀린 폴란드군이 측면 반격으로 전세를 뒤집었다.',1,{fr:70,a:1.8,d:1.5,eo:.45,rec:1}],
+ UK:['그들의 가장 빛나는 시간','1940년 처칠: "우리는 해안에서 싸울 것이며, 결코 항복하지 않을 것이다."',2,{d:1.5,c:'home',ds:1.8,sup:15,mil:.15,eo:.15}],
+ GER:['낫질 작전','1940년 5월, 기갑부대가 "통과할 수 없다"던 아르덴 숲을 뚫었다.',1,{a:1.45,eo:.2,mil:.1}],
+ FRA:['마른의 기적','1914년 9월, 파리의 택시 600대가 증원군을 전선으로 실어 날랐다.',1,{fr:50,a:1.4,d:1.35,eo:.25,mil:.1}],
+ USA:['민주주의의 병기창','1940년 루스벨트: "우리는 민주주의의 거대한 병기창이 되어야 한다."',2,{mil:.35,g:100,st:{s:25,o:25},a:1.2}],
+ JPN:['진주만 기습','1941년 12월 7일 새벽, 선전포고보다 먼저 폭탄이 떨어졌다.',1,{a:1.45,eMil:.08,eo:.2,ds:1.4}],
+ ITA:['피아베 강 방어선','1917년 카포레토에서 무너진 군대가 피아베 강에서 버텨 냈다.',2,{d:1.6,c:'rough',fr:30,a:1.25,eo:.15}],
+ RUS:['동장군과 초토화','1812년에도 1941년에도, 물러나며 모든 것을 불태웠고 겨울이 적을 멈췄다.',2,{d:1.6,fr:40,eSup:8,eMil:.06,eo:.25,mil:.15}],
+ CHN:['지구전','1938년 타이얼좡. "중국의 땅은 넓고, 시간은 우리 편이다."',2,{mil:.35,d:1.45,fr:35,eo:.25}],
+ KOR:['독립군 총궐기','1920년 봉오동과 청산리. 쫓기던 독립군이 매복으로 정규군을 무너뜨렸다.',1,{rec:2,a:1.5,eMil:.08,eSup:10,sup:20,indep:1,eo:.3}],
+ FIN:['모티 전술','1939년 겨울전쟁. 스키 부대가 숲길의 적 종대를 토막 내 하나씩 포위했다.',2,{d:1.8,a:1.5,c:'cold',fr:40,eo:.25}],
+ POL:['비스와의 기적','1920년 8월, 바르샤바 문턱까지 밀린 폴란드군이 측면 반격으로 전세를 뒤집었다.',1,{fr:60,a:1.6,d:1.5,eo:.35,rec:1}],
  ESP:['노 파사란','1936년 마드리드. "그들은 지나가지 못한다."',2,{d:1.8,c:'urbhome',sup:10}],
- NED:['홀란트 수상 방어선','1672년부터 내려온 전통: 둑을 터 저지대를 물바다로 만든다.',2,{d:2.4,c:'home',st:{f:-10}}],
- BEL:['이제르 강 범람','1914년 니우포르트의 수문을 열어 독일군 앞에 호수를 만들었다.',2,{d:2.2,c:'home',fr:30}],
+ NED:['홀란트 수상 방어선','1672년부터 내려온 전통: 둑을 터 저지대를 물바다로 만든다.',2,{d:2,c:'home',st:{f:-10}}],
+ BEL:['이제르 강 범람','1914년 니우포르트의 수문을 열어 독일군 앞에 호수를 만들었다.',2,{d:1.9,c:'home',fr:30}],
  DEN:['조용한 저항','1943년, 점령당한 나라가 하룻밤에 유대인 7천 명을 바다 건너로 피신시켰다.',1,{eMil:.1,sup:15,rec:1}],
  POR:['가장 오랜 동맹','1373년부터 이어진 영국과의 동맹이 위기 때 금과 함대를 부른다.',2,{g:70,d:1.5,c:'home',ds:1.8}],
- NOR:['드뢰바크 해협의 포성','1940년 4월, 낡은 해안포가 독일 중순양함 블뤼허를 격침했다.',2,{ds:2.6,d:1.4,eMil:.08}],
+ NOR:['드뢰바크 해협의 포성','1940년 4월, 낡은 해안포가 독일 중순양함 블뤼허를 격침했다.',2,{ds:2.2,d:1.4,eMil:.08}],
  SWE:['무장 중립','철광석을 팔고 국경을 굳게 지켜 두 번의 대전을 비켜 갔다.',3,{d:1.7,c:'home',g:50}],
  CZE:['국경 요새선','1938년, 산맥을 따라 늘어선 벙커와 스코다 공장의 대포.',2,{d:2,c:'home',mil:.2}],
- YUG:['파르티잔 봉기','1941~45년, 산악의 파르티잔이 점령군 수십 개 사단을 붙잡아 두었다.',1,{rec:2,eMil:.1,eSup:8,eo:.35}],
- OTT:['갈리폴리','1915년, 연합군의 상륙을 해안 절벽에서 여덟 달 동안 막아 냈다.',2,{ds:2.6,d:1.4,c:'home'}],
- GRC:['"오히(아니오)"의 날','1940년 10월 28일, 최후통첩에 "아니오"로 답하고 이탈리아군을 알바니아까지 밀어냈다.',1,{d:1.8,a:1.5,fr:40,sup:15,eo:.35}],
+ YUG:['파르티잔 봉기','1941~45년, 산악의 파르티잔이 점령군 수십 개 사단을 붙잡아 두었다.',1,{rec:2,eMil:.1,eSup:8,eo:.3}],
+ OTT:['갈리폴리','1915년, 연합군의 상륙을 해안 절벽에서 여덟 달 동안 막아 냈다.',2,{ds:2.2,d:1.4,c:'home'}],
+ GRC:['"오히(아니오)"의 날','1940년 10월 28일, 최후통첩에 "아니오"로 답하고 이탈리아군을 알바니아까지 밀어냈다.',1,{d:1.7,a:1.45,fr:40,sup:15,eo:.3}],
  IND:['인도를 떠나라','1942년, 비폭력 불복종이 제국의 통치를 마비시켰다.',1,{eSup:12,sup:15,mil:.35,indep:1}],
  DAN:['이손초 방어','1915~17년, 알프스 기슭에서 열한 번의 공세를 막아 냈다.',2,{d:1.6,c:'rough'}],
  ROU:['마라셰슈티','1917년 여름, "이곳은 지나갈 수 없다."',1,{d:1.7,fr:30}],
  HUN:['후사르의 돌격','기병의 나라가 남긴 마지막 돌격 정신.',1,{a:1.45,sup:8}],
  BGR:['도이란 방어선','1917~18년, 영국·프랑스군의 공세를 산등성이 참호에서 막았다.',2,{d:1.8,c:'rough'}],
- AFG:['카이바르 고개','세 번의 영국-아프간 전쟁. 제국의 군대는 고개를 넘지 못했다.',2,{d:2.5,c:'rough',eMil:.06}],
- CHE:['국가 보루(레뒤이)','1940년 기장 장군: 평야를 내주고 알프스 요새에서 끝까지 버틴다.',3,{d:2.6,c:'rough'}],
+ AFG:['카이바르 고개','세 번의 영국-아프간 전쟁. 제국의 군대는 고개를 넘지 못했다.',2,{d:2.1,c:'rough',eMil:.06}],
+ CHE:['국가 보루(레뒤이)','1940년 기장 장군: 평야를 내주고 알프스 요새에서 끝까지 버틴다.',3,{d:2.2,c:'rough'}],
  AUT:['알프스 요새','산길과 고개마다 진지를 쌓는다.',2,{d:1.8,c:'rough'}],
  MNG:['초원의 기병','1939년 할힌골, 몽골 기병이 일본군의 측면을 돌았다.',1,{a:1.5,mil:.2}],
  THA:['대나무 외교','바람에 휘어도 꺾이지 않는다. 열강 사이에서 독립을 지킨 시암.',2,{g:60,sup:10,d:1.4,c:'home'}],
- EST:['독립 전쟁의 기억','1918~20년, 작은 나라가 두 열강을 차례로 몰아냈다.',1,{fr:45,a:1.6,d:1.3,eo:.3}],LVA:['독립 전쟁의 기억','1919년 리가 앞에서 독일 의용군과 적군을 모두 물리쳤다.',1,{fr:45,a:1.6,d:1.3,eo:.3}],LTU:['독립 전쟁의 기억','1919~20년 빌뉴스를 둘러싼 독립 전쟁.',1,{fr:45,a:1.6,d:1.3,eo:.3}],
+ EST:['독립 전쟁의 기억','1918~20년, 작은 나라가 두 열강을 차례로 몰아냈다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LVA:['독립 전쟁의 기억','1919년 리가 앞에서 독일 의용군과 적군을 모두 물리쳤다.',1,{fr:45,a:1.5,d:1.3,eo:.25}],LTU:['독립 전쟁의 기억','1919~20년 빌뉴스를 둘러싼 독립 전쟁.',1,{fr:45,a:1.5,d:1.3,eo:.25}],
  IRL:['부활절 봉기','1916년 더블린, 실패한 봉기가 온 나라를 일으켜 세웠다.',1,{eSup:10,sup:15,rec:1,indep:1}],
  MEX:['혁명군','1910년 혁명, 농민군이 순식간에 나라를 뒤덮었다.',1,{mil:.4,sup:-5}],
- PRY:['차코의 전사','1932~35년, 인구 세 배의 볼리비아를 사막에서 이겼다.',2,{d:1.8,a:1.5,eo:.3}],
+ PRY:['차코의 전사','1932~35년, 인구 세 배의 볼리비아를 사막에서 이겼다.',2,{d:1.7,a:1.45,eo:.25}],
  BOL:['안데스 고원','희박한 공기가 침략군을 먼저 지치게 한다.',2,{d:1.9,c:'rough'}],
  BRA:['담배 피우는 뱀','"브라질이 참전하느니 뱀이 담배를 피우겠다"던 말을 뒤집은 원정군.',1,{a:1.4,mil:.2}],
  ARG:['세계의 곡창','곡물과 쇠고기 수출로 금을 모은다.',1,{g:80,st:{f:30}}],
@@ -1403,14 +1496,14 @@ const ULTS={
  EGY:['수에즈의 열쇠','운하 통행료와 전략적 위치를 무기로 삼는다.',1,{g:60,sup:10}],
  NPL:['구르카','"겁쟁이가 되느니 죽는 게 낫다." 쿠크리 칼을 든 산악 보병.',1,{a:1.6,d:1.6,c:'rough'}],
  ALB:['스칸데르베그의 산','15세기, 25년 동안 오스만 대군을 산에서 막아 낸 영웅.',2,{d:2.1,c:'rough'}],
- Serbia:['콜루바라의 반격','1914년 12월, 탄약이 바닥난 세르비아군이 반격해 오스트리아군을 몰아냈다.',1,{fr:60,a:1.7,d:1.4,eo:.45,rec:1}],
- Ethiopia:['아드와','1896년, 아프리카 군대가 유럽 열강의 침략군을 정면에서 무찔렀다.',1,{a:1.9,d:1.6,sup:15,eo:.4,rec:1}],
+ Serbia:['콜루바라의 반격','1914년 12월, 탄약이 바닥난 세르비아군이 반격해 오스트리아군을 몰아냈다.',1,{fr:55,a:1.55,d:1.4,eo:.35,rec:1}],
+ Ethiopia:['아드와','1896년, 아프리카 군대가 유럽 열강의 침략군을 정면에서 무찔렀다.',1,{a:1.6,d:1.5,sup:15,eo:.3,rec:1}],
  Montenegro:['검은 산','작은 산악 공국이 끝까지 오스만에 굴복하지 않았다.',2,{d:2.1,c:'rough'}]};
 const ULT0=['총동원령','남은 모든 장정과 공장을 전쟁에 돌린다.',1,{mil:.35,d:1.4,c:'home',sup:-4}];
 const ultOf=n=>ULTS[NID(n)]||ULTS[n]||ULTS[ENN[n]]||ULT0;
 const ULTC={home:'본토',rough:'산악·구릉',cold:'삼림·동토·겨울',urbhome:'도시·본토',desert:'사막'};
 function ultCond(s,n,c,rid){if(!c)return true;const t=terrOf(rid);if(c=='home')return s.R[rid]&&s.R[rid].o==n;if(c=='rough')return t=='mtn'||t=='hill';if(c=='desert')return t=='desert';if(c=='cold'){const T=T2[rid],lat=T?80-T.cy*138/560:40;return t=='forest'||t=='tundra'||(WIN(s)&&lat>45)}if(c=='urbhome')return t=='urban'||(s.R[rid]&&s.R[rid].o==n);return true}
-const ultK=u=>.7+.35*u; // 열세 1배 → ×1.05, 2배 → ×1.4, 3배 → ×1.75
+const ultK=u=>.85+.2*u; // 열세 1배 → ×1.05, 2배 → ×1.25, 3배 → ×1.45
 const ultSc=(m,k)=>1+(m-1)*k;
 function ultAct(s,n){const U=(s.ULT||{})[n];if(!U)return null;const D=ultOf(n);return s.t-U.t<D[2]?{U,D,k:ultK(U.u)}:null}
 function ultM(s,n,role,rid,o){const A=ultAct(s,n);if(!A)return 1;const f=A.D[3];let m=1;
@@ -1430,7 +1523,7 @@ function ultFxText(n,k){const f=ultOf(n)[3],L=[],c=f.c?ULTC[f.c]+' ':'',P=v=>Mat
  if(f.a)L.push(`${f.c&&f.c!='home'&&f.c!='urbhome'?c:''}공격 +${P(ultSc(f.a,k)-1)}%`);if(f.d)L.push(`${c}방어 +${P(ultSc(f.d,k)-1)}%`);if(f.ds)L.push(`상륙 저지 +${P(ultSc(f.ds,k)-1)}%`);
  if(f.fr)L.push(f.fr*k>=100?'적 전선 진척 전부 되돌림':`적 전선 ${Math.round(f.fr*k)}%p 되밀기`);if(f.rec)L.push(`점령당한 땅 ${Math.round(f.rec*k)}곳 즉시 탈환`);if(f.mil)L.push(`군사력 +${P(f.mil*k)}%`);if(f.eMil)L.push(`적 군사력 −${P(Math.min(.3,f.eMil*k))}%`);
  if(f.eSup)L.push(`적 지지 −${Math.round(f.eSup*k)}%p`);if(f.sup)L.push(`지지 ${f.sup>0?'+':'−'}${Math.round(Math.abs(f.sup)*(f.sup>0?k:1))}%p`);if(f.g)L.push(`국고 +${Math.round(f.g*k)}`);
- if(f.st)for(const r in f.st)L.push(`${{f:'식량',s:'철강',o:'석유'}[r]} ${f.st[r]>0?'+':'−'}${Math.round(Math.abs(f.st[r])*(f.st[r]>0?k:1))}`);if(f.eo)L.push(`전투 화력·생존 +${Math.round(f.eo*k*100)}%`);if(f.eo)L.push(`전투 중 적 조직력 −${Math.round((1-Math.max(.25,1-f.eo*k))*100)}%`);if(f.indep)L.push('종주국 지지가 낮으면 독립');return L}
+ if(f.st)for(const r in f.st)L.push(`${{f:'식량',s:'철강',o:'석유'}[r]} ${f.st[r]>0?'+':'−'}${Math.round(Math.abs(f.st[r])*(f.st[r]>0?k:1))}`);if(f.eo)L.push(`전투 화력·생존 +${Math.round(f.eo*k*100)}%`);if(f.eo)L.push(`전투 중 적 조직력 −${Math.round((1-Math.max(.35,1-f.eo*k))*100)}%`);if(f.eo&&1+f.eo*k>1.3)L.push('적 장갑 우위 무효');if(f.indep)L.push('종주국 지지가 낮으면 독립');return L}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}
@@ -2309,7 +2402,7 @@ function popHTML(){const me=mine();if(V.tab!='mil'||V.bt.u==null||!V.bt.t||!me)r
  <dt>지형</dt><dd>${TERR[E.HP.ter][3]} ${TERR[E.HP.ter][0]}${E.HP.riv?' · '+E.HP.riv+' 도하':''}</dd><dt>전투폭</dt><dd>사단 ${E.HP.W}개${E.HP.dirs>1?` (${E.HP.dirs}방향 공격)`:''}</dd><dt>사단 수</dt><dd>${E.HP.nA} 대 ${E.HP.nD}</dd><dt>소모 우세</dt><dd>${E.ratio.toFixed(2)} : 1</dd><dt>예상 전개</dt><dd style="color:${E.SIM.end=='brk'?'#2f6b25':E.SIM.end=='stall'?'var(--ox)':'inherit'}">${E.SIM.end=='brk'?E.SIM.rd+'주 만에 돌파':E.SIM.end=='stall'?E.SIM.rd+'주 만에 공세 좌절':'12주 소모전'}</dd><dt>예상 전선 진척</dt><dd>${F&&F.a==me?F.p+'% → ':''}${E.g>0?'+':''}${E.g}%</dd></dl>${hoiMods(E.HP.mA,E.HP.mD)}<div class="rowf"><button data-act="bt:cancel">취소</button><button class="pri" data-act="bt:3" ${need?'disabled':''}>${need?(isPara?'공군 부대를 고르시오':'해군 호위를 고르시오'):'손실 확인 →'}</button></div>`;
  return`<div class="st">작전 2/2 · <i>예상 손실 확인</i></div><h5>${esc(RG[r][0])} ${E.sea?'상륙전':'공격'}</h5><dl><dt>아군 손실</dt><dd>군사력 −${pc(E.ca,A.mil)}</dd><dt>적군 손실</dt><dd>군사력 −${pc(E.cd,D.mil)}</dd>${E.sea?`<dt>상륙 실패 시</dt><dd>군사력 −${pc(E.use*.18,A.mil)}</dd>`:''}${w?'':`<dt>외교</dt><dd style="color:var(--ox)">${esc(nm(E.d,y))}에 선전포고</dd>`}${p?`<dt>조약</dt><dd style="color:var(--ox)">${TY[p.ty]} 파기 · 지지 −10%p</dd>`:''}</dl><div class="rowf"><button data-act="bt:2">← 편성</button><button class="pri" data-act="bt:ok">명령 확정</button></div>`}
 // ── 사단 전투 화면 ──
-const hoiChip=([l,v])=>`<span class="hm ${v>0?'up':'dn'}">${esc(l)} ${v>0?'+':'−'}${Math.abs(v)}%</span>`;
+const hoiChip=([l,v])=>`<span class="hm ${v>=0?'up':'dn'}">${esc(l)}${v?` ${v>0?'+':'−'}${Math.abs(v)}%`:''}</span>`;
 function hoiMods(mA,mD){return`<div class="hoi-m"><div><small>공격 보정</small>${mA.map(hoiChip).join('')||'<span class="hm">없음</span>'}</div><div><small>방어 보정</small>${mD.map(hoiChip).join('')||'<span class="hm">없음</span>'}</div></div>`}
 function divStats(X,def){const row=(l,v)=>`<span><i>${l}</i>${v}</span>`;return`<div class="hoi-st">${def?row('방어',X.df)+row('대전차',X.pr):row('연성 공격',X.sa)+row('경성 공격',X.ha)+row('돌파',X.bk)}${row('조직력',X.org)}${X.ar?row('장갑',X.ar):''}${row('기갑',X.t+'%')}</div>`}
 function hoiRep(b){const H=b.hoi;if(!H)return'';const TR=TERR[H.ter],y=yr(S),L=[[100,100]].concat(H.rl),px=i=>(i/12*300).toFixed(1),py=v=>(70-v*.62).toFixed(1),line=k=>L.map((v,i)=>px(i)+','+py(v[k])).join(' '),last=L[L.length-1];

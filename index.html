@@ -712,8 +712,7 @@ function aiAnswer(s,t){const n=t.b,m=t.a,N=s.N[n],M=s.N[m];let ok=false,why='';
 const TY={trade:'무역',nap:'불가침',ally:'동맹',cease:'휴전',ret:'영토 반환',peace:'강화'};
 function ai(s,n){const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=wars(s,n),sh=Object.values(N.st).some(v=>v<3);
  o.focus=sh?'ind':w.length?'def':Math.random()<.3?'res':'wel';
- w.forEach(e=>{if(!alive(s,e))return;const E=s.N[e];const tg=Object.keys(s.R).filter(r=>(s.R[r].occ||s.R[r].o)==e&&held(s,n).some(x=>dist(x,r)<=1));
-  if(tg.length&&N.mil>E.mil*.6)o.atk.push({r:tg[0],c:50});else if(N.mil<E.mil*.7||N.sup<45)o.props.push({to:e,ty:'cease'})});
+ o.mv=[];aiWar(s,n,o,w.filter(e=>alive(s,e)));
  const ns=nb(s,n).filter(x=>alive(s,x));
  if(Math.random()<.3){const x=ns.find(x=>!pact(s,n,x,'trade')&&!atWar(s,n,x));if(x)o.props.push({to:x,ty:'trade'})}
  if(!w.length&&qt(s)==1&&N.sup>55&&Math.random()<.15&&({GER:1938,ITA:1936,JPN:1937,RUS:1939}[NID(n)]||9999)<=yr(s)){const x=ns.find(x=>!pact(s,n,x)&&s.N[x].mil*1.8<N.mil&&!s.N[x].lord);if(x){const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==x&&held(s,n).some(h=>dist(h,r)<=1));if(r){o.atk.push({r,c:50});s.log.push(`${nm(n,yr(s))}: 자원 부족과 군사 우위로 팽창 결정`)}}}
@@ -1382,14 +1381,14 @@ function subdivide(){if(!CT||!window.d3)return;const out=[];CT.forEach(t=>{if(!t
  km.forEach(a=>{for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){A[a[i]].add(a[j]);A[a[j]].add(a[i])}});
  const pk=k=>PARENT[k]||k,old=ADJ||{};
  for(const a in old)old[a].forEach(b=>{const as=CT.filter(t=>pk(t.k)==a),bs=CT.filter(t=>pk(t.k)==b);if(!as.length||!bs.length)return;if(as.some(x=>bs.some(y=>A[x.k].has(y.k))))return;let best=null;as.forEach(x=>bs.forEach(y=>{const d=Math.hypot(x.cx-y.cx,x.cy-y.cy);if(!best||d<best[0])best=[d,x.k,y.k]}));A[best[1]].add(best[2]);A[best[2]].add(best[1])});
- CT.forEach(t=>{let u=0;t.__pk.forEach(key=>{if(km.get(key).length==1)u++});t.coast=u>=3&&u/t.__pk.size>.12;delete t.__pk});
+ CT.forEach(t=>{let u=0;t.__pk.forEach(key=>{if(km.get(key).length==1)u++});t.coast=u>=3&&(u/t.__pk.size>.12||u>=8);delete t.__pk});
  ADJ=A}
 const regOf=en=>{const k=NK[en];return k&&PROV[k]?PROV[k][0].k:k};
 function provAt(pk,x,y){const L=PROV[pk];if(!L)return pk;let b=L[0],bd=1e9;L.forEach(p=>{const d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;b=p}});return b.k}
 function isHome(s,n,r){const P=PF[PID(n)],h=P&&NK[P.home];if(h)return(PARENT[r]||r)==h;const k=HOMEK2(s,n);return k&&(PARENT[r]||r)==(PARENT[k]||k)}
 
 // ════════ 군 편제: 육군·해군·공군 ════════
-const FRC0={UK:[.4,.4,.2],GER:[.62,.12,.26],FRA:[.64,.2,.16],USA:[.45,.35,.2],JPN:[.4,.44,.16],ITA:[.55,.3,.15],RUS:[.74,.1,.16],CHN:[.9,.05,.05],KOR:[1,0,0],FIN:[.85,.05,.1],POL:[.84,.06,.1],ESP:[.74,.16,.1],NED:[.5,.38,.12],NOR:[.55,.38,.07],SWE:[.62,.24,.14],OTT:[.78,.14,.08],GRC:[.7,.24,.06],IND:[.92,.03,.05],BRA:[.72,.22,.06],ARG:[.7,.24,.06],POR:[.6,.34,.06],DEN:[.6,.34,.06]};
+const FRC0={UK:[.4,.4,.2],GER:[.62,.12,.26],FRA:[.64,.2,.16],USA:[.45,.35,.2],JPN:[.56,.32,.12],ITA:[.55,.3,.15],RUS:[.74,.1,.16],CHN:[.9,.05,.05],KOR:[1,0,0],FIN:[.85,.05,.1],POL:[.84,.06,.1],ESP:[.74,.16,.1],NED:[.5,.38,.12],NOR:[.55,.38,.07],SWE:[.62,.24,.14],OTT:[.78,.14,.08],GRC:[.7,.24,.06],IND:[.92,.03,.05],BRA:[.72,.22,.06],ARG:[.7,.24,.06],POR:[.6,.34,.06],DEN:[.6,.34,.06]};
 const BR={a:'육군',n:'해군',f:'공군'};
 function FRC(n){const MX=S&&S.MIX&&S.MIX[n];if(MX)return{a:MX.a,n:MX.n,f:MX.f};const id=NID(n),f=id&&FRC0[id];if(f)return{a:f[0],n:f[1],f:f[2]};if(!S||!S.N[n])return{a:.85,n:.1,f:.05};const coast=held(S,n).some(r=>T2[r]&&T2[r].coast);return coast?{a:.72,n:.2,f:.08}:{a:.92,n:0,f:.08}}
 const NAVY={UK:[['본국 함대',.5],['지중해 함대',.3],['동양 함대',.2]],GER:[['대양 함대',.6],['U보트 함대',.4]],FRA:[['대서양 함대',.5],['지중해 함대',.5]],USA:[['대서양 함대',.45],['태평양 함대',.55]],JPN:[['연합함대',.6],['제1항공함대',.4]],ITA:[['제1함대 (타란토)',.6],['제2함대',.4]],RUS:[['발트 함대',.4],['흑해 함대',.3],['태평양 함대',.3]],CHN:[['국민정부 해군',1]],FIN:[['연안 함대',1]],POL:[['그디니아 함대',1]],ESP:[['공화국 함대',1]],NED:[['동인도 함대',.6],['본국 함대',.4]],NOR:[['노르웨이 해군',1]],SWE:[['해안 함대',1]],OTT:[['흑해 함대',1]],IND:[['왕립 인도 해군',1]]};
@@ -1638,7 +1637,7 @@ const MVMAX=4;
 function mvStep(s,oo){Object.keys(oo).forEach(n=>{(oo[n].mv||[]).forEach(m=>{if(!s.N[n]||ctrl(s,m.r)!=n)return;const from=locOf(s,n,m.u);let dest=m.r;const p=from&&pathTo(s,n,from,m.r);if(p&&p.length-1>MVMAX)dest=p[MVMAX];else if(!p){const coast=T2[m.r]&&T2[m.r].coast&&FRC(n).n>.04;if(!coast)return}s.UL=s.UL||{};s.UL[n]=s.UL[n]||{};s.UL[n][m.u]=dest})})}
 // 전투 보정용: 공격 부대 위치, 방어 부대 배치
 function locMods(s,a,d,rid,o){let fa=1,fd=1;const ids=(o.units&&o.units.length?o.units:[o.u]).filter(x=>x&&x[0]=='a');
- if(ids.length&&!o.sea&&o.op!='para'){const f=ids.map(id=>{const h=hops(s,a,locOf(s,a,id),rid,6);return h<=1?1:h==2?.85:h==3?.72:.6});fa=f.reduce((x,y)=>x+y,0)/f.length}
+ if(ids.length&&!o.sea&&o.op!='para'&&!o.near){const f=ids.map(id=>{const h=hops(s,a,locOf(s,a,id),rid,6);return h<=1?1:h==2?.85:h==3?.72:.6});fa=f.reduce((x,y)=>x+y,0)/f.length}
  const F=forces(d).filter(u=>u.b=='a');if(F.length){const tot=F.reduce((x,u)=>x+u.w,0)||1,near=F.filter(u=>{const L=locOf(s,d,u.id);return L&&(L==rid||(ADJ&&ADJ[L]&&ADJ[L].has(rid)))}).reduce((x,u)=>x+u.w,0);fd=.85+.6*near/tot}
  return{fa,fd}}
 function mvHTML(me,u,r){const from=u.r,p=from?pathTo(S,me,from,r):null,y=yr(S),coast=T2[r]&&T2[r].coast&&FRC(me).n>.04,n=p?p.length-1:null,dest=p&&n>MVMAX?p[MVMAX]:r,D=supD(S,me),sv=supV(D[r]);
@@ -1711,6 +1710,30 @@ function applyPeace(s,t){const{a,b}=t,y=yr(s);(t.take||[]).forEach(r=>{const R=s
 function peaceClauses(t,y){const L=[`${nm(t.a,y)}와 ${nm(t.b,y)}는 이 조약의 서명과 함께 모든 적대 행위를 멈춘다.`];
  if((t.take||[]).length)L.push(`${nm(t.b,y)}는 다음 지역을 ${nm(t.a,y)}에 영구히 할양한다: ${t.take.map(r=>RG[r]?RG[r][0]:r).join(', ')}.`);else L.push('양국이 점령한 지역은 모두 원래 주인에게 돌아간다.');
  if(t.pay)L.push(`${nm(t.pay>0?t.b:t.a,y)}는 배상금 ${Math.abs(t.pay)}을 지급한다.`);if(t.pup)L.push(`${nm(t.b,y)} 정부는 ${nm(t.a,y)}의 보호를 받으며 외교와 군사를 그에 따른다.`);L.push('그 밖의 점령지는 이 조약 발효와 함께 반환한다.');return L}
+// ════════ AI: 전장 판단 ════════
+function aiEval(s,n,rid,uids,c,sea){const d=ctrl(s,rid);if(!d||d==n)return null;const OM={att:1,g:1,ca:1,cd:1},HP=hoiSetup(s,n,d,rid,c,{units:uids,op:'full',near:1,sea:sea?1:0},1,1,OM,1);HP.OMg=1;const R=hoiSim(HP,()=>1);return{g:R.g,lA:R.lA,lD:R.lD,end:R.end,dirs:HP.dirs,nA:HP.nA,nD:HP.nD}}
+function aiWar(s,n,o,W){const N=s.N[n],y=yr(s);if(!W.length)return;const army=forces(n).filter(u=>u.b=='a').sort((a,b)=>b.w-a.w),air=forces(n).filter(u=>u.b=='f');if(!army.length)return;
+ const h=held(s,n),cand=new Set();h.forEach(x=>(ADJ&&ADJ[x]||[]).forEach(r=>{const c=ctrl(s,r);if(c&&W.includes(c))cand.add(r)}));
+ let sea=0;const navy=forces(n).filter(u=>u.b=='n');if(!cand.size&&navy.length){Object.keys(s.R).forEach(r=>{const c=ctrl(s,r);if(c&&W.includes(c)&&seaOK(s,n,r))cand.add(r)});sea=1}
+ const C=[...cand].slice(0,28),used=new Set(),orders=[],caps=new Set(W.map(e=>HOMEK2(s,e)));
+ const val=r=>{const v=RG[r][5];return(+v[0]+ +v[1]+ +v[2])*3+(caps.has(r)?25:0)+((s.FR||{})[r]&&s.FR[r].a==n?s.FR[r].p*.4:0)};
+ // 1) 부대 하나씩: 가장 이득이 큰 목표
+ for(const u of army){let best=null;for(const r of C){if(orders.some(x=>x.r==r))continue;const E=aiEval(s,n,r,[u.id],Math.round(u.w*FRC(n).a*100),sea);if(!E)continue;const fp=((s.FR||{})[r]&&s.FR[r].a==n)?s.FR[r].p:0,sc=E.g+val(r)+E.dirs*6-E.lA*120;if((E.g>8||(fp>=50&&E.g>0))&&(!best||sc>best.sc))best={r,sc,E}}if(best){orders.push({r:best.r,u:u.id,c:Math.round(u.w*FRC(n).a*100)});used.add(u.id)}}
+ // 2) 아무도 이길 수 없으면 전군을 한곳에 모아 본다
+ if(!orders.length&&C.length){const ids=army.map(u=>u.id),c=Math.round(FRC(n).a*100);let best=null;for(const r of C){const E=aiEval(s,n,r,ids,c,sea);if(!E)continue;const fp=((s.FR||{})[r]&&s.FR[r].a==n)?s.FR[r].p:0,sc=E.g+val(r)-E.lA*100;if((E.g>5||(fp>=40&&E.g>-5))&&(!best||sc>best.sc))best={r,sc}}
+  const emax=Math.max(...W.map(e=>s.N[e].mil));
+  if(!best){let att=null;for(const r of C){const E=aiEval(s,n,r,ids,c,sea);if(!E)continue;const ex=E.lD*E.nD-E.lA*E.nA;if(N.mil>emax*1.15&&ex>1&&(!att||ex>att.ex))att={r,ex}}if(att)best={r:att.r,attr:1}}
+  if(!best&&!(s.ULT||{})[n]&&N.mil>emax*1.3&&C.length&&Math.random()<.5){o.ult=1;best={r:C.map(r=>({r,v:val(r)})).sort((a,b)=>b.v-a.v)[0].r}}
+  if(best)army.forEach(u=>{orders.push({r:best.r,u:u.id,c:Math.round(u.w*FRC(n).a*100),op:best.attr?'attr':undefined});used.add(u.id)})}
+ // 3) 공격 부대는 목표 곁으로 옮기고, 공군을 붙인다
+ orders.forEach((a,i)=>{if(sea){a.sea=1;a.nv=navy[0].id;a.op='full';if(i==0&&air[0])a.af=air[0].id;o.atk.push(a);return}const L=locOf(s,n,a.u);if(hops(s,n,L,a.r,6)>1){const st=h.filter(x=>ADJ&&ADJ[x]&&ADJ[x].has(a.r)).sort((p,q)=>hops(s,n,L,p,8)-hops(s,n,L,q,8))[0];if(st)o.mv.push({u:a.u,r:st})}if(i==0&&air[0])a.af=air[0].id;if(!a.op)a.op=(encCount(s,n,a.r)>=2?'enc':'full');o.atk.push(a)});
+ // 4) 남은 부대는 가장 위협받는 아군 지역으로
+ const threat=h.map(r=>{let t=0;(ADJ&&ADJ[r]||[]).forEach(x=>{const c=ctrl(s,x);if(c&&W.includes(c))t+=s.N[c].mil});const F=(s.FR||{})[r];if(F&&W.includes(F.a))t+=F.p*2;return{r,t}}).filter(x=>x.t>0).sort((a,b)=>b.t-a.t);
+ army.filter(u=>!used.has(u.id)).forEach((u,i)=>{const T=threat[i%Math.max(1,Math.min(3,threat.length))];if(T&&locOf(s,n,u.id)!=T.r)o.mv.push({u:u.id,r:T.r})});
+ // 5) 강화: 이기면 점령지를 받고 끝내고, 지면 배상을 내고서라도 끝낸다
+ W.forEach(e=>{if(!alive(s,e))return;const ws=warScore(s,n,e),occ=Object.keys(s.R).filter(r=>s.R[r].o==e&&s.R[r].occ==n);
+  if(ws>=3&&occ.length>=2&&Math.random()<.35)o.props.push({to:e,ty:'peace',take:occ.slice(0,Math.min(4,Math.floor(ws))),pay:ws>=6?50:0,pup:0});
+  else if(ws<=-3&&Math.random()<.4)o.props.push({to:e,ty:'peace',take:[],pay:N.g>60?-50:0,pup:0})})}
 let NFc={};
 function opMods(s,a,rid,o,F){const op=o.op||'full',r={att:1,ca:1,cd:1,g:1};
  if(op=='enc'){if(encCount(s,a,rid)>=2){r.att=1.2;r.cd=1.6}else r.att=.95}

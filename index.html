@@ -1084,7 +1084,7 @@ const TBTH={
  urban:{n:'시가지',ic:'🏚',top:0x86817a,top2:0x79746d,tile:0xaaa398,tileA:0xcbc6ba,cliff:0x6c665d,cliff2:0x48443e,sky:0x9eadbb,sky2:0xd2d8dc,fog:0xbec6cc,sun:0xffeedd,hemi:[0xdde6ee,0x55504a],deco:'urban'},
  marsh:{n:'습지',ic:'🌿',top:0x66794a,top2:0x5a6c42,tile:0x919f72,tileA:0xaebe8b,cliff:0x5d5841,cliff2:0x3d3a2b,sky:0x9db6bd,sky2:0xd2dedc,fog:0xbccbc8,sun:0xf4ead0,hemi:[0xd0e0e0,0x4a5038],deco:'marsh'},
  jungle:{n:'밀림',ic:'🌴',top:0x3f6a2c,top2:0x4c7a34,tile:0x7f9a58,tileA:0x93b868,cliff:0x5c4a30,cliff2:0x3b301f,sky:0x8cc0bf,sky2:0xd4ece4,fog:0xb4d2c8,sun:0xfff0c8,hemi:[0xd0f0e0,0x355a28],deco:'jungle'}};
-function tbThemeOf(I){if(I.sea)return'beach';if(I.win||I.ter=='tundra')return'winter';return{plain:I.coast?'beach':'plain',forest:'forest',mtn:'mtn',hill:'mtn',urban:'urban',desert:'desert',marsh:'marsh',jungle:'jungle'}[I.ter]||'plain'}
+function tbThemeOf(I){if(I.sea||(I.A||[]).some(p=>p.ty=='shp'))return'beach';if(I.win||I.ter=='tundra')return'winter';return{plain:I.coast?'beach':'plain',forest:'forest',mtn:'mtn',hill:'mtn',urban:'urban',desert:'desert',marsh:'marsh',jungle:'jungle'}[I.ter]||'plain'}
 const TB3X=c=>Math.sqrt(3)*c-5.63;
 function tb3Hex(c,r){return[Math.sqrt(3)*(c+.5*(r&1))-5.63,1.5*r-5.25]}
 // ── 재료·모형 ──
@@ -1162,7 +1162,7 @@ function tb3Unit(ty,M){const g=new THREE.Group(),u={g,ty};
   const hu=new THREE.Mesh(hg,M.hull);hu.castShadow=true;hu.receiveShadow=true;hu.position.y=-.08;g.add(hu);const st=tb3Box(1.9,.04,.08,M.body);st.position.set(-.05,.17,.245);g.add(st);const st2=st.clone();st2.position.z=-.245;g.add(st2);
   const dk=tb3Box(1.5,.05,.4,M.deck);dk.position.set(.04,.24,0);g.add(dk);if(M.n){for(const s of[-1,1]){const d=tb3Decal(tb3Insig(M.n),.18);d.position.set(.55,.12,s*.252);if(s<0)d.rotation.y=Math.PI;d.userData.keep=1;g.add(d)}}const s1=tb3Box(.46,.26,.3,M.light);s1.position.set(.08,.4,0);g.add(s1);const s2=tb3Box(.26,.18,.24,M.light);s2.position.set(.02,.62,0);g.add(s2);
   const fn=tb3Cyl(.07,.09,.32,10,M.dark);fn.position.set(.38,.5,0);fn.rotation.z=-.12;g.add(fn);const ms=tb3Cyl(.012,.012,.7,4,M.metal);ms.position.set(-.06,.92,0);g.add(ms);
-  u.tur=[-.62,.72].map(x=>{const t=new THREE.Group();t.position.set(x,.33,0);t.rotation.y=x<0?-Math.PI/2:Math.PI/2;g.add(t);const b=tb3Cyl(.12,.13,.1,10,M.dark);t.add(b);for(const s of[-1,1]){const br=tb3Cyl(.022,.022,.42,6,M.metal);br.rotation.x=Math.PI/2;br.position.set(s*.045,.03,.24);t.add(br)}return t});tb3Merge(g);u.tur.forEach(t=>tb3Merge(t));u.mz=new THREE.Vector3(-.85,.36,0)}
+  u.tur=[-.62,.72].map(x=>{const t=new THREE.Group();t.position.set(x,.33,0);t.rotation.y=x<0?-Math.PI/2:Math.PI/2;g.add(t);const b=tb3Cyl(.12,.13,.1,10,M.dark);t.add(b);for(const s of[-1,1]){const br=tb3Cyl(.022,.022,.42,6,M.metal);br.rotation.x=Math.PI/2;br.position.set(s*.045,.03,.24);t.add(br)}return t});tb3Merge(g);u.tur.forEach(t=>tb3Merge(t));g.scale.setScalar(.74);u.mz=new THREE.Vector3(-.85,.36,0)}
  return u}
 // ── 지형: 떠 있는 섬, 판, 장식 ──
 function tb3Noise(seed){const P=[];const r=tbRng(seed);for(let i=0;i<6;i++)P.push([r()*6.28,1+Math.floor(r()*6),r()*.5+.2]);return a=>P.reduce((s,[ph,k,w])=>s+Math.sin(a*k+ph)*w,0)/2.2}

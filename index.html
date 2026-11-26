@@ -589,6 +589,26 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .brp,.cd,.rp,.paperN{position:relative}
 .dh,.sh,.br-h{background-image:linear-gradient(180deg,rgba(255,230,180,.06),rgba(0,0,0,0) 50%),repeating-linear-gradient(90deg,rgba(201,164,92,.05) 0 2px,transparent 2px 6px),var(--hud)!important}
 .dh b::before{content:'❖';color:var(--br);font-size:12px;margin-right:9px;vertical-align:2px}
+.parch{display:none!important}
+.leafc{position:absolute;inset:0;width:100%;height:100%;z-index:7;pointer-events:none}
+.erase{animation:erOut 9s ease forwards}
+.erase text{font:900 26px var(--serif);letter-spacing:.18em;fill:#3a2414;opacity:.85;paint-order:stroke;stroke:rgba(244,232,204,.6);stroke-width:3px}
+.erase path{fill:none;stroke:#8f1d10;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:erLine .9s ease-in .8s forwards}
+@keyframes erLine{to{stroke-dashoffset:0}}
+@keyframes erOut{0%{opacity:0}6%{opacity:1}70%{opacity:1}100%{opacity:0}}
+@media (max-width:760px){
+.bar{gap:4px!important;padding:0 4px!important}.bar .me{padding-right:4px;border-right:0}.bar .me b{display:none}
+.bar .res{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;gap:3px}.bar .res::-webkit-scrollbar{display:none}
+.bar .rs{height:34px;padding:2px 6px 2px 3px;gap:4px;flex:none}.bar .rs .ri{padding:2px;width:14px!important;height:14px!important}.bar .rs small{display:none!important}.bar .rs b{font-size:13px}.bar .rs .dl{display:none}
+.bar .aub,.bar .date{display:none}.warchip{font-size:11px;padding:3px 6px;white-space:nowrap;flex:none}
+#rdy{height:34px;padding:0 10px;font-size:12px!important;letter-spacing:.02em;white-space:nowrap;flex:none}
+.tb svg{width:20px;height:20px}.doc{right:0;top:auto}.doc::before{display:none}
+}
+.bk{background:#efe2c2 var(--ptex) center/cover!important;border:1px solid #000!important;border-image:none!important;box-shadow:0 0 0 4px var(--w2),0 0 0 5px var(--br2),0 26px 60px rgba(0,0,0,.6)!important}
+.bk>*:first-child{background:transparent!important;box-shadow:inset -22px 0 26px -16px rgba(60,36,12,.5)}
+.bk>*:nth-child(2){background:transparent!important;box-shadow:inset 22px 0 26px -16px rgba(60,36,12,.4)}
+.bk::before{content:'';position:absolute;inset:-6px;pointer-events:none;z-index:6;background:var(--c1) top left/30px 30px no-repeat,var(--c2) top right/30px 30px no-repeat,var(--c3) bottom left/30px 30px no-repeat,var(--c4) bottom right/30px 30px no-repeat}
+.bk button.on,.bk .on{background:var(--hud)!important;color:var(--brt)!important;border-color:#000!important;box-shadow:inset 0 0 0 1px var(--br),0 2px 0 rgba(0,0,0,.3)!important}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -624,7 +644,7 @@ function newGame(mode,secs){const e=mode=='w2',Y0=e?1936:1910,T=mode=='w1'?36:mo
  for(const r in RG){S.R[r]={o:RG[r][e?4:3],occ:null};own.add(S.R[r].o)}
  own.forEach(n=>{const p=P[n]||2;S.N[n]={g:p*30,pop:p*10+20,ind:p*8+10,sup:60,mil:p*6,mil0:p*6,st:{f:20,s:20,o:20},lord:L[n]||null,ind2:0,start:held(S,n).length}});
  (e?AL36:AL10).forEach(([a,b],i)=>S.TR.push({id:'i'+i,ty:'ally',a,b,st:'on'}));return S}
-function nb(s,n){const h=held(s,n),o=new Set();for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
+function nb(s,n){const h=held(s,n),o=new Set();if(ADJ){h.forEach(x=>(ADJ[x]||[]).forEach(r=>{const R=s.R[r];if(R){const d=R.occ||R.o;if(d!=n)o.add(d)}}));return[...o]}for(const r in s.R){const d=s.R[r].occ||s.R[r].o;if(d!=n&&h.some(x=>dist(x,r)<=1))o.add(d)}return[...o]}
 function attack(s,a,rid,c,why,o){const R=s.R[rid];if(!R)return;const d=R.occ||R.o;if(d==a||!alive(s,a))return;o=o||{};const adj=held(s,a).some(x=>dist(x,rid)<=1);if(!adj){if(o.op=='para'&&o.af&&paraOK(s,a,rid))o.sea=0;else{if(!o.nv||!seaOK(s,a,rid))return;o.sea=1}}else o.sea=0;
  const p=pact(s,a,d,'nap')||pact(s,a,d,'ally');if(p){p.st='x';s.N[a].sup-=10;s.log.push(`${nm(a,yr(s))}이(가) ${nm(d,yr(s))}와의 조약을 파기했다`)}
  if(!atWar(s,a,d)){s.W.push(a+'|'+d);s.log.push(`${nm(a,yr(s))}→${nm(d,yr(s))} 선전포고`+(why?` (${why})`:''));
@@ -664,6 +684,11 @@ function ai(s,n){const N=s.N[n],o={focus:'ind',atk:[],props:[]},w=wars(s,n),sh=O
  if(!w.length&&qt(s)==1&&N.sup>55&&Math.random()<.15&&({GER:1938,ITA:1936,JPN:1937,RUS:1939}[NID(n)]||9999)<=yr(s)){const x=ns.find(x=>!pact(s,n,x)&&s.N[x].mil*1.8<N.mil&&!s.N[x].lord);if(x){const r=Object.keys(s.R).find(r=>(s.R[r].occ||s.R[r].o)==x&&held(s,n).some(h=>dist(h,r)<=1));if(r){o.atk.push({r,c:50});s.log.push(`${nm(n,yr(s))}: 자원 부족과 군사 우위로 팽창 결정`)}}}
  if(!(s.ULT||{})[n]&&w.length&&(Object.values(s.R).some(R=>R.o==n&&R.occ)||N.mil<Math.max(0,...w.map(e=>s.N[e]?s.N[e].mil:0))*.7)&&Math.random()<.35)o.ult=1;
  return o}
+// 땅을 모두 잃은 나라는 사라지고, 점령한 나라가 그 땅을 갖는다
+function annexDead(s){const y=yr(s);s.DEAD=[];for(const n in s.N){if(s.N[n].dead||held(s,n).length)continue;const own=Object.keys(s.R).filter(r=>s.R[r].o==n);if(!own.length)continue;const cnt={};own.forEach(r=>{const o=s.R[r].occ;if(o&&o!=n)cnt[o]=(cnt[o]||0)+1});const by=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];if(!by)continue;
+ own.forEach(r=>{const R=s.R[r];R.o=R.occ&&R.occ!=n?R.occ:by;R.occ=null;if(s.FR)delete s.FR[r];if(s.ENT)delete s.ENT[r]});
+ s.W=s.W.filter(w=>!w.split('|').includes(n));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==n||t.b==n))t.st='x'});for(const m in s.N)if(s.N[m].lord==n)s.N[m].lord=null;
+ Object.assign(s.N[n],{dead:1,by,mil:0});s.N[by].sup=Math.min(100,s.N[by].sup+4);s.DEAD.push({n,by,c:own.length});s.log.push(`${nm(n,y)} 멸망 — 영토가 ${nm(by,y)}에 병합되었다`)}}
 function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
  ns.forEach(n=>{const h=P_h(s,n);oo[n]=h?(ords[n]||{focus:'ind',atk:[],props:[]}):ai(s,n)});
  // 이벤트
@@ -702,7 +727,7 @@ function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 
  s.PJ.forEach(p=>{const d=PJC[p.id],N=s.N[p.n];if(p.ok&&d&&d.gpt&&N)N.g+=d.gpt});
  ns.forEach(n=>{const o=oo[n]||{},N=s.N[n];(o.proj||[]).forEach(id=>{const d=PJC[id];if(!d||s.PJ.some(p=>p.id==id&&p.n==n)||N.g<d.cost)return;N.g-=d.cost;s.PJ.push({id,n,t0:s.t,left:d.q});s.log.push(`${nm(n,y)}: ${d.name} 착공`)});
   if(o.cargo&&N.st[o.cargo]!=null)for(const k in N.st)N.st[k]=Math.max(0,N.st[k]+(k==o.cargo?2:-1))});
- s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
+ annexDead(s);s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
 function score(s,n){return score0(s,n)+Object.values(((s.GO||{})[n])||{}).filter(g=>g.st=='ok').length*25}
 function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+held(s,n).length*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
 async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
@@ -711,7 +736,7 @@ const mine=()=>S&&Object.entries(S.P).find(([u])=>u==uid)?.[1]||O.want||null;
 async function join(c,create,mode,secs){code=c.toUpperCase().replace(/[^A-Z0-9]/g,'')||'ROOM';
  const d=db.doc('rooms/'+code),sn=await d.get();
  if(sn.exists)S=JSON.parse(sn.data().s);else if(create){S=newGame(mode,secs);await save(S)}else{alert('방이 없어요');return}
- host=S.host==uid;unsub.forEach(u=>u());unsub=[d.onSnapshot(x=>{if(x.exists){const n=JSON.parse(x.data().s),base=PREV&&PREV.t<n.t?PREV:S;PREV=null;if(!base||n.t!=base.t||n.phase!=base.phase){O={want:O.want}}const prev=base,adv=prev&&n.t>prev.t;const pt=adv&&prev.phase!='lobby'&&$('#cv')&&pageTurn();S=n;host=S.host==uid;render();if(adv){if(pt)setTimeout(()=>cine(prev),1400);else cine(prev)}}}),
+ host=S.host==uid;unsub.forEach(u=>u());unsub=[d.onSnapshot(x=>{if(x.exists){const n=JSON.parse(x.data().s),base=PREV&&PREV.t<n.t?PREV:S;PREV=null;if(!base||n.t!=base.t||n.phase!=base.phase){O={want:O.want}}const prev=base,adv=prev&&n.t>prev.t;const pt=adv&&prev.phase!='lobby'&&$('#cv')&&pageTurn();S=n;host=S.host==uid;render();if(adv){if(pt)setTimeout(()=>cine(prev),1850);else cine(prev)}}}),
   db.collection(`rooms/${code}/orders`).onSnapshot(q=>{ORD={};q.forEach(x=>ORD[x.id]=x.data());if(host)hostTick()})];render()}
 let busy=false,PREV=null,LASTPULL=0;async function hostTick(){if(!host||!S||S.phase!='play'||busy)return;if(O&&O.t==S.t)ORD[uid]=Object.assign({},ORD[uid],O);
  if(Date.now()-LASTPULL>2500&&db){LASTPULL=Date.now();try{const q=await db.collection(`rooms/${code}/orders`).get();q.forEach(x=>{if(x.id!=uid||!(O&&O.t==S.t))ORD[x.id]=x.data()})}catch(e){}}
@@ -1974,7 +1999,8 @@ function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R);if(sig==BASESIG
   L.forEach(a=>{if(used.has(a.k))return;L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25)).forEach(c=>used.add(c.k));const P=innerPt(a);if(!P)return;const fs=Math.min(24,P.w*.92/(t.length*1.4),P.h*.8);if(fs<.6)return;LB.push({t,x:P.x,y:P.y,fs})})});
  LB.sort((a,b)=>b.fs-a.fs);const plc=[];LABS=[];LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);LABS.push(l)});requestDraw()}
 function flash(){FLT=Date.now();clearInterval(window.__fli);window.__fli=setInterval(()=>{FLON=!FLON;requestDraw();if(Date.now()-FLT>5600){clearInterval(window.__fli);FLON=0;requestDraw()}},380)}
-function drawMap(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H=CV.height,v=camVB(),sc=W/v[2],U=dpr/sc,mv=MOVING,world=!V.nat&&V.tab!='mil';
+function drawMap(){drawMap0();if(PARCH_C&&CX&&CT&&S){CX.setTransform(1,0,0,1,0,0);CX.globalCompositeOperation='multiply';CX.globalAlpha=.92;CX.drawImage(PARCH_C,0,0,CV.width,CV.height);CX.globalAlpha=1;CX.globalCompositeOperation='source-over'}}
+function drawMap0(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H=CV.height,v=camVB(),sc=W/v[2],U=dpr/sc,mv=MOVING,world=!V.nat&&V.tab!='mil';
  CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);
  const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);
  const keep=V.nat?new Set(V.nat=='KOR'&&S.N.KOR&&S.N.KOR.lord?['Korea','Dem. Rep. Korea','China'].map(e=>NK[e]):held(S,V.nat)):null;
@@ -2082,6 +2108,7 @@ function buildOverlay(){if(!$('#map'))return;feats();const me=mine(),vn=V.nat,vp
  [...new Set([me,vn].filter(x=>x&&S.N[x]&&alive(S,x)))].forEach(n=>{const c=capOf(n),L=socialOf(n),PO=(S.PO||{})[n]||{},cats=[...new Set(Object.keys(PO).map(id=>POL[id]&&POL[id].c).filter(Boolean))].slice(0,6);
   if(L.length)ft+=`<g class="soc" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}">${L.map(([k,t,d],i)=>`<g transform="translate(${(i-(L.length-1)/2)*22} -34)"><circle r="10" class="socb"/>${SOC[k]}<title>${t} — ${d}</title></g>`).join('')}</g>`;
   if(n==me&&cats.length)ft+=`<g class="psl" data-sx="${c[0].toFixed(3)}" data-sy="${c[1].toFixed(3)}" data-act2="book">${cats.map((k,i)=>`<g transform="translate(${(i-(cats.length-1)/2)*19} 26)"><circle r="8.5" fill="#8f2a17" stroke="#efe4c8" stroke-width="1.2"/><g transform="translate(-6.6 -6.6) scale(.55)" fill="none" stroke="#f6e3cc" stroke-width="2">${CIC[PCAT[k][1]]}</g><title>${PCAT[k][0]} 정책 시행 중</title></g>`).join('')}</g>`});
+ (V.erase||[]).forEach(p=>{const w=p.t.length*34+40;ft+=`<g data-sx="${p.x.toFixed(3)}" data-sy="${p.y.toFixed(3)}"><g class="erase"><text y="8" text-anchor="middle">${esc(p.t)}</text><path d="M${-w/2} 1 C${-w/4} -3 ${w/4} 5 ${w/2} -1" pathLength="1"/><path d="M${-w/2+6} 7 C${-w/4} 3 ${w/4} 10 ${w/2-4} 4" pathLength="1" style="animation-delay:1.5s"/></g></g>`});
  V.ink.forEach(p=>ft+=`<g data-sx="${p.x.toFixed(3)}" data-sy="${p.y.toFixed(3)}"><g class="inkst" style="animation-delay:${p.d||0}s"><rect x="${-p.t.length*6.5-10}" y="-15" width="${p.t.length*13+20}" height="26" rx="2"/><text y="4" text-anchor="middle">${esc(p.t)}</text></g></g>`);
  V.pulse.forEach(p=>ft+=`<g data-sx="${p.x.toFixed(3)}" data-sy="${p.y.toFixed(3)}"><circle class="pulse" r="16"/><circle class="pulse" r="16" style="animation-delay:.5s"/></g>`);
  $('#fts').innerHTML=ft;LCD=1;SCL=[...$('#map').querySelectorAll('[data-sx]')];SCK=[...$('#map').querySelectorAll('[data-sk]')];SCL.forEach(e=>{e.__x=+e.dataset.sx;e.__y=+e.dataset.sy});applyCam()}
@@ -2114,19 +2141,43 @@ function makeParch(w,h,seed,o){o=o||{};const R=rngS(seed),c=document.createEleme
  if(o.edge!==false){const e=Math.min(w,h)*.16;const g=x.createLinearGradient(0,0,e,0);[[0,0,e,0,0,0,e,h],[w,0,w-e,0,w-e,0,e,h],[0,0,0,e,0,0,w,e],[0,h,0,h-e,0,h-e,w,e]].forEach(([a,b,c2,d,rx,ry,rw,rh])=>{const gg=x.createLinearGradient(a,b,c2,d);gg.addColorStop(0,'rgba(95,58,22,.55)');gg.addColorStop(.35,'rgba(120,80,35,.18)');gg.addColorStop(1,'rgba(120,80,35,0)');x.fillStyle=gg;x.fillRect(rx,ry,rw,rh)});
   for(let i=0;i<260;i++){const side=R()*4|0,t=R(),px=side<2?(side?w:0)+(side?-1:1)*R()*e*.25:t*w,py=side<2?t*h:(side==3?h:0)+(side==3?-1:1)*R()*e*.25,r=4+R()*18;const gg=x.createRadialGradient(px,py,0,px,py,r);gg.addColorStop(0,'rgba(80,45,15,.22)');gg.addColorStop(1,'rgba(80,45,15,0)');x.fillStyle=gg;x.beginPath();x.arc(px,py,r,0,7);x.fill()}}
  return c}
-let PARCH_URL='',PANEL_URL='';
-function parchInit(){try{const mw=$('#mapw');if(!mw)return;const w=Math.min(1800,Math.round(mw.clientWidth||1200)),h=Math.min(1200,Math.round(mw.clientHeight||800));const c=makeParch(w,h,7331,{base:'#f4e8cc',stains:4,folds:2});PARCH_URL=c.toDataURL('image/jpeg',.88);const p=$('#parch');if(p)p.style.backgroundImage=`url(${PARCH_URL})`;
+let PARCH_URL='',PANEL_URL='',PARCH_C=null;
+function parchInit(){try{const mw=$('#mapw');if(!mw)return;const w=Math.min(1800,Math.round(mw.clientWidth||1200)),h=Math.min(1200,Math.round(mw.clientHeight||800));const c=makeParch(w,h,7331,{base:'#f4e8cc',stains:4,folds:2});PARCH_C=c;PARCH_URL='';requestDraw();
  if(!PANEL_URL){PANEL_URL=makeParch(640,900,4242,{base:'#f3e6c6',stains:2,folds:1,edge:true}).toDataURL('image/jpeg',.86);document.documentElement.style.setProperty('--ptex',`url(${PANEL_URL})`)}}catch(e){}}
-// 분기 넘김: 지금 지도를 한 장 떠서 책장처럼 넘긴다
-function pageTurn(){const mw=$('#mapw');if(!mw||!CV||document.hidden)return;let url;try{url=CV.toDataURL('image/jpeg',.82)}catch(e){return}
- mw.querySelectorAll('.leaf').forEach(e=>e.remove());window.__turnT=Date.now();setTimeout(()=>{if($('#play'))ui()},1550);const L=document.createElement('div');L.className='leaf';
- L.innerHTML=`<div class="lf-under"></div><div class="lf-p"><div class="lf-f"><i style="background-image:url(${url})"></i><b style="background-image:url(${PARCH_URL})"></b><em></em></div><div class="lf-b" style="background-image:url(${PARCH_URL})"><i style="background-image:url(${url})"></i></div></div>`;
- mw.appendChild(L);try{sfx('page')}catch(e){}setTimeout(()=>L.remove(),1700);return true}
+// 분기 넘김: 지도를 그린 양피지가 모서리부터 둥글게 말려 올라간다
+function pageTurn(){const mw=$('#mapw');if(!mw||!CV||document.hidden)return false;const W=CV.width,H=CV.height;if(!W||!H)return false;
+ const old=document.createElement('canvas');old.width=W;old.height=H;old.getContext('2d').drawImage(CV,0,0);
+ mw.querySelectorAll('.leafc').forEach(e=>e.remove());const c=document.createElement('canvas');c.className='leafc';c.width=W;c.height=H;mw.appendChild(c);const x=c.getContext('2d');
+ window.__turnT=Date.now();setTimeout(()=>{if($('#play'))ui()},2050);try{sfx('page')}catch(e){}
+ const dpr=CV.__dpr||1,a=-11*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cx=W/2,cy=H/2;
+ // 회전한 좌표계(말림선이 세로)에서 종이의 범위
+ const P=[[0,0],[W,0],[0,H],[W,H]].map(([px,py])=>[(px-cx)*ca+(py-cy)*sa,-(px-cx)*sa+(py-cy)*ca]),xmin=Math.min(...P.map(p=>p[0])),xmax=Math.max(...P.map(p=>p[0])),ymin=Math.min(...P.map(p=>p[1]))-40,ymax=Math.max(...P.map(p=>p[1]))+40;
+ const tex=PARCH_C||old,T0=performance.now(),D=1900;
+ const frame=now=>{const k=Math.min(1,(now-T0)/D),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+  const span=xmax-xmin,Lmax=span,X=xmax-e*(span+150*dpr),L=Math.max(0,xmax-X),r=Math.min(105,(18+2.1*Math.sqrt(L/dpr)))*dpr;
+  x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,W,H);
+  const toF=()=>x.setTransform(ca,sa,-sa,ca,cx,cy),fromF=()=>x.transform(ca,-sa,sa,ca,0,0);
+  // 1) 아직 펼쳐진 부분
+  toF();x.save();x.beginPath();x.rect(xmin-50,ymin,Math.max(0,X-xmin+50),ymax-ymin);x.clip();x.save();fromF();x.drawImage(old,-cx,-cy);x.restore();
+  // 들리기 시작한 종이의 음영
+  const lg=x.createLinearGradient(X-r*1.6,0,X,0);lg.addColorStop(0,'rgba(60,36,12,0)');lg.addColorStop(.7,'rgba(255,244,214,.12)');lg.addColorStop(1,'rgba(60,36,12,.28)');x.fillStyle=lg;x.fillRect(X-r*1.6,ymin,r*1.6,ymax-ymin);x.restore();
+  // 2) 말린 종이가 새 지도 위에 드리운 그림자
+  const sg=x.createLinearGradient(X+r*.6,0,X+r*2.6,0);sg.addColorStop(0,'rgba(30,18,6,.45)');sg.addColorStop(1,'rgba(30,18,6,0)');x.fillStyle=sg;x.fillRect(X+r*.6,ymin,r*2,ymax-ymin);
+  // 3) 원통: 종이 뒷면이 감겨 있다
+  if(X<xmax+r){x.save();x.beginPath();x.rect(X,ymin,r,ymax-ymin);x.clip();
+   const n=Math.max(8,Math.round(r/2));for(let i=0;i<n;i++){const t0=i/n,t1=(i+1)/n,s0=Math.sin(t0*Math.PI/2)*r,s1=Math.sin(t1*Math.PI/2)*r;const sx=((xmax-X)*.6+t0*r*1.6)%Math.max(1,tex.width-4);x.drawImage(tex,sx,0,Math.max(1,r*1.6/n),tex.height,X+r-s1,ymin,Math.max(.6,s1-s0)+.6,ymax-ymin)}
+   // 비치는 잉크
+   x.globalAlpha=.07;x.save();x.translate(2*X+r,0);x.scale(-1,1);fromF();x.drawImage(old,-cx,-cy);x.restore();x.globalAlpha=1;
+   const cg=x.createLinearGradient(X,0,X+r,0);cg.addColorStop(0,'rgba(40,22,6,.55)');cg.addColorStop(.18,'rgba(60,36,12,.2)');cg.addColorStop(.55,'rgba(255,248,226,.28)');cg.addColorStop(.78,'rgba(120,80,40,.05)');cg.addColorStop(1,'rgba(40,22,6,.5)');x.fillStyle=cg;x.fillRect(X,ymin,r,ymax-ymin);
+   x.restore();x.strokeStyle='rgba(50,30,10,.55)';x.lineWidth=1.2*dpr;x.beginPath();x.moveTo(X+r,ymin);x.lineTo(X+r,ymax);x.stroke()}
+  if(k<1)requestAnimationFrame(frame);else c.remove()};
+ requestAnimationFrame(frame);return true}
+function warmPaths(){if(!CT)return;let i=0;const f=()=>{const end=performance.now()+10;while(i<CT.length&&performance.now()<end){p2(CT[i]);innerPt(CT[i]);i++}if(i<CT.length)setTimeout(f,0)};f()}
 function shell(){if($('#play'))return;app.className='';app.innerHTML=`<div id="play" class="play"><header class="bar" id="bar"></header><nav class="tabs" id="tabs"></nav>
 <div class="mapw" id="mapw"><canvas id="cv"></canvas><div id="parch" class="parch"></div><svg id="map" xmlns="http://www.w3.org/2000/svg"><defs id="defs"><pattern id="gridhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45) scale(.14)"><rect width="1.4" height="6" fill="#b08a2e" opacity=".55"/></pattern><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8f2a17"/></marker></defs><g id="ovl"></g><g id="fts"></g></svg>
 <div class="grain" id="grain"></div><div id="plate" class="plate"></div><div class="zm"><button data-act="zin" aria-label="확대">+</button><button data-act="zout" aria-label="축소">−</button><button data-act="zhome" aria-label="내 국가로">⌂</button></div>
 <div id="tags"></div><div id="pop"></div><section id="sheet" class="sheet"></section><aside id="doc" class="doc"></aside><div id="agenda" class="agenda" data-act="agenda"></div></div><div id="book" class="book"></div><div id="brw" class="brw"></div><div id="cards" class="cards"></div><div id="endw"></div><div id="resp" class="resp"></div><div id="toast" class="toast"></div></div>`;
- grain();const sv=$('#map'),mw=$('#mapw');CV=$('#cv');CX=CV.getContext('2d');HITX=document.createElement('canvas').getContext('2d');const rs=()=>{const r=mw.getBoundingClientRect();VW=r.width||1;VH=r.height||1;const d=Math.min(2,window.devicePixelRatio||1);CV.__dpr=d;CV.width=Math.round(VW*d);CV.height=Math.round(VH*d);CV.style.width=VW+'px';CV.style.height=VH+'px';applyCam();clearTimeout(window.__pt);window.__pt=setTimeout(parchInit,250)};new ResizeObserver(rs).observe(mw);rs();
+ grain();setTimeout(warmPaths,150);const sv=$('#map'),mw=$('#mapw');CV=$('#cv');CX=CV.getContext('2d');HITX=document.createElement('canvas').getContext('2d');const rs=()=>{const r=mw.getBoundingClientRect();VW=r.width||1;VH=r.height||1;const d=Math.min(2,window.devicePixelRatio||1);CV.__dpr=d;CV.width=Math.round(VW*d);CV.height=Math.round(VH*d);CV.style.width=VW+'px';CV.style.height=VH+'px';applyCam();clearTimeout(window.__pt);window.__pt=setTimeout(parchInit,250)};new ResizeObserver(rs).observe(mw);rs();
  const PTS={};let mv=0,lastTap=0,lastR=null;
  sv.addEventListener('pointerdown',e=>{for(const k in PTS)if(k!=e.pointerId&&e.pointerType=='mouse')delete PTS[k];PTS[e.pointerId]=[e.clientX,e.clientY];mv=0;cancelAnimationFrame(ANIM);ANIM=0});
  window.addEventListener('pointermove',e=>{if(!PTS[e.pointerId])return;if(e.pointerType=='mouse'&&!e.buttons){delete PTS[e.pointerId];return}const ks=Object.keys(PTS),o=PTS[e.pointerId];
@@ -2496,7 +2547,7 @@ function ui(){if(!S||S.phase=='lobby'||!$('#play'))return;const me=mine();PCTN=V
  const bk=$('#book');if(V.bk.open){const r=bk.querySelector('.bk-r'),st=r?r.scrollTop:0;bk.innerHTML=bookHTML();bk.className='book on';const r2=bk.querySelector('.bk-r');if(r2&&!V.bk.reset)r2.scrollTop=st;V.bk.reset=0}else bk.className='book';
  const bw=$('#brw');if(V.br){const h=brHTML();if(bw.__h!==h){bw.innerHTML=h;bw.__h=h}bw.className='brw on'}else{bw.className='brw';bw.innerHTML='';bw.__h=''}
  if(V.news&&!$('#news')&&!V.br)newsShow();
- if(V.cd.auto&&!V.news&&!V.br&&!$('#news')&&unanswered().length&&!(Date.now()-(window.__turnT||0)<1500)){V.cd.auto=0;V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]))}
+ if(V.cd.auto&&!V.news&&!V.br&&!$('#news')&&unanswered().length&&!(Date.now()-(window.__turnT||0)<2000)){V.cd.auto=0;V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]))}
  const cw=$('#cards');if(V.cd.open&&myCards().length){const h=cardHTML();if(cw.__h!==h){cw.innerHTML=h;cw.__h=h}cw.className='cards on'}else{cw.className='cards';cw.innerHTML='';cw.__h=''}
  const rp=$('#resp');if(V.res){rp.innerHTML=resPop(V.res);rp.className='resp on'}else{rp.className='resp';rp.innerHTML=''}
  const ew=$('#endw');if(S.phase=='end'&&!V.endx){if(!ew.firstChild)ew.innerHTML=endHTML()}else ew.innerHTML=''}
@@ -2560,6 +2611,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
 // ════════ 분기 전환: 지도 강조 + 신문 ════════
 function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S);feats();V.cd.auto=1;V.cd.open=0;V.cd.i=0;sfx('bell');setTimeout(()=>sfx('paper'),700);
  if(me&&S.N[me]){const a=((p.PO||{})[me])||{},b=((S.PO||{})[me])||{},c=capOf(me);V.ink=[];Object.keys(b).filter(id=>!a[id]&&POL[id]).forEach((id,i)=>V.ink.push({x:c[0],y:c[1],t:'공포 · '+POL[id].n,d:i*.6}));Object.keys(a).filter(id=>!b[id]&&POL[id]).forEach((id,i)=>V.ink.push({x:c[0],y:c[1],t:'폐지 · '+POL[id].n,d:(i+2)*.6}));setTimeout(()=>{V.ink=[];if($('#play'))ui()},8000);if((S.BT||[]).some(x=>x.a==me||x.d==me))setTimeout(()=>sfx('boom'),400)}
+ V.erase=(S.DEAD||[]).map(d=>{const L=Object.keys(p.R).filter(r=>p.R[r].o==d.n&&LBL[r]);if(!L.length)return null;const sx=L.reduce((a,r)=>a+LBL[r][0],0)/L.length,sy=L.reduce((a,r)=>a+LBL[r][1],0)/L.length;return{x:sx,y:sy,t:nm(d.n,yr(p))}}).filter(Boolean);if(V.erase.length){setTimeout(()=>{V.erase=[];if($('#play'))ui()},9000)}
  FL=new Set(Object.keys(S.R).filter(r=>p.R[r]&&(p.R[r].o!=S.R[r].o||p.R[r].occ!=S.R[r].occ)));flash();
  if(me&&p.N[me]&&S.N[me]){const a=p.N[me],b=S.N[me];V.dl={g:b.g-a.g,f:b.st.f-a.st.f,i:b.ind-a.ind,t:Date.now()};setTimeout(()=>{if($('#bar'))$('#bar').innerHTML=barHTML()},7200)}
  const ev=[],pos=(id)=>{const d=PJC[id];if(d.p){const m=d.p[Math.floor(d.p.length/2)];return LL(m[0],m[1])}if(d.at2)return LL(d.at2[0],d.at2[1]);const f=FTI[d.pid+'.'+d.at];return f?[f.x,f.y]:capOf(natOf(d.pid))};
@@ -2573,6 +2625,7 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
  (S.DC?Object.entries(S.DC):[]).forEach(([n,L])=>{const old=((p.DC||{})[n])||[];L.filter(id=>!old.includes(id)&&!EVDEC.has(id)).forEach(id=>{const d=DECS.find(x=>x.id==id);if(d&&d.n!='*')ev.push({pri:n==me?88:(held(S,n).length>=5?70:40),h:`${nm(n,y)}, ${d.t}`,s:d.h,at:capOf(n),ty:'border'})})});
  if(me&&p.N[me]&&S.N[me]&&p.N[me].lord&&!S.N[me].lord)ev.push({pri:99,h:`${nm(me,y)}, 독립 선포`,s:'국내 영토와 과세권을 확보했다.',at:capOf(me),ty:'border'});
  if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국 정부는 다음 분기 예산을 짜는 중이다.',at:me?capOf(me):[500,280],ty:'none'})}
+ (S.DEAD||[]).forEach(d=>{ev.push({pri:d.n==me?100:d.by==me?98:90,h:`${nm(d.n,y)} 멸망`,s:`마지막 영토를 잃었다. ${d.c}개 지역이 ${nm(d.by,y)}에 병합되고, 지도에서 그 이름이 지워졌다.`,at:capOf(d.by),ty:'border'})});
  (S.UE||[]).forEach(e=>{const D=ultOf(e.n);ev.push({pri:e.n==me?97:wars(S,me).includes(e.n)?95:72,h:`결전 — ${nm(e.n,y)}, ${D[0]}`,s:`${D[1]} ${e.x?e.x+'.':''} (열세 ${e.u}배)`,at:capOf(e.n),ty:'border'})});
  (S.BT||[]).forEach(b=>{const inv=b.a==me||b.d==me;if(!inv&&Math.abs(b.g)<40)return;ev.push({pri:inv?(b.d==me?92:86):45,h:`${RG[b.rid][0]} ${b.sea?'상륙전':'전투'} — ${nm(b.a,y)} ${b.fail?'상륙 실패':b.cap?'점령':b.g>0?b.g+'% 진격':'공세 저지'}`,s:`${nm(b.a,y)} 군이 ${nm(b.d,y)} 방어선을 공격했다. 공격 측 군사력 −${pc(b.ca,b.m0||1)}, 방어 측 −${pc(b.cd,b.d0||1)}. 전선 진척 ${b.p}%.`,at:LBL[b.rid],sel:'r:'+b.rid,ty:'border'})});
  (S.EH||[]).forEach(h=>{const e=EVI[h.id];if(!e)return;const mj=PF[PID(h.n)]||held(S,h.n).length>=6;if(e.n=='*'&&h.n!=me)return;if(!mj&&h.n!=me)return;ev.push({pri:h.n==me?(e.n=='*'?50:91):(e.n=='*'?10:68),h:`${nm(h.n,y)}, ${e.t}`,s:`“${e.o[h.i].t}” — ${e.x.split('. ')[0]}.`,at:capOf(h.n),ty:'mail'})});

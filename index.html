@@ -611,6 +611,25 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .bk button.on,.bk .on{background:var(--hud)!important;color:var(--brt)!important;border-color:#000!important;box-shadow:inset 0 0 0 1px var(--br),0 2px 0 rgba(0,0,0,.3)!important}
 .br-h{padding:8px 12px!important;margin:-12px -16px 8px!important}.br-h small{color:var(--brm)!important}.br-h b{color:var(--brt)!important;text-shadow:0 1px 0 #000}
 .tanki{display:inline-block;vertical-align:-2px}
+.leafsv{position:absolute;inset:0;z-index:8;pointer-events:none}.leafsv svg{width:100%;height:100%;display:block}
+#map.svhide{opacity:0;transition:none}#map{transition:opacity .45s ease}
+#repw{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:9}
+.repb{display:flex;align-items:center;gap:12px;background:var(--hud);border:1px solid #000;box-shadow:inset 0 0 0 1px var(--br2),0 8px 20px rgba(0,0,0,.45);padding:8px 14px;border-radius:3px;color:var(--brt)}
+.repb small{color:#e08a62;letter-spacing:.14em;font:700 11px var(--serif)}.repb b{font:700 20px var(--serif);min-width:150px;text-align:center}
+.rp-bar{width:180px;height:6px;background:#0f0b07;box-shadow:inset 0 0 0 1px var(--br2)}.rp-bar i{display:block;height:100%;background:var(--br)}
+.repb button{background:transparent;color:var(--brt);border:1px solid var(--br2);height:30px;border-radius:3px}
+.ultfx{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:radial-gradient(ellipse at center,rgba(40,14,6,.55),rgba(10,6,3,.88));animation:ufIn .35s ease-out;cursor:pointer}
+.uf-c{position:relative;width:min(560px,90vw);padding:30px 34px 34px;text-align:center;background:#efe2c2 var(--ptex) center/cover;border:1px solid #000;box-shadow:0 0 0 5px var(--w2),0 0 0 6px var(--br),0 30px 80px rgba(0,0,0,.7);animation:ufCard .7s cubic-bezier(.2,1.4,.4,1) both}
+.uf-c svg{box-shadow:0 0 0 1px #000,0 4px 10px rgba(0,0,0,.35);margin:6px auto 8px;display:block}
+.uf-k{font:700 13px var(--serif);letter-spacing:.4em;color:#8f2a17}
+.uf-n{font:700 16px var(--serif);color:#5a4630;letter-spacing:.12em}
+.uf-t{word-break:keep-all;font:900 clamp(28px,5vw,44px)/1.2 var(--serif);color:#1d140b;margin:10px 0 12px;animation:ufTxt .9s ease-out .35s both}
+.uf-h{font:italic 15px/1.6 var(--serif);color:#4a3a26}
+.uf-x{margin-top:10px;font:700 14px var(--serif);color:#2f6b25}
+.uf-s{position:absolute;right:26px;top:22px;font:900 20px var(--serif);color:#8f2a17;border:3px solid #8f2a17;padding:4px 12px;letter-spacing:.3em;transform:rotate(-12deg);opacity:0;animation:ufStamp .35s ease-in 1s forwards}
+@keyframes ufIn{from{opacity:0}to{opacity:1}}@keyframes ufCard{from{transform:scale(.6) rotate(-4deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ufTxt{from{letter-spacing:.5em;opacity:0;filter:blur(3px)}to{letter-spacing:.02em;opacity:1;filter:none}}
+@keyframes ufStamp{0%{opacity:0;transform:rotate(-12deg) scale(2.2)}100%{opacity:.9;transform:rotate(-12deg) scale(1)}}
 </style><script>window.echarts={registerMap:function(n,g){window.WORLD=g}}</script></head><body><div id="splash"><div class="spx"><div class="sp-img"></div><div class="sp-pb"><i id="spb"></i></div><div class="sp-lb"><span id="sps">지도 원판을 인쇄하는 중…</span><span id="spn">10%</span></div><div class="sp-q2" id="spq"></div></div></div>
 <script>(function(){var Q=[["1910","영국·프랑스·러시아의 협상과 독일·오스트리아의 동맹이 맞선다"],["1914. 6. 28","사라예보에서 오스트리아 황태자가 저격당하다"],["1919. 4. 11","상하이에서 대한민국 임시정부가 수립되다"],["1929. 10","뉴욕 증권시장 붕괴, 대공황이 세계로 번지다"],["1936. 3. 7","독일군, 라인란트 비무장지대에 진주하다"],["1936. 7","스페인에서 내전이 시작되다"]],i=0,e=document.getElementById("spq");function f(){if(!e)return;e.style.opacity=0;setTimeout(function(){e.innerHTML="<b>"+Q[i][0]+"</b>"+Q[i][1];e.style.opacity=1;i=(i+1)%Q.length},350)}f();window.__spq=setInterval(f,2600)})();</script>
 <main id="app"></main>
@@ -691,6 +710,11 @@ function annexDead(s){const y=yr(s);s.DEAD=[];for(const n in s.N){if(s.N[n].dead
  own.forEach(r=>{const R=s.R[r];R.o=R.occ&&R.occ!=n?R.occ:by;R.occ=null;if(s.FR)delete s.FR[r];if(s.ENT)delete s.ENT[r]});
  s.W=s.W.filter(w=>!w.split('|').includes(n));s.TR.forEach(t=>{if(t.st!='x'&&(t.a==n||t.b==n))t.st='x'});for(const m in s.N)if(s.N[m].lord==n)s.N[m].lord=null;
  Object.assign(s.N[n],{dead:1,by,mil:0});s.N[by].sup=Math.min(100,s.N[by].sup+4);s.DEAD.push({n,by,c:own.length});s.log.push(`${nm(n,y)} 멸망 — 영토가 ${nm(by,y)}에 병합되었다`)}}
+// 분기별 지도 기록 (타임랩스)
+function histPush(s,next){const H=s.HIST=s.HIST||{k:Object.keys(s.R).sort(),n:[],f:[]};const enc=()=>H.k.map(r=>{const R=s.R[r],o=R?(R.occ||R.o):'';let i=H.n.indexOf(o);if(i<0){H.n.push(o);i=H.n.length-1}return i.toString(36).padStart(2,'0')}).join('');if(!H.f.length&&next)H.f.push(enc());if(next)H.f.push(enc())}
+function repR(i){const H=S.HIST;if(!H||!H.f[i])return null;const f=H.f[i],R={};H.k.forEach((k,j)=>{R[k]={o:H.n[parseInt(f.substr(j*2,2),36)],occ:null}});return R}
+function repStart(){const H=S.HIST;if(!H||H.f.length<2){toast('아직 기록된 분기가 부족하다');return}V.rep={i:0,R:repR(0)};V.docOn=0;V.tab=null;V.cd.open=0;clearInterval(window.__rep);window.__rep=setInterval(()=>{if(!V.rep){clearInterval(window.__rep);return}if(V.rep.i>=S.HIST.f.length-1){clearInterval(window.__rep);V.rep.end=1;ui();return}V.rep.i++;V.rep.R=repR(V.rep.i);sfx('page');requestDraw();ui()},520);ui();requestDraw()}
+function repHTML(){const R=V.rep;if(!R)return'';const t=R.i,y=S.Y0+Math.floor(t/4),q=t%4+1,n=S.HIST.f.length;return`<div class="repb"><small>타임랩스</small><b>${y}년 ${q}분기</b><div class="rp-bar"><i style="width:${(t/(n-1)*100).toFixed(1)}%"></i></div><button data-act="repx">${R.end?'닫기':'그만 보기'}</button></div>`}
 function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 ${q}분기 —`];const ns=Object.keys(s.N).filter(n=>alive(s,n)),oo={};
  ns.forEach(n=>{const h=P_h(s,n);oo[n]=h?(ords[n]||{focus:'ind',atk:[],props:[]}):ai(s,n)});
  // 이벤트
@@ -729,7 +753,7 @@ function step(s,ords){const y=yr(s),q=qt(s);s.BT=[];s.UE=[];s.log=[`— ${y}년 
  s.PJ.forEach(p=>{const d=PJC[p.id],N=s.N[p.n];if(p.ok&&d&&d.gpt&&N)N.g+=d.gpt});
  ns.forEach(n=>{const o=oo[n]||{},N=s.N[n];(o.proj||[]).forEach(id=>{const d=PJC[id];if(!d||s.PJ.some(p=>p.id==id&&p.n==n)||N.g<d.cost)return;N.g-=d.cost;s.PJ.push({id,n,t0:s.t,left:d.q});s.log.push(`${nm(n,y)}: ${d.name} 착공`)});
   if(o.cargo&&N.st[o.cargo]!=null)for(const k in N.st)N.st[k]=Math.max(0,N.st[k]+(k==o.cargo?2:-1))});
- annexDead(s);s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
+ annexDead(s);histPush(s,1);s.t++;s.ready={};s.deadline=Date.now()+s.secs*1000;if(s.t>=s.T)s.phase='end';goalStep(s)}
 function score(s,n){return score0(s,n)+Object.values(((s.GO||{})[n])||{}).filter(g=>g.st=='ok').length*25}
 function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+held(s,n).length*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
 async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
@@ -2017,8 +2041,8 @@ function drawMap0(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H
  for(const off of offs){CX.setTransform(sc,0,0,sc,(off-v[0])*sc,-v[1]*sc);
   CX.strokeStyle=MAPC.grat;CX.lineWidth=.7*U;CX.stroke(STP.g);
   if(!mv){[[30,'rgba(52,96,118,.09)'],[24,MAPC.sea],[18,'rgba(52,96,118,.13)'],[13,MAPC.sea],[9,'rgba(52,96,118,.2)'],[5,'#d9e8e6']].forEach(([w,c])=>{CX.strokeStyle=c;CX.lineWidth=w*U;CX.stroke(LANDP)})}
-  for(const t of CT){const R=S.R[t.k],P=p2(t);CX.fillStyle=R?paperize(NM[R.o][1]):'#ddd0ae';CX.fill(P);if(R&&R.occ){CX.fillStyle=hatch(R.occ,U);CX.fill(P)}}
-  for(const r in S.FR||{}){const F=S.FR[r],t=T2[r];if(!t||!S.N[F.a])continue;CX.globalAlpha=.25+F.p/100*.55;CX.fillStyle=hatch(F.a,U);CX.fill(p2(t));CX.globalAlpha=1}
+  for(const t of CT){const R=V.rep?V.rep.R[t.k]:S.R[t.k],P=p2(t);CX.fillStyle=R?paperize(NM[R.o][1]):'#ddd0ae';CX.fill(P);if(R&&R.occ){CX.fillStyle=hatch(R.occ,U);CX.fill(P)}}
+  for(const r in V.rep?{}:S.FR||{}){const F=S.FR[r],t=T2[r];if(!t||!S.N[F.a])continue;CX.globalAlpha=.25+F.p/100*.55;CX.fillStyle=hatch(F.a,U);CX.fill(p2(t));CX.globalAlpha=1}
   if(keep){CX.fillStyle=MAPC.dim;for(const t of CT)if(!keep.has(t.k))CX.fill(p2(t))}
   if(FLON&&FL.size){CX.fillStyle='rgba(163,54,27,.28)';FL.forEach(k=>{const t=T2[k];if(t)CX.fill(p2(t))})}
   if(!mv){if(!window.__lh){const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.strokeStyle='rgba(60,40,20,.13)';x.lineWidth=1;x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.stroke();window.__lh=CX.createPattern(c,'repeat')}window.__lh.setTransform(new DOMMatrix([U*.8,0,0,U*.8,0,0]));CX.fillStyle=window.__lh;CX.fill(LANDP);
@@ -2031,7 +2055,7 @@ function drawMap0(){if(!CX||!CT||!S||!STP)return;const dpr=CV.__dpr,W=CV.width,H
   if(!world&&CAM.w<250){CX.fillStyle=MAPC.sea;CX.fill(STP.lake);CX.strokeStyle=MAPC.coast;CX.lineWidth=.7*U;CX.stroke(STP.lake);if(STP.us&&!mv){CX.save();CX.clip(STP.us);CX.strokeStyle='rgba(110,63,53,.55)';CX.lineWidth=.8*U;CX.setLineDash([2*U,2*U]);CX.stroke(STP.usl);CX.setLineDash([]);CX.restore()}}
   if(V.sel&&V.sel.t=='r'&&T2[V.sel.id]){const P=p2(T2[V.sel.id]);CX.strokeStyle='rgba(255,246,222,.85)';CX.lineWidth=5*U;CX.stroke(P);CX.strokeStyle='#8f2a17';CX.lineWidth=2.4*U;CX.stroke(P)}}
  CX.setTransform(dpr,0,0,dpr,0,0);const k=VW/v[2];CX.textAlign='center';CX.textBaseline='middle';CX.fillStyle=MAPC.lab;
- for(const l of LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46);for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.font=`700 ${f.toFixed(1)}px "Noto Serif KR",serif`;if('letterSpacing' in CX)CX.letterSpacing=(f*.3).toFixed(1)+'px';CX.fillText(l.t,sx,sy)}}
+ for(const l of V.rep?[]:LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46);for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.font=`700 ${f.toFixed(1)}px "Noto Serif KR",serif`;if('letterSpacing' in CX)CX.letterSpacing=(f*.3).toFixed(1)+'px';CX.fillText(l.t,sx,sy)}}
  if('letterSpacing' in CX)CX.letterSpacing='0px';
  if(CAM.w<260){CX.fillStyle='rgba(60,40,22,.72)';const f=Math.max(10,Math.min(14,1000/CAM.w*1.6));CX.font=`italic 600 ${f}px "Noto Serif KR",serif`;for(const t of CT){if(!t.parent)continue;const P=innerPt(t)||{x:t.cx,y:t.cy};for(const off of offs){const sx=(P.x+off-v[0])*k,sy=(P.y-v[1])*k+(CAM.w<120?16:12);if(sx<-80||sx>VW+80||sy<-20||sy>VH+20)continue;CX.fillText(t.pn,sx,sy)}}}}
 function regionAt(cx,cy){if(!HITX||!CT)return null;const r=$('#map').getBoundingClientRect(),v=camVB();let mx=v[0]+(cx-r.left)/VW*v[2];const my=v[1]+(cy-r.top)/VH*v[3];mx=((mx%1000)+1000)%1000;
@@ -2157,7 +2181,8 @@ function parchInit(){try{const mw=$('#mapw');if(!mw)return;const w=Math.min(1800
 // 분기 넘김: 지도를 그린 양피지가 모서리부터 둥글게 말려 올라간다
 function pageTurn(){const mw=$('#mapw');if(!mw||!CV||document.hidden)return false;const W=CV.width,H=CV.height;if(!W||!H)return false;
  const old=document.createElement('canvas');old.width=W;old.height=H;old.getContext('2d').drawImage(CV,0,0);
- mw.querySelectorAll('.leafc').forEach(e=>e.remove());const c=document.createElement('canvas');c.className='leafc';c.width=W;c.height=H;mw.appendChild(c);const x=c.getContext('2d');
+ mw.querySelectorAll('.leafc,.leafsv').forEach(e=>e.remove());const c=document.createElement('canvas');c.className='leafc';c.width=W;c.height=H;mw.appendChild(c);const x=c.getContext('2d');
+ const sv0=$('#map'),svw=document.createElement('div');svw.className='leafsv';if(sv0){const cl=sv0.cloneNode(true);cl.removeAttribute('id');cl.classList.add('mapclone');svw.appendChild(cl);mw.appendChild(svw);sv0.classList.add('svhide')}
  window.__turnT=Date.now();setTimeout(()=>{if($('#play'))ui()},2050);try{sfx('page')}catch(e){}
  const dpr=CV.__dpr||1,a=-11*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cx=W/2,cy=H/2;
  // 회전한 좌표계(말림선이 세로)에서 종이의 범위
@@ -2180,11 +2205,12 @@ function pageTurn(){const mw=$('#mapw');if(!mw||!CV||document.hidden)return fals
    x.globalAlpha=.07;x.save();x.translate(2*X+r,0);x.scale(-1,1);fromF();x.drawImage(old,-cx,-cy);x.restore();x.globalAlpha=1;
    const cg=x.createLinearGradient(X,0,X+r,0);cg.addColorStop(0,'rgba(40,22,6,.55)');cg.addColorStop(.18,'rgba(60,36,12,.2)');cg.addColorStop(.55,'rgba(255,248,226,.28)');cg.addColorStop(.78,'rgba(120,80,40,.05)');cg.addColorStop(1,'rgba(40,22,6,.5)');x.fillStyle=cg;x.fillRect(X,ymin,r,ymax-ymin);
    x.restore();x.strokeStyle='rgba(50,30,10,.55)';x.lineWidth=1.2*dpr;x.beginPath();x.moveTo(X+r,ymin);x.lineTo(X+r,ymax);x.stroke()}
-  if(k<1)requestAnimationFrame(frame);else c.remove()};
+  {const q=(fx,fy)=>[(ca*fx-sa*fy+cx)/dpr,(sa*fx+ca*fy+cy)/dpr],pts=[q(xmin-60,ymin),q(X,ymin),q(X,ymax),q(xmin-60,ymax)];svw.style.clipPath=`polygon(${pts.map(p=>p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px').join(',')})`}
+  if(k<1)requestAnimationFrame(frame);else{c.remove();svw.remove();const s1=$('#map');if(s1)s1.classList.remove('svhide')}};
  requestAnimationFrame(frame);return true}
 function warmPaths(){if(!CT)return;let i=0;const f=()=>{const end=performance.now()+10;while(i<CT.length&&performance.now()<end){p2(CT[i]);innerPt(CT[i]);i++}if(i<CT.length)setTimeout(f,0)};f()}
 function shell(){if($('#play'))return;app.className='';app.innerHTML=`<div id="play" class="play"><header class="bar" id="bar"></header><nav class="tabs" id="tabs"></nav>
-<div class="mapw" id="mapw"><canvas id="cv"></canvas><div id="parch" class="parch"></div><svg id="map" xmlns="http://www.w3.org/2000/svg"><defs id="defs"><pattern id="gridhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45) scale(.14)"><rect width="1.4" height="6" fill="#b08a2e" opacity=".55"/></pattern><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8f2a17"/></marker></defs><g id="ovl"></g><g id="fts"></g></svg>
+<div class="mapw" id="mapw"><canvas id="cv"></canvas><div id="parch" class="parch"></div><div id="repw"></div><svg id="map" xmlns="http://www.w3.org/2000/svg"><defs id="defs"><pattern id="gridhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45) scale(.14)"><rect width="1.4" height="6" fill="#b08a2e" opacity=".55"/></pattern><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8f2a17"/></marker></defs><g id="ovl"></g><g id="fts"></g></svg>
 <div class="grain" id="grain"></div><div id="plate" class="plate"></div><div class="zm"><button data-act="zin" aria-label="확대">+</button><button data-act="zout" aria-label="축소">−</button><button data-act="zhome" aria-label="내 국가로">⌂</button></div>
 <div id="tags"></div><div id="pop"></div><section id="sheet" class="sheet"></section><aside id="doc" class="doc"></aside><div id="agenda" class="agenda" data-act="agenda"></div></div><div id="book" class="book"></div><div id="brw" class="brw"></div><div id="cards" class="cards"></div><div id="endw"></div><div id="resp" class="resp"></div><div id="toast" class="toast"></div></div>`;
  grain();setTimeout(warmPaths,150);const sv=$('#map'),mw=$('#mapw');CV=$('#cv');CX=CV.getContext('2d');HITX=document.createElement('canvas').getContext('2d');const rs=()=>{const r=mw.getBoundingClientRect();VW=r.width||1;VH=r.height||1;const d=Math.min(2,window.devicePixelRatio||1);CV.__dpr=d;CV.width=Math.round(VW*d);CV.height=Math.round(VH*d);CV.style.width=VW+'px';CV.style.height=VH+'px';applyCam();clearTimeout(window.__pt);window.__pt=setTimeout(parchInit,250)};new ResizeObserver(rs).observe(mw);rs();
@@ -2305,7 +2331,7 @@ function guide(n){const L=HG.filter(e=>e[2]==n&&e[0]*4+e[1]-1>=S.t+S.Y0*4&&e[0]*
   return`<div class="ln"><div class="g">${e[0]}년 ${e[1]}분기 · ${esc(e[5])}<small>${esc(e[6])} — ${diff||'조건 확인 중'}</small></div></div>`}).join(''):'<div class="note" style="margin:0">향후 2년간 예정된 역사적 고비 없음.</div>'}
 // ════════ 문서 패널 ════════
 function docHTML(){const me=mine(),y=yr(S),N=me&&S.N[me];if(V.nat&&V.nat!=me&&(!V.tab||V.tab=='gov'))return{t:`공개 자료 — ${nm(V.nat,y)}`,b:visitDoc(V.nat)+natHTML(V.nat)};if(!V.tab)return null;
- if(V.tab=='log')return{t:'분기 기록 · 역사 흐름',b:`<div class="sec"><span>${y}년 ${qt(S)}분기 이전 처리 결과</span></div>${S.log.map(l=>`<div class="ln"><div class="g">${esc(l)}</div></div>`).join('')}${me?`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(me)}`:''}${S.phase=='end'?endDoc():''}`};
+ if(V.tab=='log')return{t:'분기 기록 · 역사 흐름',b:`<div class="cmds" style="margin:0 0 6px"><button class="pri" data-act="rep">지도 타임랩스 보기 (${(S.HIST&&S.HIST.f.length)||1}개 분기)</button></div><div class="sec"><span>${y}년 ${qt(S)}분기 이전 처리 결과</span></div>${S.log.map(l=>`<div class="ln"><div class="g">${esc(l)}</div></div>`).join('')}${me?`<div class="sec"><span>앞으로 2년의 역사 흐름</span></div>${guide(me)}`:''}${S.phase=='end'?endDoc():''}`};
  if(!N)return null;if(V.tab=='gov'){const g=govDoc(me),st=V.gsub=='s';return{t:st?'국가 전략 — '+nm(me,y):g.t,b:`<div class="subt"><button class="${st?'':'on'}" data-act="gsub:d">국가 자료</button><button class="${st?'on':''}" data-act="gsub:s">국가 전략${decDue(me)?' ●':''}</button></div>`+(st?natHTML(me):g.b)}}if(V.tab=='fin')return finDoc(me);if(V.tab=='ind')return indDoc(me);if(V.tab=='mil')return milDoc(me);if(V.tab=='dip')return dipDoc(me);return null}
 function endDoc(){const y=yr(S);return`<div class="sec"><span>최종 순위</span></div>${Object.keys(S.N).filter(x=>alive(S,x)).sort((a,b)=>score(S,b)-score(S,a)).slice(0,10).map((x,i)=>`<div class="ln"><div class="g">${i+1}. ${esc(nm(x,y))}${Object.values(S.P).includes(x)?' · 플레이어':''}</div><div class="v">${score(S,x)}</div></div>`).join('')}`}
 function govDoc(me){const pid=PID(me),P=pid&&PF[pid],N=S.N[me],y=yr(S),q=qt(S);if(!P)return{t:'국가 개요',b:genericGov(me)};
@@ -2491,7 +2517,7 @@ function goalsHTML(n){const G=(S.GO||{})[n]||{};return`<div class="sec"><span>�
 function endHTML(){const y=yr(S),me=mine(),L=Object.keys(S.N).filter(x=>alive(S,x)).sort((a,b)=>score(S,b)-score(S,a)),rank=me?L.indexOf(me)+1:0;
  return`<div class="news on" id="endv"><div class="paperN"><div class="mast"><b>역사의 판정</b><small>${y}년 · 종전</small></div><div class="hl" style="cursor:default"><h2>${me?(rank==1?esc(nm(me,y))+', 시대의 승자':!alive(S,me)?esc(nm(me,y))+' 정부 해산':esc(nm(me,y))+' 최종 '+rank+'위'):'종전'}</h2></div>
  ${me?goalsHTML(me):''}<div class="sec"><span>열강 순위</span><span>점수</span></div>${L.slice(0,10).map((x,i)=>`<div class="ln"><div class="g">${i+1}. ${flag(x,22,15)} ${esc(nm(x,y))}${Object.values(S.P).includes(x)?' · 플레이어':''}</div><div class="v">${score(S,x)}</div></div>`).join('')}
- <div class="rowf"><button data-act="endx">지도 보기</button><button class="pri" data-act="leave">처음으로</button></div></div></div>`}
+ <div class="rowf"><button data-act="endx">지도 보기</button><button data-act="endrep">타임랩스</button><button class="pri" data-act="leave">처음으로</button></div></div></div>`}
 
 // ════════ 지도 위 작전 창 ════════
 function msnHTML(me,u,r){const R=S.R[r],d=R.occ||R.o,D=S.N[d],y=yr(S),types=Object.entries(MSN).filter(([k,m])=>m[1]==u.b),mt=V.bt.mt&&MSN[V.bt.mt]&&MSN[V.bt.mt][1]==u.b?V.bt.mt:types[0][0],fd=FRC(d),en=u.b=='f'?D.mil*fd.f:D.mil*fd.n*(mt=='sub'?.3:.7),odds=Math.round(clamp(u.str/(u.str+en+.01)*100,0,100)),k=Math.min(1.5,u.str/Math.max(1,en+1));
@@ -2548,6 +2574,7 @@ function brGo(){const b=V.br&&V.br.L[V.br.i];if(!b)return;const t=tgtPt(b.rid);i
 function placePop(){const el=$('#pop');if(!el||!el.firstChild||!V.bt.t)return;const t=LBL[V.bt.t];if(!t)return;const[x,y]=toScr(t[0],t[1]),de=$('#doc'),dw=VW>=760&&de&&de.classList.contains('on')?de.offsetWidth+12:0;const pp=el.firstChild,h=pp.offsetHeight||300,w=pp.offsetWidth||280;pp.style.left=clamp(x,w/2+10,VW-dw-w/2-10)+'px';const top=clamp(y-h-18,10,VH-h-10);pp.style.top=top+'px';pp.style.transform='translateX(-50%)';pp.classList.toggle('below',top>y-h-18)}
 // ════════ 그리기 ════════
 function ui(){if(!S||S.phase=='lobby'||!$('#play'))return;const me=mine();PCTN=V.nat||me;
+ {const rw=$('#repw');if(rw)rw.innerHTML=repHTML();const sv=$('#map');if(sv&&!document.querySelector('.leafsv'))sv.classList.toggle('svhide',!!V.rep)}
  $('#bar').innerHTML=barHTML();$('#tabs').innerHTML=tabsHTML();$('#plate').innerHTML=plateHTML();$('#plate').classList.toggle('w',!V.nat);tickUI();buildBase();buildOverlay();
  const sh=sheetHTML(),se=$('#sheet');if(sh){se.innerHTML=`<div class="sh" data-act="min">${sh.ic||''}<div><b>${esc(sh.t)}</b><small>${esc(sh.s||'')}</small></div><button data-act="min" aria-label="접기">${V.min?'▴':'▾'}</button><button data-act="close" aria-label="닫기">✕</button></div><div class="sb">${sh.b}</div>`;se.className='sheet on'+(V.min?' min':'')}else{se.className='sheet'}
  const dc=docHTML(),de=$('#doc');if(dc&&V.docOn){de.innerHTML=`<div class="dh"><b>${esc(dc.t)}</b><button data-act="docx" aria-label="문서 닫기">✕</button></div><div class="db">${dc.b}</div>`;de.className='doc on'}else de.className='doc';
@@ -2557,8 +2584,8 @@ function ui(){if(!S||S.phase=='lobby'||!$('#play'))return;const me=mine();PCTN=V
  const bk=$('#book');if(V.bk.open){const r=bk.querySelector('.bk-r'),st=r?r.scrollTop:0;bk.innerHTML=bookHTML();bk.className='book on';const r2=bk.querySelector('.bk-r');if(r2&&!V.bk.reset)r2.scrollTop=st;V.bk.reset=0}else bk.className='book';
  const bw=$('#brw');if(V.br){const h=brHTML();if(bw.__h!==h){bw.innerHTML=h;bw.__h=h}bw.className='brw on'}else{bw.className='brw';bw.innerHTML='';bw.__h=''}
  if(V.news&&!$('#news')&&!V.br)newsShow();
- if(V.cd.auto&&!V.news&&!V.br&&!$('#news')&&unanswered().length&&!(Date.now()-(window.__turnT||0)<2000)){V.cd.auto=0;V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]))}
- const cw=$('#cards');if(V.cd.open&&myCards().length){const h=cardHTML();if(cw.__h!==h){cw.innerHTML=h;cw.__h=h}cw.className='cards on'}else{cw.className='cards';cw.innerHTML='';cw.__h=''}
+ if(V.cd.auto&&!V.news&&!V.br&&!$('#news')&&unanswered().length&&!(Date.now()-(window.__turnT||0)<2000)&&!V.rep){V.cd.auto=0;V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]))}
+ const cw=$('#cards');if(V.cd.open&&myCards().length&&!V.rep){const h=cardHTML();if(cw.__h!==h){cw.innerHTML=h;cw.__h=h}cw.className='cards on'}else{cw.className='cards';cw.innerHTML='';cw.__h=''}
  const rp=$('#resp');if(V.res){rp.innerHTML=resPop(V.res);rp.className='resp on'}else{rp.className='resp';rp.innerHTML=''}
  const ew=$('#endw');if(S.phase=='end'&&!V.endx){if(!ew.firstChild)ew.innerHTML=endHTML()}else ew.innerHTML=''}
 function game(){const first=!$('#play');shell();if(first||!V.init){V.init=1;const me=mine();const c=me?presetCam(me):{x:500,y:250,w:1000};CAM={...c};if(me){V.nat=me;V.tab=null;V.prev={x:500,y:250,w:1000}}applyCam()}ui()}
@@ -2615,7 +2642,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'gsub':V.gsub=v;ui();return;case'strat':{V.gsub='s';V.tab='gov';V.docOn=1;if(V.nat!=me)return enterNation(me);ui();return}
  case'evc':{const[id,k]=v.split(':');sfx('stamp');sendO({evc:Object.assign({},O.evc,{[id]:+k})});ui();setTimeout(()=>{const L=myCards(),i=L.indexOf(id);if(V.cd.open&&i>=0&&i+1<L.length&&unanswered().length){V.cd.i=i+1;sfx('page');ui()}},650);return}
  case'cdi':V.cd.i=+v;sfx('page');ui();return;case'cdx':V.cd.open=0;sfx('page');ui();return;case'cards':V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]));sfx('page');ui();return
- case'endx':V.endx=1;ui();return;case'leave':leaveRoom();return
+ case'endx':V.endx=1;ui();return;case'rep':repStart();return;case'endrep':V.endx=1;repStart();return;case'repx':V.rep=null;clearInterval(window.__rep);ui();requestDraw();return;case'leave':leaveRoom();return
  case'res':V.res=V.res==v?null:v;ui();return;case'resx':V.res=null;ui();return
  case'news':return newsGo();case'newsx':return newsClose()}}
 // ════════ 분기 전환: 지도 강조 + 신문 ════════
@@ -2635,12 +2662,16 @@ function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S
  (S.DC?Object.entries(S.DC):[]).forEach(([n,L])=>{const old=((p.DC||{})[n])||[];L.filter(id=>!old.includes(id)&&!EVDEC.has(id)).forEach(id=>{const d=DECS.find(x=>x.id==id);if(d&&d.n!='*')ev.push({pri:n==me?88:(held(S,n).length>=5?70:40),h:`${nm(n,y)}, ${d.t}`,s:d.h,at:capOf(n),ty:'border'})})});
  if(me&&p.N[me]&&S.N[me]&&p.N[me].lord&&!S.N[me].lord)ev.push({pri:99,h:`${nm(me,y)}, 독립 선포`,s:'국내 영토와 과세권을 확보했다.',at:capOf(me),ty:'border'});
  if(!ev.length){const l=S.log.slice(1).find(l=>!/—/.test(l))||`${y}년 ${qt(S)}분기, 각국 정세 큰 변동 없어`;ev.push({pri:1,h:l,s:'각국 정부는 다음 분기 예산을 짜는 중이다.',at:me?capOf(me):[500,280],ty:'none'})}
+ {const UL=(S.UE||[]).filter(e=>e.n==me||wars(S,me).includes(e.n)||PF[PID(e.n)]);if(UL.length)setTimeout(()=>ultFxShow(UL),300)}
  (S.DEAD||[]).forEach(d=>{ev.push({pri:d.n==me?100:d.by==me?98:90,h:`${nm(d.n,y)} 멸망`,s:`마지막 영토를 잃었다. ${d.c}개 지역이 ${nm(d.by,y)}에 병합되고, 지도에서 그 이름이 지워졌다.`,at:capOf(d.by),ty:'border'})});
  (S.UE||[]).forEach(e=>{const D=ultOf(e.n);ev.push({pri:e.n==me?97:wars(S,me).includes(e.n)?95:72,h:`결전 — ${nm(e.n,y)}, ${D[0]}`,s:`${D[1]} ${e.x?e.x+'.':''} (열세 ${e.u}배)`,at:capOf(e.n),ty:'border'})});
  (S.BT||[]).forEach(b=>{const inv=b.a==me||b.d==me;if(!inv&&Math.abs(b.g)<40)return;ev.push({pri:inv?(b.d==me?92:86):45,h:`${RG[b.rid][0]} ${b.sea?'상륙전':'전투'} — ${nm(b.a,y)} ${b.fail?'상륙 실패':b.cap?'점령':b.g>0?b.g+'% 진격':'공세 저지'}`,s:`${nm(b.a,y)} 군이 ${nm(b.d,y)} 방어선을 공격했다. 공격 측 군사력 −${pc(b.ca,b.m0||1)}, 방어 측 −${pc(b.cd,b.d0||1)}. 전선 진척 ${b.p}%.`,at:LBL[b.rid],sel:'r:'+b.rid,ty:'border'})});
  (S.EH||[]).forEach(h=>{const e=EVI[h.id];if(!e)return;const mj=PF[PID(h.n)]||held(S,h.n).length>=6;if(e.n=='*'&&h.n!=me)return;if(!mj&&h.n!=me)return;ev.push({pri:h.n==me?(e.n=='*'?50:91):(e.n=='*'?10:68),h:`${nm(h.n,y)}, ${e.t}`,s:`“${e.o[h.i].t}” — ${e.x.split('. ')[0]}.`,at:capOf(h.n),ty:'mail'})});
  ev.sort((a,b)=>b.pri-a.pri);V.news={y,q:qt(S),ev};{const L=(S.BT||[]).filter(b=>b.a==me||b.d==me).slice(0,6);if(L.length){V.br={L,i:0};setTimeout(brGo,200)}}V.pulse=ev.filter(e=>e.at&&e.ty!='none').slice(0,6).map(e=>({x:e.at[0],y:e.at[1]}));
  setTimeout(()=>{V.pulse=[];FL.clear();FLsig='';if($('#play'))ui()},7000);if($('#play'))ui()}
+function ultFxShow(list){const y=yr(S);let i=0;const nx=()=>{const old=$('#ultfx');if(old)old.remove();if(i>=list.length)return;const e=list[i++],D=ultOf(e.n),d=document.createElement('div');d.id='ultfx';d.className='ultfx';
+ d.innerHTML=`<div class="uf-c"><div class="uf-k">결전 카드</div>${flag(e.n,96,64)}<div class="uf-n">${esc(nm(e.n,y))}</div><div class="uf-t">${esc(D[0])}</div><div class="uf-h">${esc(D[1])}</div>${e.x?`<div class="uf-x">${esc(e.x)}</div>`:''}<div class="uf-s">발동</div></div>`;
+ d.onclick=nx;document.body.appendChild(d);try{sfx('boom')}catch(_){}setTimeout(()=>{if(d.isConnected)nx()},3400)};nx()}
 function newsShow(){const N=V.news;if(!N)return;const h=N.ev[0],o=N.ev.slice(1,4),d=document.createElement('div');d.className='news';d.id='news';
  d.innerHTML=`<div class="paperN" id="paperN"><div class="mast"><b>세계 통신</b><small>${N.y}년 ${N.q}분기 · 호외</small></div><button class="hl" data-act="news"><h2>${esc(h.h)}</h2><p>${esc(h.s)}</p><span class="go">제목을 누르면 현장 지도로 ›</span></button>${o.length?`<div class="cols">${o.map(e=>`<div><b>${esc(e.h)}</b>${esc(e.s)}</div>`).join('')}</div>`:''}<div class="rowf"><button data-act="newsx" style="background:#18140f;color:#efe7d2">신문 접기</button></div></div>`;
  d.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b)act(b.dataset.act);else if(e.target==d)newsClose()});document.body.appendChild(d)}

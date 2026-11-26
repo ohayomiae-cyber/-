@@ -644,7 +644,7 @@ button.pri:disabled{filter:grayscale(.7) brightness(.85)}
 .tbw.tb3{padding:0;display:block;background:#0c0a08}
 .tb3v{position:absolute;inset:0}.tb3v canvas{display:block;width:100%!important;height:100%!important}
 .tb3-load{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(ellipse at center,#2a1d10,#0c0805);color:#f2dcae;font-family:var(--serif);z-index:3;transition:opacity .5s}.tb3-load.off{opacity:0;pointer-events:none}
-.tb3-load i{width:44px;height:44px;border:3px solid rgba(242,193,78,.25);border-top-color:#f2c14e;border-radius:50%;animation:tbSpin .9s linear infinite}.tb3-load b{font-size:17px;letter-spacing:.08em}@keyframes tbSpin{to{transform:rotate(360deg)}}
+.tb3-load i{width:44px;height:44px;border:3px solid rgba(242,193,78,.25);border-top-color:#f2c14e;border-radius:50%;animation:tbSpin .9s linear infinite}.tb3-load b{font-size:17px;letter-spacing:.08em}.tb3-load div{display:flex;gap:8px;margin-top:6px}.tb3-load button{background:transparent;border:1px solid #8a6a3a;color:#d9c39a;height:34px;padding:0 14px;border-radius:3px;font:600 13px var(--serif)}@keyframes tbSpin{to{transform:rotate(360deg)}}
 .tb3-top{position:absolute;left:0;right:0;top:0;display:flex;align-items:flex-start;gap:10px;padding:10px 12px 26px;background:linear-gradient(rgba(8,5,2,.82),rgba(8,5,2,0));pointer-events:none;z-index:2;font-family:var(--serif)}
 .tb3-sd{flex:1;min-width:0;display:flex;gap:9px;align-items:flex-start;color:#f6e7c4}.tb3-sd.en{justify-content:flex-end;text-align:right}.tb3-sd>div{min-width:0;flex:1;max-width:330px}.tb3-sd b{display:block;font-size:17px;text-shadow:0 1px 2px #000}.tb3-sd small{display:block;font-size:11.5px;color:#d9c39a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tb3-sd img,.tb3-sd svg{box-shadow:0 0 0 1px #000,0 0 0 2px #b8913f;flex:0 0 auto}
@@ -1163,7 +1163,7 @@ function tb3Build(T,host){const TH=TBTH[tbThemeOf(T.I)],seed=(T.I.seed||1)>>>0;i
  let snow=null;if(TH.snow||TH.deco=='desert'){const n=TH.snow?900:300,g=new THREE.BufferGeometry(),p=new Float32Array(n*3),q=tbRng(seed+5);for(let i=0;i<n;i++){p[i*3]=(q()-.5)*34;p[i*3+1]=q()*16;p[i*3+2]=(q()-.5)*30}g.setAttribute('position',new THREE.BufferAttribute(p,3));snow=new THREE.Points(g,new THREE.PointsMaterial({color:TH.snow?0xffffff:0xe8d2a0,size:TH.snow?.09:.06,transparent:true,opacity:TH.snow?.9:.5}));sc.add(snow)}
  const cam=new THREE.PerspectiveCamera(34,W/H,.1,260);
  T3={TH,R,sc,cam,sun,tiles,hl,mA,sea,snow,clouds,U:{},fx:[],host,t0:performance.now(),shake:0,ray:new THREE.Raycaster(),plane:new THREE.Plane(new THREE.Vector3(0,1,0),-.2),hf:isl.hf,intro:1};tb3Fit();tb3Units();
- const el=R.domElement;el.onpointerdown=tb3Down;el.onpointermove=tb3Move;el.onpointerup=tb3Up;el.onpointercancel=tb3Up}
+ const el=R.domElement;if(!el.__lost){el.__lost=1;el.addEventListener('webglcontextlost',ev=>{ev.preventDefault();TB3R=null;const T=V.tb;if(T){T.no3=1;T3=null;tbShow()}})}el.onpointerdown=tb3Down;el.onpointermove=tb3Move;el.onpointerup=tb3Up;el.onpointercancel=tb3Up}
 function tb3Fit(){const{R,cam,host}=T3,W=host.clientWidth||800,H=host.clientHeight||600;R.setSize(W,H);cam.aspect=W/H;const port=W/H<.9,el=(port?58:44)*Math.PI/180,vf=cam.fov*Math.PI/180,hf=2*Math.atan(Math.tan(vf/2)*cam.aspect);let d=Math.max((port?7.2:8.6)/Math.tan(hf/2),(6.3*Math.sin(el)+2.4)/Math.tan(vf/2));T3.camD=d;T3.camEl=el;cam.updateProjectionMatrix();T3.W=W;T3.H=H}
 function tb3Clear(){for(const id in T3.U){const u=T3.U[id];T3.sc.remove(u.g);if(u.hp)T3.sc.remove(u.hp)}T3.U={};T3.fx.forEach(f=>f.o&&T3.sc.remove(f.o));T3.fx=[]}
 function tb3HpTex(f,side){const c=document.createElement('canvas');c.width=128;c.height=20;const x=c.getContext('2d');x.fillStyle='rgba(20,12,6,.85)';x.fillRect(0,0,128,20);x.fillStyle=side=='A'?'#e8b84a':'#c0392b';x.fillRect(0,0,128,4);x.fillStyle=f<.35?'#d0402c':f<.7?'#e09a2a':'#6fb04a';x.fillRect(3,6,122*clamp(f,0,1),11);x.strokeStyle='rgba(0,0,0,.6)';for(let i=1;i<6;i++){x.beginPath();x.moveTo(3+i*20.3,6);x.lineTo(3+i*20.3,17);x.stroke()}const t=new THREE.CanvasTexture(c);return t}
@@ -1196,7 +1196,8 @@ function tb3Dmg(p,d){if(!d)return;const c=document.createElement('canvas');c.wid
 function tb3Die(u){u.dead=1;u.g.traverse(o=>{if(o.isMesh&&o.material&&o.material.color){o.material=o.material.clone();o.material.color.lerp(new THREE.Color(0x2b2622),.7)}});if(u.hp)u.hp.visible=false;if(u.ring)u.ring.visible=false;tb3Boom(u.g.position.clone().add(new THREE.Vector3(0,.3,0)),1);
  const p=u.g.position.clone();let k=0;tb3Fx(null,2.6,f=>{if(++k%5==0){const m=new THREE.Mesh(tb3G('ico',()=>new THREE.IcosahedronGeometry(1,0)),new THREE.MeshStandardMaterial({color:0x3a3530,transparent:true,opacity:.55,flatShading:true}));m.position.set(p.x+(Math.random()-.5)*.3,p.y+.3,p.z);tb3Fx(m,1.4,g=>{m.position.y=p.y+.3+g*1.6;m.scale.setScalar(.15+g*.35);m.material.opacity=.55*(1-g)})}})}
 // ── 매 프레임 ──
-function tb3Frame(){const T=V.tb;if(!T||!T3||!T3.host.isConnected){return}requestAnimationFrame(tb3Frame);const now=performance.now(),t=(now-T3.t0)/1000;if(T3.host.clientWidth!=T3.W||T3.host.clientHeight!=T3.H)tb3Fit();
+function tb3Frame(){const T=V.tb;if(!T||!T3||!T3.host.isConnected){return}requestAnimationFrame(tb3Frame);const now=performance.now(),t=(now-T3.t0)/1000;
+ {const q=T3.perf=T3.perf||{n:0,s:0,last:now,lv:0};const d=now-q.last;q.last=now;if(d<500){q.n++;q.s+=d}if(q.n>=45){const avg=q.s/q.n;q.n=0;q.s=0;if(avg>40&&q.lv<2){q.lv++;T3.R.setPixelRatio(q.lv==1?1:.75);if(q.lv==2){T3.sun.shadow.mapSize.set(512,512);T3.sun.shadow.map&&T3.sun.shadow.map.dispose();T3.sun.shadow.map=null}T3.W=0}}}if(T3.host.clientWidth!=T3.W||T3.host.clientHeight!=T3.H)tb3Fit();
  const ev=tbAdvance(T,now);const plan=T.mode=='plan';
  if(T.rebuild){T.rebuild=0;tb3Units()}
  const L=plan?null:T.st.U;
@@ -1256,24 +1257,27 @@ function tbShow2D(){let el=$('#tbw');if(!el){el=document.createElement('div');el
  const cv=$('#tbcv');cv.onpointerdown=tbDown;cv.onpointermove=tbMove;cv.onpointerup=tbUp;cv.onpointercancel=tbUp;tbFoot();if(!T.loop){T.loop=1;requestAnimationFrame(tbFrame)}}
 function tbShow(){const T=V.tb;if(T.no3||!tb3OK())return tbShow2D();let el=$('#tbw');if(!el){el=document.createElement('div');el.id='tbw';document.body.appendChild(el)}el.className='tbw tb3';const y=yr(S),TH=TBTH[tbThemeOf(T.I)],cnt=L=>{const c={};L.forEach(p=>c[p.ty]=(c[p.ty]||0)+1);return Object.entries(c).map(([k,v])=>`${TBU[k].n} ${v}`).join(' · ')};
  const mods=L=>(L||[]).filter(x=>x[1]).slice(0,5).map(([t,v])=>`<span class="${v>0?'up':'dn'}">${esc(t)} ${v>0?'+':''}${v}%</span>`).join('');
- el.innerHTML=`<div id="tb3v" class="tb3v"></div><div class="tb3-load" id="tb3l"><i></i><b>${TH.ic} ${TH.n} 전장 준비 중…</b></div>
+ el.innerHTML=`<div id="tb3v" class="tb3v"></div><div class="tb3-load" id="tb3l"><i></i><b>${TH.ic} ${TH.n} 전장 준비 중…</b><div><button data-tb="to2d">간단한 화면으로 보기</button><button data-tb="x">취소</button></div></div>
  <div class="tb3-top"><div class="tb3-sd">${flag(T.a,44,29)}<div><b>${esc(nm(T.a,y))}</b><small>${T.nA?T.nA+'개 군단 · ':''}${cnt(T.place)}</small><div class="tb-bar a"><i id="tbA" style="width:100%"></i></div><div class="tb3-md">${mods(T.HP.mA)}</div></div></div>
  <div class="tb3-tt"><span class="tb3-th">${TH.ic} ${TH.n} 전장${T.I.riv?' · '+esc(T.I.riv)+' 도하':''}${T.replay?' · 다시보기':''}</span><b>${esc(RG[T.r]?RG[T.r][0]:'')} ${T.replay?'전투':'공격'}</b>${T.war?'<span class="tb3-th" style="color:#ff9a7a;border-color:#c0392b;margin-top:4px">⚠ 이 공격으로 선전포고</span>':''}</div>
  <div class="tb3-sd en"><div><b>${esc(nm(T.d,y))}</b><small>${T.nD?T.nD+'개 군단 · ':''}${cnt(T.I.D)} · ${esc(TBTAC.D[T.I.tacD][0])}</small><div class="tb-bar d"><i id="tbD" style="width:100%"></i></div><div class="tb3-md">${mods(T.HP.mD)}</div></div>${flag(T.d,44,29)}</div></div>
- <div class="tb3-bot" id="tbf"></div>`;tbFoot();
- tb3Load().then(()=>{if(V.tb!==T)return;try{tb3Build(T,$('#tb3v'));const l=$('#tb3l');if(l)l.classList.add('off');setTimeout(()=>{const l=$('#tb3l');if(l)l.remove()},600);requestAnimationFrame(tb3Frame)}catch(e){console.error(e);T.no3=1;tbShow()}}).catch(()=>{if(V.tb!==T)return;T.no3=1;tbShow()})}
+ <div class="tb3-bot" id="tbf"></div>`;tbFoot();el.querySelectorAll('#tb3l [data-tb]').forEach(b=>b.onclick=()=>tbAct(b.dataset.tb));
+ const to=setTimeout(()=>{if(V.tb===T&&!T3&&!T.no3){T.no3=1;toast('3D 전장을 불러오지 못해 간단한 화면으로 보여 준다');tbShow()}},9000);
+ tb3Load().then(()=>{clearTimeout(to);if(V.tb!==T||T.no3)return;try{tb3Build(T,$('#tb3v'));const l=$('#tb3l');if(l)l.classList.add('off');setTimeout(()=>{const l=$('#tb3l');if(l)l.remove()},600);requestAnimationFrame(tb3Frame)}catch(e){console.error(e);T.no3=1;tbShow()}}).catch(()=>{clearTimeout(to);if(V.tb!==T||T.no3)return;T.no3=1;tbShow()})}
 function tbFoot(){const T=V.tb,f=$('#tbf');if(!T||!f)return;
  if(T.mode=='plan')f.innerHTML=`<div class="tb-tac">${Object.entries(TBTAC.A).map(([k,[n,d]])=>`<button data-tb="tac:${k}" class="${T.tac==k?'on':''}"><b>${n}</b><small>${d}</small></button>`).join('')}</div><div class="tb-go"><small>부대를 끌어 아래쪽 네 줄에 배치하세요</small><button data-tb="auto">자동 배치</button><button data-tb="x">취소</button><button class="pri" data-tb="go">전투 개시</button></div>`;
- else if(T.mode=='fight')f.innerHTML=`<div class="tb-go"><small>${esc(TBTAC.A[T.tac]?TBTAC.A[T.tac][0]:'')} — 전투 중</small><button data-tb="spd" class="${T.spd>1?'on':''}">${T.spd>1?'빠르게 ×3':'보통 속도'}</button><button data-tb="skip">결과 보기</button></div>`;
+ else if(T.mode=='fight')f.innerHTML=`<div class="tb-go"><small>${esc(TBTAC.A[T.tac]?TBTAC.A[T.tac][0]:'')} — 전투 중</small><button data-tb="spd" class="${T.spd>1.5?'on':''}">속도 ×${T.spd>=4?4:T.spd>=2?2:1}</button><button data-tb="skip">결과 보기</button></div>`;
  else{const e=T.st.end,w=e.win;f.innerHTML=`<div class="tb-res ${w?'ok':'no'}"><b>${w?'승리 — 돌파':'패배 — 공격 격퇴'}</b><small>아군 손실 ${Math.round(e.fa*70)}% · 적 손실 ${Math.round(e.fd*70)}%${e.br=='D'?' · 적이 진지를 버리고 후퇴':e.br=='A'?' · 아군이 후퇴':''}${T.replay?'':' — 결과는 분기 마감 때 지도에 반영된다'}</small></div><div class="tb-go">${T.replay?'':'<button data-tb="re">다시보기</button>'}<button class="pri" data-tb="ok">${T.replay?'닫기':'확인'}</button></div>`}
  f.querySelectorAll('[data-tb]').forEach(b=>b.onclick=()=>tbAct(b.dataset.tb))}
 function tbAct(a){const T=V.tb;if(!T)return;sfx('click');const[k,v]=a.split(':');
- if(k=='tac'){T.tac=v;tbFoot()}else if(k=='auto'){T.place=tbAuto(T.place.map(p=>p.ty),'A',tbRng(Date.now()>>>0));tbFoot()}else if(k=='x'){tbClose()}
- else if(k=='go'){if(!tbPlaceOK(T.place,T.place.map(p=>p.ty))){toast('배치가 올바르지 않다');return}tbFight()}else if(k=='spd'){T.spd=T.spd>1?1:3;tbFoot()}else if(k=='skip'){while(!T.st.end)T.st.step();T.st.ev=[];T.mode='done';tbFoot()}
+ if(k=='to2d'){T.no3=1;tbClose3();tbShow();return}if(k=='tac'){T.tac=v;tbFoot()}else if(k=='auto'){T.place=tbAuto(T.place.map(p=>p.ty),'A',tbRng(Date.now()>>>0));tbFoot()}else if(k=='x'){tbClose()}
+ else if(k=='go'){if(!tbPlaceOK(T.place,T.place.map(p=>p.ty))){toast('배치가 올바르지 않다');return}tbFight()}else if(k=='spd'){T.spd=T.spd>=4?1:T.spd>=2?4:2;try{localStorage.setItem('tb_spd',T.spd)}catch(e){}tbFoot()}else if(k=='skip'){while(!T.st.end)T.st.step();T.st.ev=[];T.mode='done';tbFoot()}
  else if(k=='re'){tbFight(1)}else if(k=='ok'){if(!T.replay&&!T.sent)tbCommit();tbClose()}}
-function tbFight(re){const T=V.tb;T.I.A=T.place.map(p=>({ty:p.ty,c:p.c,r:p.r}));T.I.tacA=T.tac;T.st=tbSim(T.I);T.mode='fight';T.spd=T.spd||1;T.acc=0;T.last=performance.now();T.fx=[];T.wr=[];T.rebuild=1;T.endAt=0;tbFoot();sfx('boom');const el=$('#tbw');if(el&&el.classList.contains('tb3')){const b=document.createElement('div');b.className='tb3-fight';b.innerHTML='<b>전투 개시</b><small>'+esc(TBTAC.A[T.tac]?TBTAC.A[T.tac][0]:'')+'</small>';el.appendChild(b);setTimeout(()=>b.remove(),1900)}}
+function tbFight(re){const T=V.tb;T.I.A=T.place.map(p=>({ty:p.ty,c:p.c,r:p.r}));T.I.tacA=T.tac;T.st=tbSim(T.I);T.mode='fight';T.spd=T.spd||(()=>{try{return +localStorage.getItem('tb_spd')||1.5}catch(e){return 1.5}})();T.acc=0;T.last=performance.now();T.fx=[];T.wr=[];T.rebuild=1;T.endAt=0;tbFoot();sfx('boom');const el=$('#tbw');if(el&&el.classList.contains('tb3')){const b=document.createElement('div');b.className='tb3-fight';b.innerHTML='<b>전투 개시</b><small>'+esc(TBTAC.A[T.tac]?TBTAC.A[T.tac][0]:'')+'</small>';el.appendChild(b);setTimeout(()=>b.remove(),1900)}}
 function tbCommit(){const T=V.tb,me=mine();T.sent=1;const g={r:T.r,ids:T.ids,A:T.I.A,tacA:T.I.tacA,seed:T.I.seed,res:T.st.end,sig:T.sig,I:Object.assign({},T.I,{tyA:undefined})};O.tb=Object.assign({},O.tb,{[T.r]:g});const P={tb:O.tb};if(T.war){O.war=(O.war||[]).filter(x=>x!=T.r).concat(T.r);P.war=O.war}sendO(P);V.tbDone=(V.tbDone||[]).concat(T.ids);V.kOrd=V.kOrd||{};T.ids.forEach(i=>V.kOrd[i]='hold');V.tbMark=V.tbMark||{};V.tbMark[T.r]=T.st.end.win;toast(T.st.end.win?`${RG[T.r][0]} 돌파 — 분기 마감 때 점령`:`${RG[T.r][0]} 공격 실패 — 분기 마감 때 손실 반영`);ui();requestDraw()}
-function tbClose(){if(T3){try{tb3Clear();T3.sc.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{if(m.map)m.map.dispose();m.dispose()})}});T3.R.renderLists&&T3.R.renderLists.dispose()}catch(e){}T3=null}const el=$('#tbw');if(el)el.remove();V.tb=null}
+function tbClose(){tbClose3();const el=$('#tbw');if(el)el.remove();V.tb=null}
+document.addEventListener('keydown',e=>{const T=V.tb;if(!T||e.key!='Escape')return;if(T.mode=='plan')tbAct('x');else if(T.mode=='done')tbAct('ok');else tbAct('skip')});
+function tbClose3(){if(T3){try{tb3Clear();T3.sc.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{if(m.map)m.map.dispose();m.dispose()})}});T3.R.renderLists&&T3.R.renderLists.dispose();if(T3.R.domElement.parentNode)T3.R.domElement.remove()}catch(e){}T3=null}}
 function tbPos(G,u,st){const T=V.tb,a=G.pt(u.pc,u.pr),b=G.pt(u.c,u.r);if(!st)return b;const f=clamp((st.t+(T.acc||0)-u.mt)/Math.max(.2,u.md),0,1);return[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]}
 function tbFrame(){const T=V.tb,cv=$('#tbcv');if(!T||!cv){if(T)T.loop=0;return}requestAnimationFrame(tbFrame);const dpr=Math.min(2,devicePixelRatio||1),W=cv.clientWidth,H=cv.clientHeight;if(cv.width!=Math.round(W*dpr)||cv.height!=Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
  const X=cv.getContext('2d'),G=tbGeo(cv),R=G.R,now=performance.now();X.setTransform(dpr,0,0,dpr,0,0);X.clearRect(0,0,W,H);
@@ -1406,7 +1410,7 @@ function drawK(){KHIT=[];if(!S||!S.K||V.rep||!CX)return;const me=mine(),v=camVB(
 const KPH={mv:0,cap:0,bt:1,adv:2,ret:2,die:2,enc:3};
 function kPlay(p){const E=(S.KE||[]).slice(),KP0=S.KP;if(!E.length||!KP0||!p||!p.R)return 0;const pos={};for(const n in KP0)KP0[n].forEach(([i,r,h])=>{const P=kPt(r);pos[i]={n,r,h,x:P[0],y:P[1],a:1}});
  const R={};for(const r in p.R)R[r]={o:p.R[r].o,occ:p.R[r].occ};const ev=E.map(e=>{const ph=KPH[e.t]||0;return Object.assign({},e,{st:e.k+(ph==0?0:ph==1?.38:ph==2?.62:0),du:ph==1?0:.36})}).sort((a,b)=>a.st-b.st);
- const end=Math.max(...ev.map(e=>e.st+e.du))+.5;V.kp={R,pos,ev,j:0,t0:performance.now()+250,fx:[],v:0,act:[],end};const me=mine();
+ const end=Math.min(12,Math.max(1,...ev.map(e=>(e.st||0)+(e.du||0)))+.5);V.kp={R,pos,ev,j:0,t0:performance.now()+250,fx:[],v:0,act:[],end};const me=mine();
  const mineEv=ev.filter(e=>(e.t=='bt'||e.t=='cap')&&me&&(e.n==me||e.d==me));if(V.follow!==false&&mineEv.length){const xs=mineEv.map(e=>kPt(e.b));const cx=xs.reduce((a,p)=>a+p[0],0)/xs.length,cy=xs.reduce((a,p)=>a+p[1],0)/xs.length;flyXY(cx,cy,Math.min(Math.max(CAM.w,90),220),700)}
  const fr=()=>{const K=V.kp;if(!K)return;const el=(performance.now()-K.t0)/KTMS;let ch=0;
   while(K.j<K.ev.length&&K.ev[K.j].st<=el){const e=K.ev[K.j++],P=pos[e.i];
@@ -1418,7 +1422,7 @@ function kPlay(p){const E=(S.KE||[]).slice(),KP0=S.KP;if(!E.length||!KP0||!p||!p
   for(const i in pos){const P=pos[i];if(P.die)P.a=Math.max(0,1-(performance.now()-P.die)/700)}
   if(ch)K.v++;requestDraw();if(el<K.end)requestAnimationFrame(fr);else{V.kp=null;requestDraw()}};requestAnimationFrame(fr);return end*KTMS+250}
 // ── 군단 선택·명령 ──
-function kClick(cx,cy){const me=mine();if(!S||!S.K||!me||V.kp||S.phase!='play')return false;const rc=CV.getBoundingClientRect(),x=cx-rc.left,y=cy-rc.top;
+function kClick(cx,cy){const me=mine();if(V.kp){const K=V.kp;K.t0-=1e6;requestDraw();return true}if(!S||!S.K||!me||S.phase!='play')return false;const rc=CV.getBoundingClientRect(),x=cx-rc.left,y=cy-rc.top;
  const hit=KHIT.slice().reverse().find(b=>Math.abs(x-b.x)<=b.w/2+4&&Math.abs(y-b.y)<=b.h/2+4);
  if(hit&&hit.n==me){const same=V.kSel&&V.kSel.length==hit.ids.length&&hit.ids.every(i=>V.kSel.includes(i));V.kSel=same?null:hit.ids.slice();V.sel=null;ui();requestDraw();return true}
  if(V.kSel&&V.kSel.length){const r=regionAt(cx,cy);if(r){kOrder(V.kSel,r);return true}V.kSel=null;ui();requestDraw();return true}
@@ -1508,20 +1512,25 @@ function vicHTML(s,me,fin){const V_=fin&&s.VIC?s.VIC:vicCalc(s),y=yr(s),lead=V_.
  ${row('경제 승리','종전 때 산업력 1위',V_.econ?`${fl(V_.econ)} <small>산업력 ${s.N[V_.econ].ind|0}</small>`:'-',V_.econ==me,30)}`}
 function score(s,n){return vicBonus(s,n)+score0(s,n)+Object.values(((s.GO||{})[n])||{}).filter(g=>g.st=='ok').length*25}
 function score0(s,n){const N=s.N[n],g=N.start<=1?alive(s,n)&&!N.lord?30:0:held(s,n).length>N.start?30:0;return Math.round(N.g/10+N.pop+N.ind+Math.pow(heldW(s,n),.75)*15+N.sup+s.TR.filter(t=>t.st=='on'&&(t.a==n||t.b==n)).length*3+g-(N.lord?20:0))}
-async function save(s){s.v=++ver+Date.now();await db.doc('rooms/'+code).set({s:JSON.stringify(s)})}
+// 저장: 공유 저장소 문서는 256KB까지라 상태를 gzip으로 압축해 넣는다 (긴 게임에서 저장이 실패해 멈추던 문제)
+async function packS(s){const js=JSON.stringify(s);if(typeof CompressionStream=='undefined')return{s:js};try{const cs=new Blob([js]).stream().pipeThrough(new CompressionStream('gzip')),u=new Uint8Array(await new Response(cs).arrayBuffer());let bin='';for(let i=0;i<u.length;i+=0x8000)bin+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return{z:btoa(bin)}}catch(e){return{s:js}}}
+async function unpackS(d){if(!d)return null;if(typeof d.s=='string')return JSON.parse(d.s);const bin=atob(d.z),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const ds=new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'));return JSON.parse(await new Response(ds).text())}
+function pruneS(s,lv){const H=s.HIST;if(H&&H.f&&H.f.length>8){const keep=lv>1?8:Math.ceil(H.f.length/2);H.f=[H.f[0]].concat(H.f.slice(-keep))}(s.BT||[]).forEach(b=>{if(lv>1){delete b.tb;if(b.hoi){delete b.hoi.rl;delete b.hoi.A;delete b.hoi.D}}});if(lv>1){s.TR=(s.TR||[]).filter(t=>t.st!='x');s.WRH=(s.WRH||[]).slice(-20)}}
+let SAVEERR=0;async function save(s){s.v=++ver+Date.now();let P=await packS(s);for(let lv=1;lv<=2&&(P.z||P.s).length>240000;lv++){pruneS(s,lv);P=await packS(s)}
+ try{await db.doc('rooms/'+code).set(P);if(SAVEERR){SAVEERR=0;toast('저장이 다시 정상으로 돌아왔다')}}catch(e){SAVEERR++;console.error('save',e&&e.code,e&&e.message);if(SAVEERR==1||SAVEERR%5==0)toast('저장에 실패했다 — 잠시 뒤 다시 시도한다');throw e}}
 async function sendO(p){Object.assign(O,p);O.t=S.t;O.nation=mine();if(NICK)O.nick=NICK;try{await db.doc(`rooms/${code}/orders/${uid}`).set(O)}catch(e){}}
 const mine=()=>S&&Object.entries(S.P).find(([u])=>u==uid)?.[1]||O.want||null;
 async function join(c,create,mode,secs){code=c.toUpperCase().replace(/[^A-Z0-9]/g,'')||'ROOM';
  const d=db.doc('rooms/'+code),sn=await d.get();
- if(sn.exists)S=JSON.parse(sn.data().s);else if(create){S=newGame(mode,secs);S.diff=DIFF;if(SPEC){S.spec=1;S.spd=8}await save(S)}else{alert('방이 없어요');return}
- host=S.host==uid;unsub.forEach(u=>u());unsub=[d.onSnapshot(x=>{if(x.exists){const n=JSON.parse(x.data().s),base=PREV&&PREV.t<n.t?PREV:S;PREV=null;if(!base||n.t!=base.t||n.phase!=base.phase){O={want:O.want}}const prev=base,adv=prev&&n.t>prev.t;const pt=adv&&prev.phase!='lobby'&&$('#cv')&&pageTurn();S=n;host=S.host==uid;render();if(adv){if(pt)setTimeout(()=>cine(prev),1850);else cine(prev)}}}),
+ if(sn.exists)S=await unpackS(sn.data());else if(create){S=newGame(mode,secs);S.diff=DIFF;if(SPEC){S.spec=1;S.spd=8}await save(S)}else{alert('방이 없어요');return}
+ host=S.host==uid;unsub.forEach(u=>u());unsub=[d.onSnapshot(async x=>{if(x.exists){const my=++SNAPSEQ;let n;try{n=await unpackS(x.data())}catch(e){console.error('unpack',e);toast('게임 상태를 읽지 못했다 — 브라우저를 최신으로 업데이트해 주세요');return}if(my!=SNAPSEQ||!n)return;const base=PREV&&PREV.t<n.t?PREV:S;PREV=null;if(!base||n.t!=base.t||n.phase!=base.phase){O={want:O.want}}const prev=base,adv=prev&&n.t>prev.t;const pt=adv&&prev.phase!='lobby'&&$('#cv')&&pageTurn();S=n;host=S.host==uid;render();if(adv){if(pt)setTimeout(()=>cine(prev),1850);else cine(prev)}}}),
   db.collection(`rooms/${code}/orders`).onSnapshot(q=>{ORD={};q.forEach(x=>ORD[x.id]=x.data());if(host)hostTick()}),chatSub()];CHAT=[];CHSEEN=0;V.chat=0;if(NICK){if(host){S.NN=S.NN||{};if(S.NN[uid]!==uniqNick(S,uid,NICK)){S.NN[uid]=uniqNick(S,uid,NICK);save(S)}}else sendO({nick:NICK})}render()}
-let busy=false,PREV=null,LASTPULL=0;async function hostTick(){if(!host||!S||S.phase!='play'||busy)return;if(O&&O.t==S.t)ORD[uid]=Object.assign({},ORD[uid],O);
+let busy=false,PREV=null,LASTPULL=0,SNAPSEQ=0,STEPERR=0;async function hostTick(){if(!host||!S||S.phase!='play'||busy)return;if(O&&O.t==S.t)ORD[uid]=Object.assign({},ORD[uid],O);
  if(Date.now()-LASTPULL>2500&&db){LASTPULL=Date.now();try{const q=await db.collection(`rooms/${code}/orders`).get();q.forEach(x=>{if(x.id!=uid||!(O&&O.t==S.t))ORD[x.id]=x.data()})}catch(e){}}
  const hu=Object.entries(S.P),all=hu.length&&hu.every(([u])=>S.ready[u]),late=S.spec?(!S.pause&&Date.now()>=(S.nextT||0)&&Date.now()-(window.__turnT||0)>2400):Date.now()>S.deadline;
  // 준비 상태 수집
  let ch=false;hu.forEach(([u])=>{if(ORD[u]&&ORD[u].t==S.t&&ORD[u].ready&&!S.ready[u]){S.ready[u]=1;ch=true}});
- if(hu.length&&hu.every(([u])=>S.ready[u])||late){busy=true;try{PREV=JSON.parse(JSON.stringify(S));const ords={};hu.forEach(([u,n])=>{if(ORD[u]&&ORD[u].t==S.t)ords[n]=ORD[u]});step(S,ords);if(S.spec)S.nextT=Date.now()+(S.spd||8)*1000;await save(S)}catch(e){console.error(e)}finally{busy=false}}else if(ch)await save(S)}
+ if(hu.length&&hu.every(([u])=>S.ready[u])||late){busy=true;const snap=JSON.stringify(S);let phase='step';try{PREV=JSON.parse(snap);const ords={};hu.forEach(([u,n])=>{if(ORD[u]&&ORD[u].t==S.t)ords[n]=ORD[u]});step(S,ords);if(S.spec)S.nextT=Date.now()+(S.spd||8)*1000;phase='save';await save(S);STEPERR=0}catch(e){console.error('hostTick '+phase,e);STEPERR++;S=JSON.parse(snap);PREV=null;if(phase=='step'&&(STEPERR==1||STEPERR%10==0))toast('분기 처리 중 오류가 나 다시 시도한다: '+String(e&&e.message||e).slice(0,60))}finally{busy=false}}else if(ch){try{await save(S)}catch(e){}}}
 setInterval(()=>{hostTick();tickUI()},1000);
 // 로비 합류/선택 처리
 async function claim(n){if(host||S.phase!='lobby'&&!Object.values(S.P).includes(n)){}O.want=n;await sendO({want:n});
@@ -3063,7 +3072,11 @@ function drawFL(){if(!(FLON&&FL.size))return;const v=camVB(),sc=CV.width/v[2],of
 // 움직이는 동안에는 멈췄을 때 그린 완성본을 밀고 키워서 보여 준다 (선 굵기가 바뀌지 않도록)
 // ════════ 타일 지도: 여러 배율의 세계 조각을 그려 두고 합성한다 ════════
 const TS=512,TPPU=[.75,1.5,3,6,12,24,48,96,192,384],TY0=-40,TY1=600;let TILES=new Map(),TSIG='',TQ=[],TQS=new Set(),TBUSY=0,TPOOL=[];
-const tileSig=()=>mapSig()+'|'+(V.nat||'')+'|'+(V.tab=='mil'?1:0)+'|'+(V.supOn?1:0)+'|'+(V.kp?'k'+V.kp.v:'');
+// 타일 무효화: 보기 방식이 바뀌면 전부, 땅 주인만 바뀌면 그 지역에 걸친 조각만 다시 그린다 (분기 넘김·재생 때 끊김 방지)
+const tileSig=()=>[V.nat||'',V.tab=='mil'?1:0,V.supOn?'s'+S.t:0,V.rep?'r':'',S.N.KOR&&S.N.KOR.lord?1:0].join('|');
+let TRS=null,TRS_K=null,TRS_S=null;
+function regState(){const RR=V.rep?V.rep.R:V.kp?V.kp.R:S.R,F=V.rep||V.kp?{}:(S.FR||{}),o={};for(const r in RR){const R=RR[r],f=F[r];o[r]=(R?R.o+'/'+(R.occ||''):'')+(f?'/'+f.a+Math.round(f.p/10):'')}return o}
+function tileInvalBox(x0,y0,x1,y1){const m=8;TILES.forEach((o,k)=>{const q=k.split(':'),L=+q[0],tw=TS/TPPU[L],a=+q[1]*tw,b=+q[2]*tw;if(a>x1+m||a+tw<x0-m||b>y1+m||b+tw<y0-m)return;TILES.delete(k);TPOOL.push(o.c)})}
 function tileKey(L,tx,ty){return L+':'+tx+':'+ty}
 // 세계의 한 구역 v=[x,y,w,h]를 X에 배율 sc(장치 픽셀/단위)로 그린다
 // 영역 테두리를 짧은 조각으로 나눠 둔다: 화면 조각에 걸친 부분만 긋기 위해
@@ -3095,9 +3108,11 @@ function tileFlush(){if(TBUSY)return;TBUSY=1;const step=()=>{const t0=performanc
 function tilesClear(){TILES.forEach(o=>TPOOL.push(o.c));TILES.clear();TQ=[];TQS.clear()}
 function tilesBase(){const ppu=TPPU[0],tw=TS/ppu;for(let tx=0;tx*tw<1000;tx++)for(let ty=Math.floor(TY0/tw);ty*tw<TY1;ty++){const k=tileKey(0,tx,ty);if(!TILES.has(k))renderTile(0,tx,ty)}}
 // 매 프레임: 고른 배율의 조각을 붙이고, 없는 조각은 더 거친 조각으로 메운다
-function drawTiles(){const W=CV.width,H=CV.height,v=camVB(),sp=W/v[2];const sg=tileSig(),fresh=sg!=TSIG;if(fresh){TSIG=sg;tilesClear()}tilesBase();
+function drawTiles(){const W=CV.width,H=CV.height,v=camVB(),sp=W/v[2];const sg=tileSig();let fresh=sg!=TSIG;if(fresh){TSIG=sg;tilesClear();TRS=null}
+ {const src=V.rep?V.rep.R:V.kp?V.kp.R:S.R,key=V.rep?'r'+V.rep.i:V.kp?'k'+V.kp.v:'s'+S.t+'|'+(S.v||'');if(key!==TRS_K||src!==TRS_S){const now=regState();if(TRS&&!fresh){let n=0;for(const r in now)if(now[r]!==TRS[r]){const t=T2[r];if(t){tileInvalBox(t.x0,t.y0,t.x1,t.y1);n++}}if(n)fresh=true}TRS=now;TRS_K=key;TRS_S=src}}
+ tilesBase();
  let Lt=0;for(let L=0;L<TPPU.length;L++){Lt=L;if(TPPU[L]>=sp*.8)break}
- CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);CX.imageSmoothingEnabled=true;CX.imageSmoothingQuality='high';
+ CX.setTransform(1,0,0,1,0,0);CX.fillStyle=MAPC.sea;CX.fillRect(0,0,W,H);CX.imageSmoothingEnabled=true;CX.imageSmoothingQuality='low';
  const offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);const want=[];
  const rng=(L,off)=>{const tw=TS/TPPU[L],nx=Math.ceil(1000/tw);return[Math.max(0,Math.floor((v[0]-off)/tw)),Math.min(nx-1,Math.floor((v[0]+v[2]-off)/tw)),Math.max(Math.floor(TY0/tw),Math.floor(v[1]/tw)),Math.min(Math.floor(TY1/tw),Math.floor((v[1]+v[3])/tw))]};
  const full=L=>offs.every(off=>{const[a,b,c,d]=rng(L,off);for(let x=a;x<=b;x++)for(let y=c;y<=d;y++)if(!TILES.has(tileKey(L,x,y)))return false;return true});
@@ -3806,7 +3821,7 @@ function act(a,el){const[k,...r]=a.split(':'),v=r.join(':'),me=mine(),y=S&&yr(S)
  case'res':V.res=V.res==v?null:v;ui();return;case'resx':V.res=null;ui();return
  case'news':return newsGo();case'newsx':return newsClose()}}
 // ════════ 분기 전환: 지도 강조 + 신문 ════════
-function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S);V.kOrd={};V.kSel=null;V.tbDone=[];V.tbMark={};const kT=kPlay(p);(S.CAPE||[]).forEach((c,i)=>{if(c.l==me||c.w==me||PF[PID(c.l)])setTimeout(()=>toast(`🏳 ${nm(c.l,y)} 항복 — ${nm(c.w,y)}의 승리`),kT+i*1800)});feats();V.cd.auto=1;V.cd.open=0;V.cd.i=0;sfx('bell');setTimeout(()=>sfx('paper'),700);
+function cine(p){if(!S||S.phase=='lobby'||!p||!p.N)return;const me=mine(),y=yr(S);if(V.tb&&!V.tb.replay&&!V.tb.sent){tbClose();toast('분기가 넘어가 준비 중이던 전투가 취소되었다')}V.kOrd={};V.kSel=null;V.tbDone=[];V.tbMark={};const kT=kPlay(p);(S.CAPE||[]).forEach((c,i)=>{if(c.l==me||c.w==me||PF[PID(c.l)])setTimeout(()=>toast(`🏳 ${nm(c.l,y)} 항복 — ${nm(c.w,y)}의 승리`),kT+i*1800)});feats();V.cd.auto=1;V.cd.open=0;V.cd.i=0;sfx('bell');setTimeout(()=>sfx('paper'),700);
  if(me&&S.N[me]){const a=((p.PO||{})[me])||{},b=((S.PO||{})[me])||{},c=capOf(me);V.ink=[];Object.keys(b).filter(id=>!a[id]&&POL[id]).forEach((id,i)=>V.ink.push({x:c[0],y:c[1],t:'공포 · '+POL[id].n,d:i*.6}));Object.keys(a).filter(id=>!b[id]&&POL[id]).forEach((id,i)=>V.ink.push({x:c[0],y:c[1],t:'폐지 · '+POL[id].n,d:(i+2)*.6}));setTimeout(()=>{V.ink=[];if($('#play'))ui()},8000);if((S.BT||[]).some(x=>x.a==me||x.d==me))setTimeout(()=>sfx('boom'),400)}
  const ulN=(S.UE||[]).filter(e=>e.n==me||wars(S,me).includes(e.n)||PF[PID(e.n)]).length,ulT=ulN?300+3400*ulN:0;V.banim=(S.BT||[]).filter(b=>!b.msn&&!b.k&&LBL[b.rid]).filter(b=>b.a==me||b.d==me||Math.abs(b.g)>=30||b.cap||(PF[PID(b.a)]&&PF[PID(b.d)])).slice(0,14).map(b=>{const src=b.sea?seaSrc(p,b.a,b.rid):landSrc(p,b.a,b.rid),s0=src&&LBL[src]?LBL[src]:null,t0=LBL[b.rid];if(!s0)return null;return{base:ulT/1000,s:s0,t:t0,c:darker(NM[b.a][1],.65),ok:b.cap||b.g>0,r:b.fail?'상륙 실패':b.cap?'점령':b.g>0?'+'+b.g+'%':'저지'}}).filter(Boolean);V.holdT=Math.max(Date.now()+ulT+(V.banim.length?2400+V.banim.length*300:0),Date.now()+kT);if(V.follow!==false){const mb=V.banim.find((x,i)=>{const b=(S.BT||[]).filter(b=>!b.msn&&!b.k&&LBL[b.rid])[i];return b&&(b.a==me||b.d==me)})||V.banim[0];if(mb)setTimeout(()=>flyXY(mb.t[0],mb.t[1],Math.min(CAM.w,90),700),Math.max(50,ulT-200))}setTimeout(()=>{if($('#play'))ui()},V.holdT-Date.now()+30);if(V.banim.length){setTimeout(()=>{V.lastArr=V.banim;V.banim=[];if($('#play'))ui()},ulT+7000)}
  V.erase=(S.DEAD||[]).map(d=>{const L=Object.keys(p.R).filter(r=>p.R[r].o==d.n&&LBL[r]);if(!L.length)return null;const sx=L.reduce((a,r)=>a+LBL[r][0],0)/L.length,sy=L.reduce((a,r)=>a+LBL[r][1],0)/L.length;return{x:sx,y:sy,t:nm(d.n,yr(p))}}).filter(Boolean);if(V.erase.length){setTimeout(()=>{V.erase=[];if($('#play'))ui()},9000)}

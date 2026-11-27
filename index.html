@@ -3533,9 +3533,55 @@ function hatch(k,U){let h=HATCH[k];if(!h){const c=document.createElement('canvas
 function buildBase(){if(!CT)return;const sig=JSON.stringify(S.R);if(sig==BASESIG){requestDraw();return}BASESIG=sig;const y=yr(S),G={};
  CT.forEach(c=>{if(c.parent)return;const R=S.R[c.k];if(R)(G[R.o]=G[R.o]||[]).push(c)});
  PARENTS.forEach(P=>{const ps=CT.filter(t=>t.parent==P.k),o=ps.length&&S.R[ps[0].k]&&S.R[ps[0].k].o;if(o&&ps.every(t=>S.R[t.k]&&S.R[t.k].o==o))(G[o]=G[o]||[]).push(P);else ps.forEach(t=>{const R=S.R[t.k];if(R)(G[R.o]=G[R.o]||[]).push(t)})});
- const LB=[];Object.keys(G).forEach(o=>{const L=G[o].slice().sort((a,b)=>b.np-a.np),used=new Set(),t=nm(o,y);
-  L.forEach(a=>{if(used.has(a.k))return;L.filter(c=>!used.has(c.k)&&Math.hypot(c.bcx-a.bcx,c.bcy-a.bcy)<(a.bx1-a.bx0>60?140:25)).forEach(c=>used.add(c.k));const P=innerPt(a);if(!P)return;const fs=Math.min(24,P.w*.92/(t.length*1.4),P.h*.8);if(fs<.6)return;LB.push({t,x:P.x,y:P.y,fs})})});
- LB.sort((a,b)=>b.fs-a.fs);const plc=[];LABS=[];LB.forEach(l=>{const w=l.fs*l.t.length*1.38/2,h=l.fs*.62,bb=[l.x-w,l.y-h,l.x+w,l.y+h];if(plc.some(q=>bb[0]<q[2]&&bb[2]>q[0]&&bb[1]<q[3]&&bb[3]>q[1]))return;plc.push(bb);LABS.push(l)});requestDraw()}
+ const LB=[];Object.keys(G).forEach(o=>{if(!S.N[o])return;natLabs(o,G[o],nm(o,y)).forEach(l=>LB.push(l))});
+ LB.sort((a,b)=>b.fs-a.fs);const plc=[];LABS=[];LB.forEach(l=>{for(const o of[l].concat(l.alt||[],[.75,.55].map(k=>Object.assign({},l,{fs:l.fs*k,ls:0,alt:undefined})).filter(o=>o.fs>=.5))){const B=labOBB(o);if(plc.some(A=>labHit(A,B)))continue;plc.push(B);LABS.push(o);break}});requestDraw()}
+// 기울어진 글자 띠끼리 실제로 겹치는지 (분리축 검사)
+function labOBB(l){const n=[...l.t].length,c=Math.cos(l.a||0),s=Math.sin(l.a||0);return{x:l.x,y:l.y,hl:l.fs*(n*1.3+(l.ls||0)*Math.max(0,n-1))/2*.9+Math.min(l.fs*.3,1.2),hh:l.fs*.44,u:[c,s],v:[-s,c]}}
+function labHit(A,B){const dx=B.x-A.x,dy=B.y-A.y,r=(R,ax)=>R.hl*Math.abs(R.u[0]*ax[0]+R.u[1]*ax[1])+R.hh*Math.abs(R.v[0]*ax[0]+R.v[1]*ax[1]);for(const ax of[A.u,A.v,B.u,B.v])if(Math.abs(dx*ax[0]+dy*ax[1])>r(A,ax)+r(B,ax))return false;return true}
+// ════════ 국가명 자리 ════════
+// 나라가 가진 땅 전체를 덩어리(이어진 땅·가까운 섬)로 묶어 격자에 그리고, 글자 띠가 통째로 들어가는 가장 큰 자리를 찾는다.
+// 땅 가운데(경계에서 가장 먼 곳) 쪽을 먼저 보고, 길쭉한 나라는 땅 방향으로 기울이며, 넓은 나라는 자간을 벌려 땅을 가로지르게 쓴다.
+// 본토(수도가 있는 덩어리)와 가장 큰 덩어리에는 늘 이름을 쓰고, 나머지는 충분히 클 때만 쓴다.
+let LABCV=null;const LABC=new Map();
+function natLabs(o,tiles,t){if(!FT.length)try{feats()}catch(e){}let cp=null;try{cp=capOf(o)}catch(e){}const key=t+'|'+(cp?Math.round(cp[0])+','+Math.round(cp[1]):'')+'|'+tiles.map(c=>c.k).sort().join(',');const c=LABC.get(o);if(c&&c.key===key)return c.L;let L=[];try{L=labFit(o,tiles,t)}catch(e){console.error('국가명 자리',o,e)}LABC.set(o,{key,L});return L}
+const labArea=r=>{let a=0;for(let i=0,j=r.length-1;i<r.length;j=i++)a+=(r[j][0]+r[i][0])*(r[j][1]-r[i][1]);return Math.abs(a/2)};
+function labFit(o,tiles,t){const R=[];for(const c of tiles)for(const r of(c.rs||[])){if(!r||r.length<3)continue;let a=1e9,b=-1e9,u=1e9,d=-1e9;for(const q of r){if(q[0]<a)a=q[0];if(q[0]>b)b=q[0];if(q[1]<u)u=q[1];if(q[1]>d)d=q[1]}R.push({r,x0:a,x1:b,y0:u,y1:d,ar:labArea(r)})}
+ if(!R.length)return[];const par=R.map((_,i)=>i),fd=i=>{while(par[i]!=i)i=par[i]=par[par[i]];return i},m=.6;
+ for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const A=R[i],B=R[j];if(A.x0-m<=B.x1&&B.x0-m<=A.x1&&A.y0-m<=B.y1&&B.y0-m<=A.y1){const a=fd(i),b=fd(j);if(a!=b)par[a]=b}}
+ const CL=new Map();R.forEach((q,i)=>{const k=fd(i);if(!CL.has(k))CL.set(k,[]);CL.get(k).push(q)});let cap=null;try{cap=capOf(o)}catch(e){}
+ const cls=[...CL.values()].map(L=>{let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,ar=0;L.forEach(q=>{x0=Math.min(x0,q.x0);x1=Math.max(x1,q.x1);y0=Math.min(y0,q.y0);y1=Math.max(y1,q.y1);ar+=q.ar});return{L,x0,x1,y0,y1,ar,cap:!!cap&&cap[0]>=x0-1&&cap[0]<=x1+1&&cap[1]>=y0-1&&cap[1]<=y1+1}}).sort((a,b)=>b.ar-a.ar);
+ const big=cls[0].ar,home=cls.find(c=>c.cap)||cls[0],pick=cls.filter(c=>c===cls[0]||c===home||c.ar>=Math.max(big*.15,45)).slice(0,4);
+ return pick.flatMap(c=>labOne(c,t,c===home,c===home?cap:null))}
+function labOne(C,t,home,cap){const bw=C.x1-C.x0,bh=C.y1-C.y0;if(!(bw>0&&bh>0))return[];const cs=Math.max(.22,Math.max(bw,bh)/120),W=Math.ceil(bw/cs)+4,H=Math.ceil(bh/cs)+4,N=W*H;
+ const cv=LABCV||(LABCV=document.createElement('canvas'));if(cv.width<W)cv.width=W;if(cv.height<H)cv.height=H;const x=cv.getContext('2d',{willReadFrequently:true});x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,cv.width,cv.height);x.setTransform(1/cs,0,0,1/cs,2-C.x0/cs,2-C.y0/cs);x.fillStyle='#000';
+ for(const q of C.L){x.beginPath();q.r.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill()}
+ const im=x.getImageData(0,0,W,H).data,lab=new Int32Array(N).fill(-1),comps=[];
+ for(let i=0;i<N;i++){if(im[i*4+3]<=100||lab[i]>=0)continue;const id=i,q=[i];lab[i]=id;for(let h=0;h<q.length;h++){const k=q[h],cx=k%W;for(const nk of[cx>0?k-1:-1,cx<W-1?k+1:-1,k-W,k+W]){if(nk<0||nk>=N||lab[nk]>=0||im[nk*4+3]<=100)continue;lab[nk]=id;q.push(nk)}}comps.push({id,cells:q})}
+ if(!comps.length)return[];comps.sort((a,b)=>b.cells.length-a.cells.length);const sel=[comps[0]];
+ // 수도가 있는 땅이 가장 큰 덩어리와 따로 떨어져 있으면 (예: 일본 본토와 만주) 그곳에도 이름을 쓴다
+ if(cap){const cx=Math.floor((cap[0]-C.x0)/cs+2),cy=Math.floor((cap[1]-C.y0)/cs+2);let hid=-1;for(let r=0;r<=3&&hid<0;r++)for(let dy=-r;dy<=r&&hid<0;dy++)for(let dx=-r;dx<=r;dx++){const xx=cx+dx,yy=cy+dy;if(xx>=0&&yy>=0&&xx<W&&yy<H&&lab[yy*W+xx]>=0){hid=lab[yy*W+xx];break}}const hc=comps.find(c=>c.id===hid);if(hc&&hc!==comps[0]&&hc.cells.length>=comps[0].cells.length*.04)sel.push(hc)}
+ return sel.map((cm,si)=>labComp(cm,lab,W,H,N,cs,C,t,home&&(si>0||sel.length==1))).filter(Boolean)}
+function labComp(cm,lab,W,H,N,cs,C,t,home){const cid=cm.id,cells=cm.cells;
+ // 경계까지 거리 (모따기 근사)
+ const D=new Float32Array(N);for(const k of cells)D[k]=1e6;const r2=1.4142;
+ for(let y=1;y<H-1;y++)for(let xx=1;xx<W-1;xx++){const k=y*W+xx;if(!D[k])continue;D[k]=Math.min(D[k],D[k-1]+1,D[k-W]+1,D[k-W-1]+r2,D[k-W+1]+r2)}
+ for(let y=H-2;y>0;y--)for(let xx=W-2;xx>0;xx--){const k=y*W+xx;if(!D[k])continue;D[k]=Math.min(D[k],D[k+1]+1,D[k+W]+1,D[k+W+1]+r2,D[k+W-1]+r2)}
+ // 땅의 방향 (주성분)
+ let mx=0,my=0;for(const k of cells){mx+=k%W;my+=(k/W)|0}mx/=cells.length;my/=cells.length;let sxx=0,syy=0,sxy=0;for(const k of cells){const u=k%W-mx,v=((k/W)|0)-my;sxx+=u*u;syy+=v*v;sxy+=u*v}
+ const ev=Math.sqrt((sxx-syy)**2+4*sxy*sxy),l1=(sxx+syy+ev)/2,l2=Math.max(1e-6,(sxx+syy-ev)/2),el=l1/l2;let ang=.5*Math.atan2(2*sxy,sxx-syy);const lim=el>6?1.1:el>3?.75:el>1.8?.4:.15;ang=clamp(ang,-lim,lim);
+ const angs=Math.abs(ang)>.06?[0,ang*.5,ang]:[0],n=[...t].length,len=n*1.3,cand=cells.slice().sort((p,q)=>D[q]-D[p]).slice(0,56),span=Math.max(W,H);
+ const inC=(px,py)=>{const ix=Math.floor(px),iy=Math.floor(py);return ix>=0&&iy>=0&&ix<W&&iy<H&&lab[iy*W+ix]===cid};
+ const fits=(px,py,ca,sa,f,hl)=>{const hh=f*.62,e=hl*1.04;if(!inC(px+e*ca,py+e*sa)||!inC(px-e*ca,py-e*sa))return false;let bad=0;for(let i=-6;i<=6;i++)for(let j=-1;j<=1;j++){const u=hl*i/6,v=hh*j;if(!inC(px+u*ca-v*sa,py+u*sa+v*ca)&&++bad>1)return false}return true};
+ let best=null;const all=[];for(const a of angs){const ca=Math.cos(a),sa=Math.sin(a);for(const k of cand){const px=k%W+.5,py=((k/W)|0)+.5;if(best&&D[k]*2.2<best.f*.6)continue;let lo=0,hi=Math.max(1,span*1.15/len);
+   for(let it=0;it<11;it++){const mid=(lo+hi)/2;if(fits(px,py,ca,sa,mid,mid*len/2))lo=mid;else hi=mid}const sc=lo*(1-Math.abs(a)*.1),o={sc,f:lo,px,py,a,ca,sa};all.push(o);if(!best||sc>best.sc)best=o}}
+ if(!best)return null;let f=best.f;
+ // 너무 좁아 글자가 안 들어가는 작은 나라: 본토면 땅 가운데에 작게라도 쓴다
+ if(f*cs<1.1){if(!home)return null;const k=cand[0];best.px=k%W+.5;best.py=((k/W)|0)+.5;best.a=0;f=Math.max(f,1.1/cs)}
+ let hl=f*len/2;const st=Math.max(.5,f*.2);if(best.f===f)while(hl<span&&fits(best.px,best.py,best.ca,best.sa,f,hl+st))hl+=st;
+ const ls=n>1?clamp((2*hl*.82/f-len)/(n-1),0,1.5):0,mk=(o,f,ls)=>({t,x:(((C.x0+(o.px-2)*cs)%1000)+1000)%1000,y:C.y0+(o.py-2)*cs,fs:Math.min(64,f*cs),a:+o.a.toFixed(3),ls:+ls.toFixed(2)});
+ // 겹칠 때 쓸 다른 자리: 다른 기울기·떨어진 곳에서 잘 들어가는 순으로 몇 개
+ const alt=[];all.filter(o=>o!==best&&o.f*cs>=1).sort((p,q)=>q.sc-p.sc).forEach(o=>{if(alt.length>=4)return;if([best].concat(alt.map(z=>z._o)).some(z=>Math.hypot(z.px-o.px,z.py-o.py)<o.f*.8&&Math.abs(z.a-o.a)<.2))return;const z=mk(o,o.f,0);z._o=o;alt.push(z)});
+ const L=mk(best,f,ls);L.alt=alt.map(z=>{delete z._o;return z});return L}
 function flash(){FLT=Date.now();clearInterval(window.__fli);window.__fli=setInterval(()=>{FLON=!FLON;requestDraw();if(Date.now()-FLT>5600){clearInterval(window.__fli);FLON=0;requestDraw()}},380)}
 let MCACHE=null,MCV=null,MSIG='',RIPCV=null;const RIPB=[-20,-30,1020,600],RIPK=2.6;
 const INNERP={};
@@ -3604,13 +3650,13 @@ function drawTiles(){const W=CV.width,H=CV.height,v=camVB(),sp=W/v[2];const sg=t
     if(o){o.u=performance.now();const cw=Math.min(tw,1000-tx*tw);if(cw>=tw)CX.drawImage(o.c,dx,dy,ds+.6,ds+.6);else CX.drawImage(o.c,0,0,cw*ppu,TS,dx,dy,cw*sp,ds+.6)}else if(fresh&&L==Lt&&!MOVING){renderTile(L,tx,ty);const o2=TILES.get(k);const cw=Math.min(tw,1000-tx*tw);CX.drawImage(o2.c,0,0,Math.min(cw,tw)*ppu,TS,dx,dy,Math.min(cw,tw)*sp,ds+.6)}else if(L==Lt||L==Lt-1){const cxm=v[0]+v[2]/2-off,cym=v[1]+v[3]/2;want.push([Math.hypot((tx+.5)*tw-cxm,(ty+.5)*tw-cym)+(L==Lt?0:-1e5),k])}}}}
  want.sort((a,b)=>a[0]-b[0]).forEach(([,k])=>{if(!TQS.has(k)){TQS.add(k);TQ.push(k)}});if(TQ.length>60){TQ.splice(60).forEach(k=>TQS.delete(k))}if(TQ.length)tileFlush()}
 // 국가명은 몇 단계 크기로 미리 써 둔 그림을 늘려 붙인다 (확대 중 글꼴을 매번 새로 그리는 끊김 방지)
-const LSPR=new Map();try{document.fonts.addEventListener('loadingdone',()=>{LSPR.clear();requestDraw()})}catch(e){}function labSpr(t,f,dpr){const b=Math.pow(2,Math.ceil(Math.log2(f)*3)/3),key=t+'|'+b.toFixed(2)+'|'+dpr;let o=LSPR.get(key);if(o)return o;
- const c=document.createElement('canvas'),x=c.getContext('2d'),font=`700 ${b.toFixed(1)}px "Noto Serif KR",serif`;x.font=font;if('letterSpacing' in x)x.letterSpacing=(b*.3).toFixed(1)+'px';const w=Math.ceil(x.measureText(t).width+b*.6),hh=Math.ceil(b*1.5);
- c.width=Math.ceil(w*dpr);c.height=Math.ceil(hh*dpr);x.scale(dpr,dpr);x.font=font;if('letterSpacing' in x)x.letterSpacing=(b*.3).toFixed(1)+'px';x.textAlign='center';x.textBaseline='middle';x.fillStyle=MAPC.lab;x.fillText(t,w/2+b*.15,hh/2);
+const LSPR=new Map();try{document.fonts.addEventListener('loadingdone',()=>{LSPR.clear();requestDraw()})}catch(e){}function labSpr(t,f,dpr,ls){ls=ls||0;const b=Math.pow(2,Math.ceil(Math.log2(f)*3)/3),key=t+'|'+b.toFixed(2)+'|'+dpr+'|'+ls;let o=LSPR.get(key);if(o)return o;
+ const c=document.createElement('canvas'),x=c.getContext('2d'),font=`700 ${b.toFixed(1)}px "Noto Serif KR",serif`;x.font=font;const ch=[...t],cw=ch.map(q=>x.measureText(q).width),gap=b*(.3+ls),tw=cw.reduce((a,v)=>a+v,0)+gap*Math.max(0,ch.length-1),w=Math.ceil(tw+b*.6),hh=Math.ceil(b*1.5);
+ c.width=Math.ceil(w*dpr);c.height=Math.ceil(hh*dpr);x.scale(dpr,dpr);x.font=font;x.textAlign='left';x.textBaseline='middle';x.fillStyle=MAPC.lab;let px=(w-tw)/2;ch.forEach((q,i)=>{x.fillText(q,px,hh/2);px+=cw[i]+gap});
  o={c,w,h:hh,f:b};if(LSPR.size>400)LSPR.clear();LSPR.set(key,o);return o}
 function drawLabels(){const v=camVB(),dpr=CV.__dpr||1,k=VW/v[2],offs=[0];if(v[0]<0)offs.push(-1000);if(v[0]+v[2]>1000)offs.push(1000);
  CX.setTransform(dpr,0,0,dpr,0,0);CX.textAlign='center';CX.textBaseline='middle';CX.fillStyle=MAPC.lab;
- for(const l of V.rep?[]:LABS){const px=l.fs*k;if(px<8)continue;const f=Math.min(px,46),sp=labSpr(l.t,f,dpr),s=f/sp.f;for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-200||sx>VW+200||sy<-60||sy>VH+60)continue;CX.drawImage(sp.c,sx-sp.w*s/2,sy-sp.h*s/2,sp.w*s,sp.h*s)}}
+ for(const l of V.rep?[]:LABS){const px=l.fs*k;if(px<7)continue;const f=Math.min(px,60),sp=labSpr(l.t,f,dpr,l.ls),s=f/sp.f,al=px>130?Math.max(.3,1-(px-130)/170):1,hw=sp.w*s/2+20;for(const off of offs){const sx=(l.x+off-v[0])*k,sy=(l.y-v[1])*k;if(sx<-hw||sx>VW+hw||sy<-hw||sy>VH+hw)continue;if(l.a||al<1){CX.save();CX.globalAlpha=al;CX.translate(sx,sy);if(l.a)CX.rotate(l.a);CX.drawImage(sp.c,-sp.w*s/2,-sp.h*s/2,sp.w*s,sp.h*s);CX.restore()}else CX.drawImage(sp.c,sx-sp.w*s/2,sy-sp.h*s/2,sp.w*s,sp.h*s)}}
  if(CAM.w<260){CX.fillStyle='rgba(60,40,22,.72)';const f=Math.max(10,Math.min(14,1000/CAM.w*1.6));CX.font=`italic 600 ${f}px "Noto Serif KR",serif`;for(const t of CT){if(!t.parent)continue;const P=innerPt(t)||{x:t.cx,y:t.cy};for(const off of offs){const sx=(P.x+off-v[0])*k,sy=(P.y-v[1])*k+(CAM.w<120?16:12);if(sx<-80||sx>VW+80||sy<-20||sy>VH+20)continue;CX.fillText(t.pn,sx,sy)}}}
  CX.setTransform(1,0,0,1,0,0)}
 function parchMul(){if(!PARCH_C)return;CX.setTransform(1,0,0,1,0,0);CX.globalCompositeOperation='multiply';CX.globalAlpha=.92;CX.drawImage(PARCH_C,0,0,CV.width,CV.height);CX.globalAlpha=1;CX.globalCompositeOperation='source-over'}

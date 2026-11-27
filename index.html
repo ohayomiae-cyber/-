@@ -425,7 +425,7 @@ body{background:#d9c49a}
 .cards{position:fixed;inset:0;z-index:18;display:none;background:rgba(43,29,16,.55);padding:2vh 2vw;overflow:auto}.cards.on{display:grid;place-items:center}
 .cd-wrap{width:min(680px,96vw);perspective:1200px}
 .cd{border:22px solid transparent;border-image:var(--frame) 24 / 22px stretch;background:var(--pp2) var(--noise);background-clip:padding-box;box-shadow:0 22px 50px rgba(0,0,0,.55);padding:10px 22px 16px;color:var(--ink);animation:cdin .45s ease-out;transform-origin:50% 100%}
-@keyframes cdin{from{transform:rotateX(18deg) translateY(30px);opacity:0}}
+@keyframes cdin{from{transform:rotateX(18deg) translateY(30px);opacity:0}}.cd.still{animation:none}
 .cd-top{display:flex;justify-content:space-between;font:600 12.5px var(--serif);color:var(--ink2);border-bottom:3px double var(--ink2);padding-bottom:6px}.cd-top span{font-family:'Cinzel',serif}
 .cd-art{display:block;width:100%;height:118px;margin:8px 0 2px;background:linear-gradient(transparent 60%,rgba(90,69,40,.08));border-bottom:1px solid rgba(90,69,40,.4)}
 .cd h2{margin:10px 0 6px;font:900 30px/1.2 var(--serif)}.cd p{margin:0 0 14px;font:400 15.5px/1.75 var(--serif);color:#3b2a1a;text-indent:1em}
@@ -4200,7 +4200,7 @@ function ui(){if(!S||S.phase=='lobby'||!$('#play'))return;const me=mine();PCTN=V
  const bw=$('#brw');if(V.br&&!(V.holdT>Date.now())){const h=brHTML();if(bw.__h!==h){bw.innerHTML=h;bw.__h=h}bw.className='brw on'}else{bw.className='brw';bw.innerHTML='';bw.__h=''}
  if(V.news&&!$('#news')&&!V.br&&!V.wsum&&!(V.holdT>Date.now()))newsShow();
  if(V.cd.auto&&!V.news&&!V.br&&!V.wsum&&!$('#news')&&unanswered().length&&!(Date.now()-(window.__turnT||0)<2000)&&!V.rep){V.cd.auto=0;V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]))}
- const cw=$('#cards');if(V.cd.open&&myCards().length&&!V.rep){const h=cardHTML();if(cw.__h!==h){cw.innerHTML=h;cw.__h=h}cw.className='cards on'}else{cw.className='cards';cw.innerHTML='';cw.__h=''}
+ const cw=$('#cards');if(V.cd.open&&myCards().length&&!V.rep){const h=cardHTML();if(cw.__h!==h){const L_=myCards(),k_=L_[Math.min(V.cd.i||0,L_.length-1)],same=cw.__k===k_&&cw.__h,st=cw.scrollTop,ws=(cw.querySelector('.cd-wrap')||{}).scrollTop||0;cw.innerHTML=h;cw.__h=h;cw.__k=k_;if(same){const c=cw.querySelector('.cd');if(c)c.classList.add('still');cw.scrollTop=st;const w=cw.querySelector('.cd-wrap');if(w)w.scrollTop=ws}}cw.className='cards on'}else{cw.className='cards';cw.innerHTML='';cw.__h=''}
  const rp=$('#resp');if(V.res){rp.innerHTML=resPop(V.res);rp.className='resp on'}else{rp.className='resp';rp.innerHTML=''}
  const ew=$('#endw');if(S.phase=='end'&&!V.endx){if(!ew.firstChild)ew.innerHTML=endHTML()}else ew.innerHTML=''}
 function game(){const first=!$('#play');shell();if(first||!V.init){V.init=1;const me=mine();const c=me?presetCam(me):{x:500,y:250,w:1000};CAM={...c};if(me){V.nat=me;V.tab=null;V.prev={x:500,y:250,w:1000}}applyCam()}ui()}
@@ -4268,7 +4268,7 @@ function act(a,el){const[k,...r]=a.split(':'),me=mine(),y=S&&yr(S);let v=r.join(
  case'bookx':V.bk.open=0;sfx('page');ui();return;case'book':V.res=null;V.bk.open=1;V.bk.f=r[0]?'all':'need';V.bk.c=r[0]||null;V.bk.sel=null;V.bk.reset=1;sfx('page');ui();return
  case'dec':sendO({dec:(O.dec||[]).filter(x=>x!=v).concat(v)});ui();return;case'undec':sendO({dec:(O.dec||[]).filter(x=>x!=v)});ui();return
  case'gsub':V.gsub=v;ui();return;case'strat':{V.gsub='s';V.tab='gov';V.docOn=1;if(V.nat!=me)return enterNation(me);ui();return}
- case'evc':{const[id,k]=v.split(':');sfx('stamp');sendO({evc:Object.assign({},O.evc,{[id]:+k})});ui();setTimeout(()=>{const L=myCards(),i=L.indexOf(id);if(V.cd.open&&i>=0&&i+1<L.length&&unanswered().length){V.cd.i=i+1;sfx('page');ui()}},650);return}
+ case'evc':{const[id,k]=v.split(':');if((O.evc||{})[id]===+k)return;sfx('stamp');sendO({evc:Object.assign({},O.evc,{[id]:+k})});ui();return}
  case'cdi':V.cd.i=+v;sfx('page');ui();return;case'cdx':V.cd.open=0;sfx('page');ui();return;case'cards':V.cd.open=1;V.cd.i=Math.max(0,myCards().indexOf(unanswered()[0]));sfx('page');ui();return
  case'mvok':{const uu=myUnits()[V.bt.u];if(!uu)return;sfx('march');sendO({mv:(O.mv||[]).filter(m=>m.u!=uu.id).concat({u:uu.id,r:v})});toast(`${uu.nm} → ${RG[v][0]} 이동 명령`);V.bt={u:null,t:null,st:0};ui();return}
  case'umv':{sendO({mv:(O.mv||[]).filter(m=>m.u!=v)});ui();return}

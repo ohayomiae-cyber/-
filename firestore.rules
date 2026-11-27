@@ -1,0 +1,22 @@
+rules_version = '2';
+// Borders in Ink — Firestore 보안 규칙
+// 게임은 모든 문서를 { _j: "JSON 문자열" } 한 칸으로 저장한다. 그 모양이 아니면 거부한다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function ok() {
+      return request.resource.data.keys().hasOnly(['_j'])
+        && request.resource.data._j is string
+        && request.resource.data._j.size() < 1000000;
+    }
+    // 방 상태
+    match /rooms/{room} {
+      allow read: if true;
+      allow create, update: if ok();
+    }
+    // 방의 명령서(orders)·채팅(chat)
+    match /rooms/{room}/{sub}/{id} {
+      allow read: if sub in ['orders', 'chat'];
+      allow create, update: if sub in ['orders', 'chat'] && ok();
+    }
+  }
+}

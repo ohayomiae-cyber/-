@@ -1338,7 +1338,7 @@ function tbIcon(X,ty,R,col){X.save();X.strokeStyle=col;X.fillStyle=col;X.lineWid
  X.restore()}
 function tbGeo(cv){const W=cv.clientWidth,H=cv.clientHeight,R=Math.min(W/((TBC+.5)*Math.sqrt(3)),H/(1.5*(TBROWS-1)+2)),w=Math.sqrt(3)*R,ox=(W-w*(TBC+.5))/2+w/2,oy=(H-(1.5*R*(TBROWS-1)+2*R))/2+R;return{R,w,ox,oy,pt:(c,r)=>[ox+w*(c+.5*(r&1)),oy+1.5*R*r]}}
 function tbHexAt(G,x,y){let b=null,bd=1e9;for(let r=0;r<TBROWS;r++)for(let c=0;c<TBC;c++){const p=G.pt(c,r),d=(p[0]-x)**2+(p[1]-y)**2;if(d<bd){bd=d;b=[c,r]}}return bd<G.R*G.R*1.1?b:null}
-function tbOpen(ids,r,war,F){const me=mine(),s=S,o=ctrl(s,r),A=kOf(s,me).filter(c=>ids.includes(c.i)).map(c=>{const st=tbStage(s,me,c,r);return st?[me,st.h?Object.assign({},c,{h:c.h*tbFat(st.h),r:st.r}):c]:null}).filter(Boolean),D=[];for(const m in s.K)if(atWar(s,me,m)||(war&&m==o))s.K[m].forEach(c=>{if(c.r==r)D.push([m,c])});if(!A.length||!D.length)return false;
+function tbOpen(ids,r,war,F){const me=mine(),s=S,o=ctrl(s,r),A=kOf(s,me).filter(c=>ids.includes(c.i)).map(c=>{const st=tbStage(s,me,c,r);return st?[me,st.h?Object.assign({},c,{h:c.h*tbFat(st.h),r:st.r}):c]:null}).filter(Boolean),WW=war?warWith(s,me,o):null,D=[];for(const m in s.K)if(atWar(s,me,m)||(WW&&WW.has(m)))s.K[m].forEach(c=>{if(c.r==r)D.push([m,c])});if(!A.length||!D.length)return false;
  F=F||{af:[],nv:[]};const X=tbXOf(s,me,F.af,F.nv,!!(T2[r]&&T2[r].coast)),HP=kHP(s,r,A,D,0,1),seed=(Date.now()*2654435761^hs(r))>>>0,I=tbInput(s,r,A,D,0,HP,seed,null,'assault',X);
  V.tb={mode:'plan',I,war:war?1:0,af:X.af,nv:X.nv,sig:tbSig2(A,D,seed,{af:X.af,nv:X.nv}),ids:A.map(x=>x[1].i),r,a:me,d:D[0][0],HP,place:I.A.map(p=>Object.assign({},p)),tac:'assault',sA:A.reduce((t,[n,c])=>t+kDiv(s,n)*c.h,0),sD:D.reduce((t,[n,c])=>t+kDiv(s,n)*c.h,0),nA:A.length,nD:D.length};tbShow();sfx('march');return true}
 function tbReplay(b){if(!b||!b.tb)return;const I=JSON.parse(JSON.stringify(b.tb));V.tb={mode:'plan',replay:1,I,r:b.rid,a:b.a,d:b.d,HP:{mA:b.hoi?b.hoi.mA:[],mD:b.hoi?b.hoi.mD:[],ter:I.ter,riv:I.riv},place:I.A,tac:I.tacA,nA:'',nD:''};tbShow();tbFight()}
@@ -1469,7 +1469,7 @@ function kBattle(s,r,A,D,k,E,sea,G){const a=A[0][0],d=D[0][0],AN=s.N[a],DN=s.N[d
 function kStep(s,oo){if(!ADJ)return;s.KE=[];s.KC={};s.CAPE=[];const E=s.KE,y=yr(s);
  (s.CAPQ||[]).slice().forEach(q=>{const o=(oo[q.w]||{}).capT,ty=o&&o.l==q.l?o.ty:s.t>q.t?'puppet':null;if(!ty||!s.N[q.l]||s.N[q.l].dead){if(ty||!s.N[q.l]||s.N[q.l].dead)s.CAPQ.splice(s.CAPQ.indexOf(q),1);return}kTerms(s,q.w,q.l,ty);s.CAPQ.splice(s.CAPQ.indexOf(q),1)});
  kSync(s);s.KP={};for(const n in s.K)if(wars(s,n).length||kOf(s,n).some(c=>c.tg&&c.tg!=c.r))s.KP[n]=s.K[n].map(c=>[c.i,c.r,+c.h.toFixed(2)]);
- for(const n in oo){const o=oo[n]||{};if(P_h(s,n)&&Array.isArray(o.war))o.war.forEach(r=>{const d=ctrl(s,r);if(d&&d!=n&&s.N[d]&&!atWar(s,n,d)&&!friend(s,n,d))declareWar(s,n,d,'')})}
+ for(const n in oo){const o=oo[n]||{};if(P_h(s,n)&&Array.isArray(o.war))o.war.forEach(r=>{const d=ctrl(s,r);if(!d||d==n||!s.N[d]||atWar(s,n,d)||warBlock(s,n,d))return;const L=s.N[d].lord;if(L&&L!=n&&s.N[L]&&!atWar(s,n,L))declareWar(s,n,L,'');if(!atWar(s,n,d))declareWar(s,n,d,'')})}
  for(const n in oo){const o=oo[n]||{},L=kOf(s,n);if(o.km&&P_h(s,n))for(const id in o.km){const c=L.find(c=>c.i==id);if(!c)continue;const v=o.km[id];if(v=='auto'){c.m=0;c.tg=null}else if(v=='hold'){c.m=1;c.tg=null}else if(s.R[v]){c.m=1;c.tg=v}}kFromAtk(s,n,o)}
  for(const n in s.K){const o=oo[n]||{};if(!P_h(s,n)||o.kAuto!==0)kAI(s,n)}
  const fought=new Set();
@@ -1564,7 +1564,7 @@ function kClick(cx,cy){const me=mine();if(V.kp){const K=V.kp;K.t0-=1e6;requestDr
  if(V.kSel&&V.kSel.length){const r=regionAt(cx,cy);if(r){kOrder(V.kSel,r);return true}V.kSel=null;ui();requestDraw();return true}
  return false}
 function kOrder(ids,r){const me=mine(),L=kOf(S,me).filter(c=>ids.includes(c.i));if(!L.length){V.kSel=null;ui();return}const o=ctrl(S,r);
- if(o&&o!=me&&!friend(S,me,o)&&!atWar(S,me,o)){if(facSame(S,me,o)||truce(S,me,o)){toast(`${nm(o,yr(S))}와는 ${facSame(S,me,o)?'같은 진영':'휴전 중'}이라 공격할 수 없다`);return}V.kWar={ids,r};ui();return}
+ if(o&&o!=me&&!friend(S,me,o)&&!atWar(S,me,o)){const b=warBlock(S,me,o);if(b){toast(b);return}V.kWar={ids,r};ui();return}
  const done=new Set(V.tbDone||[]);if(L.every(c=>done.has(c.i))){toast('이 군단은 이번 분기에 이미 싸웠다 — 다음 분기에 다시 명령하세요');return}
  if(o&&atWar(S,me,o)&&kAttackAt(r,ids))return;
  const ok=L.filter(c=>!done.has(c.i)&&kPath(S,me,c.r,r));if(!ok.length){toast('그곳까지 이어진 길이 없다 (바다·중립국으로 막힘)');return}
@@ -1587,13 +1587,17 @@ function tbXOf(s,n,af,nv,coast){const F=forces(n),A=F.filter(u=>u.b=='f'&&(af||[
 const dpEstA=u=>clamp(Math.round(u.str*.5),1,5),dpEstN=u=>clamp(Math.round(u.str*.45),1,4);
 // 멀리 있는 군단도 공격에 보낼 수 있다: 아군 땅을 따라 목표 옆 지역(집결지)까지 행군하고, 거리만큼 피로가 쌓인다
 const TBMAXH=10,tbFat=h=>h<=0?1:Math.max(.55,1-.08*h);
-function tbStage(s,n,c,r){if(ADJ[c.r]&&ADJ[c.r].has(r))return{r:c.r,h:0};const D=kDistF(s,n,c.r);if(D[r]==null)return null;const h=D[r]-1;if(h<1||h>TBMAXH)return null;const st=[...(ADJ[r]||[])].find(x=>D[x]===h&&s.R[x]&&(ctrl(s,x)==n||friend(s,n,ctrl(s,x))));return st?{r:st,h}:null}
+function tbStage(s,n,c,r){if(ADJ[c.r]&&ADJ[c.r].has(r))return{r:c.r,h:0};const D=kDistF(s,n,c.r),K=kRel(s,n);let b=null;for(const x of(ADJ[r]||[])){const h=D[x];if(h==null||h<1||h>TBMAXH||!s.R[x]||!K.fr(ctrl(s,x)))continue;if(!b||h<b.h)b={r:x,h}}return b}
+// 선전포고가 막히는 이유 (없으면 null) — 호스트의 declareWar와 같은 규칙
+function warBlock(s,a,d){if(!s.N[a]||!s.N[d]||a==d||atWar(s,a,d))return null;const y=yr(s);if(friend(s,a,d))return`${nm(d,y)}는 우방이라 공격할 수 없다`;if(facSame(s,a,d))return`${nm(d,y)}와는 같은 진영이라 공격할 수 없다`;if(truce(s,a,d))return`${nm(d,y)}와는 휴전 중이라 공격할 수 없다`;if((s.CAPQ||[]).some(q=>q.l==d&&q.w!=a))return`${nm(d,y)}는 이미 다른 나라에 항복해 강화 협상 중이다`;const L=s.N[d].lord;if(L&&L!=a&&s.N[L]&&!atWar(s,a,L)){if(friend(s,a,L))return`${nm(d,y)}는 우방 ${nm(L,y)}의 속령이라 공격할 수 없다`;if(truce(s,a,L))return`${nm(d,y)}의 종주국 ${nm(L,y)}와 휴전 중이라 공격할 수 없다`}return null}
+// 선전포고하면 함께 적이 되는 나라: 상대, (속령이면) 종주국, 그리고 그들의 진영
+function warWith(s,a,d){const out=new Set([d]),add=x=>{if(!x||out.has(x)||x==a||!s.N[x])return;out.add(x)},L=s.N[d]&&s.N[d].lord;if(L&&L!=a&&!atWar(s,a,L)){add(L);const fl=facOf(s,L);if(fl)s.FAC[fl].mem.forEach(x=>{if(!facSame(s,a,x))add(x)})}const fd=facOf(s,d);if(fd)s.FAC[fd].mem.forEach(x=>{if(!facSame(s,a,x))add(x)});return out}
 function kDispatch(r,pre,war,X){const me=mine(),o=ctrl(S,r),done=new Set(V.tbDone||[]),used=new Set(V.tbUsed||[]),EX=new Set((X&&X.ids)||[]),ST={},ALL=kOf(S,me).filter(c=>!done.has(c.i)),C=ALL.filter(c=>{if(ADJ[c.r]&&ADJ[c.r].has(r)){ST[c.i]={r:c.r,h:0};return true}if(EX.has(c.i)){const st=tbStage(S,me,c,r);if(st){ST[c.i]=st;return true}}return false});
- const DD=[];for(const m in S.K)if(atWar(S,me,m)||(war&&m==o))S.K[m].forEach(c=>{if(c.r==r)DD.push([m,c])});if(!DD.length)return false;
+ const WW=war?warWith(S,me,o):null,DD=[];for(const m in S.K)if(atWar(S,me,m)||(WW&&WW.has(m)))S.K[m].forEach(c=>{if(c.r==r)DD.push([m,c])});if(!DD.length)return false;
  const coast=!!(T2[r]&&T2[r].coast),sel={};C.forEach(c=>sel['k'+c.i]=pre&&pre.length?pre.includes(c.i):true);if(pre&&pre.length&&!C.some(c=>sel['k'+c.i]))C.forEach(c=>sel['k'+c.i]=true);
- const xa=new Set((X&&X.af)||[]),xn=new Set((X&&X.nv)||[]);forces(me).forEach(u=>{if(u.b=='f')sel[u.id]=!used.has(u.id)&&u.h>.3&&(X?xa.has(u.id):airInRange(me,u,r));if(u.b=='n')sel[u.id]=coast&&!used.has(u.id)&&u.h>.3&&(X?xn.has(u.id):navInRange(me,u,r))});
+ const XD=!!(X&&X.af),xa=new Set((X&&X.af)||[]),xn=new Set((X&&X.nv)||[]);forces(me).forEach(u=>{if(u.b=='f')sel[u.id]=!used.has(u.id)&&u.h>.3&&(XD?xa.has(u.id):airInRange(me,u,r));if(u.b=='n')sel[u.id]=coast&&!used.has(u.id)&&u.h>.3&&(XD?xn.has(u.id):navInRange(me,u,r))});
  const cnt=x=>kOf(S,me).filter(c=>c.r==x).length,stg=[...(ADJ[r]||[])].filter(x=>ctrl(S,x)==me).sort((a,b)=>cnt(b)-cnt(a))[0]||null,W_=wars(S,me),FS=new Set(C.filter(c=>[...(ADJ[c.r]||[])].some(x=>x!=r&&W_.includes(ctrl(S,x)))).map(c=>c.i));
- let HP=null;try{if(ALL.length)HP=kHP(S,r,(C.length?C:ALL.slice(0,1)).map(c=>[me,c]),DD,0,1)}catch(e){}V.dp={r,war:war?1:0,coast,sel,HP,DD,FS,stg,far:ALL.length-C.length,ST,xa,xn,X:!!X};dpShow();sfx('page');return true}
+ let HP=null;try{if(ALL.length)HP=kHP(S,r,(C.length?C:ALL.slice(0,1)).map(c=>[me,c]),DD,0,1)}catch(e){}V.dp={r,war:war?1:0,coast,sel,HP,DD,FS,stg,far:ALL.length-C.length,ST,xa,xn,X:XD};dpShow();sfx('page');return true}
 function dpState(){const D=V.dp,me=mine(),done=new Set(V.tbDone||[]),used=new Set(V.tbUsed||[]),C=kOf(S,me).filter(c=>!done.has(c.i)&&D.ST[c.i]).sort((a,b)=>D.ST[a.i].h-D.ST[b.i].h||b.h-a.h),F=forces(me),AF=F.filter(u=>u.b=='f'),NV=F.filter(u=>u.b=='n');
  const ok=u=>!used.has(u.id)&&u.h>.3&&(u.b=='f'?(D.xa.has(u.id)||airInRange(me,u,D.r)):D.coast&&(D.xn.has(u.id)||navInRange(me,u,D.r))),sc=C.filter(c=>D.sel['k'+c.i]),sa=AF.filter(u=>D.sel[u.id]&&ok(u)),sn=NV.filter(u=>D.sel[u.id]&&ok(u));
  const sA=sc.reduce((t,c)=>t+kDiv(S,me)*c.h*tbFat(D.ST[c.i].h),0),X=tbXOf(S,me,sa.map(u=>u.id),sn.map(u=>u.id),D.coast),tyA=sc.length?tbArmy(S,me,sA,0,{noAir:1}).concat(Array(X.air).fill('air'),Array(X.shp).fill('shp')):[];
@@ -1632,7 +1636,7 @@ const dmBase=(n,u)=>locOf(S,n,u.id);
 function dmEta(me,from,to,per){if(!from||!to)return null;if(from==to)return 0;const p=kPath(S,me,from,to);if(!p)return null;return Math.ceil((p.length-1)/per)}
 function kMove(pre,dest){const me=mine();if(!S||!S.K||!me)return;const sel={};(pre||[]).forEach(k=>sel[k]=true);V.dm={sel,dest:dest||null,picking:0};dmShow();sfx('page')}
 // 목적지가 적 땅이면 '파견하고 공격': 고른 부대가 그 전선으로 가고, 곧바로 전투 편성 화면이 열린다
-function dmKind(me,r){if(!r||!S.R[r])return null;const o=ctrl(S,r);if(!o||o==me||friend(S,me,o))return{own:1};const war=!atWar(S,me,o),def=Object.keys(S.K).some(m=>(atWar(S,me,m)||m==o)&&S.K[m].some(c=>c.r==r));return{atk:1,war,def,o}}
+function dmKind(me,r){if(!r||!S.R[r])return null;const o=ctrl(S,r);if(!o||o==me||friend(S,me,o))return{own:1};const war=!atWar(S,me,o),WW=war?warWith(S,me,o):null,def=Object.keys(S.K).some(m=>(atWar(S,me,m)||(WW&&WW.has(m)))&&S.K[m].some(c=>c.r==r));return{atk:1,war,def,o,blk:war?warBlock(S,me,o):null}}
 function dmAirAtk(me,u,r){const b=dmBase(me,u);if(!b)return null;const D=kDistF(S,me,b);return D[r]!=null&&D[r]<=AIRRANGE*2?D[r]:null}
 function dmNavAtk(me,u,r){const b=dmBase(me,u),t=T2[r],q=b&&T2[b];return!!(t&&q&&t.coast&&q.coast&&wrapD([q.cx,q.cy],[t.cx,t.cy])<NAVRANGE*1.6)}
 function dmDests(){const me=mine(),y=yr(S),W=wars(S,me),out=[],EK={};for(const m in S.K)if(atWar(S,me,m))S.K[m].forEach(c=>{EK[c.r]=(EK[c.r]||0)+kDiv(S,m)*c.h});
@@ -1653,17 +1657,17 @@ function dmHTML(){const D=V.dm,me=mine(),y=yr(S),dests=dmDests(),dest=D.dest,KD=
   return card(u.id,D.sel[u.id],!ok,u.nm,`${bn} 기지 · 전력 ${Math.round(u.h*100)}%`,em,u.h,why)};
  const col=(k,cls,title,items,n,note,allKey)=>`<div class="dp-col ${cls}"><div class="dp-h"><span class="dp-ic">${DPIC[k]}</span><b>${title}</b><small>${n}</small>${items?`<button data-dm="all:${allKey}">전체</button>`:''}</div>${note?`<div class="dp-note">${note}</div>`:''}<div class="dp-list">${items||''}</div></div>`;
  const nk=L.filter(c=>D.sel['k'+c.i]&&!done.has(c.i)&&cInfo(c).ok).length,na=AF.filter(u=>D.sel[u.id]).length,nn=NV.filter(u=>D.sel[u.id]&&coast).length,any=nk||na||nn;
- const goLab=!dest?'목적지를 고르세요':!any?'부대를 고르세요':battle?(KD.war?'⚠ 선전포고하고 공격':'⚔ 파견하고 공격'):atk?'⚑ 파견 — 빈 땅 점령':'⚑ 파견';
+ const blk=atk&&KD.blk,need=battle&&!nk&&any,goOk=dest&&any&&!blk&&!need,goLab=!dest?'목적지를 고르세요':blk?'⛔ '+blk:!any?'부대를 고르세요':need?'공격할 육군 군단을 하나 이상 고르세요':battle?(KD.war?'⚠ 선전포고하고 공격':'⚔ 파견하고 공격'):atk?(KD.war?'⚠ 선전포고 — 빈 땅 점령':'⚑ 파견 — 빈 땅 점령'):'⚑ 파견';
  return`<div class="dp-in"><div class="dp-top"><div><small>부대 파견 · ${y}년 ${qt(S)}분기</small><b>⚑ 여러 부대를 한 번에 파견${battle?' · 곧바로 공격':''}</b><span>보낼 부대를 원하는 만큼 고르고 목적지를 정하세요. <b style="display:inline;font-size:inherit;color:#ff9a7a">적 땅</b>을 고르면 파견과 동시에 공격한다.</span></div><button class="dp-x" data-dm="x" aria-label="닫기">✕</button></div>
  <div class="dm-dest"><span>목적지</span><div class="dm-dl">${dests.map(d=>`<button class="${D.dest==d.r?'on':''}${d.atk?' atk':d.war?' war':''}" data-dm="dest:${d.r}"><b>${esc(RG[d.r][0])}</b><small>${esc(d.lab)}${!d.atk&&d.th>0?' · 적 '+d.th.toFixed(1):''}</small></button>`).join('')}<button class="pick" data-dm="pick"><b>🗺 지도에서 고르기</b><small>내 땅 또는 공격할 땅</small></button></div></div>
  <div class="dp-tabs"><button data-dp-j="army">육군 ${nk}</button><button data-dp-j="air">공군 ${na}</button><button data-dp-j="navy">해군 ${nn}</button></div>
  <div class="dp-cols">${col('a','army','육군 군단',army,`${nk}/${L.length} 선택`,battle?'먼 군단은 목표 옆 집결지까지 행군해 바로 공격에 합류한다 (한 칸마다 피로 −8%)':'지역별로 묶여 있다 — 여러 지역에서 원하는 만큼 고를 수 있다','a')}${col('f','air','공군',AF.map(u=>unit(u,0)).join(''),`${na}/${AF.length}`,AF.length?(battle?`기지에서 ${AIRRANGE*2}칸 안이면 바로 출격한다`:'목적지 근처 기지로 옮긴다'):'이 나라에는 공군이 없다','f')}${col('n','navy','해군',NV.map(u=>unit(u,1)).join(''),`${nn}/${NV.length}`,NV.length?(dest&&!coast?'목적지가 내륙이라 함대를 보낼 수 없다':battle?'가까운 바다의 함대가 함포로 돕는다':'해안 목적지 근처 바다로 이동한다'):'이 나라에는 해군이 없다','n')}</div>
  <div class="dp-sum"><div class="dp-side me"><small>파견할 부대</small><b>군단 ${nk} · 공군 ${na} · 함대 ${nn}</b></div><div class="dp-side en"><small>${battle?'공격 목표':'목적지'}</small><b>${dest?esc(RG[dest][0]):'—'}${battle?` <small style="display:inline;color:#ff9a7a">${esc(nm(KD.o,y))}</small>`:''}</b></div></div>
- <div class="dp-go"><button data-dm="x">닫기</button><button class="pri${battle?' atk':''}" data-dm="go" ${dest&&any?'':'disabled'}>${goLab}</button></div></div>`}
+ <div class="dp-go"><button data-dm="x">닫기</button><button class="pri${battle?' atk':''}" data-dm="go" ${goOk?'':'disabled'}>${esc(goLab)}</button></div></div>`}
 function dmGo(){const D=V.dm,me=mine(),dest=D.dest;if(!dest)return;const KD=dmKind(me,dest),coast=!!(T2[dest]&&T2[dest].coast),done=new Set(V.tbDone||[]);
- O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};const P={};
+ if(KD&&KD.blk){toast(KD.blk);return}O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};const P={};
  if(KD&&KD.atk&&KD.def){// 파견하고 공격
-  const L=kOf(S,me).filter(c=>D.sel['k'+c.i]&&!done.has(c.i)).map(c=>({c,st:tbStage(S,me,c,dest)})).filter(x=>x.st);if(!L.length){toast('공격에 나설 수 있는 군단이 없다');return}
+  const L=kOf(S,me).filter(c=>D.sel['k'+c.i]&&!done.has(c.i)).map(c=>({c,st:tbStage(S,me,c,dest)})).filter(x=>x.st);if(!L.length){toast(kOf(S,me).some(c=>D.sel['k'+c.i])?'고른 군단은 전선까지 갈 길이 없다 (바다 너머이거나 10칸보다 멀다)':'공격할 육군 군단을 하나 이상 고르세요 — 공군·함대만으로는 공격할 수 없다');return}
   const AF=forces(me).filter(u=>u.b=='f'&&D.sel[u.id]&&dmAirAtk(me,u,dest)!=null),NV=forces(me).filter(u=>u.b=='n'&&D.sel[u.id]&&coast&&dmNavAtk(me,u,dest));
   L.forEach(({c,st})=>{const t=st.h?st.r:'hold';O.km[c.i]=t;V.kOrd[c.i]=t});P.km=O.km;
   const stg=(L.find(x=>x.st.h)||L[0]).st.r,stgC=[...(ADJ[dest]||[])].find(x=>ctrl(S,x)==me&&T2[x]&&T2[x].coast),mvU=AF.map(u=>({u:u.id,r:stg})).concat(stgC?NV.map(u=>({u:u.id,r:stgC})):[]),ids=mvU.map(m=>m.u);if(mvU.length){O.mv=(O.mv||[]).filter(m=>!ids.includes(m.u)).concat(mvU);P.mv=O.mv}
@@ -1690,14 +1694,16 @@ function airInRange(me,u,r){const b=dmBase(me,u);if(!b)return false;if(b==r)retu
 function navInRange(me,u,r){const b=dmBase(me,u),t=T2[r],q=b&&T2[b];return!!(t&&q&&t.coast&&q.coast&&wrapD([q.cx,q.cy],[t.cx,t.cy])<NAVRANGE)}
 function milDispatchHTML(me){const L=kOf(S,me),G={};L.forEach(c=>{(G[c.r]=G[c.r]||[]).push(c)});const ord=V.kOrd||{};
  return`<div class="cmds"><button class="pri" data-act="kmove">⚑ 부대 파견 — 여러 군단·공군·함대를 한 번에</button></div><div class="sec"><span>육군 군단 ${L.length}개</span><span>지역을 누르면 그 군단들을 골라 파견</span></div>${Object.entries(G).map(([r,cs])=>{const h=cs.reduce((t,c)=>t+c.h,0)/cs.length,mv=cs.filter(c=>{const o=ord[c.i];return(o&&o!='hold'&&o!='auto')||(c.tg&&c.tg!=c.r)}).length;return`<div class="ln cl" data-act="kmove:${r}"><div class="g">${esc(RG[r][0])}<small>${cs.length}개 군단 · 평균 전력 ${Math.round(h*100)}%${mv?` · ${mv}개 이동 중`:''}</small></div><div class="v">${TANKI}</div></div>`}).join('')}`}
-function kAttackAt(r,ids0){const me=mine(),o=ctrl(S,r);if(!S||!S.K||!me||!o||o==me||friend(S,me,o))return false;if(!atWar(S,me,o)&&(facSame(S,me,o)||truce(S,me,o))){toast(`${nm(o,yr(S))}와는 ${facSame(S,me,o)?'같은 진영':'휴전 중'}이라 공격할 수 없다`);return true}
- const done=new Set(V.tbDone||[]),adj=kOf(S,me).filter(c=>!done.has(c.i)&&(!ids0||ids0.includes(c.i))&&ADJ[c.r]&&ADJ[c.r].has(r)),war=!atWar(S,me,o),def=Object.keys(S.K).some(m=>(m==o||atWar(S,me,m))&&S.K[m].some(c=>c.r==r));
- if(!adj.length){if(def&&held(S,me).some(x=>ADJ[x]&&ADJ[x].has(r))){V.kSel=null;V.kWar=null;ui();requestDraw();return kDispatch(r,ids0||null,war)}return false}
- V.kSel=null;V.kWar=null;if(def){ui();requestDraw();kDispatch(r,ids0?adj.map(c=>c.i):null,war);return true}
+function kAttackAt(r,ids0){const me=mine(),o=ctrl(S,r);if(!S||!S.K||!me||!o||o==me||friend(S,me,o))return false;const war=!atWar(S,me,o);if(war){const b=warBlock(S,me,o);if(b){toast(b);return true}}
+ const done=new Set(V.tbDone||[]),isAdj=c=>ADJ[c.r]&&ADJ[c.r].has(r),pick=kOf(S,me).filter(c=>!done.has(c.i)&&(!ids0||ids0.includes(c.i))),adj=pick.filter(isAdj),WW=war?warWith(S,me,o):null,def=Object.keys(S.K).some(m=>(atWar(S,me,m)||(WW&&WW.has(m)))&&S.K[m].some(c=>c.r==r));
+ if(def){// 지키는 적이 있다 → 전투 편성: 맞닿은 군단 + (고른 군단이면) 집결지까지 행군할 수 있는 먼 군단
+  const far=ids0?pick.filter(c=>!isAdj(c)&&tbStage(S,me,c,r)).map(c=>c.i):[],any=adj.length||far.length||kOf(S,me).some(c=>!done.has(c.i)&&isAdj(c));if(!any)return false;
+  V.kSel=null;V.kWar=null;ui();requestDraw();if(kDispatch(r,ids0?adj.map(c=>c.i).concat(far):null,war,far.length?{ids:far}:null))return true;return false}
+ if(!adj.length)return false;V.kSel=null;V.kWar=null;
  O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};const c=adj[0];O.km[c.i]=r;V.kOrd[c.i]=r;const P={km:O.km};if(war){O.war=(O.war||[]).filter(x=>x!=r).concat(r);P.war=O.war}sendO(P);sfx('stamp');toast(`${kName(c)} → ${RG[r][0]}: 지키는 적이 없어 분기 마감 때 바로 점령${war?' (선전포고)':''}`);ui();requestDraw();return true}
 function kbarHTML(){const me=mine();if(!S||!S.K||!me||!S.N[me]||S.phase!='play'||V.rep)return'';const y=yr(S);let h='';
  const cq=(S.CAPQ||[]).find(q=>q.w==me&&S.N[q.l]&&!(O.capT&&O.capT.l==q.l));if(cq)h+=`<div class="kcap"><b>🏳 ${esc(nm(cq.l,y))} 항복</b><small>강화 조건을 정하라 — 정하지 않으면 괴뢰국이 된다</small><div><button data-act="kcap:${cq.l}:annex">합병</button><button data-act="kcap:${cq.l}:puppet">괴뢰국</button><button data-act="kcap:${cq.l}:free">배상금만</button></div></div>`;
- if(V.kWar){const o=ctrl(S,V.kWar.r);h+=`<div class="kbar warn"><span class="kb-t"><b>⚠ ${esc(nm(o,y))}에 선전포고</b><small>${esc(RG[V.kWar.r][0])} 공격으로 전쟁이 시작된다</small></span><button data-act="kwar" class="atk">선전포고하고 공격</button><button data-act="kwarx">취소</button></div>`}
+ if(V.kWar){const o=ctrl(S,V.kWar.r);h+=`<div class="kbar warn"><span class="kb-t"><b>⚠ ${esc(nm(o,y))}에 선전포고</b><small>${esc(RG[V.kWar.r][0])} 공격으로 전쟁이 시작된다${(()=>{const W=[...warWith(S,me,o)].filter(x=>x!=o&&!atWar(S,me,x));return W.length?` · ${esc(W.map(x=>nm(x,y)).join('·'))}도 적이 된다`:''})()}</small></span><button data-act="kwar" class="atk">선전포고하고 공격</button><button data-act="kwarx">취소</button></div>`}
  const L=kOf(S,me);if(V.kSel&&V.kSel.length){const C=L.filter(c=>V.kSel.includes(c.i));if(C.length){const c=C[0],hp=C.reduce((a,c)=>a+c.h,0)/C.length,o=(V.kOrd||{})[c.i],tg=o&&o!='hold'&&o!='auto'?o:c.tg,man=o?o!='auto':c.m;
   h+=`<div class="kbar"><span class="kb-t"><b>${esc(kName(c))}${C.length>1?` 외 ${C.length-1}`:''}</b><small>${esc(RG[c.r][0])} · 전력 ${Math.round(hp*100)}% · ${man?(tg?'→ '+esc(RG[tg][0]):'제자리 방어'):'자동 지휘'}</small></span><span class="kb-h">지도에서 목표 지역을 누르세요</span><button data-act="kmove">⚑ 파견</button><button data-act="kh">정지</button><button data-act="ka">자동</button><button data-act="kx">✕</button></div>`}}
  else if(wars(S,me).length&&L.length){if(!window.THREE&&!window.__tb3pf&&tb3OK()){window.__tb3pf=1;setTimeout(()=>tb3Load().catch(()=>{}),2500)}const on=O.kAuto!==0,K=kTargets();
@@ -4009,7 +4015,7 @@ function act(a,el){const[k,...r]=a.split(':'),me=mine(),y=S&&yr(S);let v=r.join(
  case'tbre':{const b=V.br&&V.br.L[+v];if(b)tbReplay(b);return}
  case'kfb':{const t=kTargets().def.find(x=>x.r==v);if(t)kDispatch(v,null);else toast('지금은 그 지역을 칠 수 있는 군단이 없다');return}
  case'kgrab':{const K=kTargets(),used=new Set();O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};let n=0;K.empty.forEach(t=>{const i=t.ids.find(i=>!used.has(i));if(i==null)return;used.add(i);O.km[i]=t.r;V.kOrd[i]=t.r;n++});sendO({km:O.km});sfx('stamp');toast(`${n}개 군단이 빈 땅으로 진격 — 분기 마감 때 점령`);ui();requestDraw();return}
- case'kwar':{const W_=V.kWar;V.kWar=null;if(!W_)return;if(kAttackAt(W_.r,W_.ids))return;O.war=(O.war||[]).filter(x=>x!=W_.r).concat(W_.r);O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};W_.ids.forEach(i=>{O.km[i]=W_.r;V.kOrd[i]=W_.r});sendO({war:O.war,km:O.km});toast(`선전포고 — 분기 마감 때 ${RG[W_.r][0]}으로 진격`);ui();requestDraw();return}
+ case'kwar':{const W_=V.kWar;V.kWar=null;if(!W_||!S||!S.R[W_.r]){ui();return}const o_=ctrl(S,W_.r),b_=o_&&!atWar(S,mine(),o_)?warBlock(S,mine(),o_):null;if(b_){toast(b_);ui();return}if(kAttackAt(W_.r,W_.ids))return;const me_=mine(),ok_=kOf(S,me_).filter(c=>W_.ids.includes(c.i)&&!(V.tbDone||[]).includes(c.i));O.war=(O.war||[]).filter(x=>x!=W_.r).concat(W_.r);O.km=Object.assign({},O.km);V.kOrd=V.kOrd||{};ok_.forEach(c=>{O.km[c.i]=W_.r;V.kOrd[c.i]=W_.r});sendO({war:O.war,km:O.km});sfx('stamp');toast(`⚠ ${nm(o_,yr(S))}에 선전포고 — 지금은 전선에 닿는 군단이 없어 분기 마감 때 ${RG[W_.r][0]} 쪽으로 진격한다`);ui();requestDraw();return}
  case'kwarx':V.kWar=null;ui();return;
  case'kmove':{if(V.tab!='mil'&&!v){}const pre=v?kOf(S,me).filter(c=>c.r==v).map(c=>'k'+c.i):(V.kSel||[]).map(i=>'k'+i);V.kSel=null;kMove(pre,null);return}
  case'kmovu':return kMove([v],null);

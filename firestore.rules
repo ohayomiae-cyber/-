@@ -13,6 +13,11 @@ service cloud.firestore {
       allow read: if true;
       allow create, update: if ok();
     }
+    // 공개 방 목록 (방장이 남기는 방 요약)
+    match /lobby/{room} {
+      allow read: if true;
+      allow create, update: if ok();
+    }
     // 방의 명령서(orders)·채팅(chat)
     match /rooms/{room}/{sub}/{id} {
       allow read: if sub in ['orders', 'chat'];
